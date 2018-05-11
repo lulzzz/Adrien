@@ -1,9 +1,14 @@
 ﻿#r @".\bin\Debug\netstandard2.0\Adrien.dll"
 
-open Adrien.Derivatives
+open Adrien.Numeric
+
+open System.Numerics;
 
    
-let r = A.Vector [|1.0f; 2.0f; 3.0f|]
+let r = scalar 4.4f
+
+
+
 
 
 
