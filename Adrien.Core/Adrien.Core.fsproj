@@ -3,18 +3,21 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Adrien</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Backend.fs" />
-    <Compile Include="Numeric.fsi" />
     <Compile Include="Numeric.fs" />
+    <Compile Include="Derivative.fs" />
     <None Include="Script.fsx" />
-    <Compile Include="Derivatives.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Numerics.Tensors" Version="0.1.0-preview2-180510-5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adrien.Backend.CLR\Adrien.Backend.CLR.fsproj" />
   </ItemGroup>
 
 </Project>
