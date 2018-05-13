@@ -1,6 +1,5 @@
 ﻿module Adrien.Numeric
 
-
 type Numeric = 
     {   Shape : Shape
         Format : Format
@@ -12,20 +11,20 @@ type Numeric =
 
     static member Zero = { Shape = Scalar; Format = Float32; Data = 0.0f; Op = None; Left = None; Right = None}
 
-    static member UnaryExp(a:Numeric, op:Op) = {Shape = a.Shape; Format = a.Format; Data = null; Op = Some op; Left = Some a; Right = None}
+    static member UnaryOp(a:Numeric, op:Op) = {Shape = a.Shape; Format = a.Format; Data = null; Op = Some op; Left = Some a; Right = None}
 
-    static member BinaryExp(a:Numeric, b:Numeric, op:Op) = {Shape = a.Shape; Format = a.Format; Data = null; Op = Some op; Left = Some a; Right = Some b}
+    static member BinaryOp(a:Numeric, b:Numeric, op:Op) = {Shape = a.Shape; Format = a.Format; Data = null; Op = Some op; Left = Some a; Right = Some b}
 
-    static member (~-)  (a:Numeric)  =  Numeric.UnaryExp(a, Op.SubCons)
-    static member (~+)  (a:Numeric)  =  Numeric.UnaryExp(a, Op.AddCons)
+    static member (~-)  (a:Numeric)  =  Numeric.UnaryOp(a, Op.SubCons)
+    static member (~+)  (a:Numeric)  =  Numeric.UnaryOp(a, Op.AddCons)
 
-    static member (*)  (a:Numeric, b:Numeric)  =  Numeric.BinaryExp(a, b, Op.Mul)
-    static member (/)  (a:Numeric, b:Numeric)  =  Numeric.BinaryExp(a, b, Op.Div)
-    static member (+)  (a:Numeric, b:Numeric)  =  Numeric.BinaryExp(a, b, Op.Add) 
-    static member (-)  (a:Numeric, b:Numeric)  =  Numeric.BinaryExp(a, b, Op.Sub)
+    static member (*)  (a:Numeric, b:Numeric)  =  Numeric.BinaryOp(a, b, Op.Mul)
+    static member (/)  (a:Numeric, b:Numeric)  =  Numeric.BinaryOp(a, b, Op.Div)
+    static member (+)  (a:Numeric, b:Numeric)  =  Numeric.BinaryOp(a, b, Op.Add) 
+    static member (-)  (a:Numeric, b:Numeric)  =  Numeric.BinaryOp(a, b, Op.Sub)
     
-    static member Sin(a:Numeric) = Numeric.UnaryExp(a, Op.Sin)
-    static member Cos(a:Numeric) = Numeric.UnaryExp(a, Op.Cos)
+    static member Sin(a:Numeric) = Numeric.UnaryOp(a, Op.Sin)
+    static member Cos(a:Numeric) = Numeric.UnaryOp(a, Op.Cos)
   
 and Shape =
     | Scalar

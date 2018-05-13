@@ -8,12 +8,8 @@
 
   <ItemGroup>
     <Compile Include="Numeric.fs" />
-    <Compile Include="Derivative.fs" />
+    <Compile Include="Expression.fs" />
     <None Include="Script.fsx" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Numerics.Tensors" Version="0.1.0-preview2-180510-5" />
   </ItemGroup>
 
   <ItemGroup>
