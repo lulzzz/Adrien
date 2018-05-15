@@ -9,8 +9,6 @@ Todos:
 
 * 2-stage compilation (dims first, TC second)
 * weight initialization (use a TC transformation)
-* data-loading pattern with chunks
-* dynamic generation of input datasets
 * `Ndarray` with `Memory<float>` or `Span<float>`
 
 ## Basic concepts
@@ -126,21 +124,23 @@ void Main()
     // assuming proper data
     IEnumerable<MyInput> examples = ...; // snipped 
     
-    // stream 'batches' of inputs
-    var minibatch = new Minibatch(
-        examples, 
-        batchSize: 64,
-        randomize: true);
+    var dataset = new SimpleLoader(examples);
 
     // initialize the weights
-    CGInit.Glorot(cg, minibatch);
+    CGInit.Glorot(cg, dataset);
 
     // configuring the SGD
-    var descent = SGD.RMSProp(cg);
-    for(int i = 0; i < 1000; i++)
+    var descent = SGD.RMSProp(cg, dataset, minibatchSize: 64);
+
+    // Manually iterating over minibatches
+    for(int i = 0; i < 100; i++)
     {
-        descent.Do(minibatch);
+        descent.DoMinibatch();
     }
+
+    // An epoch is a series of minibatches
+    // through the whole dataset
+    descent.DoEpoch();
 
     // retrieve from device
     cg = desc.GetComputeGraph();
@@ -268,3 +268,24 @@ var A4 = T.NewConstant(ts =>
     });
 ```
 This approach is appropriate to load large precomputed tensors as it avoid chatty interactions between Adrien the the client code.
+
+## Efficient data loading
+Feeding an input dataset to the network during training comes at boundary of the computational network. As datasets used for differentiable programming can be very large, they can exceed the amount of memory. Then, even if memory is not a direct concern, I/O might be a problem instead. The illustrative example shows a `SimpleLoader` that loads in-memory the entire dataset through simple enumeration. 
+
+By implementing the `IChunkLoader`, the client codes can give access to the dataset through _chunks_ which are typically expected to be contiguous pieces of data that are convenient to load at once.
+
+```
+interface IChunkLoader<T>
+{
+    int[] GetChunkSizes();
+    LoadChunk(int chunk, int index, int count, T[] data);
+}
+```
+Then, in certain scenarios, the dataset can be expected to programmatically generated, or simply indefinitely large. In such situation the `IGenerativeLoader` could be used:
+```
+interface IGenerativeLoader<T>
+{
+    Load(T[] data);
+}
+```
+Adrien adopts a _tabular_ perspective on data loading. Columnar alternatives could be considered for the DP framework itself. However, as the `IChunkLoader` can be implemented on top of a underlying columnar storage - taking advantage of the columnar angle - it's unclear how much extra performance or extra convenience would be gained in practice.
