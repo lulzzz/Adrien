@@ -7,24 +7,29 @@ This document is a tentative to define the overall look-and-feel of a C# front-e
 
 Todos:
 
-* 4 tensor types: input, constant, flow, parameter
 * 2-stage compilation (dims first, TC second)
 * weight initialization
-* rephrase "layers" as TC
-* tensor comprehensions
 * columnar data-feeding pattern with chunks
+* discuss need for complex constants
 * dynamic generation of input datasets
 * `Ndarray` with `Memory<float>` or `Span<float>`
 
-## Introductive example
+## Basic concepts
 
-The API differentiates the `Tensor` which as symbolic from from the `Ndarray` which is the numeric counterpart. Through a `TensorContext`, a graph of `Tensor` is built, which results in a `TensorGraph` object. The compilation of the `TensorGraph` goes in two stages: (A) infer all tensor dimensions (B) generate the tensor comprehensions.
+Adrien resolves around the concept of _computation network_ which can be automatically differentiated in order to learn from a dataset. The definition of a such a network is typically done at the _symbolic_ level, through a graph - referred as the _tensor graph_ - of _tensors_ and _tensor comprehensions_ (or simply _comprehensions_). The tensors, i.e. the variables of the computation, are glued together by the comprehensions, which can be seen as the high level operators over the tensors.
+
+This tensor graph can be compiled into the _compute graph_. The compute graph is the numeric counterpart of original symbolic graph. The compute graph involves _ND array_ (counterparts of tensors) and _kernels_ (counterparts of comprehensions).
+
+Tensors and ND arrays are represented by the classes `Tensor` and `Ndarray` respectively. Through a `TensorContext`, a graph of `Tensor` is built, which results in a `TensorGraph` object. The compilation of the `TensorGraph` goes in two stages: (A) infer all tensor dimensions (B) generate the tensor comprehensions.
 
 The base class `Tensor` is an untyped generic tensor; it is intended for a "programmatic" use case. The classes `Tensor1`, `Tensor2`, `Tensor3` only specifies the number of dimensions by not the dimension themselves. Finally, the `Tensor<D1, D2, D3>` generic descendants of `Tensor` are encoding the tensor dimensions through the generics. They lend themselves to some degree of type-inference support from C#.
 
 ```
 // untyped generic tensor
-class Tensor { }
+class Tensor 
+{ 
+    public TensorContext Context { get; } // snipped
+}
 
 // 1D, 2D and 3D tensors, dim-untyped
 class Tensor1 : Tensor {}
@@ -46,6 +51,7 @@ class Tensor<D1, D2, D3> : Tensor3
   where D1 : IDim, D2 : IDim, D3 : IDim { }
 ```
 
+## Introductive example
 
 The code below illustrates a minimal model training through SGD. We are adopting a naïve data streaming pattern where inputs are provided as _tabular_ data. However, in practice, it's important to also support a _columnar_ scenario.
 
@@ -113,7 +119,7 @@ void Main()
     // note: missing 'metrics' (ala CNTK)
     var tg = new TensorGraph(
         criterion: loss,
-        outputs: new[] {X4} 
+        outputs: new[] {X4} // X4 not reachable otherwise
     );
 
     var cg = tg.Compile(); // cg = compute graph
@@ -156,9 +162,53 @@ The tensor graph involves two types of nodes: tensors and tensor comprehensions.
 
 * **constant tensors** are externally defined, they are treated as constants from the SGD perspective. From the differentiable programming perspective, those tensors might be modified in-between two SGD phases, but those changes are operated by the client. 
 * **input tensors** are populated through the data feeding process of the computational graph. From an SGD perspective, those tensors are also treated as constant. However, they are not _external_ to the SGD process, as they are part of the minibatch process.
-* **flow tensors** are (functionally) pure result of calculations within the graph, and the bulk of them are only intermediate results.
+* **flow tensors** are (functionally) pure functional result of calculations within the graph, and the bulk of them are only intermediate results. Some flow tensors are referred as the output of the network, but being an "output" tensor does have any numerical impact.
 * **parameter tensors** contains what is commonly referred as the _weight_. They are randomly initialized, and the whole point of the training phase is to discover the most efficient set of parameters with respect to the criterion.
 
+## Dimensional inference
+
+The use of tensors allows a concise yet readable syntax to be used in C#. However, the type system of C# itself does not support a complete inference of the tensor dimensions. Instead of expecting the client code of Adrien to painstakingly specific every single dimension, Adrien opts for a more liberal approach where dimensions are mostly inferred based on the _dimensional constraints_.
+
+Constraints can be expressed when instantiating a tensor down to a full specification of all its dimensions, but constraints can also be expressed as equations combining tensors through comprehensions.
+
+```
+public Tensor<D> Dense<D>(Tensor in)
+{
+    var T = in.Context;
+
+    var A = T.New(); // no dims specified
+    var b = T.New<D>(); // 1D of dim 'D'
+    var res = T.New<D>(); // 1D of dim 'D
+
+    // 'A' starts with dim 'D', followed (right) by all dims of 'in'
+    T.BindOnRight<D>(A, in);
+
+    // a tensor comprehension is produced here
+    // which becomes part of the context
+    // returning the resulting tensor to keep code fluid
+    return T.New(
+        inputs: new [] {in},
+        params: new [] {A, b}
+        outputs: new [] {res},
+        factory: tcb => // tcb = tensor comprehension builder
+        {
+            // at this point, all dimensions have been inferred
+            var i = tcb.NewIndex();
+            var jx = tcb.NewIndexRange(A.Dims - 1);
+            
+            // general affine transformation
+            tcb.Add(res[i].AssignSum(A[i, jx] * in[jx] + b[i]]));
+
+            // 'F' is sugar the lib of float -> float functions
+            tcb.Add(res[i].Assign(F.ReLU(res[i])));
+        }
+    )
+}
+```
+
+A tensor comprehension (or just comprehension) operates in two distinct stages. First, it emits constraints on tensor dimensions. Second, it builds the the tensor comprehension _per se_.
+
+The _builder_ produces a list of statements, inspired by the _Facebook Tensor Comprehensions_. At this point of the calculation, all tensor dimensions are known. This property facilitates writing logic over varying number of indices.
 
 ## Model persistence and check-pointing
 
