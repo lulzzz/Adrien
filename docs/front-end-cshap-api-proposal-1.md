@@ -8,9 +8,8 @@ This document is a tentative to define the overall look-and-feel of a C# front-e
 Todos:
 
 * 2-stage compilation (dims first, TC second)
-* weight initialization
-* columnar data-feeding pattern with chunks
-* discuss need for complex constants
+* weight initialization (use a TC transformation)
+* data-loading pattern with chunks
 * dynamic generation of input datasets
 * `Ndarray` with `Memory<float>` or `Span<float>`
 
@@ -246,3 +245,26 @@ var cg = tg.Compile(dic);
 We do not want to _force_ the client to serialize the tensor graph itself. As the client will also be running .NET, the client can re-instantiate the tensor graph, reloading only the parameter tensors. The only angle needed to make this work is to have a deterministic way to identify tensors when generating the tensor graph.
 
 This approach removes entire class of versioning problems, as the serialization of the tensor graph is almost akin to the serialization of VM assembly.
+
+## Loading constant tensors
+
+Constant tensors are expected to be externally defined - with respect of the SGD. The initial example illustrates a constant tensor with a circulant matrix:
+```
+var A4 = T.NewConstant(
+    (i, j, dimI, dimJ) => 
+        i == j + 1 || (i == 0 && j == dimJ - 1)
+        ? 1f 
+        : 0f);
+```
+This approach is practical to define "algebraic" constant tensors but it would be highly inefficient if the goal merely to load an existing tensor. An alternative option consists providing the `Tensor` and expecting the `NDArray` to be returned:
+
+```
+var A4 = T.NewConstant(ts => 
+    {
+        // 'nda' should match dims of tensor 'ts'
+        Ndarray nda = ...; // snipped
+        // populate the 'NDarray'
+        return nda;
+    });
+```
+This approach is appropriate to load large precomputed tensors as it avoid chatty interactions between Adrien the the client code.
