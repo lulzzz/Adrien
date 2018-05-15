@@ -86,11 +86,17 @@ type Expression =
     
 type A = Expression
 
-let Const(n:Numeric)  = n|> Expression.Const
+let constant(n : obj) = 
+    match n with
+    | :? float32 as x -> scalar x  |> Expression.Const
+    | :? VectorArray<float32> as x -> vector x  |> Expression.Const
+    | :? MatrixArray<float32> as x -> matrix x  |> Expression.Const
+    | _ as x -> {Shape = Symbol; Format = Nan; Data = x; Op = None; Left = None; Right = None } |> Expression.Const 
 
-let constant(c:float32) = scalar c |> Expression.Const
 
- 
+
+
+
     
         
 

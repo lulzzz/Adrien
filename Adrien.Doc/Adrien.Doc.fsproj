@@ -3,11 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="CLRBackend.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Adrien.Base\Adrien.Base.fsproj" />
-  </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />
+  <ItemGroup>
+    <None Include="build.fsx" />
+  </ItemGroup>
 </Project>

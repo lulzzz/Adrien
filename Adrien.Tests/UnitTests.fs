@@ -2,10 +2,11 @@ module UnitTest
 
 open Xunit
 open Adrien.Numeric
+open Adrien.Expression
 
 [<Fact>]
 let ``Can construct`` () =
-    let r = scalar 4.4f
-    let s = scalar 3.0f
+    let r = constant 4.4f
+    let s = constant 3.0f
     let m = r + s
     Assert.Equal(true, true)

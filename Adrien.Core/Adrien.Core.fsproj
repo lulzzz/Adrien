@@ -1,19 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Adrien</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
-
   <ItemGroup>
+    <Compile Include="Graph.fsi" />
     <Compile Include="Numeric.fs" />
     <Compile Include="Expression.fs" />
     <None Include="Script.fsx" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\Adrien.Backend.CLR\Adrien.Backend.CLR.fsproj" />
   </ItemGroup>
-
+  <Import Project="..\.paket\Paket.Restore.targets" />
 </Project>
