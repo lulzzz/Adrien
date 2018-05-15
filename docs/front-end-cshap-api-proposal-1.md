@@ -5,6 +5,18 @@ Status: EARLY DRAFT
 
 This document is a tentative to define the overall look-and-feel of a C# front-end API for Adrien.
 
+Todos:
+
+* 4 tensor types: input, constant, flow, parameter
+* 2-stage compilation (dims first, TC second)
+* weight initialization
+* rephrase "layers" as TC
+* tensor comprehensions
+* persisting model requires to stable indexing of tensors
+* columnar data-feeding pattern with chunks
+* dynamic generation of input datasets
+* `Ndarray` with `Memory<float>` or `Span<float>`
+
 The API differentiates the `Tensor` which as symbolic from from the `Ndarray` which is the numeric counterpart.
 
 The base class `Tensor` is an untyped generic tensor; it is intended for a "programmatic" use case.
@@ -24,14 +36,14 @@ class Tensor3 : Tensor {}
 interface IDim { int Dim {get;} }
 
 // 1D tensor, dim-typed
-class Tensor<D1> : Tensor where D1 : IDim { }
+class Tensor<D1> : Tensor1 where D1 : IDim { }
 
 // 2D tensor, dim-typed
-class Tensor<D1, D2> : Tensor 
+class Tensor<D1, D2> : Tensor2 
   where D1 : IDim, D2 : IDim { }
 
 // 3D tensor, dim-typed
-class Tensor<D1, D2, D3> : Tensor 
+class Tensor<D1, D2, D3> : Tensor3 
   where D1 : IDim, D2 : IDim, D3 : IDim { }
 ```
 
@@ -51,24 +63,39 @@ class MyInput
 
 void Main()
 {
+    // context intended for model persistence scenarios
+    var T = new TensorContext();
+    var TC = T.Comprehensions;
+
     // binding inputs to 'MyInput'
-    var Y = Tensor<DH>.Input<MyInput>((in, i) => in.Y[i]);
-    var z = Tensor<D1>.Input<MyInput>((in, i) => in.z);
+    var Y = T.New<DH>.Input<MyInput>(
+        (in, nda) => // MyInput * Ndarray 
+        {
+            // avoid chatty calls to anonymous function
+            for(var i = 0; i < in.Y.Length; i++) 
+            { 
+                nda[i] = in.Y[i]; 
+            }
+        }
+    );
+
+    var z = T.New<D1>.Input<MyInput>(
+        (in, nda) => { nda[0] = in.z; });
 
     // X1 is Tensor<DH>
     // A is Tensor2, dims to be inferred as (DH, DH)
     // b is Tensor<DH>
-    var (X1, A, b) = Layers.Dense<DH>(Y).With(AF.ReLU);
-    var (X2, _, _) = Layers.Dense<DH>(X1); // ReLU by default
+    var (X1, A, b) = TC.Dense<DH>(Y); // ReLU by default
+    var (X2, _, _) = TC.Dense<DH>(X1).WithReLU();
 
     // "manual" layer definition
-    var A3 = new Tensor2(); // dims inferred
-    var b3 = new Tensor<DH>();
-    var X3 = AF.ReLU(A3 * X2 + b3);
+    var A3 = T.New2(); // Tensor2, dims inferred
+    var b3 = T.New<DH>(); // Tensor<DH>
+    var X3 = TC.ReLU(A3 * X2 + b3);
 
     // constant ad-hoc 2D tensor (circulant matrix)
     // explicit init flags tensor as 'constant'
-    var A4 = Tensor.Constant(
+    var A4 = T.NewConstant(
         (i, j, dimI, dimJ) => 
             i == j + 1 || (i == 0 && j == dimJ - 1)
             ? 1f 
@@ -78,9 +105,9 @@ void Main()
     var X4 = A4 * X3;
 
     // Final layer connected 'X3' (not X4)
-    var (Z, _, _) = Layers.Linear<D1>(X3).With(AF.Sigmoid);
+    var (Z, _, _) = TC.Linear<D1>(X3).WithSigmoid();
 
-    var loss = Loss.MeanSquare(z, Z);
+    var loss = TC.MeanSquare(z, Z);
 
     // Grab the whole graph from the criterion.
     // Unreachable elements can be added as 'outputs'.
@@ -101,6 +128,8 @@ void Main()
         batchSize: 64,
         randomize: true);
 
+    // TODO: missing the weight initialization
+
     // configuring the SGD
     var descent = SGD.RMSProp(cg);
     for(int i = 0; i < 1000; i++)
@@ -120,3 +149,7 @@ void Main()
     Ndarray x4e = cg.Eval(in, X4);
 }
 ```
+
+## Model persistence and check-pointing
+
+The purpose of `TensorContext` is to allow a model to be gracefully persisted.
