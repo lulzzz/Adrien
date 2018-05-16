@@ -7,7 +7,6 @@ This document is a tentative to define the overall look-and-feel of a C# front-e
 
 Todos:
 
-* 2-stage compilation (dims first, TC second)
 * weight initialization (use a TC transformation)
 * `Ndarray` with `Memory<float>` or `Span<float>`
 
@@ -67,11 +66,10 @@ void Main()
 {
     // context intended for model persistence scenarios
     var T = new TensorContext();
-    var TC = T.Comprehensions;
 
     // binding inputs to 'MyInput'
     var Y = T.New<DH>.Input<MyInput>(
-        (in, nda) => // MyInput * Ndarray 
+        (in, nda) => // MyInput * NDArray 
         {
             // avoid chatty calls to anonymous function
             for(var i = 0; i < in.Y.Length; i++) 
@@ -88,7 +86,7 @@ void Main()
     // A is Tensor2, dims to be inferred as (DH, DH)
     // b is Tensor<DH>
     var (X1, A, b) = TC.Dense<DH>(Y); // ReLU by default
-    var (X2, _, _) = TC.Dense<DH>(X1).WithReLU();
+    var (X2, _, _) = TC.Dense<DH>(X1, t => F.SeLU(t)); // SeLU instead
 
     // "manual" layer definition
     var A3 = T.New2(); // Tensor2, dims inferred
@@ -164,13 +162,16 @@ The tensor graph involves two types of nodes: tensors and tensor comprehensions.
 * **flow tensors** are (functionally) pure functional result of calculations within the graph, and the bulk of them are only intermediate results. Some flow tensors are referred as the output of the network, but being an "output" tensor does have any numerical impact.
 * **parameter tensors** contains what is commonly referred as the _weight_. They are randomly initialized, and the whole point of the training phase is to discover the most efficient set of parameters with respect to the criterion.
 
-## Dimensional inference
+## Tensor Comprehensions
+
+The definition of tensor comprehensions goes in two phases. First, defining constraints on the tensor dimensions. Second, once dimensions are know, defining the fine-print of the comprehension logic.
 
 The use of tensors allows a concise yet readable syntax to be used in C#. However, the type system of C# itself does not support a complete inference of the tensor dimensions. Instead of expecting the client code of Adrien to painstakingly specific every single dimension, Adrien opts for a more liberal approach where dimensions are mostly inferred based on the _dimensional constraints_.
 
 Constraints can be expressed when instantiating a tensor down to a full specification of all its dimensions, but constraints can also be expressed as equations combining tensors through comprehensions.
 
 ```
+// A tensor comprehension forming a 'dense layer'
 public Tensor<D> Dense<D>(Tensor in)
 {
     var T = in.Context;
@@ -269,7 +270,7 @@ var A4 = T.NewConstant(ts =>
 ```
 This approach is appropriate to load large precomputed tensors as it avoid chatty interactions between Adrien the the client code.
 
-## Efficient data loading
+## Efficient dataset loading
 Feeding an input dataset to the network during training comes at boundary of the computational network. As datasets used for differentiable programming can be very large, they can exceed the amount of memory. Then, even if memory is not a direct concern, I/O might be a problem instead. The illustrative example shows a `SimpleLoader` that loads in-memory the entire dataset through simple enumeration. 
 
 By implementing the `IChunkLoader`, the client codes can give access to the dataset through _chunks_ which are typically expected to be contiguous pieces of data that are convenient to load at once.
