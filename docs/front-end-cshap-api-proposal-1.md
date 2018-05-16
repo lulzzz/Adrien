@@ -8,7 +8,7 @@ This document is a tentative to define the overall look-and-feel of a C# front-e
 Todos:
 
 * weight initialization (use a TC transformation)
-* `Ndarray` with `Memory<float>` or `Span<float>`
+* `NDArray` with `Memory<float>` or `Span<float>`
 
 ## Basic concepts
 
@@ -16,7 +16,7 @@ Adrien resolves around the concept of _computation network_ which can be automat
 
 This tensor graph can be compiled into the _compute graph_. The compute graph is the numeric counterpart of original symbolic graph. The compute graph involves _ND array_ (counterparts of tensors) and _kernels_ (counterparts of comprehensions).
 
-Tensors and ND arrays are represented by the classes `Tensor` and `Ndarray` respectively. Through a `TensorContext`, a graph of `Tensor` is built, which results in a `TensorGraph` object. The compilation of the `TensorGraph` goes in two stages: (A) infer all tensor dimensions (B) generate the tensor comprehensions.
+Tensors and ND arrays are represented by the classes `Tensor` and `NDArray` respectively. Through a `TensorContext`, a graph of `Tensor` is built, which results in a `TensorGraph` object. The compilation of the `TensorGraph` goes in two stages: (A) infer all tensor dimensions (B) generate the tensor comprehensions.
 
 The base class `Tensor` is an untyped generic tensor; it is intended for a "programmatic" use case. The classes `Tensor1`, `Tensor2`, `Tensor3` only specifies the number of dimensions by not the dimension themselves. Finally, the `Tensor<D1, D2, D3>` generic descendants of `Tensor` are encoding the tensor dimensions through the generics. They lend themselves to some degree of type-inference support from C#.
 
@@ -144,12 +144,12 @@ void Main()
     cg = desc.GetComputeGraph();
 
     // isolate a parameter tensor
-    Ndarray vA = cg.Get(A);
+    NDArray vA = cg.Get(A);
 
     MyInput in = ...; // snipped
 
     // model evaluation 
-    Ndarray x4e = cg.Eval(in, X4);
+    NDArray x4e = cg.Eval(in, X4);
 }
 ```
 
@@ -232,12 +232,12 @@ Then, from the deserialization side, it would be:
 ```
 TensorGraph tg = ...; // snipped
 StreamReader reader = ...; // snipped
-var dic = new Dictionary<int, Ndarray>();
+var dic = new Dictionary<int, NDArray>();
 var count = reader.ReadInt32();
 for(var i = 0; i < count; i++)
 {
     var idx = reader.ReadInt32();
-    var nda = reader.ReadNdarray();
+    var nda = reader.ReadNDArray();
     dic.Add(idx, nda);
 }
 var cg = tg.Compile(dic);
@@ -263,8 +263,8 @@ This approach is practical to define "algebraic" constant tensors but it would b
 var A4 = T.NewConstant(ts => 
     {
         // 'nda' should match dims of tensor 'ts'
-        Ndarray nda = ...; // snipped
-        // populate the 'NDarray'
+        NDArray nda = ...; // snipped
+        // populate the 'NDArray'
         return nda;
     });
 ```
