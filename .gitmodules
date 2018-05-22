@@ -1,0 +1,3 @@
+[submodule "src/spikes/1/TensorComprehensions"]
+	path = src/spikes/1/TensorComprehensions
+	url = https://github.com/facebookresearch/TensorComprehensions.git
