@@ -16,16 +16,16 @@ type Numeric =
 
     static member BinaryOp(a:Numeric, b:Numeric, op:Op) = {Shape = a.Shape; Format = a.Format; Data = None; Op = Some op; Left = Some a; Right = Some b}
 
-    static member (~-)  (a:Numeric)  =  Numeric.UnaryOp(a, Op.SubCons)
-    static member (~+)  (a:Numeric)  =  Numeric.UnaryOp(a, Op.AddCons)
+    static member (~-)  (a:Numeric)  =  (a, Op.SubCons) |> Numeric.UnaryOp
+    static member (~+)  (a:Numeric)  =  (a, Op.AddCons) |> Numeric.UnaryOp
 
-    static member (*)  (a:Numeric, b:Numeric)  =  Numeric.BinaryOp(a, b, Op.Mul)
-    static member (/)  (a:Numeric, b:Numeric)  =  Numeric.BinaryOp(a, b, Op.Div)
-    static member (+)  (a:Numeric, b:Numeric)  =  Numeric.BinaryOp(a, b, Op.Add) 
-    static member (-)  (a:Numeric, b:Numeric)  =  Numeric.BinaryOp(a, b, Op.Sub)
+    static member (*)  (a:Numeric, b:Numeric)  =  (a, b, Op.Mul) |> Numeric.BinaryOp
+    static member (/)  (a:Numeric, b:Numeric)  =  (a, b, Op.Div) |> Numeric.BinaryOp
+    static member (+)  (a:Numeric, b:Numeric)  =  (a, b, Op.Add) |> Numeric.BinaryOp 
+    static member (-)  (a:Numeric, b:Numeric)  =  (a, b, Op.Sub) |> Numeric.BinaryOp
     
-    static member Sin(a:Numeric) = Numeric.UnaryOp(a, Op.Sin)
-    static member Cos(a:Numeric) = Numeric.UnaryOp(a, Op.Cos)
+    static member Sin(a:Numeric) = (a, Op.Sin) |> Numeric.UnaryOp
+    static member Cos(a:Numeric) = (a, Op.Cos) |> Numeric.UnaryOp
   
 and Shape =
     | Scalar
@@ -52,7 +52,16 @@ and Op =
     | Div
     | Sin
     | Cos
+   
+    member op.isUnary = 
+        match op with
+        | Log | Log10 | AddCons | SubCons | Sin | Cos-> true
+        | _ -> false
 
+    member op.isBinary = 
+        match op with
+        | Add | Sub | Mul | Div -> true
+        | _ -> false
 
 and UnaryOp = 
     {
@@ -67,9 +76,14 @@ and BinaryOp =
         op: Op
     }
 
-
+let (|Unary|Binary|) (op:Op) = 
+    if op.isUnary then Unary 
+    else if op.isBinary then Binary
+    else failwith "Unknown operation"
+    
 type VectorArray<'T> = 'T[]
 type MatrixArray<'T> = 'T[,]
+
 
 let Zero = { Shape = Symbol; Format = Float32; Data = 0.0f; Op = None; Left = None; Right = None}
 

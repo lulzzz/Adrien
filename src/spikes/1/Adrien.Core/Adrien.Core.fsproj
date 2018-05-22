@@ -10,6 +10,7 @@
     <Compile Include="Graph.fs" />
     <Compile Include="Numeric.fs" />
     <Compile Include="Expression.fs" />
+    <Compile Include="Tree.fs" />
     <None Include="Script.fsx" />
   </ItemGroup>
   <ItemGroup>

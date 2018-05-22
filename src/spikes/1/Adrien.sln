@@ -23,6 +23,8 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Adrien.Backend.CLR", "Adrie
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Adrien.Doc", "Adrien.Doc\Adrien.Doc.fsproj", "{641A7E41-4933-46AD-A443-75A347DB8AFA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adrien.Interop.Native", "Adrien.Interop.Native\Adrien.Interop.Native.csproj", "{3BE48E79-6587-4716-A680-D44C65C3A9F4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,14 @@ Global
 		{641A7E41-4933-46AD-A443-75A347DB8AFA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{641A7E41-4933-46AD-A443-75A347DB8AFA}.Release|x64.ActiveCfg = Release|Any CPU
 		{641A7E41-4933-46AD-A443-75A347DB8AFA}.Release|x64.Build.0 = Release|Any CPU
+		{3BE48E79-6587-4716-A680-D44C65C3A9F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BE48E79-6587-4716-A680-D44C65C3A9F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BE48E79-6587-4716-A680-D44C65C3A9F4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3BE48E79-6587-4716-A680-D44C65C3A9F4}.Debug|x64.Build.0 = Debug|Any CPU
+		{3BE48E79-6587-4716-A680-D44C65C3A9F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BE48E79-6587-4716-A680-D44C65C3A9F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BE48E79-6587-4716-A680-D44C65C3A9F4}.Release|x64.ActiveCfg = Release|Any CPU
+		{3BE48E79-6587-4716-A680-D44C65C3A9F4}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

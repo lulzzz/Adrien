@@ -1,84 +1,78 @@
-﻿module Graph
-(* From https://www.cs.cornell.edu/courses/cs3110/2013sp/lectures/lec21-graphs/lec21.html *)
+﻿(* Based on Steven Horsfield's code at https://stevehorsfield.wordpress.com/2009/07/27/f-a-data-structure-for-modelling-directional-graphs/ *)
 
-(* A signature for directed graphs.*)
+module Graph
 
-type graph  (* A directed graph consisting of a set of vertices
-             * V and directed edges E with integer weights. *)
-type vertex (* A vertex, or node, of the graph *)
-type edge   (* A edge of the graph *)
+  (* In this module, a graph is represented by an adjacency
+     list.
 
-(* Creates an empty graph. *)
-val create : unit -> graph
+     This module is not intended to be a high performance
+     implementation.
 
-(* Returns the id of the specified vertex. *)
-val vertex_id : vertex -> int
+     This module can represent a directed or undirected
+     graph depending on the method of handling edges.
+     The default behaviour results in a directed graph.
+  *)
 
-(* Compares two vertices, returning 0 if their ids are equal, -1 if
- * the first has a smaller id, and +1 if first has a larger id.
- * Suitable for comparators in sets and maps. *)
-val compare : vertex -> vertex -> int
+  type VertexData<'V> =
+    int (* identifier *) *
+    'V (* vertex data *)
 
-(* For an edge return (src, dst, w) where src is the source vertex of
- * the edge, dst is the destination vertex, and w is the edge
- * weight. *)
-val edge_info : edge -> vertex * vertex * int
+  type EdgeData<'E> =
+    int (* identifier *) *
+    int (* priority *) *
+    int (* vertex target *) *
+    'E (* edge data *)
 
-(* True if the given graph is empty (has no vertices).
- * Run time O(1). *)
-val is_empty : graph -> bool
+  (* The graph uses adjacency list notation *)
+  type Adjacency<'E> = EdgeData<'E> list
 
-(* A list of all vertices in the graph, without duplicates, in the order
- * they were added.Run time: O(|V|). *)
-val vertices : graph -> vertex list
+  (* The Vertex type represents the internal structure
+     of the graph *)
+  type Vertex<'V, 'E> = VertexData<'V> * Adjacency<'E>
 
-(* A list of all vertices in the graph, without duplicates, in the order
- * they were added.Run time: O(1). *)
-val num_vertices : graph -> int
+  (* A Graph is a Vertex list.  The nextNode allows for
+     consistent addressing of nodes *)
+  type Graph<'V, 'E> =
+    int (* nextNode identifier *) *
+    Vertex<'V, 'E> list
 
-(* A list of all edges in the graph, without duplicates.
- * Run time: O(|V|+|E|). *)
-val edges : graph -> edge list
+  (* Empty graph construction *)
+  val empty: Graph<_,_>
 
-(* A list of the edges leaving the vertex v.
- * Run time: linear in the length of the result. *)
-val outgoing : vertex -> edge list
+  (* Helper methods for getting the data from a Vertex *)
+  val vertexId : Vertex<_,_> -> int
+  val vertexData : Vertex<'V,_> -> 'V
+  (* Helper methods for getting the data from an Edge *)
+  val edgeId : EdgeData<_> -> int
+  val edgePriority : EdgeData<_> -> int
+  val edgeTarget : EdgeData<_> -> int
+  val edgeData : EdgeData<'E> -> 'E
 
-(* A list of the edges coming in to the vertex v.
- * Run time: linear in the length of the result. *)
-val incoming : vertex -> edge list
+  (* Getting a vertex from a graph by id *)
+  val getVertex : int -> Graph<'V,'E> -> Vertex<'V,'E>
+  (* Getting all edges from a graph by a vertex id *)
+  val getEdges : int -> Graph<'V,'E> -> Adjacency<'E>
 
-(* The number of incoming edges for the specified vertex.
- * Run time: O(1). *)
-val in_degree : vertex -> int
+  (* Add a new vertex *)
+  val addVertex : 'V -> Graph<'V,'E> -> 
+      int (*new id*) * Graph<'V,'E>
 
-(* The number of outgoing edges for the specified vertex. 
- * Run time: O(1). *)
-val out_degree : vertex -> int
+  (* Add a new edge.  Edges include a priority value *)
+  val addEdge :
+    int (*priority*) ->
+    int (*source vertex*) ->
+    int (*target vertex*) ->
+    'E (*edge data*) ->
+    Graph<'V,'E> ->
+    int (*new id*) * Graph<'V,'E>
 
-(* Adds a new isolated vertex (a vertex with no incident
- * edges) to the specified graph, and returns that vertex. 
- * Run time: O(1). *)
-val add_vertex : graph -> vertex
+  (* The edges aren't sorted by default so this function
+     sorts them by priority *)
+  val sortEdges : Adjacency<'E> -> Adjacency<'E>
 
-(* Removes the specified vertex from the specified graph,
- * along with all incident edges; that is, all edges that
- * have the vertex as a source or destination. 
- * Run time: O(|E|). 
- * Note that the total time for removing all |V| vertices in the 
- * graph is also O(|E|) and not O(|V||E|). *)
-val remove_vertex : graph -> vertex -> unit
+  (* Removes an edge from a graph by id *)
+  val removeEdge : int -> Graph<'V,'E> -> Graph<'V,'E>
 
-(* add_edge (src, dst, w) adds an edge from src vertex to dst
- * vertex with weight w. 
- * Run time: O(1). *)
-val add_edge : vertex * vertex * int -> unit
-
-(* remove_edge (src, dst) removes the edge from src vertex to
- * dst vertex, and has no effect if the edge does not exist. 
- * Run time: O(|E|). *)
-val remove_edge : vertex * vertex -> unit
-
-(* Creates and returns a copy of the graph. 
- * Run time: O(|V|+|E|). *)
-val copy : graph -> graph
+  (* Removes a vertex from a graph by id and removes
+     any related edges *)
+  val removeVertex : int -> Graph<'V,'E> -> Graph<'V,'E>
