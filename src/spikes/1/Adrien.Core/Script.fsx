@@ -9,19 +9,17 @@ let c1 = constant 4.4f;
 let c2 = constant 6.4f;
 let c3 = constant 8.4f;
 let c4 = sin c1;
-//let f x:A = sin x + cos x + constant 0.44
+type A = Expression
+let f x = sin x + cos x + constant 0.44f 
+let z x = x * constant 44.0f
 
+let t =  sin(c1 * c2 + c3) |> expr_tree
 
+tree f 
 
- 
-//let e = scalar 4.4f * vector([|0.9f|])
+let g x = f >> z
 
-//let o = constant t * constant e
-//o;;
-
-let t =  sin(c1 * c2 + c3) |> tree
-
- 
+composite g |> tree
 
 
 

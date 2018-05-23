@@ -91,6 +91,8 @@ let One = { Shape = Symbol; Format = Float32; Data = 1.0f; Op = None; Left = Non
 
 let Nin = { Shape = Symbol; Format = Nan; Data = "Nin"; Op = None; Left = None; Right = None}
 
+let internal Var = { Shape = Symbol; Format = Nan; Data = "Var"; Op = None; Left = None; Right = None}
+
 let scalar(n:float32) = { Shape = Scalar; Format = Float32; Data = n; Op = None; Left = None; Right = None; }
 
 let vector(n:VectorArray<float32>) = { Shape = Vector; Format = Float32; Data = n; Op = None; Left = None; Right = None; }

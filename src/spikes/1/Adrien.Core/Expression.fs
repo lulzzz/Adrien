@@ -3,44 +3,61 @@
 open Adrien.Numeric
 
 type Expression =
-    | Expression of Numeric
-    | Derivative of f: Expression * df: Expression * tag: uint32 //Forward mode derivative 
+    | Constant of Numeric
+    | Expression of f: Expression * df: Expression * tag: uint32 //Forward mode derivative 
+    | Function of (Expression -> Expression)
+    | CFunction of (Expression -> Expression -> Expression)
 
-    static member Zero = scalar 0.0f |> Expression
+    static member Zero = scalar 0.0f |> Constant
 
-     //The derivative of f(g(x)) wrt x is f'(g(x)) * g'(x) or df/dg * dg/dx
-type A = Expression
+let internal V = Var |> Constant
 
-let unary a ff fd df =
+//The derivative of f(g(x)) wrt x is f'(g(x)) * g'(x) or df/dg * dg/dx
+let rec unary a ff fd df =
     match a with
-    | Expression x  -> ff x |> Expression
-    | Derivative(a, da, tag) -> let cp = fd(a) in Derivative(cp, df(cp, a, da), tag)
-    
-let binary a b ff fd df_da df_db df_dab =
+    | Constant x  -> ff x |> Constant
+    | Expression(a, da, tag) -> let cp = fd(a) in Expression(cp, df(cp, a, da), tag)
+    | Function f -> let v = f(V) in unary v ff fd df
+    | CFunction gf -> let v2 = gf(V) in unary (v2 |> Expression.Function) ff fd df
+
+let rec binary a b ff fd df_da df_db df_dab =
     match a with
-    | Expression x ->
+    | Constant x ->
         match b with
-        | Expression y ->  ff(x, y) |> Expression
-        | Derivative(y, dy, ytag) -> let cp = fd(a, y) in Derivative(cp, df_db(cp, y, dy), ytag)
+        | Constant y ->  ff(x, y) |> Constant
+        | Expression(y, dy, ytag) -> let cp = fd(a, y) in Expression(cp, df_db(cp, y, dy), ytag)
+        | Function f -> let v = f(V) in binary a v ff fd df_da df_db df_dab
+        | CFunction gf -> let v2 = gf(V) in binary a (v2 |> Expression.Function) ff fd df_da df_db df_dab
          
-    | Derivative(x, dx, xtag) ->
+    | Expression(x, dx, xtag) ->
         match b with
-        | Expression _  -> let cp = fd(x, b) in Derivative(cp, df_da(cp, x, dx), xtag)
-        | Derivative(y, dy, ytag) ->
+        | Constant _  -> let cp = fd(x, b) in Expression(cp, df_da(cp, x, dx), xtag)
+        | Expression(y, dy, ytag) ->
             match compare xtag ytag with
-            | 0 -> let cp = fd(x, y) in Derivative(cp, df_dab(cp, x, dx, y, dy), xtag) // ai = bi
-            | -1                 -> let cp = fd(a, y) in Derivative(cp, df_db(cp, y, dy), ytag) // ai < bi
-            | _ -> let cp = fd(x, b) in Derivative(cp, df_da(cp, y, dy), ytag) // ai > bi
+            | 0 -> let cp = fd(x, y) in Expression(cp, df_dab(cp, x, dx, y, dy), xtag) // ai = bi
+            | -1                 -> let cp = fd(a, y) in Expression(cp, df_db(cp, y, dy), ytag) // ai < bi
+            | _ -> let cp = fd(x, b) in Expression(cp, df_da(cp, y, dy), ytag) // ai > bi
+        | Function f -> let v = f(V) in binary v b ff fd df_da df_db df_dab
+        | CFunction gf -> let v2 = gf(V) in binary (v2 |> Expression.Function) b ff fd df_da df_db df_dab
 
-let primal d =
-    match d with
-    | Expression _ -> d
-    | Derivative(f, _, _) -> f
 
-let derivative d =
+    | Function f -> let v = f(V) in binary v b ff fd df_da df_db df_dab
+
+    | CFunction gf -> let v2 = gf(V) in binary (v2 |> Expression.Function) b ff fd df_da df_db df_dab
+
+let rec primal d =
     match d with
-    | Expression _ -> Expression.Zero
-    | Derivative(_, df, _) -> df
+    | Constant _ -> d
+    | Expression(f, _, _) -> f
+    | Function f -> let v = f(V) in primal v
+    | CFunction gf -> let v2 = gf(V) in primal (v2 |> Expression.Function)
+
+let rec derivative d =
+    match d with
+    | Constant _ -> Expression.Zero
+    | Expression(_, df, _) -> df
+    | Function f -> let v = f(V) in derivative v
+    | CFunction gf -> let v2 = gf(V) in derivative (v2 |> Expression.Function)
 
 type Expression with
         
@@ -88,9 +105,9 @@ type Expression with
     
 let constant(n : obj) = 
     match n with
-    | :? float32 as x -> scalar x  |> Expression
-    | :? VectorArray<float32> as x -> vector x  |> Expression
-    | :? MatrixArray<float32> as x -> matrix x  |> Expression
+    | :? float32 as x -> scalar x  |> Constant
+    | :? VectorArray<float32> as x -> vector x  |> Constant
+    | :? MatrixArray<float32> as x -> matrix x  |> Constant
     | _ -> failwith "Unknown constant expression."
     
         
