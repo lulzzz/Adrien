@@ -4,24 +4,36 @@ open Adrien.Numeric
 open Adrien.Expression
 open Adrien.Tree
 
-let s1 = scalar 4.4f
-let c1 = constant 4.4f;
-let c2 = constant 6.4f;
-let c3 = constant 8.4f;
-let c4 = sin c1;
-type A = Expression
+(*c4 = sin c1;
+
 let f x = sin x + cos x + constant 0.44f 
-let z x = x * constant 44.0f
 
-let t =  sin(c1 * c2 + c3) |> expr_tree
+//tree f;;
 
-tree f 
+let g x (y:Expression) = sin (x * y) + cos y + c3
 
-let g x = f >> z
-
-composite g |> tree
+derivative f;;
+//let c x = sin x
 
 
+//tree g;;
+
+*)
+//let h = sin c2
+//h;;
+//let t =  sin(c1 * c2 + c3) 
+//let z x = x * constant 44.0f + t
+
+//let g x = f
+//composite g |> tree
+
+let f x = constant 0.44f +  sin x;
+
+let s1 = sin (constant 0.5f)
+
+//derivative s1;;
+
+tree s1;;
 
 
 

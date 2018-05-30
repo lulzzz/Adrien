@@ -6,11 +6,13 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Util.fs" />
     <Compile Include="Tagger.fs" />
     <Compile Include="Graph.fsi" />
     <Compile Include="Graph.fs" />
     <Compile Include="Numeric.fs" />
     <Compile Include="Expression.fs" />
+    <Compile Include="LinqExpression.fs" />
     <Compile Include="Tree.fs" />
     <None Include="Script.fsx" />
   </ItemGroup>

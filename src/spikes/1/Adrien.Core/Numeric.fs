@@ -1,5 +1,8 @@
 ﻿module Adrien.Numeric
 
+open Adrien.Util
+open System.Diagnostics
+
 (**
 # First-level heading
 Some more documentation using `Markdown`.
@@ -91,13 +94,18 @@ let One = { Shape = Symbol; Format = Float32; Data = 1.0f; Op = None; Left = Non
 
 let Nin = { Shape = Symbol; Format = Nan; Data = "Nin"; Op = None; Left = None; Right = None}
 
-let internal Var = { Shape = Symbol; Format = Nan; Data = "Var"; Op = None; Left = None; Right = None}
+let internal Var = { Shape = Symbol; Format = Nan; Data = "x"; Op = None; Left = None; Right = None}
+
+let internal Var' = { Shape = Symbol; Format = Nan; Data = "dx"; Op = None; Left = None; Right = None}
 
 let scalar(n:float32) = { Shape = Scalar; Format = Float32; Data = n; Op = None; Left = None; Right = None; }
 
 let vector(n:VectorArray<float32>) = { Shape = Vector; Format = Float32; Data = n; Op = None; Left = None; Right = None; }
 
 let matrix(n:MatrixArray<float32>) = { Shape = Matrix; Format = Format.Float32; Data = n; Op = None; Left = None; Right = None; }
+
+let name (symbol:string) =
+    { Shape = Symbol; Format = Nan; Data = symbol ; Op = None; Left = None; Right = None}
 
 
 

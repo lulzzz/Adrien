@@ -1,66 +1,96 @@
 ﻿module Adrien.Expression
 
 open Adrien.Numeric
+open Adrien.Tagger
+
+type IDerivable = interface end
 
 type Expression =
-    | Constant of Numeric
+    | Value of Numeric
     | Expression of f: Expression * df: Expression * tag: uint32 //Forward mode derivative 
-    | Function of (Expression -> Expression)
-    | CFunction of (Expression -> Expression -> Expression)
+    interface IDerivable
+ 
+    static member Zero = scalar 0.0f |> Value
 
-    static member Zero = scalar 0.0f |> Constant
+type Function =
+    | F1 of (Expression -> Expression)
+    | F2 of (Expression -> Expression -> Expression)
+    | F3 of (Expression -> Expression -> Expression -> Expression)
+    interface IDerivable
 
-let internal V = Var |> Constant
+let constant(n : obj) = 
+    match n with
+    | :? float32 as x -> scalar x  |> Value
+    | :? VectorArray<float32> as x -> vector x  |> Value
+    | :? MatrixArray<float32> as x -> matrix x  |> Value
+    | _ -> failwith "Unknown constant expression."
+    
+let var(n : string) = name n |> Value
 
+let internal V = Var |> Value
+
+let internal apply<'TReturn> (a:Expression->'TReturn) (expr:Function) = 
+    match expr with
+        | F1 f -> let f1 = f(var "x1") in a f1
+        | F2 f -> 
+            let f2 = f(var "x2") in
+            let f1 = f2(var "x1") in
+            a f1
+        | F3 f -> 
+            let f3 = f(var "x3") in
+            let f2 = f3(var "x2") in
+            let f1 = f2(var "x1") in
+            a f1
+      
 //The derivative of f(g(x)) wrt x is f'(g(x)) * g'(x) or df/dg * dg/dx
-let rec unary a ff fd df =
+let rec unary (a:Expression) ff fd df =
     match a with
-    | Constant x  -> ff x |> Constant
-    | Expression(a, da, tag) -> let cp = fd(a) in Expression(cp, df(cp, a, da), tag)
-    | Function f -> let v = f(V) in unary v ff fd df
-    | CFunction gf -> let v2 = gf(V) in unary (v2 |> Expression.Function) ff fd df
-
+    | Value x  -> ff x |> Value
+    | Expression(x, dx, xtag) -> let cp = fd(x) in Expression(cp, df(cp, x, dx), xtag)
+  
+ 
 let rec binary a b ff fd df_da df_db df_dab =
     match a with
-    | Constant x ->
+    | Value x ->
         match b with
-        | Constant y ->  ff(x, y) |> Constant
+        | Value y ->  ff(x, y) |> Value
         | Expression(y, dy, ytag) -> let cp = fd(a, y) in Expression(cp, df_db(cp, y, dy), ytag)
-        | Function f -> let v = f(V) in binary a v ff fd df_da df_db df_dab
-        | CFunction gf -> let v2 = gf(V) in binary a (v2 |> Expression.Function) ff fd df_da df_db df_dab
-         
+    
     | Expression(x, dx, xtag) ->
         match b with
-        | Constant _  -> let cp = fd(x, b) in Expression(cp, df_da(cp, x, dx), xtag)
+        | Value _  -> let cp = fd(x, b) in Expression(cp, df_da(cp, x, dx), xtag)
         | Expression(y, dy, ytag) ->
             match compare xtag ytag with
             | 0 -> let cp = fd(x, y) in Expression(cp, df_dab(cp, x, dx, y, dy), xtag) // ai = bi
-            | -1                 -> let cp = fd(a, y) in Expression(cp, df_db(cp, y, dy), ytag) // ai < bi
+            | -1 -> let cp = fd(a, y) in Expression(cp, df_db(cp, y, dy), ytag) // ai < bi
             | _ -> let cp = fd(x, b) in Expression(cp, df_da(cp, y, dy), ytag) // ai > bi
-        | Function f -> let v = f(V) in binary v b ff fd df_da df_db df_dab
-        | CFunction gf -> let v2 = gf(V) in binary (v2 |> Expression.Function) b ff fd df_da df_db df_dab
+     
 
+let primal d = 
+    let p e =
+        match e with
+        | Value _ -> Expression(e, Expression.Zero, 0u)
+        | Expression(x, _, _) -> x
+  
+    match box d with
+    | :? Expression as e -> p e
+    | :? (Expression -> Expression) as f1 -> Function.F1 f1 |> apply p 
+    | :? (Expression -> Expression -> Expression) as f2 -> Function.F2 f2 |> apply p
+    | _ -> failwith "Unknown derivable signature"
+    
 
-    | Function f -> let v = f(V) in binary v b ff fd df_da df_db df_dab
+let derivative d =
+    let derive e =
+        match e with
+        | Value _ -> Expression.Zero
+        | Expression(_, df, _) -> df
+    match box d with
+    | :? Expression as e -> derive e
+    | :? (Expression -> Expression) as f1 -> Function.F1 f1 |> apply derive 
+    | _ -> failwith "Unknown derivable signature"
+  
 
-    | CFunction gf -> let v2 = gf(V) in binary (v2 |> Expression.Function) b ff fd df_da df_db df_dab
-
-let rec primal d =
-    match d with
-    | Constant _ -> d
-    | Expression(f, _, _) -> f
-    | Function f -> let v = f(V) in primal v
-    | CFunction gf -> let v2 = gf(V) in primal (v2 |> Expression.Function)
-
-let rec derivative d =
-    match d with
-    | Constant _ -> Expression.Zero
-    | Expression(_, df, _) -> df
-    | Function f -> let v = f(V) in derivative v
-    | CFunction gf -> let v2 = gf(V) in derivative (v2 |> Expression.Function)
-
-type Expression with
-        
+type Expression with 
     static member (+) (a:Expression, b:Expression) =
         let inline ff(a, b) = a + b
         let inline fd(a, b) = a + b
@@ -103,13 +133,5 @@ type Expression with
         let inline df(cp, ap, at) = -at * sin ap
         unary a ff fd df
     
-let constant(n : obj) = 
-    match n with
-    | :? float32 as x -> scalar x  |> Constant
-    | :? VectorArray<float32> as x -> vector x  |> Constant
-    | :? MatrixArray<float32> as x -> matrix x  |> Constant
-    | _ -> failwith "Unknown constant expression."
-    
-        
-
+let inline diff f x = (primal f, derivative f, GlobalTagger.Next) |> Expression 
 
