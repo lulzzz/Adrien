@@ -7,9 +7,9 @@ open Microsoft.FSharp.Linq.RuntimeHelpers
 let (|RegexMatch|_|) input pattern group =
    let m = Regex.Match(input, pattern) 
    if m.Success then
-       if group < m.Groups.Count then
+    if group < m.Groups.Count then
         Some m.Groups.[group].Value
-       else None
+    else None
    else None
     
 let toExpression (``f# lambda`` : Quotations.Expr<'a>) =
