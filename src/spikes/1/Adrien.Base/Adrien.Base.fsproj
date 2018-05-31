@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1.4</Version>
+    <Authors>Allister Beharry</Authors>
+    <Product>Adrien</Product>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Backend.fs" />

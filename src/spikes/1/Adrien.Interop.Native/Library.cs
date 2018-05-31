@@ -90,8 +90,8 @@ namespace Compute.Bindings
         /// Setup your passes here.
         public virtual void SetupPasses(Driver driver)
         {
-            driver.AddTranslationUnitPass(new GetAllClassDeclsPass(this, driver.Generator));
-            driver.AddTranslationUnitPass(new ConvertFunctionParameterDeclsPass(this, driver.Generator));
+            //driver.AddTranslationUnitPass(new GetAllClassDeclsPass(this, driver.Generator));
+            //driver.AddTranslationUnitPass(new ConvertFunctionParameterDeclsPass(this, driver.Generator));
         }
 
         /// Do transformations that should happen before passes are processed.
