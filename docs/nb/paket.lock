@@ -1,0 +1,8 @@
+GENERATE-LOAD-SCRIPTS: ON
+FRAMEWORK: NET451
+NUGET
+  remote: https://www.myget.org/F/adrien/api/v2
+    Adrien (0.0.1.4)
+    Adrien.Base (0.0.1.4)
+  remote: https://www.nuget.org/api/v2
+    FSharp.Core (4.2.3)

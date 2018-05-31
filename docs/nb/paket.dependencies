@@ -1,0 +1,7 @@
+framework: net451
+generate_load_scripts: true
+source https://www.nuget.org/api/v2
+source https://www.myget.org/F/adrien/api/v2
+nuget FSharp.Core ~> 4.2.1
+nuget Adrien.Base
+nuget Adrien
