@@ -1,4 +1,4 @@
-framework: net451
+framework: net452
 generate_load_scripts: true
 source https://www.nuget.org/api/v2
 source https://www.myget.org/F/adrien/api/v2

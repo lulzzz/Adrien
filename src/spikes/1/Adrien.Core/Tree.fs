@@ -92,7 +92,9 @@ let tree d =
     match box d with
     | :? Expression as e -> exprTree e
     | :? (Expression -> Expression) as f1 -> Function.F1 f1 |> apply exprTree
-    | _ -> failwith "Unknown function signature"
+    | :? (Expression -> Expression -> Expression) as f2 -> Function.F2 f2 |> apply exprTree
+    | :? (Expression -> Expression -> Expression -> Expression) as f3 -> Function.F3 f3 |> apply exprTree
+    | _ -> failwith "This function signature is not implemented."
 
 
 let linqExprToTree (expr: LinqExpression) =
