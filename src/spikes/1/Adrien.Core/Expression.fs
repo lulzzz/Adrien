@@ -6,11 +6,11 @@ open Adrien.Tagger
 type IDerivable = interface end
 
 type Expression =
-    | Value of Numeric
-    | Expression of f: Expression * df: Expression * tag: uint32 //Forward mode derivative 
+    | Expression of Numeric
+    | Dual of e: Expression * de: Expression * tag: uint32  
     interface IDerivable
  
-    static member Zero = scalar 0.0f |> Value
+    static member Zero = scalar 0.0f |> Expression
 
 type Function =
     | F1 of (Expression -> Expression)
@@ -20,14 +20,14 @@ type Function =
 
 let constant(n : obj) = 
     match n with
-    | :? float32 as x -> scalar x  |> Value
-    | :? VectorArray<float32> as x -> vector x  |> Value
-    | :? MatrixArray<float32> as x -> matrix x  |> Value
+    | :? float32 as x -> scalar x  |> Expression
+    | :? VectorArray<float32> as x -> vector x  |> Expression
+    | :? MatrixArray<float32> as x -> matrix x  |> Expression
     | _ -> failwith "Unknown constant expression."
     
-let var(n : string) = name n |> Value
+let var(n : string) = name n |> Expression
 
-let internal V = Var |> Value
+let internal V = Var |> Expression
 
 let internal apply<'TReturn> (a:Expression->'TReturn) (expr:Function) = 
     match expr with
@@ -42,35 +42,35 @@ let internal apply<'TReturn> (a:Expression->'TReturn) (expr:Function) =
             let f1 = f2(var "x1") in
             a f1
       
-//The derivative of f(g(x)) wrt x is f'(g(x)) * g'(x) or df/dg * dg/dx
+
 let rec unary (a:Expression) ff fd df =
     match a with
-    | Value x  -> ff x |> Value
-    | Expression(x, dx, xtag) -> let cp = fd(x) in Expression(cp, df(cp, x, dx), xtag)
+    | Expression x  -> ff x |> Expression
+    | Dual(x, xdual, xtag) -> let cp = fd(x) in Dual(cp, df(cp, x, xdual), xtag)
   
  
 let rec binary a b ff fd df_da df_db df_dab =
     match a with
-    | Value x ->
+    | Expression x ->
         match b with
-        | Value y ->  ff(x, y) |> Value
-        | Expression(y, dy, ytag) -> let cp = fd(a, y) in Expression(cp, df_db(cp, y, dy), ytag)
+        | Expression y ->  ff(x, y) |> Expression
+        | Dual(y, ydual, ytag) -> let cp = fd(a, y) in Dual(cp, df_db(cp, y, ydual), ytag)
     
-    | Expression(x, dx, xtag) ->
+    | Dual(x, xdual, xtag) ->
         match b with
-        | Value _  -> let cp = fd(x, b) in Expression(cp, df_da(cp, x, dx), xtag)
-        | Expression(y, dy, ytag) ->
+        | Expression _  -> let cp = fd(x, b) in Dual(cp, df_da(cp, x, xdual), xtag)
+        | Dual(y, ydual, ytag) ->
             match compare xtag ytag with
-            | 0 -> let cp = fd(x, y) in Expression(cp, df_dab(cp, x, dx, y, dy), xtag) // ai = bi
-            | -1 -> let cp = fd(a, y) in Expression(cp, df_db(cp, y, dy), ytag) // ai < bi
-            | _ -> let cp = fd(x, b) in Expression(cp, df_da(cp, y, dy), ytag) // ai > bi
+            | 0 -> let cp = fd(x, y) in Dual(cp, df_dab(cp, x, xdual, y, ydual), xtag) // ai = bi
+            | -1 -> let cp = fd(a, y) in Dual(cp, df_db(cp, y, ydual), ytag) // ai < bi
+            | _ -> let cp = fd(x, b) in Dual(cp, df_da(cp, y, ydual), ytag) // ai > bi
      
 
 let primal d = 
     let p e =
         match e with
-        | Value _ -> Expression(e, Expression.Zero, 0u)
-        | Expression(x, _, _) -> x
+        | Expression _ -> e
+        | Dual(x, _, _) -> x
   
     match box d with
     | :? Expression as e -> p e
@@ -82,8 +82,8 @@ let primal d =
 let derivative d =
     let derive e =
         match e with
-        | Value _ -> Expression.Zero
-        | Expression(_, df, _) -> df
+        | Expression _ -> Expression.Zero
+        | Dual(_, df, _) -> df
     match box d with
     | :? Expression as e -> derive e
     | :? (Expression -> Expression) as f1 -> Function.F1 f1 |> apply derive 
@@ -133,5 +133,5 @@ type Expression with
         let inline df(cp, ap, at) = -at * sin ap
         unary a ff fd df
     
-let inline diff f x = (primal f, derivative f, GlobalTagger.Next) |> Expression 
+//let inline diff f x = (primal f, derivative f, GlobalTagger.Next) |> Expression 
 

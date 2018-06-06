@@ -27,13 +27,21 @@ derivative f;;
 //let g x = f
 //composite g |> tree
 
-let f x = constant 0.44f +  sin x;
+//let f x = constant 0.44f +  sin x;
 
-let s1 = sin (constant 0.5f)
+//let s1 = sin (constant 0.5f)
 
 //derivative s1;;
 
-tree s1;;
+//tree s1;;
+
+let c:Expression = sin (constant 0.4f)
+
+primal c
+
+derivative c;
+
+
 
 
 
