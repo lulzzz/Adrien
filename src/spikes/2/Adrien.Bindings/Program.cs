@@ -152,7 +152,7 @@ namespace Adrien.Bindings
 
                     }
                 }
-                ProgramLibrary = new MKL(ProgramOptions);
+                ProgramLibrary = new PlaidML(ProgramOptions);
                 ConsoleDriver.Run(ProgramLibrary);
                 if (ProgramLibrary.CleanAndFixup())
                 {
