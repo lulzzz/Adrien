@@ -40,44 +40,41 @@ namespace Adrien.Bindings
 
         public override void SetupPasses(Driver driver)
         {
-            /*
-            base.SetupPasses(driver);
-            driver.AddTranslationUnitPass(new MKL_IgnoreFortranAndUpperCaseDeclsPass(this, driver.Generator));
-            if (WithoutCommon)
-            {
-                driver.AddTranslationUnitPass(new MKL_IgnoreCommonDeclsPass(this, driver.Generator));
-            }
-            if (CBlas)
-            {
-                driver.AddTranslationUnitPass(new MKL_RemoveCBlasFunctionPrefixPass(this, driver.Generator));
-            }
-            */
+
         }
         /// Do transformations that should happen before passes are processed.
         public override void Preprocess(Driver driver, ASTContext ctx)
         {
-
 
         }
 
         /// Do transformations that should happen after passes are processed.
         public override void Postprocess(Driver driver, ASTContext ctx)
         {
-            
-        }
+            //ctx.SetClassBindName("@base", "VaiBase");
+            //ctx.SetClassAsValueType("@base");
+            IEnumerable<Class> classes = 
+                ctx.FindClass("VaiCtx")
+                .Concat(ctx.FindClass("PlaidmlDevconf"))
+                .Concat(ctx.FindClass("PlaidmlDevconf"))
+                .Concat(ctx.FindClass("PlaidmlDevice"))
+                .Concat(ctx.FindClass("PlaidmlDeviceEnumerator"))
+                .Concat(ctx.FindClass("PlaidmlBuffer")) 
+                .Concat(ctx.FindClass("PlaidmlMapping"))
+                .Concat(ctx.FindClass("PlaidmlShape"))
+                .Concat(ctx.FindClass("PlaidmlFunction"))
+                .Concat(ctx.FindClass("PlaidmlVar"))
+                .Concat(ctx.FindClass("PlaidmlApplier")) 
+                .Concat(ctx.FindClass("PlaidmlComposer"))
+                .Concat(ctx.FindClass("PlaidmlInvoker"))
+                .Concat(ctx.FindClass("PlaidmlInvocatio"))
+                .Concat(ctx.FindClass("PlaidmlGradient")); ;
 
-        public override bool CleanAndFixup()
-        {
-            if (!base.CleanAndFixup())
+            foreach (Class c in classes)
             {
-                return false;
-            }
-
-            //string s = File.ReadAllText(F);
-           
-            return true;
+                ctx.SetClassAsValueType(c.Name);
+            }   
         }
-
         #endregion
     }
 }
