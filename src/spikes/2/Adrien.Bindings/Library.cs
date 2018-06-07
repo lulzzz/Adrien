@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
+using Ref = System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -103,12 +104,13 @@ namespace Adrien.Bindings
         #endregion
 
         #region Properties
+        protected static DirectoryInfo AssemblyDirectory = new FileInfo(Ref.Assembly.GetExecutingAssembly().Location).Directory;
         public ILogger L { get; } = Log.Logger.ForContext<Library>();
         public abstract LibraryKind Kind { get; }
         public string Name => Kind.ToString();
         public Dictionary<string, object> BindOptions { get; internal set; }
         public DirectoryInfo RootDirectory { get; internal set; }
-        public string R => RootDirectory.FullName;
+        public string R => RootDirectory?.FullName;
         public string F { get; protected set; } 
         public string OutputDirName { get; internal set; }
         public string OutputFileName { get; internal set; }

@@ -18,9 +18,11 @@ namespace Adrien.Bindings
             SUCCESS = 0,
             UNHANDLED_EXCEPTION = 1,
             INVALID_OPTIONS = 2,
-            ERROR_DURING_CLEANUP = 3
+            ERROR_DURING_CLEANUP = 3,
+            FILE_MISSING
         }
 
+        static DirectoryInfo AssemblyDirectory = new FileInfo(Assembly.GetExecutingAssembly().Location).Directory;
         static System.Version Version = Assembly.GetExecutingAssembly().GetName().Version;
         static LoggerConfiguration LConfig;
         static ILogger L;
@@ -46,7 +48,7 @@ namespace Adrien.Bindings
                 HelpText help = GetAutoBuiltHelpText(result);
                 help.MaximumDisplayWidth = Console.WindowWidth;
                 help.Copyright = string.Empty;
-                help.Heading = new HeadingInfo("Compute.NET Bindings CLI", Version.ToString(3));
+                help.Heading = new HeadingInfo("Adrien Bindings CLI", Version.ToString(3));
                 help.AddPreOptionsLine(string.Empty);
                 if (errors.Any(e => e.Tag == ErrorType.VersionRequestedError))
                 {
@@ -132,25 +134,15 @@ namespace Adrien.Bindings
             })
             .WithParsed<PlaidMLOptions>(o =>
             {
-                if (!ProgramOptions.ContainsKey("RootDirectory"))
+                if (!File.Exists(Path.Combine(AssemblyDirectory.FullName, "base.h")))
                 {
-                    string e = Environment.GetEnvironmentVariable("MKLROOT");
-                    if (string.IsNullOrEmpty(e))
-                    {
-                        L.Error("The --root option was not specified and the MKLROOT environment variable was not found.");
-                        Exit(ExitResult.INVALID_OPTIONS);
-                    }
-                    else if (!Directory.Exists(e))
-                    {
-                        L.Error("The --root option was not specified and the directory specified by the MKLROOT environment variable does not exist.");
-                        Exit(ExitResult.INVALID_OPTIONS);
-                        ProgramOptions.Add("Root", e);
-                    }
-                    else
-                    {
-                        ProgramOptions.Add("RootDirectory", new DirectoryInfo(e));
-
-                    }
+                    L.Error($"The PlaidML header file {Path.Combine(AssemblyDirectory.FullName, "base.h")} was not found.");
+                    Exit(ExitResult.FILE_MISSING);
+                }
+                else if (!File.Exists(Path.Combine(AssemblyDirectory.FullName, "plaidml.h")))
+                {
+                    L.Error($"The PlaidML header file {Path.Combine(AssemblyDirectory.FullName, "plaidml.h")} was not found.");
+                    Exit(ExitResult.FILE_MISSING);
                 }
                 ProgramLibrary = new PlaidML(ProgramOptions);
                 ConsoleDriver.Run(ProgramLibrary);

@@ -40,7 +40,7 @@ namespace Adrien.Bindings
     {
         public PlaidMLOptions()
         {
-            ModuleName = "all";
+            ModuleName = "plaidml";
         }
 
     }

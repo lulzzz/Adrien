@@ -13,7 +13,7 @@
 #include <stddef.h>
 #endif  // __cplusplus
 
-#include "plaidml/base/base.h"
+#include "base.h"
 
 #define PLAIDML_API VAI_API
 
