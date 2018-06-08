@@ -15,7 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TensorSharp.NETStandard", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adrien.Backend.PlaidML", "Adrien.Backend.PlaidML\Adrien.Backend.PlaidML.csproj", "{F3AB6588-E6D0-4705-92DA-4611A9B3FB12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adrien.Tests", "Adrien.Tests\Adrien.Tests.csproj", "{E0ED53C6-940A-4486-8051-40F875FBEF2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adrien.Tests", "Adrien.Tests\Adrien.Tests.csproj", "{E0ED53C6-940A-4486-8051-40F875FBEF2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NativeLibs", "NativeLibs", "{5F2C8816-0C42-4D4A-874C-F7D082C28D1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adrien.Native.PlaidML.Win-x64", "Adrien.Native.PlaidML.Win-x64\Adrien.Native.PlaidML.Win-x64.csproj", "{7DF99C11-DCE1-4FBB-81F0-55FE347A9A6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,9 +81,18 @@ Global
 		{E0ED53C6-940A-4486-8051-40F875FBEF2E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E0ED53C6-940A-4486-8051-40F875FBEF2E}.Release|x64.ActiveCfg = Release|Any CPU
 		{E0ED53C6-940A-4486-8051-40F875FBEF2E}.Release|x64.Build.0 = Release|Any CPU
+		{7DF99C11-DCE1-4FBB-81F0-55FE347A9A6A}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{7DF99C11-DCE1-4FBB-81F0-55FE347A9A6A}.Debug|x64.ActiveCfg = Debug|x64
+		{7DF99C11-DCE1-4FBB-81F0-55FE347A9A6A}.Debug|x64.Build.0 = Debug|x64
+		{7DF99C11-DCE1-4FBB-81F0-55FE347A9A6A}.Release|Any CPU.ActiveCfg = Release|x64
+		{7DF99C11-DCE1-4FBB-81F0-55FE347A9A6A}.Release|x64.ActiveCfg = Release|x64
+		{7DF99C11-DCE1-4FBB-81F0-55FE347A9A6A}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7DF99C11-DCE1-4FBB-81F0-55FE347A9A6A} = {5F2C8816-0C42-4D4A-874C-F7D082C28D1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4FA2D885-8BA7-4F22-9AE0-A9CE317ED23D}
