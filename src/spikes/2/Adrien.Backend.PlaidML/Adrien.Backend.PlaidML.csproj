@@ -13,4 +13,8 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Adrien.Base\Adrien.Base.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -43,5 +43,7 @@ namespace Adrien.Bindings
             ModuleName = "plaidml";
         }
 
+        [Option("cpp", Required = false, HelpText = "Generate bindings for the PlaidML C++ ")]
+        public bool Cpp { get => ModuleName == "plaidml_cpp"; set => ModuleName = "plaidml_cpp"; }
     }
 }

@@ -15,5 +15,14 @@ namespace Adrien.Tests
             string s = plaidml.PlaidmlGetVersion();
             Assert.False(string.IsNullOrEmpty(plaidml.PlaidmlGetVersion()));
         }
+
+        [Fact]
+        public void CanCreateCtx()
+        {
+            Context ctx = new Context();
+            Assert.True(ctx.IsAllocated);
+            ctx.Free();
+            Assert.False(ctx.IsAllocated);
+        }
     }
 }
