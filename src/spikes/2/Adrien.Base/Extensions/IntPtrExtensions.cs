@@ -8,5 +8,10 @@ namespace Adrien
         {
             return (ptr == IntPtr.Zero);
         }
+
+        public static bool IsNotZero(this IntPtr ptr)
+        {
+            return (ptr != IntPtr.Zero);
+        }
     }
 }

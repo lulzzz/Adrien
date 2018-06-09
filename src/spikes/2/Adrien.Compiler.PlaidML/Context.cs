@@ -9,13 +9,13 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class Context :IDisposable
+    public class Context : PlaidMLApi<Context>
     {
         #region Constructors
         public Context(string logFileName)
         {            
-            ctxPtr = @base.__Internal.VaiAllocCtx();
-            if (ctxPtr.IsZero())
+            ptr = @base.__Internal.VaiAllocCtx();
+            if (ptr.IsZero())
             {
                 IsAllocated = false;
                 return;
@@ -29,7 +29,10 @@ namespace Adrien.Compiler.PlaidML
             };
             string logConfig = JsonConvert.SerializeObject(_logConfig);
 
-            bool r = @base.__Internal.VaiSetEventlog(ctxPtr, logConfig);
+            if (@base.__Internal.VaiSetEventlog(ptr, logConfig))
+            {
+                Info($"PlaidML log file is {GetAssemblyDirectoryFullPath(logFileName)}.");
+            }
             IsAllocated = true;
         }
 
@@ -37,63 +40,28 @@ namespace Adrien.Compiler.PlaidML
         #endregion
 
         #region Properties
-        public bool IsAllocated { get; protected set; }
+
+        #endregion
+
+        #region Overriden members
+        public override void Free()
+        {
+            ThrowIfNotAllocated();
+            @base.__Internal.VaiFreeCtx(ptr);
+            ptr = IntPtr.Zero;
+            IsAllocated = false;
+        }
         #endregion
 
         #region Methods
-        public void Free()
-        {
-            ThrowIfNotAllocated();
-            @base.__Internal.VaiFreeCtx(ctxPtr);
-            ctxPtr = IntPtr.Zero;
-            IsAllocated = false;
-        }
-
         public void Cancel()
         {
             ThrowIfNotAllocated();
-            @base.__Internal.VaiCancelCtx(ctxPtr);
-        }
-        
-        protected void ThrowIfNotAllocated()
-        {
-            if (!IsAllocated)
-            {
-                throw new InvalidOperationException($"This context is not allocated");
-            }
-        }
-        #region Disposer
-        void IDisposable.Dispose()
-        {
-            ThrowIfNotAllocated();
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
-
-        private void Dispose(bool disposing)
-        {
-            Free();
-        }
-
-        #endregion
-
-        #region Operators
-        public static implicit operator IntPtr(Context c)  // explicit byte to digit conversion operator
-        {
-            if (!c.IsAllocated)
-            {
-                throw new InvalidOperationException("This context is not allocated.");
-            }
-            else
-            {
-                return c.ctxPtr;
-            }
+            @base.__Internal.VaiCancelCtx(ptr);
         }
         #endregion
 
         #region Fields
-        protected IntPtr ctxPtr;
         protected string logFileName;
         protected FileInfo logFile;
         #endregion
