@@ -16,7 +16,7 @@ namespace Adrien.Tests
             Assert.False(string.IsNullOrEmpty(plaidml.PlaidmlGetVersion()));
         }
 
-        [Fact]
+        [Fact(DisplayName = "Can construct Context")]
         public void CanCreateCtx()
         {
             Context ctx = new Context();
