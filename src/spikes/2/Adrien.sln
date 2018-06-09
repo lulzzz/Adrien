@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PlaidML", "PlaidML\PlaidML.pyproj", "{DF33AA77-B6EA-4EA2-81A9-5B2218988CD1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adrien.Bindings", "Adrien.Bindings\Adrien.Bindings.csproj", "{148B61A8-200F-4C10-8FCB-8A36F33A548E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adrien.Core", "Adrien.Core\Adrien.Core.csproj", "{895B7A79-F377-40D2-B036-B7EB6CA23B27}"
@@ -13,13 +11,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adrien.Base", "Adrien.Base\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TensorSharp.NETStandard", "TensorSharp\src\TensorSharp\TensorSharp.NETStandard.csproj", "{3DCC51DA-A39C-489C-B57A-F99A7EACE525}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adrien.Backend.PlaidML", "Adrien.Backend.PlaidML\Adrien.Backend.PlaidML.csproj", "{F3AB6588-E6D0-4705-92DA-4611A9B3FB12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adrien.Compiler.PlaidML", "Adrien.Compiler.PlaidML\Adrien.Compiler.PlaidML.csproj", "{F3AB6588-E6D0-4705-92DA-4611A9B3FB12}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adrien.Tests", "Adrien.Tests\Adrien.Tests.csproj", "{E0ED53C6-940A-4486-8051-40F875FBEF2E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NativeLibs", "NativeLibs", "{5F2C8816-0C42-4D4A-874C-F7D082C28D1F}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PlaidML", "PythonLibs\PlaidML\PlaidML.pyproj", "{DF33AA77-B6EA-4EA2-81A9-5B2218988CD1}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adrien.Native.PlaidML.Win-x64", "NativeLibs\Adrien.Native.PlaidML.Win-x64\Adrien.Native.PlaidML.Win-x64.csproj", "{5F22FA4A-D2CC-4466-9BAB-87E78F0B1D81}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PythonLibs", "PythonLibs", "{4FE211E6-AD7D-4E5D-8B3B-30BC1D2E11C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +31,6 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DF33AA77-B6EA-4EA2-81A9-5B2218988CD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF33AA77-B6EA-4EA2-81A9-5B2218988CD1}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{DF33AA77-B6EA-4EA2-81A9-5B2218988CD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF33AA77-B6EA-4EA2-81A9-5B2218988CD1}.Release|x64.ActiveCfg = Release|Any CPU
 		{148B61A8-200F-4C10-8FCB-8A36F33A548E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{148B61A8-200F-4C10-8FCB-8A36F33A548E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{148B61A8-200F-4C10-8FCB-8A36F33A548E}.Debug|x64.ActiveCfg = Debug|x64
@@ -81,6 +79,10 @@ Global
 		{E0ED53C6-940A-4486-8051-40F875FBEF2E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E0ED53C6-940A-4486-8051-40F875FBEF2E}.Release|x64.ActiveCfg = Release|Any CPU
 		{E0ED53C6-940A-4486-8051-40F875FBEF2E}.Release|x64.Build.0 = Release|Any CPU
+		{DF33AA77-B6EA-4EA2-81A9-5B2218988CD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF33AA77-B6EA-4EA2-81A9-5B2218988CD1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DF33AA77-B6EA-4EA2-81A9-5B2218988CD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF33AA77-B6EA-4EA2-81A9-5B2218988CD1}.Release|x64.ActiveCfg = Release|Any CPU
 		{5F22FA4A-D2CC-4466-9BAB-87E78F0B1D81}.Debug|Any CPU.ActiveCfg = Debug|x64
 		{5F22FA4A-D2CC-4466-9BAB-87E78F0B1D81}.Debug|x64.ActiveCfg = Debug|x64
 		{5F22FA4A-D2CC-4466-9BAB-87E78F0B1D81}.Debug|x64.Build.0 = Debug|x64
@@ -92,6 +94,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{DF33AA77-B6EA-4EA2-81A9-5B2218988CD1} = {4FE211E6-AD7D-4E5D-8B3B-30BC1D2E11C3}
 		{5F22FA4A-D2CC-4466-9BAB-87E78F0B1D81} = {5F2C8816-0C42-4D4A-874C-F7D082C28D1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

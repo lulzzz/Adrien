@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 using Newtonsoft.Json;
 
-using Adrien.Backend.PlaidML.Bindings;
+using Adrien.Compiler.PlaidML.Bindings;
 
-namespace Adrien.Backend.PlaidML
+namespace Adrien.Compiler.PlaidML
 {
     public class Context :IDisposable
     {
@@ -78,7 +79,7 @@ namespace Adrien.Backend.PlaidML
         #endregion
 
         #region Operators
-        public static explicit operator IntPtr(Context c)  // explicit byte to digit conversion operator
+        public static implicit operator IntPtr(Context c)  // explicit byte to digit conversion operator
         {
             if (!c.IsAllocated)
             {
@@ -94,6 +95,7 @@ namespace Adrien.Backend.PlaidML
         #region Fields
         protected IntPtr ctxPtr;
         protected string logFileName;
+        protected FileInfo logFile;
         #endregion
     }
 }

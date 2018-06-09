@@ -8,7 +8,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace Adrien.Backend.PlaidML.Bindings
+namespace Adrien.Compiler.PlaidML.Bindings
 {
     public enum VaiStatus
     {
@@ -57,17 +57,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private VaiCtx.__Internal __instance;
         internal VaiCtx.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.VaiCtx __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.VaiCtx __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.VaiCtx(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.VaiCtx(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.VaiCtx __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.VaiCtx.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.VaiCtx __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.VaiCtx(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.VaiCtx(native, skipVTables);
         }
 
-        private VaiCtx(global::Adrien.Backend.PlaidML.Bindings.VaiCtx.__Internal native, bool skipVTables = false)
+        private VaiCtx(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -75,7 +75,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private VaiCtx(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.VaiCtx.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx.__Internal*) native;
         }
     }
 
@@ -86,7 +86,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             [SuppressUnmanagedCodeSecurity]
             [DllImport("plaidml", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Cdecl,
                 EntryPoint="vai_last_status")]
-            internal static extern global::Adrien.Backend.PlaidML.Bindings.VaiStatus VaiLastStatus();
+            internal static extern global::Adrien.Compiler.PlaidML.Bindings.VaiStatus VaiLastStatus();
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("plaidml", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Cdecl,
@@ -106,7 +106,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             [SuppressUnmanagedCodeSecurity]
             [DllImport("plaidml", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Cdecl,
                 EntryPoint="vai_query_feature")]
-            internal static extern global::System.IntPtr VaiQueryFeature(global::Adrien.Backend.PlaidML.Bindings.VaiFeatureId id);
+            internal static extern global::System.IntPtr VaiQueryFeature(global::Adrien.Compiler.PlaidML.Bindings.VaiFeatureId id);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("plaidml", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Cdecl,
@@ -140,7 +140,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             internal static extern void VaiSetPerfCounter([MarshalAs(UnmanagedType.LPStr)] string name, long value);
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.VaiStatus VaiLastStatus()
+        public static global::Adrien.Compiler.PlaidML.Bindings.VaiStatus VaiLastStatus()
         {
             var __ret = __Internal.VaiLastStatus();
             return __ret;
@@ -157,42 +157,42 @@ namespace Adrien.Backend.PlaidML.Bindings
             return Marshal.PtrToStringAnsi(__ret);
         }
 
-        public static void VaiSetLogger(global::Adrien.Backend.PlaidML.Bindings.Delegates.Action_IntPtr_Adrien_Backend_PlaidML_Bindings_vai_log_severity_string logger, global::System.IntPtr arg)
+        public static void VaiSetLogger(global::Adrien.Compiler.PlaidML.Bindings.Delegates.Action_IntPtr_Adrien_Compiler_PlaidML_Bindings_vai_log_severity_string logger, global::System.IntPtr arg)
         {
             var __arg0 = logger == null ? global::System.IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(logger);
             __Internal.VaiSetLogger(__arg0, arg);
         }
 
-        public static global::System.IntPtr VaiQueryFeature(global::Adrien.Backend.PlaidML.Bindings.VaiFeatureId id)
+        public static global::System.IntPtr VaiQueryFeature(global::Adrien.Compiler.PlaidML.Bindings.VaiFeatureId id)
         {
             var __ret = __Internal.VaiQueryFeature(id);
             return __ret;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.VaiCtx VaiAllocCtx()
+        public static global::Adrien.Compiler.PlaidML.Bindings.VaiCtx VaiAllocCtx()
         {
             var __ret = __Internal.VaiAllocCtx();
-            global::Adrien.Backend.PlaidML.Bindings.VaiCtx __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.VaiCtx();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.VaiCtx.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.VaiCtx __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.VaiCtx();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.VaiCtx.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static void VaiFreeCtx(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx)
+        public static void VaiFreeCtx(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.VaiFreeCtx(__arg0);
         }
 
-        public static void VaiCancelCtx(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx)
+        public static void VaiCancelCtx(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.VaiCancelCtx(__arg0);
         }
 
-        public static bool VaiSetEventlog(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, string config)
+        public static bool VaiSetEventlog(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, string config)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -247,17 +247,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlDevconf.__Internal __instance;
         internal PlaidmlDevconf.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf(native, skipVTables);
         }
 
-        private PlaidmlDevconf(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf.__Internal native, bool skipVTables = false)
+        private PlaidmlDevconf(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -265,7 +265,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlDevconf(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf.__Internal*) native;
         }
     }
 
@@ -279,17 +279,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlDevice.__Internal __instance;
         internal PlaidmlDevice.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice(native, skipVTables);
         }
 
-        private PlaidmlDevice(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice.__Internal native, bool skipVTables = false)
+        private PlaidmlDevice(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -297,7 +297,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlDevice(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice.__Internal*) native;
         }
     }
 
@@ -311,17 +311,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlDeviceEnumerator.__Internal __instance;
         internal PlaidmlDeviceEnumerator.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator(native, skipVTables);
         }
 
-        private PlaidmlDeviceEnumerator(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator.__Internal native, bool skipVTables = false)
+        private PlaidmlDeviceEnumerator(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -329,7 +329,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlDeviceEnumerator(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator.__Internal*) native;
         }
     }
 
@@ -343,17 +343,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlBuffer.__Internal __instance;
         internal PlaidmlBuffer.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer(native, skipVTables);
         }
 
-        private PlaidmlBuffer(global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer.__Internal native, bool skipVTables = false)
+        private PlaidmlBuffer(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -361,7 +361,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlBuffer(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer.__Internal*) native;
         }
     }
 
@@ -375,17 +375,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlMapping.__Internal __instance;
         internal PlaidmlMapping.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping(native, skipVTables);
         }
 
-        private PlaidmlMapping(global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping.__Internal native, bool skipVTables = false)
+        private PlaidmlMapping(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -393,7 +393,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlMapping(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping.__Internal*) native;
         }
     }
 
@@ -407,17 +407,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlShape.__Internal __instance;
         internal PlaidmlShape.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape(native, skipVTables);
         }
 
-        private PlaidmlShape(global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape.__Internal native, bool skipVTables = false)
+        private PlaidmlShape(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -425,7 +425,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlShape(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape.__Internal*) native;
         }
     }
 
@@ -439,17 +439,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlFunction.__Internal __instance;
         internal PlaidmlFunction.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction(native, skipVTables);
         }
 
-        private PlaidmlFunction(global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction.__Internal native, bool skipVTables = false)
+        private PlaidmlFunction(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -457,7 +457,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlFunction(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction.__Internal*) native;
         }
     }
 
@@ -471,17 +471,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlVar.__Internal __instance;
         internal PlaidmlVar.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar(native, skipVTables);
         }
 
-        private PlaidmlVar(global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar.__Internal native, bool skipVTables = false)
+        private PlaidmlVar(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -489,7 +489,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlVar(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar.__Internal*) native;
         }
     }
 
@@ -503,17 +503,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlApplier.__Internal __instance;
         internal PlaidmlApplier.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier(native, skipVTables);
         }
 
-        private PlaidmlApplier(global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier.__Internal native, bool skipVTables = false)
+        private PlaidmlApplier(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -521,7 +521,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlApplier(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier.__Internal*) native;
         }
     }
 
@@ -535,17 +535,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlComposer.__Internal __instance;
         internal PlaidmlComposer.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer(native, skipVTables);
         }
 
-        private PlaidmlComposer(global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer.__Internal native, bool skipVTables = false)
+        private PlaidmlComposer(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -553,7 +553,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlComposer(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer.__Internal*) native;
         }
     }
 
@@ -567,17 +567,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlInvoker.__Internal __instance;
         internal PlaidmlInvoker.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker(native, skipVTables);
         }
 
-        private PlaidmlInvoker(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker.__Internal native, bool skipVTables = false)
+        private PlaidmlInvoker(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -585,7 +585,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlInvoker(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker.__Internal*) native;
         }
     }
 
@@ -599,29 +599,29 @@ namespace Adrien.Backend.PlaidML.Bindings
         public global::System.IntPtr __Instance { get; protected set; }
 
         protected int __PointerAdjustment;
-        internal static readonly global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation> NativeToManagedMap = new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation>();
+        internal static readonly global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation> NativeToManagedMap = new global::System.Collections.Concurrent.ConcurrentDictionary<IntPtr, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation>();
         protected void*[] __OriginalVTables;
 
         protected bool __ownsNativeInstance;
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation(native, skipVTables);
         }
 
-        private static void* __CopyValue(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation.__Internal native)
+        private static void* __CopyValue(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation.__Internal native)
         {
-            var ret = Marshal.AllocHGlobal(sizeof(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation.__Internal));
-            *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation.__Internal*) ret = native;
+            var ret = Marshal.AllocHGlobal(sizeof(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation.__Internal));
+            *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation.__Internal*) ret = native;
             return ret.ToPointer();
         }
 
-        private PlaidmlInvocation(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation.__Internal native, bool skipVTables = false)
+        private PlaidmlInvocation(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation.__Internal native, bool skipVTables = false)
             : this(__CopyValue(native), skipVTables)
         {
             __ownsNativeInstance = true;
@@ -646,17 +646,17 @@ namespace Adrien.Backend.PlaidML.Bindings
         private PlaidmlGradient.__Internal __instance;
         internal PlaidmlGradient.__Internal __Instance { get { return __instance; } }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient __CreateInstance(global::System.IntPtr native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient(native.ToPointer(), skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient(native.ToPointer(), skipVTables);
         }
 
-        internal static global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient __CreateInstance(global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient.__Internal native, bool skipVTables = false)
+        internal static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient __CreateInstance(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient.__Internal native, bool skipVTables = false)
         {
-            return new global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient(native, skipVTables);
+            return new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient(native, skipVTables);
         }
 
-        private PlaidmlGradient(global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient.__Internal native, bool skipVTables = false)
+        private PlaidmlGradient(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient.__Internal native, bool skipVTables = false)
             : this()
         {
             __instance = native;
@@ -664,7 +664,7 @@ namespace Adrien.Backend.PlaidML.Bindings
 
         private PlaidmlGradient(void* native, bool skipVTables = false) : this()
         {
-            __instance = *(global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient.__Internal*) native;
+            __instance = *(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient.__Internal*) native;
         }
     }
 
@@ -681,7 +681,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             [DllImport("plaidml", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Cdecl,
                 EntryPoint="plaidml_query_devconf")]
             [return: MarshalAs(UnmanagedType.I1)]
-            internal static extern bool PlaidmlQueryDevconf(global::System.IntPtr ctx, global::System.IntPtr devconf, global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceProperty property, global::System.IntPtr output_buffer, ulong output_buffer_size, ulong* output_buffer_size_required);
+            internal static extern bool PlaidmlQueryDevconf(global::System.IntPtr ctx, global::System.IntPtr devconf, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceProperty property, global::System.IntPtr output_buffer, ulong output_buffer_size, ulong* output_buffer_size_required);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("plaidml", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Cdecl,
@@ -772,12 +772,12 @@ namespace Adrien.Backend.PlaidML.Bindings
             [SuppressUnmanagedCodeSecurity]
             [DllImport("plaidml", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Cdecl,
                 EntryPoint="plaidml_set_floatx")]
-            internal static extern void PlaidmlSetFloatx(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDatatype datatype);
+            internal static extern void PlaidmlSetFloatx(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDatatype datatype);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("plaidml", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Cdecl,
                 EntryPoint="plaidml_alloc_shape")]
-            internal static extern global::System.IntPtr PlaidmlAllocShape(global::System.IntPtr ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlDatatype datatype);
+            internal static extern global::System.IntPtr PlaidmlAllocShape(global::System.IntPtr ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDatatype datatype);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("plaidml", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Cdecl,
@@ -799,7 +799,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             [SuppressUnmanagedCodeSecurity]
             [DllImport("plaidml", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Cdecl,
                 EntryPoint="plaidml_get_shape_type")]
-            internal static extern global::Adrien.Backend.PlaidML.Bindings.PlaidmlDatatype PlaidmlGetShapeType(global::System.IntPtr shape);
+            internal static extern global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDatatype PlaidmlGetShapeType(global::System.IntPtr shape);
 
             [SuppressUnmanagedCodeSecurity]
             [DllImport("plaidml", CallingConvention = global::System.Runtime.InteropServices.CallingConvention.Cdecl,
@@ -1022,7 +1022,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return Marshal.PtrToStringAnsi(__ret);
         }
 
-        public static bool PlaidmlQueryDevconf(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf devconf, global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceProperty property, global::System.IntPtr output_buffer, ulong output_buffer_size, ref ulong output_buffer_size_required)
+        public static bool PlaidmlQueryDevconf(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf devconf, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceProperty property, global::System.IntPtr output_buffer, ulong output_buffer_size, ref ulong output_buffer_size_required)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1036,58 +1036,58 @@ namespace Adrien.Backend.PlaidML.Bindings
             }
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice PlaidmlOpenDevice(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf devconf)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice PlaidmlOpenDevice(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf devconf)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var ____arg1 = devconf.__Instance;
             var __arg1 = new global::System.IntPtr(&____arg1);
             var __ret = __Internal.PlaidmlOpenDevice(__arg0, __arg1);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static void PlaidmlCloseDevice(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice device)
+        public static void PlaidmlCloseDevice(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice device)
         {
             var ____arg0 = device.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.PlaidmlCloseDevice(__arg0);
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator PlaidmlAllocDeviceEnumerator(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.Delegates.Action_IntPtr_IntPtr callback, global::System.IntPtr arg)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator PlaidmlAllocDeviceEnumerator(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.Delegates.Action_IntPtr_IntPtr callback, global::System.IntPtr arg)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var __arg1 = callback == null ? global::System.IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback);
             var __ret = __Internal.PlaidmlAllocDeviceEnumerator(__arg0, __arg1, arg);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator PlaidmlAllocDeviceEnumeratorWithConfig(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, string configuration, global::Adrien.Backend.PlaidML.Bindings.Delegates.Action_IntPtr_IntPtr callback, global::System.IntPtr arg)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator PlaidmlAllocDeviceEnumeratorWithConfig(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, string configuration, global::Adrien.Compiler.PlaidML.Bindings.Delegates.Action_IntPtr_IntPtr callback, global::System.IntPtr arg)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var __arg2 = callback == null ? global::System.IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback);
             var __ret = __Internal.PlaidmlAllocDeviceEnumeratorWithConfig(__arg0, configuration, __arg2, arg);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static void PlaidmlFreeDeviceEnumerator(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator enumerator)
+        public static void PlaidmlFreeDeviceEnumerator(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator enumerator)
         {
             var ____arg0 = enumerator.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.PlaidmlFreeDeviceEnumerator(__arg0);
         }
 
-        public static string PlaidmlGetEnumeratorConfigSource(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator enumerator)
+        public static string PlaidmlGetEnumeratorConfigSource(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator enumerator)
         {
             var ____arg0 = enumerator.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1095,7 +1095,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return Marshal.PtrToStringAnsi(__ret);
         }
 
-        public static ulong PlaidmlGetDevconfCount(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator enumerator, bool valid_devices)
+        public static ulong PlaidmlGetDevconfCount(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator enumerator, bool valid_devices)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1105,78 +1105,78 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf PlaidmlGetDevconf(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator enumerator, ulong index)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf PlaidmlGetDevconf(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator enumerator, ulong index)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var ____arg1 = enumerator.__Instance;
             var __arg1 = new global::System.IntPtr(&____arg1);
             var __ret = __Internal.PlaidmlGetDevconf(__arg0, __arg1, index);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf PlaidmlGetInvalidDevconf(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlDeviceEnumerator enumerator, ulong index)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf PlaidmlGetInvalidDevconf(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDeviceEnumerator enumerator, ulong index)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var ____arg1 = enumerator.__Instance;
             var __arg1 = new global::System.IntPtr(&____arg1);
             var __ret = __Internal.PlaidmlGetInvalidDevconf(__arg0, __arg1, index);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevconf.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevconf.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer PlaidmlAllocBuffer(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice device, ulong size)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer PlaidmlAllocBuffer(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice device, ulong size)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var ____arg1 = device.__Instance;
             var __arg1 = new global::System.IntPtr(&____arg1);
             var __ret = __Internal.PlaidmlAllocBuffer(__arg0, __arg1, size);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static void PlaidmlFreeBuffer(global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer buffer)
+        public static void PlaidmlFreeBuffer(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer buffer)
         {
             var ____arg0 = buffer.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.PlaidmlFreeBuffer(__arg0);
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping PlaidmlMapBufferCurrent(global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer buffer, global::Adrien.Backend.PlaidML.Bindings.Delegates.Action_IntPtr_IntPtr callback, global::System.IntPtr arg)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping PlaidmlMapBufferCurrent(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer buffer, global::Adrien.Compiler.PlaidML.Bindings.Delegates.Action_IntPtr_IntPtr callback, global::System.IntPtr arg)
         {
             var ____arg0 = buffer.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var __arg1 = callback == null ? global::System.IntPtr.Zero : Marshal.GetFunctionPointerForDelegate(callback);
             var __ret = __Internal.PlaidmlMapBufferCurrent(__arg0, __arg1, arg);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping PlaidmlMapBufferDiscard(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer buffer)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping PlaidmlMapBufferDiscard(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer buffer)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var ____arg1 = buffer.__Instance;
             var __arg1 = new global::System.IntPtr(&____arg1);
             var __ret = __Internal.PlaidmlMapBufferDiscard(__arg0, __arg1);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static sbyte* PlaidmlGetMappingBase(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping mapping)
+        public static sbyte* PlaidmlGetMappingBase(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping mapping)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1186,7 +1186,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static ulong PlaidmlGetMappingSize(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping mapping)
+        public static ulong PlaidmlGetMappingSize(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping mapping)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1196,7 +1196,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static bool PlaidmlWritebackMapping(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping mapping)
+        public static bool PlaidmlWritebackMapping(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping mapping)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1206,37 +1206,37 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static void PlaidmlFreeMapping(global::Adrien.Backend.PlaidML.Bindings.PlaidmlMapping mapping)
+        public static void PlaidmlFreeMapping(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlMapping mapping)
         {
             var ____arg0 = mapping.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.PlaidmlFreeMapping(__arg0);
         }
 
-        public static void PlaidmlSetFloatx(global::Adrien.Backend.PlaidML.Bindings.PlaidmlDatatype datatype)
+        public static void PlaidmlSetFloatx(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDatatype datatype)
         {
             __Internal.PlaidmlSetFloatx(datatype);
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape PlaidmlAllocShape(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlDatatype datatype)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape PlaidmlAllocShape(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDatatype datatype)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var __ret = __Internal.PlaidmlAllocShape(__arg0, datatype);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static void PlaidmlFreeShape(global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape shape)
+        public static void PlaidmlFreeShape(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape shape)
         {
             var ____arg0 = shape.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.PlaidmlFreeShape(__arg0);
         }
 
-        public static bool PlaidmlSetShapeOffset(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape shape, ulong offset_in_elements)
+        public static bool PlaidmlSetShapeOffset(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape shape, ulong offset_in_elements)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1246,7 +1246,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static bool PlaidmlAddDimension(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape shape, ulong size_in_elements, long stride_in_elements)
+        public static bool PlaidmlAddDimension(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape shape, ulong size_in_elements, long stride_in_elements)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1256,7 +1256,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlDatatype PlaidmlGetShapeType(global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape shape)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDatatype PlaidmlGetShapeType(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape shape)
         {
             var ____arg0 = shape.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1264,7 +1264,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static ulong PlaidmlGetShapeOffset(global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape shape)
+        public static ulong PlaidmlGetShapeOffset(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape shape)
         {
             var ____arg0 = shape.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1272,7 +1272,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static ulong PlaidmlGetShapeDimensionCount(global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape shape)
+        public static ulong PlaidmlGetShapeDimensionCount(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape shape)
         {
             var ____arg0 = shape.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1280,7 +1280,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static ulong PlaidmlGetShapeDimensionSize(global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape shape, ulong dim)
+        public static ulong PlaidmlGetShapeDimensionSize(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape shape, ulong dim)
         {
             var ____arg0 = shape.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1288,7 +1288,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static long PlaidmlGetShapeDimensionStride(global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape shape, ulong dim)
+        public static long PlaidmlGetShapeDimensionStride(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape shape, ulong dim)
         {
             var ____arg0 = shape.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1296,7 +1296,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static ulong PlaidmlGetShapeBufferSize(global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape shape)
+        public static ulong PlaidmlGetShapeBufferSize(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape shape)
         {
             var ____arg0 = shape.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1304,7 +1304,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static ulong PlaidmlGetShapeElementCount(global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape shape)
+        public static ulong PlaidmlGetShapeElementCount(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape shape)
         {
             var ____arg0 = shape.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1312,14 +1312,14 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static void PlaidmlFreeFunction(global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction function)
+        public static void PlaidmlFreeFunction(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction function)
         {
             var ____arg0 = function.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.PlaidmlFreeFunction(__arg0);
         }
 
-        public static ulong PlaidmlGetFunctionInputCount(global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction function)
+        public static ulong PlaidmlGetFunctionInputCount(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction function)
         {
             var ____arg0 = function.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1327,7 +1327,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static string PlaidmlGetFunctionInput(global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction function, ulong i)
+        public static string PlaidmlGetFunctionInput(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction function, ulong i)
         {
             var ____arg0 = function.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1335,7 +1335,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return Marshal.PtrToStringAnsi(__ret);
         }
 
-        public static ulong PlaidmlGetFunctionOutputCount(global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction function)
+        public static ulong PlaidmlGetFunctionOutputCount(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction function)
         {
             var ____arg0 = function.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1343,7 +1343,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static string PlaidmlGetFunctionOutput(global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction function, ulong i)
+        public static string PlaidmlGetFunctionOutput(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction function, ulong i)
         {
             var ____arg0 = function.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1351,41 +1351,41 @@ namespace Adrien.Backend.PlaidML.Bindings
             return Marshal.PtrToStringAnsi(__ret);
         }
 
-        public static void PlaidmlFreeVar(global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar var)
+        public static void PlaidmlFreeVar(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar var)
         {
             var ____arg0 = var.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.PlaidmlFreeVar(__arg0);
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar PlaidmlAllocPlaceholder(ulong num_dimensions)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar PlaidmlAllocPlaceholder(ulong num_dimensions)
         {
             var __ret = __Internal.PlaidmlAllocPlaceholder(num_dimensions);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar PlaidmlAllocInt64(long value)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar PlaidmlAllocInt64(long value)
         {
             var __ret = __Internal.PlaidmlAllocInt64(value);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar PlaidmlAllocReal(double value)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar PlaidmlAllocReal(double value)
         {
             var __ret = __Internal.PlaidmlAllocReal(value);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar PlaidmlAllocTensor(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlBuffer buffer, global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape shape)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar PlaidmlAllocTensor(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlBuffer buffer, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape shape)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1394,35 +1394,35 @@ namespace Adrien.Backend.PlaidML.Bindings
             var ____arg2 = shape.__Instance;
             var __arg2 = new global::System.IntPtr(&____arg2);
             var __ret = __Internal.PlaidmlAllocTensor(__arg0, __arg1, __arg2);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction PlaidmlBuildCodedFunction(string code, string id)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction PlaidmlBuildCodedFunction(string code, string id)
         {
             var __ret = __Internal.PlaidmlBuildCodedFunction(code, id);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction PlaidmlLoadFunction(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlDevice dev, string file)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction PlaidmlLoadFunction(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlDevice dev, string file)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var ____arg1 = dev.__Instance;
             var __arg1 = new global::System.IntPtr(&____arg1);
             var __ret = __Internal.PlaidmlLoadFunction(__arg0, __arg1, file);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static bool PlaidmlSaveFunction(global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction func, string file)
+        public static bool PlaidmlSaveFunction(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction func, string file)
         {
             var ____arg0 = func.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1430,16 +1430,16 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer PlaidmlAllocComposer()
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer PlaidmlAllocComposer()
         {
             var __ret = __Internal.PlaidmlAllocComposer();
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static bool PlaidmlAddComposerInput(global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer composer, string name, global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar var)
+        public static bool PlaidmlAddComposerInput(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer composer, string name, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar var)
         {
             var ____arg0 = composer.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1449,7 +1449,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static bool PlaidmlAddComposerOutput(global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer composer, string name, global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar var)
+        public static bool PlaidmlAddComposerOutput(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer composer, string name, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar var)
         {
             var ____arg0 = composer.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1459,7 +1459,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static bool PlaidmlAddComposerDependency(global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer composer, global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier must_run_before)
+        public static bool PlaidmlAddComposerDependency(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer composer, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier must_run_before)
         {
             var ____arg0 = composer.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1469,7 +1469,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static bool PlaidmlAddComposerUpdate(global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer composer, global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar dest_tensor, global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar src_tensor)
+        public static bool PlaidmlAddComposerUpdate(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer composer, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar dest_tensor, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar src_tensor)
         {
             var ____arg0 = composer.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1481,36 +1481,36 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction PlaidmlBuildComposedFunction(global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer composer)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction PlaidmlBuildComposedFunction(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer composer)
         {
             var ____arg0 = composer.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var __ret = __Internal.PlaidmlBuildComposedFunction(__arg0);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static void PlaidmlFreeComposer(global::Adrien.Backend.PlaidML.Bindings.PlaidmlComposer composer)
+        public static void PlaidmlFreeComposer(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlComposer composer)
         {
             var ____arg0 = composer.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.PlaidmlFreeComposer(__arg0);
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier PlaidmlAllocApplier(global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction function)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier PlaidmlAllocApplier(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction function)
         {
             var ____arg0 = function.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var __ret = __Internal.PlaidmlAllocApplier(__arg0);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static bool PlaidmlApplyAddDependency(global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier applier, global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier must_run_before)
+        public static bool PlaidmlApplyAddDependency(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier applier, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier must_run_before)
         {
             var ____arg0 = applier.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1520,7 +1520,7 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static bool PlaidmlApplyAddInput(global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier applier, string name, global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar var)
+        public static bool PlaidmlApplyAddInput(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier applier, string name, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar var)
         {
             var ____arg0 = applier.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1530,45 +1530,45 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar PlaidmlApplyAllocOutput(global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier applier, string name)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar PlaidmlApplyAllocOutput(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier applier, string name)
         {
             var ____arg0 = applier.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var __ret = __Internal.PlaidmlApplyAllocOutput(__arg0, name);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static void PlaidmlFreeApplier(global::Adrien.Backend.PlaidML.Bindings.PlaidmlApplier applier)
+        public static void PlaidmlFreeApplier(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlApplier applier)
         {
             var ____arg0 = applier.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.PlaidmlFreeApplier(__arg0);
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker PlaidmlAllocInvoker(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlFunction function)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker PlaidmlAllocInvoker(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlFunction function)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var ____arg1 = function.__Instance;
             var __arg1 = new global::System.IntPtr(&____arg1);
             var __ret = __Internal.PlaidmlAllocInvoker(__arg0, __arg1);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static void PlaidmlFreeInvoker(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker invoker)
+        public static void PlaidmlFreeInvoker(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker invoker)
         {
             var ____arg0 = invoker.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.PlaidmlFreeInvoker(__arg0);
         }
 
-        public static bool PlaidmlSetInvokerInput(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker invoker, string name, global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar var)
+        public static bool PlaidmlSetInvokerInput(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker invoker, string name, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar var)
         {
             var ____arg0 = invoker.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1578,18 +1578,18 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape PlaidmlAllocInvokerOutputShape(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker invoker, string name)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape PlaidmlAllocInvokerOutputShape(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker invoker, string name)
         {
             var ____arg0 = invoker.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var __ret = __Internal.PlaidmlAllocInvokerOutputShape(__arg0, name);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlShape.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlShape.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static bool PlaidmlSetInvokerOutput(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker invoker, string name, global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar var)
+        public static bool PlaidmlSetInvokerOutput(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker invoker, string name, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar var)
         {
             var ____arg0 = invoker.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
@@ -1599,55 +1599,55 @@ namespace Adrien.Backend.PlaidML.Bindings
             return __ret;
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation PlaidmlScheduleInvocation(global::Adrien.Backend.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvoker invoker)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation PlaidmlScheduleInvocation(global::Adrien.Compiler.PlaidML.Bindings.VaiCtx ctx, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvoker invoker)
         {
             var ____arg0 = ctx.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var ____arg1 = invoker.__Instance;
             var __arg1 = new global::System.IntPtr(&____arg1);
             var __ret = __Internal.PlaidmlScheduleInvocation(__arg0, __arg1);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation __result0;
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation __result0;
             if (__ret == IntPtr.Zero) __result0 = null;
-            else if (global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation.NativeToManagedMap.ContainsKey(__ret))
-                __result0 = (global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation) global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation.NativeToManagedMap[__ret];
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation.__CreateInstance(__ret);
+            else if (global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation.NativeToManagedMap.ContainsKey(__ret))
+                __result0 = (global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation) global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation.NativeToManagedMap[__ret];
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static void PlaidmlFreeInvocation(global::Adrien.Backend.PlaidML.Bindings.PlaidmlInvocation invocation)
+        public static void PlaidmlFreeInvocation(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlInvocation invocation)
         {
             var __arg0 = ReferenceEquals(invocation, null) ? global::System.IntPtr.Zero : invocation.__Instance;
             __Internal.PlaidmlFreeInvocation(__arg0);
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient PlaidmlAllocGradient(global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar var)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient PlaidmlAllocGradient(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar var)
         {
             var ____arg0 = var.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var __ret = __Internal.PlaidmlAllocGradient(__arg0);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient.__CreateInstance(__ret);
             return __result0;
         }
 
-        public static void PlaidmlFreeGradient(global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient grad)
+        public static void PlaidmlFreeGradient(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient grad)
         {
             var ____arg0 = grad.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             __Internal.PlaidmlFreeGradient(__arg0);
         }
 
-        public static global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar PlaidmlComputeGradWrt(global::Adrien.Backend.PlaidML.Bindings.PlaidmlGradient grad, global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar wrt)
+        public static global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar PlaidmlComputeGradWrt(global::Adrien.Compiler.PlaidML.Bindings.PlaidmlGradient grad, global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar wrt)
         {
             var ____arg0 = grad.__Instance;
             var __arg0 = new global::System.IntPtr(&____arg0);
             var ____arg1 = wrt.__Instance;
             var __arg1 = new global::System.IntPtr(&____arg1);
             var __ret = __Internal.PlaidmlComputeGradWrt(__arg0, __arg1);
-            global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar __result0;
-            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar();
-            else __result0 = global::Adrien.Backend.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
+            global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar __result0;
+            if (__ret == IntPtr.Zero) __result0 = new global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar();
+            else __result0 = global::Adrien.Compiler.PlaidML.Bindings.PlaidmlVar.__CreateInstance(__ret);
             return __result0;
         }
     }
@@ -1655,7 +1655,7 @@ namespace Adrien.Backend.PlaidML.Bindings
     namespace Delegates
     {
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(global::System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public unsafe delegate void Action_IntPtr_Adrien_Backend_PlaidML_Bindings_vai_log_severity_string(global::System.IntPtr _0, global::Adrien.Backend.PlaidML.Bindings.VaiLogSeverity _1, [MarshalAs(UnmanagedType.LPStr)] string _2);
+        public unsafe delegate void Action_IntPtr_Adrien_Compiler_PlaidML_Bindings_vai_log_severity_string(global::System.IntPtr _0, global::Adrien.Compiler.PlaidML.Bindings.VaiLogSeverity _1, [MarshalAs(UnmanagedType.LPStr)] string _2);
 
         [SuppressUnmanagedCodeSecurity, UnmanagedFunctionPointer(global::System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public unsafe delegate void Action_IntPtr_IntPtr(global::System.IntPtr _0, global::System.IntPtr _1);

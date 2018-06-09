@@ -2,8 +2,8 @@
 
 using Xunit;
 
-using Adrien.Backend.PlaidML;
-using Adrien.Backend.PlaidML.Bindings;
+using Adrien.Compiler.PlaidML;
+using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Tests
 {

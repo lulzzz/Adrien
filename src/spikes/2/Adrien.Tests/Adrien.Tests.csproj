@@ -6,11 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Adrien.Backend.PlaidML\Adrien.Backend.PlaidML.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Backends\" />
+    <Folder Include="Compilers\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,6 +14,10 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
     <PackageReference Include="xunit" Version="2.4.0-beta.2.build4010" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0-beta.2.build4010" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Adrien.Compiler.PlaidML\Adrien.Compiler.PlaidML.csproj" />
   </ItemGroup>
 
 </Project>
