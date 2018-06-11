@@ -8,9 +8,9 @@ namespace Adrien.Compiler.PlaidML
 {
     public class DeviceEnumerator : PlaidMLApi<DeviceEnumerator>
     {
-        public DeviceEnumerator(Context ctx, string config = "") : base(ctx, config)
+        public DeviceEnumerator(Context ctx) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(context, context.settings.ConfigFileText, IntPtr.Zero, IntPtr.Zero);
+            ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(context, context.settings.Config, IntPtr.Zero, IntPtr.Zero);
             if (ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_device_enumerator_with_config");
@@ -43,7 +43,7 @@ namespace Adrien.Compiler.PlaidML
                 List<DeviceConfig> vd = new List<DeviceConfig>(count);
                 for (int i = 0; i < count; i++)
                 {
-                    vd.Add(new DeviceConfig(context, this, (ulong) i, ManualConfigText));
+                    vd.Add(new DeviceConfig(context, this, (ulong) i));
                 }
                 return vd;
             }

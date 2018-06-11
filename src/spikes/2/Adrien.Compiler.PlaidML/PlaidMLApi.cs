@@ -9,12 +9,10 @@ namespace Adrien.Compiler.PlaidML
     public abstract class PlaidMLApi<T> : CompilerApi<T>, IDisposable
     {
         #region Constructors
-        public PlaidMLApi(Context ctx, string manualConfigText = "") : base()
+        public PlaidMLApi(Context ctx) : base()
         {
             ctx.ThrowIfNotAllocated();
             this.context = ctx;
-            ManualConfigText = manualConfigText;
-            
         }
         #endregion
 
@@ -23,14 +21,6 @@ namespace Adrien.Compiler.PlaidML
         public VaiStatus LastStatus { get; protected set; }
         public string LastStatusString { get; protected set; }
         public string ManualConfigText { get; protected set; }
-
-        public string Config
-        {
-            get
-            {
-                return ManualConfigText.IsNullOrEmpty() ? ManualConfigText : context.settings.ConfigFileText;
-            }
-        }
         #endregion
 
         #region Methods

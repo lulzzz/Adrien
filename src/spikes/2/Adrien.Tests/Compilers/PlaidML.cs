@@ -43,7 +43,10 @@ namespace Adrien.Tests.Compilers
             DeviceEnumerator e = new DeviceEnumerator(new Context());
             Assert.True(e.ValidDevices.Count > 0);
             DeviceConfig d = e.ValidDevices[0];
-            Assert.True(d.Id > 0);
+            Assert.True(d.Id.IsNotNullOrEmpty());
+            Assert.True(d.Config.IsNotNullOrEmpty());
+            Assert.True(d.Description.IsNotNullOrEmpty());
+            Assert.True(d.Details.IsNotNullOrEmpty());
         }
     }
 }

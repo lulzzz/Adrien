@@ -23,7 +23,7 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
-        public Settings()
+        public Settings(string manualConfigText = "")
         {
             if (EnvironmentConfigFile != null && EnvironmentConfigFile.Exists)
             {
@@ -40,6 +40,7 @@ namespace Adrien.Compiler.PlaidML
                 ConfigFile = DefaultConfigFile;
                 Info("Using PlaidML default settings file {0}.", DefaultConfigFile.FullName);
             }
+            ManualConfigText = manualConfigText;
             Load();
         }
         #endregion
@@ -79,7 +80,26 @@ namespace Adrien.Compiler.PlaidML
 
         public bool SessionStarted { get; protected set; }
 
+        public string ManualConfigText { get; protected set; }
+
         public string ConfigFileText { get; protected set; }
+
+        public string Config
+        {
+            get
+            {
+                if (ManualConfigText.IsNotNullOrEmpty())
+                {
+                    return ManualConfigText;
+                }
+                else if (ConfigFileText.IsNotNullOrEmpty())
+                {
+                    return ConfigFileText;
+                }
+                else throw new Exception("No configuration loaded.");
+            }
+            
+        }
         #endregion
 
         #region Methods
