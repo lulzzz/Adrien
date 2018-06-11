@@ -8,7 +8,7 @@ namespace Adrien.Compiler.PlaidML
 {
     public class DeviceEnumerator : PlaidMLApi<DeviceEnumerator>
     {
-        public DeviceEnumerator(Context ctx, string config = "")
+        public DeviceEnumerator(Context context, string config = "") : base(context)
         {
             ctx.ThrowIfNotAllocated();
             if (config.IsNotNullOrEmpty())
@@ -27,6 +27,10 @@ namespace Adrien.Compiler.PlaidML
         {
             plaidml.__Internal.PlaidmlFreeDeviceEnumerator(ptr);
         }
+        #endregion
+
+        #region Prroperties
+         
         #endregion
 
 

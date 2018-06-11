@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Adrien.Native.PlaidML.Win-x64</id>
-    <version>0.3.3</version>
+    <version>0.3.3.1</version>
     <authors>Allister Beharry</authors>
     <owners>Allister Beharry</owners>
     <copyright>PlaidML is Copyright © 2018 The PlaidML authors: https://github.com/plaidml/plaidml/ </copyright>
@@ -16,6 +16,7 @@
   </metadata>
   <files>
     <file src="native\**\*.dll" target="build\native\" />
+    <file src="native\**\*.json" target="build\native\" />
     <file src="Adrien.Native.PlaidML.Win-x64.targets" target="build\Adrien.Native.PlaidML.Win-x64.targets" />
   </files>
 </package>

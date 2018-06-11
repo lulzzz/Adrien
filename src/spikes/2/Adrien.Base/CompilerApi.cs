@@ -45,7 +45,7 @@ namespace Adrien
             }
         }
 
-        protected string GetAssemblyDirectoryFullPath(string path) => Path.Combine(AssemblyDirectory.FullName, path);
+        protected static string GetAssemblyDirectoryFullPath(string path) => Path.Combine(AssemblyDirectory.FullName, path);
         #endregion
     }
 }

@@ -5,10 +5,14 @@ using Xunit;
 using Adrien.Compiler.PlaidML;
 using Adrien.Compiler.PlaidML.Bindings;
 
-namespace Adrien.Tests
+namespace Adrien.Tests.Compilers
 {
     public class PlaidMLCompilerTests
     {
+        public PlaidMLCompilerTests()
+        {
+            Driver.CreateDefaultLogger();
+        }
         [Fact(DisplayName = "Can call PlaidML GetVersion")]
         public void CanGetVersion()
         {
@@ -16,13 +20,21 @@ namespace Adrien.Tests
             Assert.False(string.IsNullOrEmpty(plaidml.PlaidmlGetVersion()));
         }
 
-        [Fact(DisplayName = "Can construct PlaidML Context class")]
+        [Fact(DisplayName = "Can construct PlaidML Context")]
         public void CanCreateCtx()
         {
             Context ctx = new Context();
             Assert.True(ctx.IsAllocated);
             ctx.Free();
             Assert.False(ctx.IsAllocated);
+        }
+
+        [Fact(DisplayName = "Can load PlaidML settings")]
+        public void CanLoadSettings()
+        {
+            Settings settings = new Settings();
+            Assert.True(settings.IsLoaded);
+            Assert.True(settings.Dict.ContainsKey("platform"));
         }
     }
 }

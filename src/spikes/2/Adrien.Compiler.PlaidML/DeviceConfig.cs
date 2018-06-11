@@ -4,7 +4,13 @@ using System.Text;
 
 namespace Adrien.Compiler.PlaidML
 {
-    class DeviceConfig
+    public class DeviceConfig : PlaidMLApi<DeviceConfig>
     {
+        public DeviceConfig(Context ctx) : base(ctx) {}
+
+        public override void Free()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
