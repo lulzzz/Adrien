@@ -8,29 +8,47 @@ namespace Adrien.Compiler.PlaidML
 {
     public class DeviceEnumerator : PlaidMLApi<DeviceEnumerator>
     {
-        public DeviceEnumerator(Context context, string config = "") : base(context)
+        public DeviceEnumerator(Context ctx, string config = "") : base(ctx, config)
         {
-            ctx.ThrowIfNotAllocated();
-            if (config.IsNotNullOrEmpty())
+            ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(context, context.settings.ConfigFileText, IntPtr.Zero, IntPtr.Zero);
+            if (ptr.IsZero())
             {
-                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(ctx, config, IntPtr.Zero, IntPtr.Zero);
+                ReportApiCallError("plaidml_alloc_device_enumerator_with_config");
             }
             else
             {
-                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumerator(ctx, IntPtr.Zero, IntPtr.Zero);
+                IsAllocated = true;
             }
-            IsAllocated = ptr.IsNotZero();
         }
 
         #region Overriden members
         public override void Free()
         {
+            base.Free();
             plaidml.__Internal.PlaidmlFreeDeviceEnumerator(ptr);
         }
         #endregion
 
-        #region Prroperties
-         
+        #region Properties
+        public List<DeviceConfig> ValidDevices
+        {
+            get
+            {
+
+                int count = (int) plaidml.__Internal.PlaidmlGetDevconfCount(this.context, this, true);
+                if (count == 0)
+                {
+                    throw new Exception("plaidml_get_devconf_count returned 0 devices.");
+                }
+                List<DeviceConfig> vd = new List<DeviceConfig>(count);
+                for (int i = 0; i < count; i++)
+                {
+                    vd.Add(new DeviceConfig(context, this, (ulong) i, ManualConfigText));
+                }
+                return vd;
+            }
+        }
+        public List<DeviceConfig> InvalidDevices { get; protected set; }
         #endregion
 
 

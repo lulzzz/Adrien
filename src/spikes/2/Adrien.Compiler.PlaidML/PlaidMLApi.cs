@@ -9,27 +9,43 @@ namespace Adrien.Compiler.PlaidML
     public abstract class PlaidMLApi<T> : CompilerApi<T>, IDisposable
     {
         #region Constructors
-        public PlaidMLApi(Context context) : base()
+        public PlaidMLApi(Context ctx, string manualConfigText = "") : base()
         {
-            context.ThrowIfNotAllocated();
-            this.ctx = context;
+            ctx.ThrowIfNotAllocated();
+            this.context = ctx;
+            ManualConfigText = manualConfigText;
+            
         }
         #endregion
 
         #region Properties
-        public bool IsAllocated { get; protected set; }
+        public bool IsAllocated { get; protected set; } = false;
         public VaiStatus LastStatus { get; protected set; }
         public string LastStatusString { get; protected set; }
+        public string ManualConfigText { get; protected set; }
+
+        public string Config
+        {
+            get
+            {
+                return ManualConfigText.IsNullOrEmpty() ? ManualConfigText : context.settings.ConfigFileText;
+            }
+        }
         #endregion
 
         #region Methods
-        public abstract void Free();
+        public virtual void Free()
+        {
+            ThrowIfNotAllocated();
+            ptr = IntPtr.Zero;
+            IsAllocated = false;
+        }
 
         internal void ThrowIfNotAllocated()
         {
             if (!IsAllocated)
             {
-                throw new InvalidOperationException($"This context is not allocated");
+                throw new InvalidOperationException($"This object is not allocated");
             }
         }
 
@@ -53,7 +69,7 @@ namespace Adrien.Compiler.PlaidML
         #endregion
 
         #region Fields
-        protected Context ctx;
+        protected Context context;
         protected IntPtr ptr;
         #endregion
 

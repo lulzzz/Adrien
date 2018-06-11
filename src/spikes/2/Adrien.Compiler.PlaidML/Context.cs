@@ -34,6 +34,13 @@ namespace Adrien.Compiler.PlaidML
             {
                 Info($"PlaidML log file is {GetAssemblyDirectoryFullPath(logFileName)}.");
             }
+            else
+            {
+                ReportApiCallError("vai_set_event_log");
+            }
+
+            settings = new Settings();
+
             IsAllocated = true;
         }
 
@@ -44,6 +51,8 @@ namespace Adrien.Compiler.PlaidML
         public bool IsAllocated { get; protected set; }
         public VaiStatus LastStatus { get; protected set; }
         public string LastStatusString { get; protected set; }
+
+        public Settings settings { get; protected set; }
         #endregion
 
         #region Methods

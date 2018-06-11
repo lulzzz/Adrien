@@ -10,6 +10,19 @@ namespace Adrien.Compiler.PlaidML
     public class Settings : CompilerApi<Settings>
     {
         #region Constructors
+        static Settings()
+        {
+            if (Environment.GetEnvironmentVariable("PLAIDML_DEFAULT_CONFIG").IsNullOrEmpty())
+            {
+                Environment.SetEnvironmentVariable("PLAIDML_DEFAULT_CONFIG", GetAssemblyDirectoryFullPath("config.json"));
+            }
+
+            if (Environment.GetEnvironmentVariable("PLAIDML_EXPERIMENTAL_CONFIG").IsNullOrEmpty())
+            {
+                Environment.SetEnvironmentVariable("PLAIDML_EXPERIMENTAL_CONFIG", GetAssemblyDirectoryFullPath("experimental.json"));
+            }
+        }
+
         public Settings()
         {
             if (EnvironmentConfigFile != null && EnvironmentConfigFile.Exists)
@@ -45,10 +58,7 @@ namespace Adrien.Compiler.PlaidML
             ? new FileInfo(Environment.GetEnvironmentVariable(SETTINGS_VAR))
             : null;
 
-
         public static FileInfo UserConfigFile = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".plaidml"));
-
-
 
         public static FileInfo DefaultConfigFile = Environment.GetEnvironmentVariable("PLAIDML_DEFAULT_CONFIG").IsNotNullOrEmpty() 
             ? new FileInfo(Environment.GetEnvironmentVariable("PLAIDML_DEFAULT_CONFIG"))
@@ -64,9 +74,24 @@ namespace Adrien.Compiler.PlaidML
         public Dictionary<string, object> Dict { get; protected set; }
 
         public bool IsLoaded { get; protected set; }
+
+        public string SessionId { get; protected set; }
+
+        public bool SessionStarted { get; protected set; }
+
+        public string ConfigFileText { get; protected set; }
         #endregion
 
         #region Methods
+        public string StartNewSession()
+        {
+            ThrowIfNotLoaded();
+            ThrowIfSessionStarted();
+            SessionId = Guid.NewGuid().ToString("D");
+            Environment.SetEnvironmentVariable(SESSION_VAR, SessionId);
+            return SessionId;
+
+        }
         protected bool Load()
         {
             try
@@ -75,6 +100,8 @@ namespace Adrien.Compiler.PlaidML
                 Dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(c);
                 if (Dict != null && Dict.Count > 0)
                 {
+                    Environment.SetEnvironmentVariable(CONFIG_FILE_VAR, ConfigFile.FullName);
+                    ConfigFileText = c;
                     Info("Loaded configuration from file {0}.", ConfigFile.FullName);
                 }
                 IsLoaded = true;
@@ -94,9 +121,16 @@ namespace Adrien.Compiler.PlaidML
                 throw new InvalidOperationException("Settings are not loaded.");
             }
         }
+
+        protected void ThrowIfSessionStarted()
+        {
+            if (SessionStarted)
+            {
+                throw new InvalidOperationException("A session has already been started.");
+            }
+        }
         #endregion
 
-        #region Operators
         #region Operators
         public object this[string key]
         {
@@ -108,6 +142,6 @@ namespace Adrien.Compiler.PlaidML
             }
         }
         #endregion
-        #endregion
+        
     }
 }

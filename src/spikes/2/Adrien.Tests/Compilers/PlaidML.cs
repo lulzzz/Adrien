@@ -11,7 +11,7 @@ namespace Adrien.Tests.Compilers
     {
         public PlaidMLCompilerTests()
         {
-            Driver.CreateDefaultLogger();
+            Driver.CreateDefaultLogger("Adrien.Tests.log");
         }
         [Fact(DisplayName = "Can call PlaidML GetVersion")]
         public void CanGetVersion()
@@ -35,6 +35,15 @@ namespace Adrien.Tests.Compilers
             Settings settings = new Settings();
             Assert.True(settings.IsLoaded);
             Assert.True(settings.Dict.ContainsKey("platform"));
+        }
+
+        [Fact(DisplayName = "Can get PlaidML valid devices")]
+        public void CanGetValidDevices()
+        {
+            DeviceEnumerator e = new DeviceEnumerator(new Context());
+            Assert.True(e.ValidDevices.Count > 0);
+            DeviceConfig d = e.ValidDevices[0];
+            Assert.True(d.Id > 0);
         }
     }
 }
