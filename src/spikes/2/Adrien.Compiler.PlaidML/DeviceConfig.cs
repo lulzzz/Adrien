@@ -28,10 +28,6 @@ namespace Adrien.Compiler.PlaidML
         #endregion
 
         #region Overriden members
-        public override void Free()
-        {
-            throw new NotImplementedException();
-        }
         #endregion
 
         #region Properties

@@ -27,7 +27,7 @@ namespace Adrien.Compiler.PlaidML
             else
             {
                 DeviceConfig = devconf;
-                Buffers = new List<Buffer>();
+                Buffers = new List<DeviceBuffer>();
                 IsAllocated = true;
                 IsOpen = true;
             }
@@ -39,11 +39,11 @@ namespace Adrien.Compiler.PlaidML
         #region Overriden members
         public override void Free()
         {
-            base.Free();
             if (this.IsOpen)
             {
                 this.Close();
             }
+            base.Free();
         }
         #endregion
 
@@ -52,7 +52,7 @@ namespace Adrien.Compiler.PlaidML
         public bool IsOpen { get; protected set; }
         public bool IsClosed { get; protected set; }
 
-        public List<Buffer> Buffers { get; protected set; }
+        public List<DeviceBuffer> Buffers { get; protected set; }
         #endregion
 
         #region Methods
@@ -79,11 +79,7 @@ namespace Adrien.Compiler.PlaidML
 
         public void CreateBuffer(Shape shape)
         {
-            Buffer buffer = new Buffer(this.context, this, shape);
-            if (buffer.IsAllocated)
-            {
-                this.Buffers.Add(buffer);
-            }
+            DeviceBuffer buffer = new DeviceBuffer(this.context, this, shape);
         }
 
         #endregion

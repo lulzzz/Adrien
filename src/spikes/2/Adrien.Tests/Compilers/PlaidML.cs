@@ -23,7 +23,7 @@ namespace Adrien.Tests.Compilers
             Assert.False(string.IsNullOrEmpty(plaidml.PlaidmlGetVersion()));
         }
 
-        [Fact(DisplayName = "Can construct PlaidML Context")]
+        [Fact(DisplayName = "Can construct a PlaidML context")]
         public void CanCreateCtx()
         {
             Context ctx = new Context();
@@ -60,13 +60,37 @@ namespace Adrien.Tests.Compilers
             Device device = new Device(context);
             Assert.True(device.IsAllocated);
             Assert.True(device.IsOpen);
+            device.Close();
+            Assert.True(device.IsClosed);
+            device.Free();
+            Assert.False(device.IsAllocated);
         }
 
         [Fact(DisplayName = "Can construct a PlaidML shape")]
         public void CanConstructShape()
         {
             Shape s = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT32, 4);
+            Assert.True(s.IsAllocated);
             Assert.Equal(PlaidmlDatatype.PLAIDML_DATA_FLOAT32, s.DataType);
+            Assert.Equal(1ul, s.DimensionCount);
+            (ulong size, long stride) dim = s.Dimensions[0];
+            Assert.Equal(4ul, dim.size);
+            Assert.Equal(1L, dim.stride);
+        }
+
+        [Fact(DisplayName = "Can construct a PlaidML buffer")]
+        public void CanConstructBuffer()
+        {
+            Device device = new Device(context);
+            Shape s1 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT32, 4, 8, 8);
+            device.CreateBuffer(s1);
+            Assert.Single(device.Buffers);
+            DeviceBuffer buffer = device.Buffers[0];
+            Assert.Equal(8UL * 8 * 4 * 4, buffer.Size);
+            Shape s2 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT64, 13, 5);
+            device.CreateBuffer(s2);
+            buffer = device.Buffers[1];
+            Assert.Equal((13UL * 5 * 8), buffer.Size);
         }
     }
 }

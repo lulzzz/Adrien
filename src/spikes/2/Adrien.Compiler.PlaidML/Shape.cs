@@ -45,8 +45,8 @@ namespace Adrien.Compiler.PlaidML
         #region Overriden members
         public override void Free()
         {
-            base.Free();
             plaidml.__Internal.PlaidmlFreeShape(this);
+            base.Free();
         }
         #endregion
 

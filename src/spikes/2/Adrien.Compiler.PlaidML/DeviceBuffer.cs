@@ -6,10 +6,10 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class Buffer : PlaidMLApi<Buffer>
+    public class DeviceBuffer : PlaidMLApi<DeviceBuffer>
     {
         #region Constructors
-        public Buffer(Context ctx, Device device, Shape shape) : base(ctx)
+        public DeviceBuffer(Context ctx, Device device, Shape shape) : base(ctx)
         {
             Size = plaidml.__Internal.PlaidmlGetShapeBufferSize(shape);
             if (Size == 0)
@@ -37,8 +37,9 @@ namespace Adrien.Compiler.PlaidML
         #region Overriden members
         public override void Free()
         {
-            base.Free();
             plaidml.__Internal.PlaidmlFreeBuffer(this);
+            base.Free();
+            
         }
         #endregion
 
