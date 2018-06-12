@@ -106,18 +106,21 @@ namespace Adrien.Compiler.PlaidML
                 }
                 else
                 {
+                    string result = ""; ;
                     int bufferSize = (int)*sizeRequired;
                     IntPtr buffer = Marshal.AllocHGlobal(bufferSize);
                     r = plaidml.__Internal.PlaidmlQueryDevconf(context, this, property, buffer, *sizeRequired, sizeRequired);
                     if (!r)
                     {
                         ReportApiCallError("plaidml_query_dev_conf");
-                        return string.Empty;
+                        result = string.Empty;
                     }
                     else
                     {
-                        return Marshal.PtrToStringAnsi(buffer);
+                        result = Marshal.PtrToStringAnsi(buffer);
                     }
+                    Marshal.FreeHGlobal(buffer);
+                    return result;
                 }
             }
         }

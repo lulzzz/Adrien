@@ -100,6 +100,8 @@ namespace Adrien.Compiler.PlaidML
             }
             
         }
+
+        public bool IsManualConfig => ManualConfigText.IsNotNullOrEmpty();
         #endregion
 
         #region Methods

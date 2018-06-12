@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 using Adrien.Compiler.PlaidML.Bindings;
@@ -10,7 +11,16 @@ namespace Adrien.Compiler.PlaidML
     {
         public DeviceEnumerator(Context ctx) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(context, context.settings.Config, IntPtr.Zero, IntPtr.Zero);
+            if (context.settings.IsManualConfig)
+            {
+                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(context, context.settings.Config, IntPtr.Zero, IntPtr.Zero);
+
+            }
+            else
+            {
+                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumerator(context, IntPtr.Zero, IntPtr.Zero);
+
+            }
             if (ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_device_enumerator_with_config");
@@ -51,6 +61,20 @@ namespace Adrien.Compiler.PlaidML
         public List<DeviceConfig> InvalidDevices { get; protected set; }
         #endregion
 
-
+        #region Methods
+        public string GetConfigSource()
+        {
+            IntPtr r = plaidml.__Internal.PlaidmlGetEnumeratorConfigSource(this);
+            if (r.IsZero())
+            {
+                ReportApiCallError("plaidml_get_enumerator_config_source");
+                return string.Empty;
+            }
+            else
+            {
+                return Marshal.PtrToStringAnsi(r);
+            }
+        }
+        #endregion
     }
 }

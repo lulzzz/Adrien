@@ -12,7 +12,7 @@ namespace Adrien.Compiler.PlaidML
     public class Context : CompilerApi<Context>
     {
         #region Constructors
-        public Context(string logFileName)
+        public Context(string eventLogFileName)
         {            
             ptr = @base.__Internal.VaiAllocCtx();
             if (ptr.IsZero())
@@ -24,15 +24,14 @@ namespace Adrien.Compiler.PlaidML
 
             Dictionary<string, string> _logConfig = new Dictionary<string, string>
             {
-
                 {"@type", "type.vertex.ai/vertexai.eventing.file.proto.EventLog"},
-                { "filename", logFileName }
+                { "filename", eventLogFileName }
             };
             string logConfig = JsonConvert.SerializeObject(_logConfig);
 
             if (@base.__Internal.VaiSetEventlog(ptr, logConfig))
             {
-                Info($"PlaidML log file is {GetAssemblyDirectoryFullPath(logFileName)}.");
+                Info($"PlaidML event log file is {GetAssemblyDirectoryFullPath(eventLogFileName)}.");
             }
             else
             {

@@ -9,9 +9,12 @@ namespace Adrien.Tests.Compilers
 {
     public class PlaidMLCompilerTests
     {
+        protected Context context;
+
         public PlaidMLCompilerTests()
         {
             Driver.CreateDefaultLogger("Adrien.Tests.log");
+            context = new Context();
         }
         [Fact(DisplayName = "Can call PlaidML GetVersion")]
         public void CanGetVersion()
@@ -47,6 +50,23 @@ namespace Adrien.Tests.Compilers
             Assert.True(d.Config.IsNotNullOrEmpty());
             Assert.True(d.Description.IsNotNullOrEmpty());
             Assert.True(d.Details.IsNotNullOrEmpty());
+            Assert.True(e.GetConfigSource().IsNotNullOrEmpty());
+            e.Free();
+        }
+
+        [Fact(DisplayName = "Can open a PlaidML device")]
+        public void CanOpenDevice()
+        {
+            Device device = new Device(context);
+            Assert.True(device.IsAllocated);
+            Assert.True(device.IsOpen);
+        }
+
+        [Fact(DisplayName = "Can construct a PlaidML shape")]
+        public void CanConstructShape()
+        {
+            Shape s = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT32, 4);
+            Assert.Equal(PlaidmlDatatype.PLAIDML_DATA_FLOAT32, s.DataType);
         }
     }
 }
