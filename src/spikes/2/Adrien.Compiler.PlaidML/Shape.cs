@@ -20,7 +20,6 @@ namespace Adrien.Compiler.PlaidML
             }
             else
             {
-                DataType = datatype;
                 IsAllocated = true;
                 int stride = 1;
                 for (int i = 0; i < dimensions.Length; i++)
@@ -40,18 +39,31 @@ namespace Adrien.Compiler.PlaidML
                 }
             }
         }
+
+        public Shape(Context ctx, IntPtr p) : base(ctx)
+        {
+            this.ptr = p;
+        }
+
         #endregion
 
         #region Overriden members
         public override void Free()
         {
-            plaidml.__Internal.PlaidmlFreeShape(this);
             base.Free();
+            plaidml.__Internal.PlaidmlFreeShape(this);
         }
         #endregion
 
         #region Properties
-        public PlaidmlDatatype DataType { get; protected set; }
+        public PlaidmlDatatype DataType
+        {
+            get
+            {
+                ThrowIfNotAllocated();
+                return plaidml.__Internal.PlaidmlGetShapeType(this);
+            }
+        }
 
         public ulong Offset
         {
@@ -82,7 +94,20 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
-       
+        public List<(ulong size, long stride)> Dimensions
+        {
+            get
+            {
+                ThrowIfNotAllocated();
+                if (this.DimensionCount == 0)
+                {
+                    return null;
+                }
+                return Enumerable.Range(0, (int)this.DimensionCount)
+                    .Select(i => (GetDimensionSize((ulong)i), GetDimensionStride((ulong)i))).ToList();
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -96,19 +121,6 @@ namespace Adrien.Compiler.PlaidML
             return plaidml.__Internal.PlaidmlGetShapeDimensionSize(this, dimension);
         }
 
-        public List<(ulong, long)> Dimensions
-        {
-            get
-            {
-                if (this.DimensionCount == 0)
-                {
-                    return null;
-                }
-                return Enumerable.Range(0, (int)this.DimensionCount)
-                    .Select(i => (GetDimensionSize((ulong) i), GetDimensionStride((ulong) i))).ToList();
-            }
-        }
-
         public bool AddDimension(ulong size, long stride)
         {
             ThrowIfNotAllocated();
@@ -118,6 +130,17 @@ namespace Adrien.Compiler.PlaidML
                 ReportApiCallError("plaidml_add_dimension");
             }
             return r;
+        }
+        #endregion
+
+        #region Operators
+        public (ulong size, long stride) this[int i]
+        {
+            get
+            {
+                ThrowIfNotAllocated();
+                return Dimensions[i];
+            }
         }
         #endregion
     }

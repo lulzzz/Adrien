@@ -22,6 +22,7 @@ namespace Adrien.Compiler.PlaidML
                 Id = id;
                 Code = code;
                 IsAllocated = true;
+                Info("Added function Id:{0} Code={1}", Id, Code);
             }
 
         }
@@ -30,8 +31,8 @@ namespace Adrien.Compiler.PlaidML
         #region Overriden members
         public override void Free()
         {
-            plaidml.__Internal.PlaidmlFreeFunction(this);
             base.Free();
+            plaidml.__Internal.PlaidmlFreeFunction(this);
         }
         #endregion
 

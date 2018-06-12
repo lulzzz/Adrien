@@ -17,6 +17,14 @@ namespace Adrien.Compiler.PlaidML
         #endregion
 
         #region Properties
+        public Context Context
+        {
+            get
+            {
+                ThrowIfNotAllocated();
+                return context;
+            }
+        }
         public bool IsAllocated { get; protected set; } = false;
         public VaiStatus LastStatus { get; protected set; }
         public string LastStatusString { get; protected set; }

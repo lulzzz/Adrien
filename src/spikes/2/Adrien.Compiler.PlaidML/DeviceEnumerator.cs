@@ -34,8 +34,8 @@ namespace Adrien.Compiler.PlaidML
         #region Overriden members
         public override void Free()
         {
-            plaidml.__Internal.PlaidmlFreeDeviceEnumerator(ptr);
             base.Free();
+            plaidml.__Internal.PlaidmlFreeDeviceEnumerator(ptr);
         }
         #endregion
 
@@ -45,7 +45,7 @@ namespace Adrien.Compiler.PlaidML
             get
             {
 
-                int count = (int) plaidml.__Internal.PlaidmlGetDevconfCount(this.context, this, true);
+                int count = (int)plaidml.__Internal.PlaidmlGetDevconfCount(this.context, this, true);
                 if (count == 0)
                 {
                     throw new Exception("plaidml_get_devconf_count returned 0 devices.");
@@ -53,12 +53,11 @@ namespace Adrien.Compiler.PlaidML
                 List<DeviceConfig> vd = new List<DeviceConfig>(count);
                 for (int i = 0; i < count; i++)
                 {
-                    vd.Add(new DeviceConfig(context, this, (ulong) i));
+                    vd.Add(new DeviceConfig(context, this, (ulong)i));
                 }
                 return vd;
             }
         }
-        public List<DeviceConfig> InvalidDevices { get; protected set; }
         #endregion
 
         #region Methods

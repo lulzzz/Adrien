@@ -37,9 +37,8 @@ namespace Adrien.Compiler.PlaidML
         #region Overriden members
         public override void Free()
         {
-            plaidml.__Internal.PlaidmlFreeBuffer(this);
             base.Free();
-            
+            plaidml.__Internal.PlaidmlFreeBuffer(this);
         }
         #endregion
 
