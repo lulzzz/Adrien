@@ -9,6 +9,7 @@ namespace Adrien.Compiler.PlaidML
 {
     public class DeviceEnumerator : PlaidMLApi<DeviceEnumerator>
     {
+        #region Constructors
         public DeviceEnumerator(Context ctx) : base(ctx)
         {
             if (context.settings.IsManualConfig)
@@ -30,12 +31,14 @@ namespace Adrien.Compiler.PlaidML
                 IsAllocated = true;
             }
         }
+        #endregion
 
         #region Overriden members
         public override void Free()
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeDeviceEnumerator(ptr);
+            ptr = IntPtr.Zero;
         }
         #endregion
 

@@ -83,6 +83,7 @@ namespace Adrien.Compiler.PlaidML
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeVar(ptr);
+            ptr = IntPtr.Zero;
         }
         #endregion
 

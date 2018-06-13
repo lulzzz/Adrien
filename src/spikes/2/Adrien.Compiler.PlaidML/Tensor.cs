@@ -30,7 +30,6 @@ namespace Adrien.Compiler.PlaidML
             {
                 Device = device;
                 Buffer = buffer;
-                Shape = shape;
                 IsAllocated = true;
             }
         }
@@ -40,6 +39,13 @@ namespace Adrien.Compiler.PlaidML
         public Device Device { get; protected set; }
         public DeviceBuffer Buffer { get; protected set; }
         public Shape Shape { get; protected set; }
+        #endregion
+
+        #region Methods
+        public MemoryView<T> CreateMemoryView<T>(bool discard = true) where T : unmanaged
+        {
+            return new MemoryView<T>(new MemoryMapping(Buffer, discard));
+        }
         #endregion
     }
 }

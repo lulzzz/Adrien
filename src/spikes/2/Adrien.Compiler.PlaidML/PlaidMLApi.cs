@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 using Adrien.Compiler.PlaidML.Bindings;
@@ -35,10 +36,10 @@ namespace Adrien.Compiler.PlaidML
         public virtual void Free()
         {
             ThrowIfNotAllocated();
-            ptr = IntPtr.Zero;
             IsAllocated = false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void ThrowIfNotAllocated()
         {
             if (!IsAllocated)

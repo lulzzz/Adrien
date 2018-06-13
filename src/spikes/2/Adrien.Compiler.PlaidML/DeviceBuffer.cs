@@ -39,6 +39,7 @@ namespace Adrien.Compiler.PlaidML
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeBuffer(this);
+            ptr = IntPtr.Zero;
         }
         #endregion
 

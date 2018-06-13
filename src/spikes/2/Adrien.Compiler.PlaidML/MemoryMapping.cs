@@ -8,10 +8,10 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class Mapping : PlaidMLApi<Mapping>
+    public class MemoryMapping : PlaidMLApi<MemoryMapping>
     {
         #region Constructors
-        public Mapping(DeviceBuffer buffer, bool discard = false) : base(buffer.Context)
+        public MemoryMapping(DeviceBuffer buffer, bool discard = true) : base(buffer.Context)
         {
             if (discard)
             {
@@ -30,6 +30,7 @@ namespace Adrien.Compiler.PlaidML
             {
                 Buffer = buffer;
                 IsAllocated = true;
+                IsValid = true;
             }
         }
         #endregion
@@ -38,7 +39,8 @@ namespace Adrien.Compiler.PlaidML
         public override void Free()
         {
             base.Free();
-            plaidml.__Internal.PlaidmlFreeMapping(this);
+            plaidml.__Internal.PlaidmlFreeMapping(this.ptr);
+            ptr = IntPtr.Zero;
         }
         #endregion
 
@@ -50,6 +52,7 @@ namespace Adrien.Compiler.PlaidML
             get
             {
                 ThrowIfNotAllocated();
+                ThrowIfNotValid();
                 unsafe
                 {
                     void *_r = plaidml.__Internal.PlaidmlGetMappingBase(context, this);
@@ -63,27 +66,50 @@ namespace Adrien.Compiler.PlaidML
             get
             {
                 ThrowIfNotAllocated();
+                ThrowIfNotValid();
                 return plaidml.__Internal.PlaidmlGetMappingSize(context, this);
             }
         }
+
+        public bool IsValid { get; protected set; }
         #endregion
 
         #region Methods
         public bool Writeback()
         {
             ThrowIfNotAllocated();
+            ThrowIfNotValid();
             bool r = plaidml.__Internal.PlaidmlWritebackMapping(context, this);
             if (!r)
             {
                 ReportApiCallError("plaidml_writeback_mapping");
+            }
+            else
+            {
+                Invalidate();
             }
             return r;
         }
 
         public unsafe Span<T> GetSpan<T>() where T : unmanaged
         {
+            ThrowIfNotValid();
             return new Span<T>(BaseAddress.ToPointer(), (int)(SizeInBytes / (ulong)sizeof(T)));
         }
+
+        internal void ThrowIfNotValid()
+        {
+            if (!IsValid)
+            {
+                throw new InvalidOperationException("This mapping has been invalidated.");
+            }
+        }
+
+        protected void Invalidate()
+        {
+            IsValid = false;
+        }
+
         #endregion
     }
 }

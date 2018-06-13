@@ -6,9 +6,9 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class Frontend : PlaidMLApi<Frontend>
+    public class Compiler : PlaidMLApi<Compiler>
     {
-        public Frontend() : base(new Context())
+        public Compiler() : base(new Context())
         {    
             SessionId = Settings.StartNewSession();
             DeviceEnumerator = new DeviceEnumerator(context);
@@ -34,7 +34,7 @@ namespace Adrien.Compiler.PlaidML
         {
             if (!Initialized)
             {
-                throw new InvalidOperationException("This frontend is not initialized.");
+                throw new InvalidOperationException("This compiler instance is not initialized.");
             }
         }
 
@@ -54,7 +54,7 @@ namespace Adrien.Compiler.PlaidML
 
         public Shape CreateShape<T>(params int[] dimensions) where T : unmanaged
         {
-
+            ThrowIfNotInitialized();
             PlaidmlDatatype datatype = Shape.ToDataType<T>();
             return new Shape(context, datatype, dimensions);
         }

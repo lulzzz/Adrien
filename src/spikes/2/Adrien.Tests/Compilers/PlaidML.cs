@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 using Xunit;
 
@@ -103,9 +104,24 @@ namespace Adrien.Tests.Compilers
             Assert.Single(device.Buffers);
             DeviceBuffer buffer = device.Buffers[0];
             Assert.Equal(8UL * 8 * 4 * 8, buffer.SizeInBytes);
-            Mapping m = new Mapping(buffer);
+            MemoryMapping m = new MemoryMapping(buffer);
             Span<long> span = m.GetSpan<long>();
             Assert.Equal((int) s1.ElementCount, span.Length);
+        }
+
+        [Fact]
+        public void CanConstructMemoryView()
+        {
+            Device device = new Device(context);
+            Shape s1 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT64, 2, 3);
+            Tensor t = new Tensor(device, s1);
+            MemoryView<Int64> v = t.CreateMemoryView<long>();
+            Int64[,] array = { { 0, 1, 3 }, { 4, 5, 6 } };
+            v.CopyFrom(array.Flatten<Int64>().ToArray());
+            v.Free();
+            MemoryView<Int64> v2 = t.CreateMemoryView<long>();
+            Assert.Equal(3, v2[2]);
+            Assert.Equal(6, v2[5]);
         }
     }
 }
