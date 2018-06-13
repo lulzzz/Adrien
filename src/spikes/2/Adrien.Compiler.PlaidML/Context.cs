@@ -12,7 +12,7 @@ namespace Adrien.Compiler.PlaidML
     public class Context : CompilerApi<Context>
     {
         #region Constructors
-        public Context(string eventLogFileName)
+        public Context(string eventLogFileName, string manualConfigText = "")
         {            
             ptr = @base.__Internal.VaiAllocCtx();
             if (ptr.IsZero())
@@ -38,7 +38,7 @@ namespace Adrien.Compiler.PlaidML
                 ReportApiCallError("vai_set_event_log");
             }
 
-            settings = new Settings();
+            settings = new Settings(manualConfigText);
 
             IsAllocated = true;
         }

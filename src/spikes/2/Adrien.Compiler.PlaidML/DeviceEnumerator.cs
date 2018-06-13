@@ -40,6 +40,15 @@ namespace Adrien.Compiler.PlaidML
         #endregion
 
         #region Properties
+        public int Count
+        {
+            get
+            {
+                ThrowIfNotAllocated();
+                return (int)plaidml.__Internal.PlaidmlGetDevconfCount(this.context, this, true);
+            }
+        }
+
         public List<DeviceConfig> ValidDevices
         {
             get
@@ -48,7 +57,7 @@ namespace Adrien.Compiler.PlaidML
                 int count = (int)plaidml.__Internal.PlaidmlGetDevconfCount(this.context, this, true);
                 if (count == 0)
                 {
-                    throw new Exception("plaidml_get_devconf_count returned 0 devices.");
+                    return null;
                 }
                 List<DeviceConfig> vd = new List<DeviceConfig>(count);
                 for (int i = 0; i < count; i++)

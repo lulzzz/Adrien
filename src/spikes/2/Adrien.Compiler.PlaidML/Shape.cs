@@ -35,7 +35,7 @@ namespace Adrien.Compiler.PlaidML
                     {
                         stride /= dimension;
                     }
-                    this.AddDimension((ulong) dimension, stride);
+                    this.AddDimension((ulong)dimension, stride);
                 }
             }
         }
@@ -80,7 +80,7 @@ namespace Adrien.Compiler.PlaidML
                 if (!r)
                 {
                     ReportApiCallError("plaidml_shape_offset");
-            
+
                 }
             }
         }
@@ -94,7 +94,16 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
-        public List<(ulong size, long stride)> Dimensions
+        public ulong ElementCount
+        {
+            get
+            {
+                ThrowIfNotAllocated();
+                return plaidml.__Internal.PlaidmlGetShapeElementCount(this);
+            }
+        }
+
+        public List<(ulong length, long stride)> Dimensions
         {
             get
             {
@@ -104,27 +113,81 @@ namespace Adrien.Compiler.PlaidML
                     return null;
                 }
                 return Enumerable.Range(0, (int)this.DimensionCount)
-                    .Select(i => (GetDimensionSize((ulong)i), GetDimensionStride((ulong)i))).ToList();
+                    .Select(i => (GetDimensionLength((ulong)i), GetDimensionStride((ulong)i))).ToList();
             }
         }
-
         #endregion
 
         #region Methods
+        public static PlaidmlDatatype ToDataType<T>() where T : unmanaged
+        {
+            PlaidmlDatatype datatype = PlaidmlDatatype.PLAIDML_DATA_INVALID;
+            T t = default;
+            switch (t)
+            {
+                case Boolean _:
+                    datatype = PlaidmlDatatype.PLAIDML_DATA_BOOLEAN;
+                    break;
+
+                case SByte _:
+                    datatype = PlaidmlDatatype.PLAIDML_DATA_INT8;
+                    break;
+
+                case Byte _:
+                    datatype = PlaidmlDatatype.PLAIDML_DATA_UINT8;
+                    break;
+
+                case Int16 _:
+                    datatype = PlaidmlDatatype.PLAIDML_DATA_INT16;
+                    break;
+
+                case UInt16 _:
+                    datatype = PlaidmlDatatype.PLAIDML_DATA_UINT16;
+                    break;
+
+                case Int32 _:
+                    datatype = PlaidmlDatatype.PLAIDML_DATA_INT32;
+                    break;
+
+                case UInt32 _:
+                    datatype = PlaidmlDatatype.PLAIDML_DATA_UINT32;
+                    break;
+
+                case Int64 _:
+                    datatype = PlaidmlDatatype.PLAIDML_DATA_INT64;
+                    break;
+
+                case UInt64 _:
+                    datatype = PlaidmlDatatype.PLAIDML_DATA_UINT64;
+                    break;
+
+                case float _:
+                    datatype = PlaidmlDatatype.PLAIDML_DATA_FLOAT32;
+                    break;
+
+                case Double _:
+                    datatype = PlaidmlDatatype.PLAIDML_DATA_FLOAT64;
+                    break;
+                default:
+                    throw new Exception($"This .NET type is not supported as a PlaidML datatype:{typeof(T).Name}");
+            }
+            return datatype;
+        }
+
         public long GetDimensionStride(ulong dimension)
         {
             return plaidml.__Internal.PlaidmlGetShapeDimensionStride(this, dimension);
         }
 
-        public ulong GetDimensionSize(ulong dimension)
+        public ulong GetDimensionLength(ulong dimension)
         {
             return plaidml.__Internal.PlaidmlGetShapeDimensionSize(this, dimension);
         }
 
-        public bool AddDimension(ulong size, long stride)
+        public bool AddDimension(ulong length, long stride)
         {
             ThrowIfNotAllocated();
-            bool r = plaidml.__Internal.PlaidmlAddDimension(context, this, size, stride);
+            bool r = plaidml.__Internal.PlaidmlAddDimension(context, this, length, stride);
             if (!r)
             {
                 ReportApiCallError("plaidml_add_dimension");
@@ -134,7 +197,7 @@ namespace Adrien.Compiler.PlaidML
         #endregion
 
         #region Operators
-        public (ulong size, long stride) this[int i]
+        public (ulong length, long stride) this[int i]
         {
             get
             {

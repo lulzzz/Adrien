@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Buffers;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -29,7 +30,6 @@ namespace Adrien.Compiler.PlaidML
             {
                 Buffer = buffer;
                 IsAllocated = true;
-                
             }
         }
         #endregion
@@ -45,28 +45,20 @@ namespace Adrien.Compiler.PlaidML
         #region Properties
         public DeviceBuffer Buffer { get; protected set; }
 
-        public string BaseAddress
+        public IntPtr BaseAddress
         {
             get
             {
                 ThrowIfNotAllocated();
                 unsafe
                 {
-                    sbyte *_r = plaidml.__Internal.PlaidmlGetMappingBase(context, this);
-                    IntPtr r = new IntPtr(_r);
-                    if (r.IsZero())
-                    {
-                        return string.Empty;
-                    }
-                    else
-                    {
-                        return Marshal.PtrToStringAnsi(r);
-                    }
+                    void *_r = plaidml.__Internal.PlaidmlGetMappingBase(context, this);
+                    return new IntPtr(_r);
                 }
             }
         }
 
-        public ulong Size
+        public ulong SizeInBytes
         {
             get
             {
@@ -79,12 +71,18 @@ namespace Adrien.Compiler.PlaidML
         #region Methods
         public bool Writeback()
         {
+            ThrowIfNotAllocated();
             bool r = plaidml.__Internal.PlaidmlWritebackMapping(context, this);
             if (!r)
             {
                 ReportApiCallError("plaidml_writeback_mapping");
             }
             return r;
+        }
+
+        public unsafe Span<T> GetSpan<T>() where T : unmanaged
+        {
+            return new Span<T>(BaseAddress.ToPointer(), (int)(SizeInBytes / (ulong)sizeof(T)));
         }
         #endregion
     }

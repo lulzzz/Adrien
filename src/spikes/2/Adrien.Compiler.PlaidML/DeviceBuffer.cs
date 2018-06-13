@@ -11,13 +11,13 @@ namespace Adrien.Compiler.PlaidML
         #region Constructors
         public DeviceBuffer(Context ctx, Device device, Shape shape) : base(ctx)
         {
-            Size = plaidml.__Internal.PlaidmlGetShapeBufferSize(shape);
-            if (Size == 0)
+            SizeInBytes = plaidml.__Internal.PlaidmlGetShapeBufferSize(shape);
+            if (SizeInBytes == 0)
             {
                 Error("plaidml_get_shape_buffer_size returned 0.");
                 return;
             }
-            ptr = plaidml.__Internal.PlaidmlAllocBuffer(context, device, Size);
+            ptr = plaidml.__Internal.PlaidmlAllocBuffer(context, device, SizeInBytes);
             if (ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_buffer");
@@ -45,7 +45,7 @@ namespace Adrien.Compiler.PlaidML
         #region Properties
         public Device Device { get; protected set; }
         public Shape Shape { get; protected set; }
-        public ulong Size { get; protected set; }
+        public ulong SizeInBytes { get; protected set; }
         #endregion
 
     }
