@@ -77,9 +77,9 @@ namespace Adrien.Compiler.PlaidML
             this.IsClosed = true;
         }
 
-        public void CreateBuffer(Shape shape)
+        public DeviceBuffer CreateBuffer(Shape shape)
         {
-            DeviceBuffer buffer = new DeviceBuffer(this.context, this, shape);
+            return new DeviceBuffer(this.context, this, shape);
         }
 
         #endregion

@@ -9,7 +9,41 @@ namespace Adrien.Compiler.PlaidML
     public class Invoker : PlaidMLApi<Invoker>
     {
         #region Constructors
-        public Invoker(Context ctx, Function f, List<Variable> inputs, List<Variable> outputs) : base(ctx)
+        public Invoker(Context ctx, Function f, params Variable[] inputs) : base(ctx)
+        {
+            ptr = plaidml.__Internal.PlaidmlAllocInvoker(context, f);
+            if (ptr.IsZero())
+            {
+                ReportApiCallError("plaidml_alloc_invoker");
+                return;
+            }
+            else
+            {
+                IsAllocated = true;
+            }
+
+            bool r = false;
+            for (int i = 0; i < inputs.Length; i++)
+            {
+                r = plaidml.__Internal.PlaidmlSetInvokerInput(this, inputs[i].Name, inputs[i]);
+                if (!r)
+                {
+                    ReportApiCallError("plaidml_set_invoker_input");
+                    break;
+                }
+            }
+            if (r)
+            {
+                AllInputVariablesSet = true;
+            }
+            else
+            {
+                AllInputVariablesSet = false;
+                return;
+            }
+
+        }
+        public Invoker(Context ctx, Function f, Variable[] inputs, Variable[] outputs) : base(ctx)
         {
             ptr = plaidml.__Internal.PlaidmlAllocInvoker(context, f); 
             if (ptr.IsZero())
@@ -23,7 +57,7 @@ namespace Adrien.Compiler.PlaidML
             }
 
             bool r = false;
-            for (int i = 0; i < inputs.Count; i++)
+            for (int i = 0; i < inputs.Length; i++)
             {
                 r = plaidml.__Internal.PlaidmlSetInvokerInput(this, inputs[i].Name, inputs[i]);
                 if (!r)
@@ -34,15 +68,15 @@ namespace Adrien.Compiler.PlaidML
             }
             if (r)
             {
-                AllInputVariablesAllocated = true;
+                AllInputVariablesSet = true;
             }
             else
             {
-                AllInputVariablesAllocated = false;
+                AllInputVariablesSet = false;
                 return;
             }
 
-            for (int i = 0; i < outputs.Count; i++)
+            for (int i = 0; i < outputs.Length; i++)
             {
                 r = plaidml.__Internal.PlaidmlSetInvokerOutput(this, outputs[i].Name, outputs[i]);
                 if (!r)
@@ -53,31 +87,28 @@ namespace Adrien.Compiler.PlaidML
             }
             if (r)
             {
-                AllOutputVariablesAllocated = true;
+                AllOutputVariablesSet = true;
             }
             else
             {
-                AllOutputVariablesAllocated = false;
+                AllOutputVariablesSet = false;
                 return;
             }
-            if (AllInputVariablesAllocated && AllOutputVariablesAllocated)
-            {
-
-            }
+            
         }
         #endregion
 
         #region Properties
-        public bool AllInputVariablesAllocated { get; protected set; }
-        public bool AllOutputVariablesAllocated { get; protected set; }
-        public bool AllVariablesAllocated => AllInputVariablesAllocated && AllOutputVariablesAllocated;
+        public bool AllInputVariablesSet { get; protected set; }
+        public bool AllOutputVariablesSet { get; protected set; }
+        public bool AllVariablesSet => AllInputVariablesSet && AllOutputVariablesSet;
         #endregion
 
         #region Methods
         public Shape GetOutputShape(string outputVariableName)
         {
             ThrowIfNotAllocated();
-            ThrowifAllVariablesNotAllocated();
+            //ThrowifAllVariablesNotAllocated();
             IntPtr r = plaidml.__Internal.PlaidmlAllocInvokerOutputShape(this, outputVariableName);
             if (r.IsZero())
             {
@@ -90,9 +121,15 @@ namespace Adrien.Compiler.PlaidML
             }
 
         }
+
+        public Invocation Invoke()
+        {
+            return new Invocation(context, this);
+        }
+
         internal void ThrowifAllVariablesNotAllocated()
         {
-            if (!AllVariablesAllocated)
+            if (!AllVariablesSet)
             {
                 throw new InvalidOperationException("All variables are not allocated.");
             }

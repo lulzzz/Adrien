@@ -16,6 +16,7 @@ namespace Adrien.Compiler.PlaidML
             {
                 return;
             }
+            IsAllocated = true;
         }
 
         #region Properties
@@ -59,10 +60,10 @@ namespace Adrien.Compiler.PlaidML
             return new Shape(context, datatype, dimensions);
         }
 
-        public Tensor CreateTensor(Device device, Shape shape)
+        public Tensor CreateTensor(Device device, Shape shape, string name)
         {
             ThrowIfNotInitialized();
-            return new Tensor(device, shape);
+            return new Tensor(device, shape, name);
         }
 
         public Function CreateFunction(string code)

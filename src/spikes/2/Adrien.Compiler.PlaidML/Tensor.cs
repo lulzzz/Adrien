@@ -6,14 +6,14 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class Tensor : PlaidMLApi<Tensor>
+    public class Tensor : Variable
     {
         #region Constructors
-        public Tensor(Device device, Shape shape, DeviceBuffer buffer = null) : base(device.Context)
+        public Tensor(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context, name)
         {
             if (buffer == null)
             {
-                buffer = new DeviceBuffer(context, device, shape);
+                buffer = device.CreateBuffer(shape);
                 if (!buffer.IsAllocated)
                 {
                     Error("Could not allocate device buffer for tensor.");
@@ -30,6 +30,8 @@ namespace Adrien.Compiler.PlaidML
             {
                 Device = device;
                 Buffer = buffer;
+                Shape = shape;
+                DataType = Shape.DataType;
                 IsAllocated = true;
             }
         }
@@ -38,13 +40,21 @@ namespace Adrien.Compiler.PlaidML
         #region Properties
         public Device Device { get; protected set; }
         public DeviceBuffer Buffer { get; protected set; }
-        public Shape Shape { get; protected set; }
+        public Shape Shape { get; protected set; } 
         #endregion
 
         #region Methods
         public MemoryView<T> CreateMemoryView<T>(bool discard = true) where T : unmanaged
         {
+            ThrowIfNotAllocated();
             return new MemoryView<T>(new MemoryMapping(Buffer, discard));
+        }
+
+        public bool CopyFrom<T>(T[] array) where T : unmanaged
+        {
+            ThrowIfNotAllocated();
+            MemoryView<T> v = CreateMemoryView<T>();
+            return v.CopyFromAndFree(array);
         }
         #endregion
     }

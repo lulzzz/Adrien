@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -39,6 +40,7 @@ namespace Adrien.Compiler.PlaidML
             IsAllocated = false;
         }
 
+        [DebuggerStepThrough]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void ThrowIfNotAllocated()
         {
@@ -48,6 +50,7 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
+        [DebuggerStepThrough]
         protected void ReportApiCallError(string call) => Error("Call to {0} returned null or false. Status : {1} {2}", call,
             LastStatus = @base.VaiLastStatus(), LastStatusString = @base.VaiLastStatusStr());
 

@@ -11,7 +11,7 @@ namespace Adrien.Compiler.PlaidML
         #region Constructors
         public Function(Context ctx, string code) : base(ctx)
         {
-            string id = Guid.NewGuid().ToString();
+            string id = "id_" + Guid.NewGuid().ToString("N");
             ptr = plaidml.__Internal.PlaidmlBuildCodedFunction(code, id);
             if (ptr.IsZero())
             {

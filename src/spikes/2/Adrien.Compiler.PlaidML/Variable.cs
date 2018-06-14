@@ -10,10 +10,13 @@ namespace Adrien.Compiler.PlaidML
     {
         #region Constructors
         protected Variable(Context ctx) : base(ctx) { }
+  
+        protected Variable(Context ctx, string name) : base(ctx)
+        {
+            Name = name;
+        }
 
-        protected Variable(Context ctx, string name) : base(ctx) {}
-
-        public Variable(Context ctx, string name, Int64 v) : base(ctx)
+        public Variable(Context ctx, string name, Int64 v) : this(ctx, name)
         {
             ptr = plaidml.__Internal.PlaidmlAllocInt64(v);
             if (ptr.IsZero())
@@ -23,7 +26,6 @@ namespace Adrien.Compiler.PlaidML
             }
             else
             {
-                Name = name;
                 DataType = PlaidmlDatatype.PLAIDML_DATA_INT64;
                 IsAllocated = true;
             }
@@ -39,7 +41,6 @@ namespace Adrien.Compiler.PlaidML
             }
             else
             {
-                Name = name;
                 DataType = PlaidmlDatatype.PLAIDML_DATA_INT64;
                 IsAllocated = true;
             }

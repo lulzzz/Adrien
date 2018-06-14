@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Xunit;
@@ -114,7 +115,7 @@ namespace Adrien.Tests.Compilers
         {
             Device device = new Device(context);
             Shape s1 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT64, 2, 3);
-            Tensor t = new Tensor(device, s1);
+            Tensor t = new Tensor(device, s1, "t");
             MemoryView<Int64> v = t.CreateMemoryView<long>();
             Int64[,] array = { { 0, 1, 3 }, { 4, 5, 6 } };
             v.CopyFrom(array.Flatten<Int64>().ToArray());
@@ -122,6 +123,31 @@ namespace Adrien.Tests.Compilers
             MemoryView<Int64> v2 = t.CreateMemoryView<long>();
             Assert.Equal(3, v2[2]);
             Assert.Equal(6, v2[5]);
+        }
+
+        [Fact]
+        public void CanInvokeFunction()
+        {
+            Device device = new Device(context);
+            string code = @"function (I[N]) -> (O) {
+                                O[i: N] = +(I[k]), i - k < N;
+                            }";
+            Function f = new Function(context, code);
+            Tensor i = new Tensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "I");
+            Tensor o = new Tensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
+            
+            Int32[] input_data = { 0, 1, 3,  4, 5, 6 };
+            i.CopyFrom(input_data);
+            MemoryView<Int32> v = i.CreateMemoryView<Int32>(false);
+            Assert.Equal(3, v[2]);
+            Invoker invoker = new Invoker(context, f, new Variable[] { i }, new Variable[] { o });
+            //Invoker invoker = new Invoker(context, f, i);
+            Shape x = invoker.GetOutputShape("O");
+            Assert.True(x.ElementCount == 6);
+            Assert.True(invoker.AllVariablesSet);
+            Invocation inv = invoker.Invoke();
+            MemoryView<Int32> R = o.CreateMemoryView<Int32>(false);
+            Assert.Equal(6, R.Length);
         }
     }
 }

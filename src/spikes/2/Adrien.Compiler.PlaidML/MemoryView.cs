@@ -66,6 +66,17 @@ namespace Adrien.Compiler.PlaidML
             return Writeback();
         }
 
+        public bool CopyFromAndFree(T[] array)
+        {
+            bool copy = CopyFrom(array);
+            if (!copy)
+            {
+                return copy;
+            }
+            Free();
+            return copy;
+        }
+
         protected void ThrowIfNotValid() => Mapping.ThrowIfNotValid();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

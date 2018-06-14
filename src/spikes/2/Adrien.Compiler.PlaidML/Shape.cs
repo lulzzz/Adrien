@@ -43,6 +43,7 @@ namespace Adrien.Compiler.PlaidML
         public Shape(Context ctx, IntPtr p) : base(ctx)
         {
             this.ptr = p;
+            IsAllocated = true;
         }
 
         #endregion
