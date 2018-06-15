@@ -6,9 +6,10 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class Compiler : PlaidMLApi<Compiler>
+    public class TileCompiler : PlaidMLApi<TileCompiler>
     {
-        public Compiler() : base(new Context())
+        #region Constructors
+        public TileCompiler() : base(new Context())
         {    
             SessionId = Settings.StartNewSession();
             DeviceEnumerator = new DeviceEnumerator(context);
@@ -18,6 +19,7 @@ namespace Adrien.Compiler.PlaidML
             }
             IsAllocated = true;
         }
+        #endregion
 
         #region Properties
         public bool Initialized => IsAllocated;

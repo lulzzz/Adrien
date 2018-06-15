@@ -34,11 +34,11 @@ namespace Adrien.Compiler.PlaidML
             }
             if (r)
             {
-                AllInputVariablesSet = true;
+                InputVariablesSet = true;
             }
             else
             {
-                AllInputVariablesSet = false;
+                InputVariablesSet = false;
                 return;
             }
 
@@ -68,11 +68,11 @@ namespace Adrien.Compiler.PlaidML
             }
             if (r)
             {
-                AllInputVariablesSet = true;
+                InputVariablesSet = true;
             }
             else
             {
-                AllInputVariablesSet = false;
+                InputVariablesSet = false;
                 return;
             }
 
@@ -87,11 +87,11 @@ namespace Adrien.Compiler.PlaidML
             }
             if (r)
             {
-                AllOutputVariablesSet = true;
+                OutputVariablesSet = true;
             }
             else
             {
-                AllOutputVariablesSet = false;
+                OutputVariablesSet = false;
                 return;
             }
             
@@ -99,16 +99,16 @@ namespace Adrien.Compiler.PlaidML
         #endregion
 
         #region Properties
-        public bool AllInputVariablesSet { get; protected set; }
-        public bool AllOutputVariablesSet { get; protected set; }
-        public bool AllVariablesSet => AllInputVariablesSet && AllOutputVariablesSet;
+        public bool InputVariablesSet { get; protected set; }
+        public bool OutputVariablesSet { get; protected set; }
+        public bool AllVariablesSet => InputVariablesSet && OutputVariablesSet;
         #endregion
 
         #region Methods
         public Shape GetOutputShape(string outputVariableName)
         {
             ThrowIfNotAllocated();
-            //ThrowifAllVariablesNotAllocated();
+            ThrowifInputVariablesNotSet();
             IntPtr r = plaidml.__Internal.PlaidmlAllocInvokerOutputShape(this, outputVariableName);
             if (r.IsZero())
             {
@@ -122,12 +122,43 @@ namespace Adrien.Compiler.PlaidML
 
         }
 
+        public bool SetInvokerOutoutVariables(params Variable[] outputs)
+        {
+            bool r = false;
+            for (int i = 0; i < outputs.Length; i++)
+            {
+                r = plaidml.__Internal.PlaidmlSetInvokerOutput(this, outputs[i].Name, outputs[i]);
+                if (!r)
+                {
+                    ReportApiCallError("plaidml_set_invoker_output");
+                    break;
+                }
+            }
+            if (r)
+            {
+                OutputVariablesSet = true;
+            }
+            else
+            {
+                OutputVariablesSet = false;
+            }
+            return r;
+        }
+
         public Invocation Invoke()
         {
             return new Invocation(context, this);
         }
 
-        internal void ThrowifAllVariablesNotAllocated()
+        internal void ThrowifInputVariablesNotSet()
+        {
+            if (!InputVariablesSet)
+            {
+                throw new InvalidOperationException("Input variables are not allocated.");
+            }
+        }
+
+        internal void ThrowifAllVariablesNotSet()
         {
             if (!AllVariablesSet)
             {
