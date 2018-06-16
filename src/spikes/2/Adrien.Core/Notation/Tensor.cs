@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Linq;
 using System.Linq.Expressions;
@@ -50,10 +51,11 @@ namespace Adrien.Notation
             {
                 if (Rank <= index.DimensionCount)
                 {
-                    return new TensorExpression<T>(Expression.ArrayIndex(this, index.Indices.Cast<Expression>()));
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(this.Dimensions), IndexSet.IndicesArrayInfo, new Expression[] {index[0] }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
+            set { }
         }
 
         public TensorExpression<T> this[Index index]
@@ -62,10 +64,11 @@ namespace Adrien.Notation
             {
                 if (Rank > 0)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(index, Index.OrderInfo, new Expression[] { }));
+                    return new TensorExpression<T>(Expression.MakeIndex(this, IndexSet.IndicesArrayInfo, new Expression[] { index }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
+            set { }
         }
 
         public TensorExpression<T> this[Index index1, Index index2]
@@ -74,10 +77,12 @@ namespace Adrien.Notation
             {
                 if (Rank > 1)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(this), Index.OrderInfo, new Expression[] { index1.LinqExpression, index2.LinqExpression }));
+                    return new TensorExpression<T>(Expression.ArrayIndex(Expression.Constant(new Index[,] { }), Expression.Parameter(typeof(int), index1.Name),
+                        Expression.Parameter(typeof(int), index2.Name)));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
+            set { }
         }
 
         public TensorExpression<T> this[Index index1, Index index2, Index index3]
@@ -90,6 +95,7 @@ namespace Adrien.Notation
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
+            set { }
         }
 
         public TensorExpression<T> this[Index index1, Index index2, Index index3, Index index4]
@@ -102,6 +108,7 @@ namespace Adrien.Notation
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
+            set { }
         }
 
         public TensorExpression<T> this[Index index1, Index index2, Index index3, Index index4, Index index5]
@@ -114,6 +121,7 @@ namespace Adrien.Notation
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
+            set { }
         }
 
         public TensorExpression<T> this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6]
@@ -126,6 +134,7 @@ namespace Adrien.Notation
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
+            set { }
         }
 
         public TensorExpression<T> this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6, Index index7]
@@ -138,6 +147,7 @@ namespace Adrien.Notation
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
+            set { }
         }
         #endregion
 

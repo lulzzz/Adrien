@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Adrien.Notation
 {
@@ -29,8 +30,12 @@ namespace Adrien.Notation
         #endregion
 
         #region Properties
+        public static PropertyInfo IndicesArrayInfo { get; } = typeof(Index).GetProperty("IndicesArray");
+
         public SortedSet<Index> Indices { get; protected set; }
 
+        public int[] IndicesArray => Indices.Select(i => i.Order).ToArray();
+        
         public int DimensionCount => Indices.Count;
         #endregion
 

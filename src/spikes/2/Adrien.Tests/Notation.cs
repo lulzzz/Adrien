@@ -17,8 +17,19 @@ namespace Adrien.Tests
         [Fact]
         public void CanConstructTensorNotation()
         {
-            Tensor<float> A = Tensor<float>.TwoD("A", "i", out Index i, out Index j );
-            var g = A[i] + A[j];
+            Tensor<float> A = Tensor<float>.TwoD("A", "a", out Index a, out Index b );
+            Assert.Equal("A", A.Name);
+            Assert.Equal(2, A.Rank);
+            Assert.Equal("a", a.Name);
+            Assert.Equal("b", b.Name);
+            var g = A[a, b];
+
+            var B = Tensor<float>.ThreeD("B", out var ijk);
+            var C = Tensor<float>.ThreeD("C");
+            var D = Tensor<float>.ThreeD("C");
+            D[ijk] = A[ijk];
+            var (i, j, k) = ijk;
+            //Assert.Equal("i", i.Name);
         }
         
     }

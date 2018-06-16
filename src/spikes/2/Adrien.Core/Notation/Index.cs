@@ -68,7 +68,7 @@ namespace Adrien.Notation
         #endregion
 
         #region Operators
-        
+        public static implicit operator Int32(Index i) => i.Order;
         #endregion
     }
 
