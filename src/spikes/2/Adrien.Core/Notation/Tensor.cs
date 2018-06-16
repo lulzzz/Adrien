@@ -13,7 +13,6 @@ namespace Adrien.Notation
             Dimensions = dim;
         }
 
-     
         public Tensor(string name, out IndexSet I, params int[] dim) : this(name, dim)
         {
             I = new IndexSet(dim.Length);
@@ -63,7 +62,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 0)
                 {
-                    return new TensorExpression<T>(Expression.ArrayIndex(this, index));
+                    return new TensorExpression<T>(Expression.MakeIndex(index, Index.OrderInfo, new Expression[] { }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
@@ -75,7 +74,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 1)
                 {
-                    return new TensorExpression<T>(Expression.ArrayIndex(this, index1, index2));
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(this), Index.OrderInfo, new Expression[] { index1.LinqExpression, index2.LinqExpression }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
@@ -145,26 +144,61 @@ namespace Adrien.Notation
         #endregion
 
         #region Methods
-        public static Tensor<T> OneD(string name) => new Tensor<T>(name, 1);
-        public static Tensor<T> OneD(string name, string indexNameBase, out IndexSet I) => new Tensor<T>(name, out I, 1);
+        public static Tensor<T> OneD(string name) => new Tensor<T>(name, new int[1]);
+        public static Tensor<T> OneD(string name, string indexName, out Index index)
+        {
+            index = new IndexSet(1, indexName);
+            return new Tensor<T>(name, new int[1]);
+        }
 
-        public static Tensor<T> TwoD(string name) => new Tensor<T>(name, 2);
-        public static Tensor<T> TwoD(string name, out IndexSet I) => new Tensor<T>(name, out I, 2);
+        public static Tensor<T> TwoD(string name) => new Tensor<T>(name, new int[2]);
+        public static Tensor<T> TwoD(string name, out IndexSet I) => new Tensor<T>(name, out I, new int[2]);
+        public static Tensor<T> TwoD(string name, string indexNameBase, out Index index1, out Index index2)
+        {
+            (index1, index2)  = new IndexSet(2, indexNameBase);
+            return new Tensor<T>(name, new int[2]);
+        }
 
-        public static Tensor<T> ThreeD(string name) => new Tensor<T>(name, 3);
-        public static Tensor<T> ThreeD(string name, out IndexSet I) => new Tensor<T>(name, out I, 3);
+        public static Tensor<T> ThreeD(string name) => new Tensor<T>(name, new int[3]);
+        public static Tensor<T> ThreeD(string name, out IndexSet I) => new Tensor<T>(name, out I, new int[3]);
+        public static Tensor<T> ThreeD(string name, string indexNameBase, out Index index1, out Index index2, out Index index3)
+        {
+            (index1, index2, index3) = new IndexSet(3, indexNameBase);
+            return new Tensor<T>(name, new int[3]);
+        }
 
-        public static Tensor<T> FourD(string name) => new Tensor<T>(name, 4);
-        public static Tensor<T> FourD(string name, out IndexSet I) => new Tensor<T>(name, out I, 4);
 
-        public static Tensor<T> FiveD(string name) => new Tensor<T>(name, 5);
-        public static Tensor<T> FiveD(string name, out IndexSet I) => new Tensor<T>(name, out I, 5);
+        public static Tensor<T> FourD(string name) => new Tensor<T>(name, new int[4]);
+        public static Tensor<T> FourD(string name, out IndexSet I) => new Tensor<T>(name, out I, new int[4]);
+        public static Tensor<T> FourD(string name, string indexNameBase, out Index index1, out Index index2, out Index index3, out Index index4)
+        {
+            (index1, index2, index3, index4) = new IndexSet(4, indexNameBase);
+            return new Tensor<T>(name, new int[4]);
+        }
 
-        public static Tensor<T> SixD(string name) => new Tensor<T>(name, 6);
-        public static Tensor<T> SixD(string name, out IndexSet I) => new Tensor<T>(name, out I, 6);
+        public static Tensor<T> FiveD(string name) => new Tensor<T>(name, new int[5]);
+        public static Tensor<T> FiveD(string name, out IndexSet I) => new Tensor<T>(name, out I, new int[5]);
+        public static Tensor<T> FiveD(string name, string indexNameBase, out Index index1, out Index index2, out Index index3, out Index index4, out Index index5)
+        {
+            (index1, index2, index3, index4, index5) = new IndexSet(5, indexNameBase);
+            return new Tensor<T>(name, new int[5]);
+        }
 
-        public static Tensor<T> SevenD(string name) => new Tensor<T>(name, 7);
-        public static Tensor<T> SevenD(string name, out IndexSet I) => new Tensor<T>(name, out I, 7);
+        public static Tensor<T> SixD(string name) => new Tensor<T>(name, new int[6]);
+        public static Tensor<T> SixD(string name, out IndexSet I) => new Tensor<T>(name, out I, new int[6]);
+        public static Tensor<T> SixD(string name, string indexNameBase, out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6)
+        {
+            (index1, index2, index3, index4, index5, index6) = new IndexSet(6, indexNameBase);
+            return new Tensor<T>(name, new int[6]);
+        }
+
+        public static Tensor<T> SevenD(string name) => new Tensor<T>(name, new int[7]);
+        public static Tensor<T> SevenD(string name, out IndexSet I) => new Tensor<T>(name, out I, new int[7]);
+        public static Tensor<T> SevenD(string name, string indexNameBase, out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7)
+        {
+            (index1, index2, index3, index4, index5, index6, index7) = new IndexSet(7, indexNameBase);
+            return new Tensor<T>(name, new int[7]);
+        }
         #endregion
     }
 }

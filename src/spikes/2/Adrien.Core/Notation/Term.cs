@@ -49,12 +49,12 @@ namespace Adrien.Notation
         protected string GetName(int index, string indexNameBase)
         {
             indexNameBase = indexNameBase != string.Empty ? indexNameBase : (string) DefaultNameBase;
-            int Z = (int)Char.GetNumericValue('Z');
-            int z = (int)Char.GetNumericValue('z');
+            int Z = 'Z';
+            int z = 'z';
             if (indexNameBase.Length == 1)
             {
                 char c = indexNameBase[0];
-                int n = (int)Char.GetNumericValue(c) + index;
+                int n = c + index;
                 int upper = Char.IsUpper(c) ? Z : z;
                 if (n > upper)
                 {
@@ -62,7 +62,7 @@ namespace Adrien.Notation
                 }
                 else
                 {
-                    return new string(Convert.ToChar(n), 1);
+                    return new string(Convert.ToChar(Convert.ToInt32(n)), 1);
                 }
             }
             else

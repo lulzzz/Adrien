@@ -1,11 +1,14 @@
 ﻿using System;
+
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 
 namespace Adrien.Notation
 {
-    public class Index : Term
+    public class Index : Term, IComparable<Index>
     {
         #region Constructors
         public Index(IndexSet set, int order, string name) : base(name)
@@ -17,10 +20,14 @@ namespace Adrien.Notation
 
         #region Override members
         internal override Expression LinqExpression => Expression.Constant(this);
+        internal override Name DefaultNameBase { get; } = "i";
         #endregion
 
-        #region Overriden members
-        internal override Name DefaultNameBase { get; } = "i";
+        #region Methods
+        public int CompareTo(Index i)
+        {
+            return this.Order.CompareTo(i.Order);
+        }
         #endregion
 
         #region Properties
@@ -28,6 +35,7 @@ namespace Adrien.Notation
         public int Order { get; protected set; }
         public (int upper, int lower) Bounds { get; internal set; }
 
+        public static PropertyInfo OrderInfo { get; } = typeof(Index).GetProperty("Order");
         #region Names
         public static Name a = "a";
         public static Name b= "b";
@@ -57,6 +65,10 @@ namespace Adrien.Notation
         public static Name z = "z";
         #endregion
 
+        #endregion
+
+        #region Operators
+        
         #endregion
     }
 
