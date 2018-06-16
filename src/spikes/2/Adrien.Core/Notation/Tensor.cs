@@ -35,6 +35,8 @@ namespace Adrien.Notation
         public int[] Dimensions { get; protected set; }
 
         public int Rank => Dimensions.Length;
+
+        public (IndexSet AssignmentIndexSet, TensorExpression<T> AssignmentExpression) Assignment { get; protected set; }
         #endregion
 
         #region Operators
@@ -45,30 +47,40 @@ namespace Adrien.Notation
             return new TensorExpression<T>(t.LinqExpression);
         }
 
-        public TensorExpression<T> this[IndexSet index]
+        public TensorExpression<T> this[IndexSet indexSet]
         {
             get
             {
-                if (Rank <= index.DimensionCount)
+                if (Rank <= indexSet.DimensionCount)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(this.Dimensions), IndexSet.IndicesArrayInfo, new Expression[] {index[0] }));
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[] { }), null,
+                        new Expression[] { Expression.Parameter(typeof(int), indexSet.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
-            set { }
+            set
+            {
+                ThrowIfAlreadyAssiged();
+                Assignment = (indexSet, value);
+            }
         }
 
-        public TensorExpression<T> this[Index index]
+        public TensorExpression<T> this[Index index1]
         {
             get
             {
                 if (Rank > 0)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(this, IndexSet.IndicesArrayInfo, new Expression[] { index }));
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[] { }), null, new Expression[] {
+                        Expression.Parameter(typeof(int), index1.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
-            set { }
+            set
+            {
+                ThrowIfAlreadyAssiged();
+                Assignment = (new IndexSet(index1), value);
+            }
         }
 
         public TensorExpression<T> this[Index index1, Index index2]
@@ -77,12 +89,16 @@ namespace Adrien.Notation
             {
                 if (Rank > 1)
                 {
-                    return new TensorExpression<T>(Expression.ArrayIndex(Expression.Constant(new Index[,] { }), Expression.Parameter(typeof(int), index1.Name),
-                        Expression.Parameter(typeof(int), index2.Name)));
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,] { }), null, new Expression[] {
+                        Expression.Parameter(typeof(int), index1.Name), Expression.Parameter(typeof(int), index2.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
-            set { }
+            set
+            {
+                ThrowIfAlreadyAssiged();
+                Assignment = (new IndexSet(index1, index2), value);
+            }
         }
 
         public TensorExpression<T> this[Index index1, Index index2, Index index3]
@@ -91,69 +107,118 @@ namespace Adrien.Notation
             {
                 if (Rank > 2)
                 {
-                    return new TensorExpression<T>(Expression.ArrayIndex(this, index1, index2, index3));
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,,] { }), null, new Expression[] {
+                        Expression.Parameter(typeof(int), index1.Name),
+                        Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
-            set { }
+            set
+            {
+                ThrowIfAlreadyAssiged();
+                Assignment = (new IndexSet(index1, index2, index3), value);
+            }
         }
 
         public TensorExpression<T> this[Index index1, Index index2, Index index3, Index index4]
         {
             get
             {
-                if (Rank > 2)
+                if (Rank > 3)
                 {
-                    return new TensorExpression<T>(Expression.ArrayIndex(this, index1, index2, index3, index4));
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,,,] { }), null, new Expression[] {
+                        Expression.Parameter(typeof(int), index1.Name),
+                        Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
+                        Expression.Parameter(typeof(int), index4.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
-            set { }
+            set
+            {
+                ThrowIfAlreadyAssiged();
+                Assignment = (new IndexSet(index1, index2, index3, index4), value);
+            }
         }
 
         public TensorExpression<T> this[Index index1, Index index2, Index index3, Index index4, Index index5]
         {
             get
             {
-                if (Rank > 2)
+                if (Rank > 4)
                 {
-                    return new TensorExpression<T>(Expression.ArrayIndex(this, index1, index2, index3, index4, index5));
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,,,,] { }), null, new Expression[] {
+                        Expression.Parameter(typeof(int), index1.Name),
+                        Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
+                        Expression.Parameter(typeof(int), index4.Name), Expression.Parameter(typeof(int), index5.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
-            set { }
+            set
+            {
+                ThrowIfAlreadyAssiged();
+                Assignment = (new IndexSet(index1, index2, index3, index4, index5), value);
+            }
         }
 
         public TensorExpression<T> this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6]
         {
             get
             {
-                if (Rank > 2)
+                if (Rank > 5)
                 {
-                    return new TensorExpression<T>(Expression.ArrayIndex(this, index1, index2, index3, index4, index5, index6));
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,,,,,] { }), null, new Expression[] {
+                        Expression.Parameter(typeof(int), index1.Name),
+                        Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
+                        Expression.Parameter(typeof(int), index4.Name), Expression.Parameter(typeof(int), index5.Name),
+                        Expression.Parameter(typeof(int), index6.Name)}));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
-            set { }
+            set
+            {
+                ThrowIfAlreadyAssiged();
+                Assignment = (new IndexSet(index1, index2, index3, index4, index5), value);
+            }
         }
 
         public TensorExpression<T> this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6, Index index7]
         {
             get
             {
-                if (Rank > 2)
+                if (Rank > 6)
                 {
-                    return new TensorExpression<T>(Expression.ArrayIndex(this, index1, index2, index3, index4, index5, index6, index7));
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,,,,,,] { }), null, new Expression[] {
+                        Expression.Parameter(typeof(int), index1.Name),
+                        Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
+                        Expression.Parameter(typeof(int), index4.Name), Expression.Parameter(typeof(int), index5.Name),
+                        Expression.Parameter(typeof(int), index6.Name), Expression.Parameter(typeof(int), index7.Name)}));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
             }
-            set { }
+            set
+            {
+                ThrowIfAlreadyAssiged();
+                Assignment = (new IndexSet(index1, index2, index3, index4, index5, index6, index7), value);
+            }
         }
         #endregion
 
         #endregion
 
         #region Methods
+        internal void ThrowIfAlreadyAssiged()
+        {
+            if (Assignment.AssignmentIndexSet != null)
+            {
+                throw new InvalidOperationException("This tensor variable has an existing assigment. You can only assign to a tensor variable once.");
+            }
+        }
+
+        internal void ThrowIfIndicesExceedRank(int c)
+        {
+            if (Rank < c) throw new ArgumentOutOfRangeException("The number of indices exceeds the dimensions of this tensor.");
+        }
+
         public static Tensor<T> OneD(string name) => new Tensor<T>(name, new int[1]);
         public static Tensor<T> OneD(string name, string indexName, out Index index)
         {

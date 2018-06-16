@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -9,7 +10,7 @@ namespace Adrien.Notation
     /// <summary>
     /// Abstracts a notation term
     /// </summary>
-    public abstract class Term
+    public abstract class Term : IEquatable<Term>
     {
         #region Constructor
         internal Term()
@@ -46,23 +47,32 @@ namespace Adrien.Notation
         #endregion
 
         #region Methods
-        protected string GetName(int index, string indexNameBase)
+        public bool Equals(Term other)
+        {
+            return this.Id == other.Id;
+        }
+
+        protected string GenerateName(int index, string indexNameBase)
         {
             indexNameBase = indexNameBase != string.Empty ? indexNameBase : (string) DefaultNameBase;
+            int A = 'A';
+            int a = 'a';
             int Z = 'Z';
             int z = 'z';
+
             if (indexNameBase.Length == 1)
             {
-                char c = indexNameBase[0];
+                char c = indexNameBase.First();
                 int n = c + index;
-                int upper = Char.IsUpper(c) ? Z : z;
-                if (n > upper)
+                int lower = Char.IsLower(c) ? a : A;
+                int upper = Char.IsLower(c) ? z : Z;
+                if (n < lower || n > upper)
                 {
-                    throw new ArgumentOutOfRangeException("Auto-generated name past Z.");
+                    throw new ArgumentOutOfRangeException("Auto-generated name past limit.");
                 }
                 else
                 {
-                    return new string(Convert.ToChar(Convert.ToInt32(n)), 1);
+                    return new string(Convert.ToChar(n), 1);
                 }
             }
             else

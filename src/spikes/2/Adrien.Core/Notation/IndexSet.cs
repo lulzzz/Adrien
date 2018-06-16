@@ -14,13 +14,15 @@ namespace Adrien.Notation
             Indices = new SortedSet<Index>();
             for (int i = 0; i < dim; i++)
             {
-                Indices.Add(new Index(this, i, GetName(i, indexNameBase)));
+                Indices.Add(new Index(this, i, GenerateName(i, indexNameBase == string.Empty ? "i" : indexNameBase)));
             }
+            this.Name = Indices.Select(i => i.Name).Aggregate((a, b) => a + b);
         }
 
         public IndexSet(params Index[] indices) : base()
         {
             Indices = new SortedSet<Index>(indices);
+            this.Name = Indices.Select(i => i.Name).Aggregate((a, b) => a + b);
         }
         #endregion
 
@@ -137,6 +139,15 @@ namespace Adrien.Notation
         protected void ThrowIfIndicesExceedDimensions(int c)
         {
             if (c > DimensionCount) throw new ArgumentOutOfRangeException("The number of indices exceeds the dimensions of this index set.");
+        }
+
+        protected static void ThrowIfIndicesFromDifferentIndexSet(params Index[] indices)
+        {
+            IndexSet set = indices[0].Set;
+            if (!indices.All(i => i.Set == set))
+            {
+                throw new InvalidOperationException("These indices are not from the same index set.");
+            }
         }
         #endregion
 
