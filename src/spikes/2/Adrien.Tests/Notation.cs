@@ -12,8 +12,6 @@ namespace Adrien.Tests
 {
     public class NotationTests
     {
-        
-
         [Fact]
         public void CanConstructTensorNotation()
         {
@@ -22,18 +20,21 @@ namespace Adrien.Tests
             Assert.Equal(2, A.Rank);
             Assert.Equal("a", a.Name);
             Assert.Equal("b", b.Name);
-            var e1 = A[a, b];
+            var A1 = A[a, b];
+            Assert.IsType<IndexExpression>((Expression) A1);
 
-            var B = Tensor<float>.ThreeD("B", out var ijk);
+            var B = Tensor<float>.ThreeD("B", "i", out var ijk);
             var (i, j, k) = ijk;
             Assert.Equal("i", i.Name);
+            Assert.Equal("j", j.Name);
+            Assert.Equal("k", k.Name);
             var C = Tensor<float>.ThreeD("C");
             var D = Tensor<float>.ThreeD("D");
             var Z = C[i];
             Assert.IsType<IndexExpression>((Expression)Z);
             var h = D[ijk];
             Assert.IsType<IndexExpression>((Expression) h);
-            
+            IndexExpression ih = (IndexExpression) h;
             //A[i, j] = B[i, j] + C[i, j];
             
             
