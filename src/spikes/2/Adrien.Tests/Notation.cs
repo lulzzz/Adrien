@@ -28,17 +28,21 @@ namespace Adrien.Tests
             Assert.Equal("i", i.Name);
             Assert.Equal("j", j.Name);
             Assert.Equal("k", k.Name);
-            var C = Tensor<float>.ThreeD("C");
-            var D = Tensor<float>.ThreeD("D");
-            var Z = C[i];
-            Assert.IsType<IndexExpression>((Expression)Z);
-            var h = D[ijk];
-            Assert.IsType<IndexExpression>((Expression) h);
-            IndexExpression ih = (IndexExpression) h;
-            //A[i, j] = B[i, j] + C[i, j];
-            
-            
+            Assert.IsType<IndexExpression>((Expression) B[i]);
+            Assert.IsType<IndexExpression>((Expression) B[ijk]);
+
+            Tensor<float> C = Tensor<float>.ThreeD("C", "a", out IndexSet abc);
+            Assert.IsType<IndexExpression>((Expression) C[abc]);
         }
         
+        [Fact]
+        public void CanAssignTensorExpression()
+        {
+            Tensor<float> A = Tensor<float>.TwoD("A", "a", out Index a, out Index b);
+            Tensor<float> B = Tensor<float>.TwoD("B");
+            Tensor<float> C = Tensor<float>.TwoD("C");
+            C[a, b] = A[a, b] * C[b];
+            Assert.True(C.IsAssigned);
+        }
     }
 }

@@ -41,7 +41,9 @@ namespace Adrien.Notation
 
         public int Rank => Dimensions.Length;
 
-        public (IndexSet AssignmentIndexSet, TensorExpression<T> AssignmentExpression) Assignment { get; protected set; }
+        public (IndexSet IndexSet, TensorExpression<T> Expression) Assignment { get; protected set; }
+
+        public bool IsAssigned => Assignment.IndexSet != null;
         #endregion
 
         #region Operators
@@ -58,7 +60,7 @@ namespace Adrien.Notation
             {
                 if (Rank <= indexSet.DimensionCount)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[] { }), null,
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new TensorExpression<T>[] { }), null,
                         new Expression[] { Expression.Parameter(typeof(int), indexSet.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
@@ -76,7 +78,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 0)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[] { }), null, new Expression[] {
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new TensorExpression<T>[] { }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
@@ -94,7 +96,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 1)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,] { }), null, new Expression[] {
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new TensorExpression<T>[,] { }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name), Expression.Parameter(typeof(int), index2.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
@@ -112,7 +114,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 2)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,,] { }), null, new Expression[] {
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new TensorExpression<T>[,,] { }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name),
                         Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name) }));
                 }
@@ -131,7 +133,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 3)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,,,] { }), null, new Expression[] {
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new TensorExpression<T>[,,,] { }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name),
                         Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
                         Expression.Parameter(typeof(int), index4.Name) }));
@@ -151,7 +153,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 4)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,,,,] { }), null, new Expression[] {
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new TensorExpression<T>[,,,,] { }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name),
                         Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
                         Expression.Parameter(typeof(int), index4.Name), Expression.Parameter(typeof(int), index5.Name) }));
@@ -171,7 +173,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 5)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,,,,,] { }), null, new Expression[] {
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new TensorExpression<T>[,,,,,] { }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name),
                         Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
                         Expression.Parameter(typeof(int), index4.Name), Expression.Parameter(typeof(int), index5.Name),
@@ -192,7 +194,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 6)
                 {
-                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new Tensor<T>[,,,,,,] { }), null, new Expression[] {
+                    return new TensorExpression<T>(Expression.MakeIndex(Expression.Constant(new TensorExpression<T>[,,,,,,] { }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name),
                         Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
                         Expression.Parameter(typeof(int), index4.Name), Expression.Parameter(typeof(int), index5.Name),
@@ -213,7 +215,7 @@ namespace Adrien.Notation
         #region Methods
         internal void ThrowIfAlreadyAssiged()
         {
-            if (Assignment.AssignmentIndexSet != null)
+            if (Assignment.IndexSet != null)
             {
                 throw new InvalidOperationException("This tensor variable has an existing assigment. You can only assign to a tensor variable once.");
             }
