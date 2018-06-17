@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Adrien.Notation
 {
-    public class idx : Name
+    public class sn : Name
     {
-        private idx(string name) : base(name) { }
+        private sn(string name) : base(name) { }
         public static Name a = "a";
         public static Name b = "b";
         public static Name c = "c";
@@ -33,7 +33,5 @@ namespace Adrien.Notation
         public static Name x = "x";
         public static Name y = "y";
         public static Name z = "z";
-
-        
     }
 }

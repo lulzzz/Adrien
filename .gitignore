@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 /src/spikes/1/.paket/load
+/src/spikes/2/.vscode
+/src/spikes/2/Adrien.Core/Script.csx

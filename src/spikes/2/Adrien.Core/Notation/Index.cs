@@ -38,7 +38,7 @@ namespace Adrien.Notation
         public static PropertyInfo OrderInfo { get; } = typeof(Index).GetProperty("Order");
         #region Names
         public static Name a = "a";
-        public static Name b= "b";
+        public static Name b = "b";
         public static Name c = "c";
         public static Name d = "d";
         public static Name e = "e";
@@ -67,9 +67,7 @@ namespace Adrien.Notation
 
         #endregion
 
-        #region Operators
-        
-        #endregion
+       
     }
 
 }

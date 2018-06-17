@@ -15,15 +15,14 @@ namespace Adrien.Tests
         [Fact]
         public void CanConstructTensorNotation()
         {
-            Tensor<float> A = Tensor<float>.TwoD("A", "a", out Index a, out Index b);
+            Tensor A = Tensor.TwoD("A", "a", out Index a, out Index b);
             Assert.Equal("A", A.Name);
             Assert.Equal(2, A.Rank);
             Assert.Equal("a", a.Name);
             Assert.Equal("b", b.Name);
             var A1 = A[a, b];
             Assert.IsType<IndexExpression>((Expression) A1);
-
-            var B = Tensor<float>.ThreeD("B", "i", out var ijk);
+            var B = Tensor.ThreeD("B", "i", out var ijk);
             var (i, j, k) = ijk;
             Assert.Equal("i", i.Name);
             Assert.Equal("j", j.Name);
@@ -31,16 +30,27 @@ namespace Adrien.Tests
             Assert.IsType<IndexExpression>((Expression) B[i]);
             Assert.IsType<IndexExpression>((Expression) B[ijk]);
 
-            Tensor<float> C = Tensor<float>.ThreeD("C", "a", out IndexSet abc);
+            Tensor C = Tensor.ThreeD("C", "a", out IndexSet abc);
             Assert.IsType<IndexExpression>((Expression) C[abc]);
         }
-        
+
+        [Fact]
+        public void CanGenerateTermNames()
+        {
+            var B = Tensor.FiveD(tn.B);
+            Assert.Equal("B", B.Name);
+            var I = new IndexSet(5, "m0");
+            Assert.Equal("m1", I[0].Name);
+
+
+        }
+
         [Fact]
         public void CanAssignTensorExpression()
         {
-            Tensor<float> A = Tensor<float>.TwoD("A", "a", out Index a, out Index b);
-            Tensor<float> B = Tensor<float>.TwoD("B");
-            Tensor<float> C = Tensor<float>.TwoD("C");
+            var A = Tensor.TwoD("A", "a", out Index a, out Index b);
+            var B = Tensor.TwoD("B");
+            var C = Tensor.TwoD("C");
             C[a, b] = A[a, b] * C[b];
             Assert.True(C.IsAssigned);
         }

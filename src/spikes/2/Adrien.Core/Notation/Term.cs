@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Adrien.Notation
 {
@@ -12,7 +9,19 @@ namespace Adrien.Notation
     /// </summary>
     public abstract class Term : IEquatable<Term>
     {
-        #region Constructor
+        private static readonly int A = 'A';
+        private static readonly int a = 'a';
+        private static readonly int Z = 'Z';
+        private static readonly int z = 'z';
+
+        public string Id { get; protected set; }
+
+        public Name Name { get; protected set; }
+
+        internal abstract Name DefaultNameBase { get; }
+
+        internal abstract Expression LinqExpression { get; }
+
         internal Term()
         {
             Id = Guid.NewGuid().ToString("N");
@@ -34,19 +43,7 @@ namespace Adrien.Notation
         {
             this.Id = t.Id;
         }
-        #endregion
-
-        #region Properties
-        public string Id { get; protected set; }
-
-        public Name Name { get; protected set; }
-
-        internal abstract Name DefaultNameBase { get; }
-
-        internal abstract Expression LinqExpression { get; }
-        #endregion
-
-        #region Methods
+        
         public bool Equals(Term other)
         {
             return this.Id == other.Id;
@@ -55,10 +52,6 @@ namespace Adrien.Notation
         protected string GenerateName(int index, string indexNameBase)
         {
             indexNameBase = indexNameBase != string.Empty ? indexNameBase : (string) DefaultNameBase;
-            int A = 'A';
-            int a = 'a';
-            int Z = 'Z';
-            int z = 'z';
 
             if (indexNameBase.Length == 1)
             {
@@ -68,19 +61,20 @@ namespace Adrien.Notation
                 int upper = Char.IsLower(c) ? z : Z;
                 if (n < lower || n > upper)
                 {
-                    throw new ArgumentOutOfRangeException("Auto-generated name past limit.");
+                    throw new Exception("Auto-generated name past last letter of alphabet. Consider using a numeric name base like a0.");
                 }
                 else
                 {
                     return new string(Convert.ToChar(n), 1);
                 }
             }
-            else
+            else if (indexNameBase.Length == 2 && Char.IsLetter(indexNameBase[0]) && Char.IsNumber(indexNameBase[1]))
             {
-                return indexNameBase + index.ToString();
+                return new string(indexNameBase[0], 1) + index.ToString();
             }
+            else throw new ArgumentException($"Unknown name base {indexNameBase}");
         }
-        #endregion
+        
 
         #region Operators
         public static implicit operator Expression(Term e)

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Adrien.Notation
+namespace Adrien.Generators
 {
-    public class Scalar : Tensor
+    public enum LanguageName
     {
+        TILE
     }
 }

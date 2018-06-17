@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Adrien.Notation
 {
-    public class TensorExpression<T> : Term where T : unmanaged
+    public class TensorExpression : Term
     {
         #region Constructors
         public TensorExpression(Expression e)
@@ -24,29 +24,29 @@ namespace Adrien.Notation
         #endregion
 
         #region Operators
-        public static TensorExpression<T> operator - (TensorExpression<T> left)
+        public static TensorExpression operator - (TensorExpression left)
         {
-            return new TensorExpression<T>(Expression.Negate(left));
+            return new TensorExpression(Expression.Negate(left));
         }
 
-        public static TensorExpression<T> operator + (TensorExpression<T> left, TensorExpression<T> right)
+        public static TensorExpression operator + (TensorExpression left, TensorExpression right)
         {
-            return new TensorExpression<T>(Expression.Add(left, right));
+            return new TensorExpression(Expression.Add(left, right));
         }
 
-        public static TensorExpression<T> operator - (TensorExpression<T> left, TensorExpression<T> right)
+        public static TensorExpression operator - (TensorExpression left, TensorExpression right)
         {
-            return new TensorExpression<T>(Expression.Subtract(left, right));
+            return new TensorExpression(Expression.Subtract(left, right));
         }
 
-        public static TensorExpression<T> operator * (TensorExpression<T> left, TensorExpression<T> right)
+        public static TensorExpression operator * (TensorExpression left, TensorExpression right)
         {
-            return new TensorExpression<T>(Expression.Multiply(left, right));
+            return new TensorExpression(Expression.Multiply(left, right));
         }
 
-        public static TensorExpression<T> operator / (TensorExpression<T> left, TensorExpression<T> right)
+        public static TensorExpression operator / (TensorExpression left, TensorExpression right)
         {
-            return new TensorExpression<T>(Expression.Divide(left, right));
+            return new TensorExpression(Expression.Divide(left, right));
         }
         #endregion
     }

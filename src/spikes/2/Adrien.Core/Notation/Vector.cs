@@ -4,10 +4,12 @@ using System.Text;
 
 namespace Adrien.Notation
 {
-    public class Vector<T> : Tensor<T> where T : unmanaged
+    public class Vector : Tensor 
     {
-        public Vector(string name, params T[] elements) : base(name, 1) {}
+        public Vector(string name) : base(name, 1) {}
 
-        public Vector(params T[] elements) : this(vn.A, elements) { }
+        public Vector() : this(vn.V1) { }
+
+        internal override Name DefaultNameBase => "v0";
     }
 }

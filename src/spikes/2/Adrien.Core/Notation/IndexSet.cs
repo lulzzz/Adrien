@@ -36,17 +36,12 @@ namespace Adrien.Notation
 
         public SortedSet<Index> Indices { get; protected set; }
 
-        public int[] IndicesArray => Indices.Select(i => i.Order).ToArray();
+        
         
         public int DimensionCount => Indices.Count;
         #endregion
 
         #region Methods
-        public IndexExpression IndexExpression(params Index[] indices)
-        {
-            return Expression.MakeIndex(Expression.Constant(this), Index.OrderInfo, indices.Select(i => (Expression)i));
-        }
-
         public static IndexSet One(out Index index1, string nameBase = "")
         {
             IndexSet s = new IndexSet(1, nameBase);
