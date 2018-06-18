@@ -41,8 +41,10 @@ namespace Adrien.Tests
             Assert.Equal("B", B.Name);
             var I = new IndexSet(5, "m0");
             Assert.Equal("m1", I[0].Name);
-
-
+            var J = new IndexSet(5, "i0");
+            Assert.Equal("i1", J[0].Name);
+            var (m1, m2, m3, m4, m5) = I;
+            Assert.Equal("m4", m4.Name);
         }
 
         [Fact]
@@ -51,6 +53,7 @@ namespace Adrien.Tests
             var A = Tensor.TwoD("A", "a", out Index a, out Index b);
             var B = Tensor.TwoD("B");
             var C = Tensor.TwoD("C");
+            C[a,b] = B[a,b] * C[b,a];
             C[a, b] = A[a, b] * C[b];
             Assert.True(C.IsAssigned);
         }

@@ -21,7 +21,7 @@ namespace Adrien.Notation
 
         internal override Name DefaultNameBase { get; } = "A";
 
-        public Tensor(params int[] dim) : base("T")
+        public Tensor(params int[] dim) : base("A")
         {
             Dimensions = dim;
         }
@@ -53,7 +53,7 @@ namespace Adrien.Notation
             {
                 if (Rank <= indexSet.DimensionCount)
                 {
-                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[] { }), null,
+                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[] { this }), null,
                         new Expression[] { Expression.Parameter(typeof(int), indexSet.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
@@ -71,7 +71,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 0)
                 {
-                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[] { }), null, new Expression[] {
+                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[] { this }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
@@ -89,7 +89,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 1)
                 {
-                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,] { }), null, new Expression[] {
+                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,] { { this } }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name), Expression.Parameter(typeof(int), index2.Name) }));
                 }
                 else throw new ArgumentOutOfRangeException($"This tensor has rank {Rank}.");
@@ -107,7 +107,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 2)
                 {
-                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,,] { }), null, new Expression[] {
+                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,,] { { { this } } }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name),
                         Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name) }));
                 }
@@ -126,7 +126,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 3)
                 {
-                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,,,] { }), null, new Expression[] {
+                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,,,] { { { { this } } } }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name),
                         Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
                         Expression.Parameter(typeof(int), index4.Name) }));
@@ -146,7 +146,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 4)
                 {
-                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,,,,] { }), null, new Expression[] {
+                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,,,,] { { { { { this } } } } }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name),
                         Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
                         Expression.Parameter(typeof(int), index4.Name), Expression.Parameter(typeof(int), index5.Name) }));
@@ -166,7 +166,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 5)
                 {
-                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,,,,,] { }), null, new Expression[] {
+                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,,,,,] { { { { { { this } } } } } }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name),
                         Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
                         Expression.Parameter(typeof(int), index4.Name), Expression.Parameter(typeof(int), index5.Name),
@@ -187,7 +187,7 @@ namespace Adrien.Notation
             {
                 if (Rank > 6)
                 {
-                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,,,,,,] { }), null, new Expression[] {
+                    return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[,,,,,,] { { { { { { { this } } } } } } }), null, new Expression[] {
                         Expression.Parameter(typeof(int), index1.Name),
                         Expression.Parameter(typeof(int), index2.Name), Expression.Parameter(typeof(int), index3.Name),
                         Expression.Parameter(typeof(int), index4.Name), Expression.Parameter(typeof(int), index5.Name),
