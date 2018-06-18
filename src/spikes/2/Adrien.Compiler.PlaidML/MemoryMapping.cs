@@ -10,41 +10,6 @@ namespace Adrien.Compiler.PlaidML
 {
     public class MemoryMapping : PlaidMLApi<MemoryMapping>
     {
-        #region Constructors
-        public MemoryMapping(DeviceBuffer buffer, bool discard = true) : base(buffer.Context)
-        {
-            if (discard)
-            {
-                ptr = plaidml.__Internal.PlaidmlMapBufferDiscard(buffer.Context, buffer);
-            }
-            else
-            {
-                ptr = plaidml.__Internal.PlaidmlMapBufferCurrent(buffer, IntPtr.Zero, IntPtr.Zero);
-            }
-            if (ptr.IsZero())
-            {
-                ReportApiCallError(discard ? "plaidml_map_buffer_discard" : "plaidml_map_buffer_current");
-                return;
-            }
-            else
-            {
-                Buffer = buffer;
-                IsAllocated = true;
-                IsValid = true;
-            }
-        }
-        #endregion
-
-        #region Overriden members
-        public override void Free()
-        {
-            base.Free();
-            plaidml.__Internal.PlaidmlFreeMapping(this.ptr);
-            ptr = IntPtr.Zero;
-        }
-        #endregion
-
-        #region Properties
         public DeviceBuffer Buffer { get; protected set; }
 
         public IntPtr BaseAddress
@@ -72,9 +37,38 @@ namespace Adrien.Compiler.PlaidML
         }
 
         public bool IsValid { get; protected set; }
-        #endregion
 
-        #region Methods
+        
+        public MemoryMapping(DeviceBuffer buffer, bool discard = true) : base(buffer.Context)
+        {
+            if (discard)
+            {
+                ptr = plaidml.__Internal.PlaidmlMapBufferDiscard(buffer.Context, buffer);
+            }
+            else
+            {
+                ptr = plaidml.__Internal.PlaidmlMapBufferCurrent(buffer, IntPtr.Zero, IntPtr.Zero);
+            }
+            if (ptr.IsZero())
+            {
+                ReportApiCallError(discard ? "plaidml_map_buffer_discard" : "plaidml_map_buffer_current");
+                return;
+            }
+            else
+            {
+                Buffer = buffer;
+                IsAllocated = true;
+                IsValid = true;
+            }
+        }
+
+        public override void Free()
+        {
+            base.Free();
+            plaidml.__Internal.PlaidmlFreeMapping(this.ptr);
+            ptr = IntPtr.Zero;
+        }
+        
         public bool Writeback()
         {
             ThrowIfNotAllocated();
@@ -109,7 +103,5 @@ namespace Adrien.Compiler.PlaidML
         {
             IsValid = false;
         }
-
-        #endregion
     }
 }

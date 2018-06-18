@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 using Adrien.Compiler.PlaidML.Bindings;
 
@@ -8,7 +6,10 @@ namespace Adrien.Compiler.PlaidML
 {
     public class Invoker : PlaidMLApi<Invoker>
     {
-        #region Constructors
+        public bool InputVariablesSet { get; protected set; }
+        public bool OutputVariablesSet { get; protected set; }
+        public bool AllVariablesSet => InputVariablesSet && OutputVariablesSet;
+        
         public Invoker(Context ctx, Function f, params Variable[] inputs) : base(ctx)
         {
             ptr = plaidml.__Internal.PlaidmlAllocInvoker(context, f);
@@ -43,6 +44,7 @@ namespace Adrien.Compiler.PlaidML
             }
 
         }
+
         public Invoker(Context ctx, Function f, Variable[] inputs, Variable[] outputs) : base(ctx)
         {
             ptr = plaidml.__Internal.PlaidmlAllocInvoker(context, f); 
@@ -96,15 +98,8 @@ namespace Adrien.Compiler.PlaidML
             }
             
         }
-        #endregion
-
-        #region Properties
-        public bool InputVariablesSet { get; protected set; }
-        public bool OutputVariablesSet { get; protected set; }
-        public bool AllVariablesSet => InputVariablesSet && OutputVariablesSet;
-        #endregion
-
-        #region Methods
+        
+        
         public Shape GetOutputShape(string outputVariableName)
         {
             ThrowIfNotAllocated();
@@ -165,6 +160,5 @@ namespace Adrien.Compiler.PlaidML
                 throw new InvalidOperationException("All variables are not allocated.");
             }
         }
-        #endregion
     }
 }

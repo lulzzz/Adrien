@@ -8,7 +8,11 @@ namespace Adrien.Compiler.PlaidML
 {
     public class Tensor : Variable
     {
-        #region Constructors
+        public Device Device { get; protected set; }
+        public DeviceBuffer Buffer { get; protected set; }
+        public Shape Shape { get; protected set; }
+
+
         public Tensor(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context, name)
         {
             if (buffer == null)
@@ -35,15 +39,8 @@ namespace Adrien.Compiler.PlaidML
                 IsAllocated = true;
             }
         }
-        #endregion
+        
 
-        #region Properties
-        public Device Device { get; protected set; }
-        public DeviceBuffer Buffer { get; protected set; }
-        public Shape Shape { get; protected set; } 
-        #endregion
-
-        #region Methods
         public MemoryView<T> CreateMemoryView<T>(bool discard = true) where T : unmanaged
         {
             ThrowIfNotAllocated();
@@ -56,6 +53,5 @@ namespace Adrien.Compiler.PlaidML
             MemoryView<T> v = CreateMemoryView<T>();
             return v.CopyFromAndFree(array);
         }
-        #endregion
     }
 }

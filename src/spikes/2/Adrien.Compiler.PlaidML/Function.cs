@@ -8,7 +8,10 @@ namespace Adrien.Compiler.PlaidML
 {
     public class Function : PlaidMLApi<Function>
     {
-        #region Constructors
+        public string Id { get; protected set; }
+        public string Code { get; protected set; }
+
+      
         public Function(Context ctx, string code) : base(ctx)
         {
             string id = "id_" + Guid.NewGuid().ToString("N");
@@ -26,20 +29,13 @@ namespace Adrien.Compiler.PlaidML
             }
 
         }
-        #endregion
-
-        #region Overriden members
+       
+  
         public override void Free()
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeFunction(this);
             ptr = IntPtr.Zero;
         }
-        #endregion
-
-        #region Properties
-        public string Id { get; protected set; }
-        public string Code { get; protected set; }
-        #endregion
     }
 }

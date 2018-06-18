@@ -8,7 +8,11 @@ namespace Adrien.Compiler.PlaidML
 {
     public class Variable : PlaidMLApi<Variable>
     {
-        #region Constructors
+        public string Name { get; protected set; }
+
+        public PlaidmlDatatype DataType { get; protected set; }
+        
+
         protected Variable(Context ctx) : base(ctx) { }
   
         protected Variable(Context ctx, string name) : base(ctx)
@@ -77,20 +81,13 @@ namespace Adrien.Compiler.PlaidML
                 IsAllocated = true;
             }
         }
-        #endregion
+      
 
-        #region Overriden members
         public override void Free()
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeVar(ptr);
             ptr = IntPtr.Zero;
         }
-        #endregion
-
-        #region Properties
-        public string Name { get; protected set; }
-        public PlaidmlDatatype DataType { get; protected set; }
-        #endregion
     }
 }

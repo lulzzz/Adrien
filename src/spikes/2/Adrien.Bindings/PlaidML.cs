@@ -16,20 +16,14 @@ namespace Adrien.Bindings
 {
     public class PlaidML : Library
     {
-        #region Constructors
+        public override LibraryKind Kind { get; } = LibraryKind.PlaidML;
+
+
         public PlaidML(Dictionary<string, object> options) : base(options)
         {
 
         }
-        #endregion
-
-        #region Properties
-        
-
-        #endregion
-
-        #region Overriden members
-        public override LibraryKind Kind { get; } = LibraryKind.PlaidML;
+       
         public override void Setup(Driver driver)
         {
             base.Setup(driver);
@@ -75,6 +69,6 @@ namespace Adrien.Bindings
                 ctx.SetClassAsValueType(c.Name);
             }   
         }
-        #endregion
+        
     }
 }

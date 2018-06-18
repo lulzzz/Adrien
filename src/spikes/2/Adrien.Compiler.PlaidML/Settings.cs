@@ -9,43 +9,6 @@ namespace Adrien.Compiler.PlaidML
 {
     public class Settings : CompilerApi<Settings>
     {
-        #region Constructors
-        static Settings()
-        {
-            if (Environment.GetEnvironmentVariable("PLAIDML_DEFAULT_CONFIG").IsNullOrEmpty())
-            {
-                Environment.SetEnvironmentVariable("PLAIDML_DEFAULT_CONFIG", GetAssemblyDirectoryFullPath("config.json"));
-            }
-
-            if (Environment.GetEnvironmentVariable("PLAIDML_EXPERIMENTAL_CONFIG").IsNullOrEmpty())
-            {
-                Environment.SetEnvironmentVariable("PLAIDML_EXPERIMENTAL_CONFIG", GetAssemblyDirectoryFullPath("experimental.json"));
-            }
-        }
-
-        public Settings(string manualConfigText = "")
-        {
-            if (EnvironmentConfigFile != null && EnvironmentConfigFile.Exists)
-            {
-                ConfigFile = EnvironmentConfigFile;
-                Info("Using PlaidML environment settings file {0}.", EnvironmentConfigFile.FullName);
-            }
-            if (UserConfigFile.Exists)
-            {
-                ConfigFile = UserConfigFile;
-                Info("Using PlaidML user settings file {0}.", UserConfigFile.FullName); 
-            }
-            else
-            {
-                ConfigFile = DefaultConfigFile;
-                Info("Using PlaidML default settings file {0}.", DefaultConfigFile.FullName);
-            }
-            ManualConfigText = manualConfigText;
-            Load();
-        }
-        #endregion
-        
-        #region Properties
         public static string CONFIG_VAR = "PLAIDML_CONFIG";
         public static string CONFIG_FILE_VAR = "PLAIDML_CONFIG_FILE";
         public static string DEVICE_IDS_VAR = "PLAIDML_DEVICE_IDS";
@@ -53,6 +16,10 @@ namespace Adrien.Compiler.PlaidML
         public static string SESSION_VAR = "PLAIDML_SESSION";
         public static string SETTINGS_VAR = "PLAIDML_SETTINGS";
         public static string TELEMETRY_VAR = "PLAIDML_TELEMETRY";
+
+        public static string PLAIDML_EXPERIMENTAL_CONFIG_VAR = "PLAIDML_EXPERIMENTAL_CONFIG";
+        public static string PLAIDML_DEFAULT_CONFIG_VAR = "PLAIDML_DEFAULT_CONFIG";
+
         public static string[] ENV_SETTINGS_VARS = { CONFIG_VAR, CONFIG_FILE_VAR, DEVICE_IDS_VAR, EXPERIMENTAL_VAR, SESSION_VAR, SETTINGS_VAR, TELEMETRY_VAR };
 
         public static FileInfo EnvironmentConfigFile = Environment.GetEnvironmentVariable(SETTINGS_VAR).IsNotNullOrEmpty()
@@ -61,13 +28,13 @@ namespace Adrien.Compiler.PlaidML
 
         public static FileInfo UserConfigFile = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".plaidml"));
 
-        public static FileInfo DefaultConfigFile = Environment.GetEnvironmentVariable("PLAIDML_DEFAULT_CONFIG").IsNotNullOrEmpty() 
-            ? new FileInfo(Environment.GetEnvironmentVariable("PLAIDML_DEFAULT_CONFIG"))
+        public static FileInfo DefaultConfigFile = Environment.GetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR).IsNotNullOrEmpty()
+            ? new FileInfo(Environment.GetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR))
             : new FileInfo(GetAssemblyDirectoryFullPath("config.json"));
 
         public static FileInfo ExperimentalConfigFile =
-            Environment.GetEnvironmentVariable("PLAIDML_EXPERIMENTAL_CONFIG").IsNotNullOrEmpty() 
-            ? new FileInfo(Environment.GetEnvironmentVariable("PLAIDML_EXPERIMENTAL_CONFIG"))
+            Environment.GetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR).IsNotNullOrEmpty()
+            ? new FileInfo(Environment.GetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR))
             : new FileInfo(GetAssemblyDirectoryFullPath("experimental.json"));
 
         public FileInfo ConfigFile { get; protected set; }
@@ -98,13 +65,58 @@ namespace Adrien.Compiler.PlaidML
                 }
                 else throw new Exception("No configuration loaded.");
             }
-            
+
         }
 
         public bool IsManualConfig => ManualConfigText.IsNotNullOrEmpty();
-        #endregion
+        
 
-        #region Methods
+        static Settings()
+        {
+            if (Environment.GetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR).IsNullOrEmpty())
+            {
+                Environment.SetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR, GetAssemblyDirectoryFullPath("config.json"));
+            }
+
+            if (Environment.GetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR).IsNullOrEmpty())
+            {
+                Environment.SetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR, GetAssemblyDirectoryFullPath("experimental.json"));
+            }
+        }
+
+        public Settings(string manualConfigText = "")
+        {
+            if (EnvironmentConfigFile != null && EnvironmentConfigFile.Exists)
+            {
+                ConfigFile = EnvironmentConfigFile;
+                Info("Using PlaidML environment settings file {0}.", EnvironmentConfigFile.FullName);
+            }
+            if (UserConfigFile.Exists)
+            {
+                ConfigFile = UserConfigFile;
+                Info("Using PlaidML user settings file {0}.", UserConfigFile.FullName); 
+            }
+            else
+            {
+                ConfigFile = DefaultConfigFile;
+                Info("Using PlaidML default settings file {0}.", DefaultConfigFile.FullName);
+            }
+            ManualConfigText = manualConfigText;
+            Load();
+        }
+ 
+
+        public object this[string key]
+        {
+
+            get
+            {
+                ThrowIfNotLoaded();
+                return this.Dict[key];
+            }
+        }
+        
+
         public string StartNewSession()
         {
             ThrowIfNotLoaded();
@@ -150,20 +162,7 @@ namespace Adrien.Compiler.PlaidML
             {
                 throw new InvalidOperationException("A session has already been started.");
             }
-        }
-        #endregion
-
-        #region Operators
-        public object this[string key]
-        {
-            
-            get
-            {
-                ThrowIfNotLoaded();
-                return this.Dict[key];
-            }
-        }
-        #endregion
+        }        
         
     }
 }

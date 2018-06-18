@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 using CommandLine;
-using CommandLine.Text;
 
 namespace Adrien.Bindings
 {
@@ -38,12 +35,12 @@ namespace Adrien.Bindings
     [Verb("plaidml", HelpText = "Generate bindings for the PlaidML library.")]
     class PlaidMLOptions : Options
     {
+        [Option("cpp", Required = false, HelpText = "Generate bindings for the PlaidML C++ ")]
+        public bool Cpp { get => ModuleName == "plaidml_cpp"; set => ModuleName = "plaidml_cpp"; }
+
         public PlaidMLOptions()
         {
             ModuleName = "plaidml";
         }
-
-        [Option("cpp", Required = false, HelpText = "Generate bindings for the PlaidML C++ ")]
-        public bool Cpp { get => ModuleName == "plaidml_cpp"; set => ModuleName = "plaidml_cpp"; }
     }
 }

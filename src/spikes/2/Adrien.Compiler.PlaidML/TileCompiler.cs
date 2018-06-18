@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 using Adrien.Compiler.PlaidML.Bindings;
 
@@ -8,7 +6,17 @@ namespace Adrien.Compiler.PlaidML
 {
     public class TileCompiler : PlaidMLApi<TileCompiler>
     {
-        #region Constructors
+        public bool Initialized => IsAllocated;
+
+        public Settings Settings => context.settings;
+
+        public string SessionId { get; protected set; }
+
+        public DeviceEnumerator DeviceEnumerator { get; protected set; }
+
+        public int DeviceCount => DeviceEnumerator.Count;
+        
+
         public TileCompiler() : base(new Context())
         {    
             SessionId = Settings.StartNewSession();
@@ -19,29 +27,8 @@ namespace Adrien.Compiler.PlaidML
             }
             IsAllocated = true;
         }
-        #endregion
+       
 
-        #region Properties
-        public bool Initialized => IsAllocated;
-        public Settings Settings => context.settings;
-
-        public string SessionId { get; protected set; }
-        
-        public DeviceEnumerator DeviceEnumerator { get; protected set; }
-
-        public int DeviceCount => DeviceEnumerator.Count;
-        #endregion
-
-        #region Methods
-        public void ThrowIfNotInitialized()
-        {
-            if (!Initialized)
-            {
-                throw new InvalidOperationException("This compiler instance is not initialized.");
-            }
-        }
-
-        
         public Device OpenFirstDevice()
         {
             ThrowIfNotInitialized();
@@ -73,6 +60,13 @@ namespace Adrien.Compiler.PlaidML
             ThrowIfNotInitialized();
             return new Function(context, code);
         }
-        #endregion
+
+        internal void ThrowIfNotInitialized()
+        {
+            if (!Initialized)
+            {
+                throw new InvalidOperationException("This compiler instance is not initialized.");
+            }
+        }
     }
 }

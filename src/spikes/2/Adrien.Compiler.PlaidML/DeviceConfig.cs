@@ -9,28 +9,12 @@ namespace Adrien.Compiler.PlaidML
 {
     public class DeviceConfig : PlaidMLApi<DeviceConfig>
     {
-        #region Constructors
-        public DeviceConfig(Context ctx, DeviceEnumerator enumerator, ulong index) : base(ctx)
-        {
-            ptr = plaidml.__Internal.PlaidmlGetDevconf(context, enumerator, index);
-            if (ptr.IsZero())
-            {
-                ReportApiCallError("plaidml_get_devconf");
-            }
-            else
-            {
-                Enumerator = enumerator;
-                Index = index;
-                IsAllocated = true;
-            }
-            
-        }
-        #endregion
+        protected string _Id;
+        protected string _Config;
+        protected string _Description;
+        protected string _Details;
+        
 
-        #region Overriden members
-        #endregion
-
-        #region Properties
         public DeviceEnumerator Enumerator { get; protected set; }
 
         public ulong Index { get; protected set; }
@@ -82,9 +66,26 @@ namespace Adrien.Compiler.PlaidML
                 return _Details;
             }
         }
-        #endregion
+        
 
-        #region Methods
+       
+        public DeviceConfig(Context ctx, DeviceEnumerator enumerator, ulong index) : base(ctx)
+        {
+            ptr = plaidml.__Internal.PlaidmlGetDevconf(context, enumerator, index);
+            if (ptr.IsZero())
+            {
+                ReportApiCallError("plaidml_get_devconf");
+            }
+            else
+            {
+                Enumerator = enumerator;
+                Index = index;
+                IsAllocated = true;
+            }
+            
+        }
+        
+
         public string QueryStringProperty(PlaidmlDeviceProperty property)
         {
             unsafe
@@ -120,13 +121,5 @@ namespace Adrien.Compiler.PlaidML
                 }
             }
         }
-        #endregion
-
-        #region Fields
-        protected string _Id;
-        protected string _Config;
-        protected string _Description;
-        protected string _Details;
-        #endregion
     }
 }

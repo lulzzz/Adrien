@@ -15,6 +15,7 @@ namespace Adrien.Bindings
     {
         protected Generator G;
         protected Library Library;
+
         public DebugDeclsPass(Library lib, Generator gen) : base()
         {
             G = gen;

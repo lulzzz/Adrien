@@ -8,7 +8,9 @@ namespace Adrien.Compiler.PlaidML
 {
     public class Placeholder : Variable
     {
-        #region Constructors
+        public ulong DimensionCount { get; protected set; }
+        
+   
         public Placeholder(Context ctx, ulong dimensionCount) : base(ctx)
         {
             ptr = plaidml.__Internal.PlaidmlAllocPlaceholder(dimensionCount); 
@@ -21,11 +23,6 @@ namespace Adrien.Compiler.PlaidML
                 IsAllocated = true;
                 DimensionCount = dimensionCount;
             }
-        }
-        #endregion
-
-        #region Properties
-        public ulong DimensionCount { get; protected set; }
-        #endregion
+        }     
     }
 }

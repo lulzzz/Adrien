@@ -15,11 +15,14 @@ namespace Adrien.Bindings
     {
         protected Generator G;
         protected Library Library;
+
+
         public GetAllClassDeclsPass(Library lib, Generator gen) : base()
         {
             G = gen;
             Library = lib;
         }
+
 
         public override bool VisitClassDecl(Class @class)
         {

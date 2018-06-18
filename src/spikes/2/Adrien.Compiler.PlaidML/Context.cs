@@ -11,7 +11,17 @@ namespace Adrien.Compiler.PlaidML
 {
     public class Context : CompilerApi<Context>
     {
-        #region Constructors
+        protected IntPtr ptr;
+        protected string logFileName;
+        protected FileInfo logFile;
+        
+
+        public bool IsAllocated { get; protected set; }
+        public VaiStatus LastStatus { get; protected set; }
+        public string LastStatusString { get; protected set; }
+        public Settings settings { get; protected set; }
+        
+
         public Context(string eventLogFileName, string manualConfigText = "")
         {            
             ptr = @base.__Internal.VaiAllocCtx();
@@ -44,17 +54,21 @@ namespace Adrien.Compiler.PlaidML
         }
 
         public Context() : this("PlaidML.log") {}
-        #endregion
+        
 
-        #region Properties
-        public bool IsAllocated { get; protected set; }
-        public VaiStatus LastStatus { get; protected set; }
-        public string LastStatusString { get; protected set; }
+        public static implicit operator IntPtr(Context c)
+        {
+            if (!c.IsAllocated)
+            {
+                throw new InvalidOperationException("This context is not allocated.");
+            }
+            else
+            {
+                return c.ptr;
+            }
+        }
+        
 
-        public Settings settings { get; protected set; }
-        #endregion
-
-        #region Methods
         public void Free()
         {
             ThrowIfNotAllocated();
@@ -79,27 +93,5 @@ namespace Adrien.Compiler.PlaidML
 
         protected void ReportApiCallError(string call) => Error("Call to {0} returned null or false. Status : {1} {2}", call,
             LastStatus = @base.VaiLastStatus(), LastStatusString = @base.VaiLastStatusStr());
-        #endregion
-
-        #region Fields
-        protected IntPtr ptr;
-        protected string logFileName;
-        protected FileInfo logFile;
-        #endregion
-
-        #region Operators
-        public static implicit operator IntPtr(Context c)
-        {
-            if (!c.IsAllocated)
-            {
-                throw new InvalidOperationException("This context is not allocated.");
-            }
-            else
-            {
-                return c.ptr;
-            }
-        }
-        #endregion
-
     }
 }

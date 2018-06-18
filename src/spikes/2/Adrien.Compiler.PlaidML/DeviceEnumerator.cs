@@ -9,40 +9,6 @@ namespace Adrien.Compiler.PlaidML
 {
     public class DeviceEnumerator : PlaidMLApi<DeviceEnumerator>
     {
-        #region Constructors
-        public DeviceEnumerator(Context ctx) : base(ctx)
-        {
-            if (context.settings.IsManualConfig)
-            {
-                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(context, context.settings.Config, IntPtr.Zero, IntPtr.Zero);
-
-            }
-            else
-            {
-                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumerator(context, IntPtr.Zero, IntPtr.Zero);
-
-            }
-            if (ptr.IsZero())
-            {
-                ReportApiCallError("plaidml_alloc_device_enumerator_with_config");
-            }
-            else
-            {
-                IsAllocated = true;
-            }
-        }
-        #endregion
-
-        #region Overriden members
-        public override void Free()
-        {
-            base.Free();
-            plaidml.__Internal.PlaidmlFreeDeviceEnumerator(ptr);
-            ptr = IntPtr.Zero;
-        }
-        #endregion
-
-        #region Properties
         public int Count
         {
             get
@@ -70,9 +36,38 @@ namespace Adrien.Compiler.PlaidML
                 return vd;
             }
         }
-        #endregion
+        
 
-        #region Methods
+        public DeviceEnumerator(Context ctx) : base(ctx)
+        {
+            if (context.settings.IsManualConfig)
+            {
+                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(context, context.settings.Config, IntPtr.Zero, IntPtr.Zero);
+
+            }
+            else
+            {
+                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumerator(context, IntPtr.Zero, IntPtr.Zero);
+
+            }
+            if (ptr.IsZero())
+            {
+                ReportApiCallError("plaidml_alloc_device_enumerator_with_config");
+            }
+            else
+            {
+                IsAllocated = true;
+            }
+        }
+        
+        
+        public override void Free()
+        {
+            base.Free();
+            plaidml.__Internal.PlaidmlFreeDeviceEnumerator(ptr);
+            ptr = IntPtr.Zero;
+        }
+        
         public string GetConfigSource()
         {
             IntPtr r = plaidml.__Internal.PlaidmlGetEnumeratorConfigSource(this);
@@ -86,6 +81,6 @@ namespace Adrien.Compiler.PlaidML
                 return Marshal.PtrToStringAnsi(r);
             }
         }
-        #endregion
+        
     }
 }

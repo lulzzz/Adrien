@@ -8,7 +8,11 @@ namespace Adrien.Compiler.PlaidML
 {
     public class DeviceBuffer : PlaidMLApi<DeviceBuffer>
     {
-        #region Constructors
+        public Device Device { get; protected set; }
+        public Shape Shape { get; protected set; }
+        public ulong SizeInBytes { get; protected set; }
+        
+        
         public DeviceBuffer(Context ctx, Device device, Shape shape) : base(ctx)
         {
             SizeInBytes = plaidml.__Internal.PlaidmlGetShapeBufferSize(shape);
@@ -32,22 +36,13 @@ namespace Adrien.Compiler.PlaidML
             }
 
         }
-        #endregion
+        
 
-        #region Overriden members
         public override void Free()
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeBuffer(this);
             ptr = IntPtr.Zero;
         }
-        #endregion
-
-        #region Properties
-        public Device Device { get; protected set; }
-        public Shape Shape { get; protected set; }
-        public ulong SizeInBytes { get; protected set; }
-        #endregion
-
     }
 }

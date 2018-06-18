@@ -9,13 +9,6 @@ namespace Adrien.Compiler.PlaidML
 {
     public class MemoryView<T> : PlaidMLApi<MemoryView<T>> where T : unmanaged
     {
-        public MemoryView(MemoryMapping mapping) : base(mapping.Context)
-        {
-            Mapping = mapping;
-            IsAllocated = mapping.IsAllocated;
-        }
-
-        #region Properties
         public MemoryMapping Mapping { get; protected set; }
 
         public DeviceBuffer Buffer => Mapping.Buffer;
@@ -24,18 +17,36 @@ namespace Adrien.Compiler.PlaidML
 
         public IntPtr BaseAddress => Mapping.BaseAddress;
 
-        public int Length => (int) Shape.ElementCount;
+        public int Length => (int)Shape.ElementCount;
 
         public Span<T> Span => Mapping.GetSpan<T>();
 
         public bool IsDirty { get; protected set; }
-        #endregion
+        
 
-        #region Overriden members
+        public MemoryView(MemoryMapping mapping) : base(mapping.Context)
+        {
+            Mapping = mapping;
+            IsAllocated = mapping.IsAllocated;
+        }
+
+        
+        public T this[int index]
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return Read(index);
+            }
+            set
+            {
+                Write(index, value);
+            }
+        }
+        
+        
         public override void Free() => Mapping.Free();
-        #endregion
-
-        #region Methods
+        
         public bool Writeback()
         {
             if (Mapping.Writeback())
@@ -82,7 +93,7 @@ namespace Adrien.Compiler.PlaidML
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void ThrowIfIndexOutsideRange(int index)
         {
-            if (index < 0 || index >= (int) Length)
+            if (index < 0 || index >= Length)
             {
                 throw new IndexOutOfRangeException();
             }
@@ -107,21 +118,5 @@ namespace Adrien.Compiler.PlaidML
             v = value;
             IsDirty = true;
         }
-        #endregion
-
-        #region Operators
-        public T this[int index]
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
-            {
-                return Read(index);
-            }
-            set
-            {
-                Write(index, value);
-            }
-        }
-        #endregion
     }
 }

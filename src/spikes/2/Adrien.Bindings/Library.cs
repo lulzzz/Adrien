@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.IO;
-using System.Linq;
 using Ref = System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 using Serilog;
 using CppSharp;
@@ -21,8 +18,32 @@ namespace Adrien.Bindings
         {
             PlaidML
         }
+
+        protected static DirectoryInfo AssemblyDirectory = new FileInfo(Ref.Assembly.GetExecutingAssembly().Location).Directory;
+
+
+        public List<string> ClassDecls = new List<string>();
+        public List<string> ClassTemplateDecls = new List<string>();
+        public List<string> ClassTemplateSpecializationDecls = new List<string>();
+
+
+        public ILogger L { get; } = Log.Logger.ForContext<Library>();
+        public abstract LibraryKind Kind { get; }
+        public string Name => Kind.ToString();
+        public Dictionary<string, object> BindOptions { get; internal set; }
+        public DirectoryInfo RootDirectory { get; internal set; }
+        public string R => RootDirectory?.FullName;
+        public string F { get; protected set; }
+        public string OutputDirName { get; internal set; }
+        public string OutputFileName { get; internal set; }
+        public string ModuleName { get; internal set; }
+        public Module Module { get; internal set; }
+        public string Class { get; internal set; }
+        public string Namespace { get; internal set; }
+        public bool WithoutCommon { get; protected set; }
+        public bool Verbose { get; internal set; }
         
-        #region Constructors
+
         public Library(Dictionary<string, object> options)
         {
             BindOptions = options;
@@ -68,9 +89,8 @@ namespace Adrien.Bindings
                 Info($"Module file is {F}.");
             }
         }
-        #endregion
 
-        #region Implemented members
+ 
         /// Setup the driver options here.
         public virtual void Setup(Driver driver)
         {
@@ -101,28 +121,8 @@ namespace Adrien.Bindings
         public virtual void Postprocess(Driver driver, ASTContext ctx)
         {
         }
-        #endregion
+        
 
-        #region Properties
-        protected static DirectoryInfo AssemblyDirectory = new FileInfo(Ref.Assembly.GetExecutingAssembly().Location).Directory;
-        public ILogger L { get; } = Log.Logger.ForContext<Library>();
-        public abstract LibraryKind Kind { get; }
-        public string Name => Kind.ToString();
-        public Dictionary<string, object> BindOptions { get; internal set; }
-        public DirectoryInfo RootDirectory { get; internal set; }
-        public string R => RootDirectory?.FullName;
-        public string F { get; protected set; } 
-        public string OutputDirName { get; internal set; }
-        public string OutputFileName { get; internal set; }
-        public string ModuleName { get; internal set; }
-        public Module Module { get; internal set; }
-        public string Class { get; internal set; }
-        public string Namespace { get; internal set; }
-        public bool WithoutCommon { get; protected set; }
-        public bool Verbose { get; internal set; }
-        #endregion
-
-        #region Methods
         public virtual bool CleanAndFixup()
         {
             if (File.Exists(Path.Combine(OutputDirName, Module.OutputNamespace + "-symbols.cpp")))
@@ -165,12 +165,5 @@ namespace Adrien.Bindings
         protected void Info(string m, params object[] o) => L.Information(m, o);
         protected void Warn(string m, params object[] o) => L.Warning(m, o);
         protected void Error(string m, params object[] o) => L.Error(m, o);
-        #endregion
-
-        #region Fields
-        public List<string> ClassDecls = new List<string>();
-        public List<string> ClassTemplateDecls = new List<string>();
-        public List<string> ClassTemplateSpecializationDecls = new List<string>();
-        #endregion
     }
 }

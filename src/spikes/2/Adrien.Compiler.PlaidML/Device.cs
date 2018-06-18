@@ -8,7 +8,12 @@ namespace Adrien.Compiler.PlaidML
 {
     public class Device : PlaidMLApi<Device>
     {
-        #region Constructors
+        public DeviceConfig DeviceConfig { get; protected set; }
+        public bool IsOpen { get; protected set; }
+        public bool IsClosed { get; protected set; }
+        public List<DeviceBuffer> Buffers { get; protected set; }
+        
+
         public Device(Context ctx, DeviceConfig devconf = null) : base(ctx)
         {
             if (devconf != null)
@@ -34,9 +39,6 @@ namespace Adrien.Compiler.PlaidML
         }
 
 
-        #endregion
-
-        #region Overriden members
         public override void Free()
         {
             if (this.IsOpen)
@@ -45,24 +47,7 @@ namespace Adrien.Compiler.PlaidML
             }
             base.Free();
         }
-        #endregion
-
-        #region Properties
-        public DeviceConfig DeviceConfig { get; protected set; }
-        public bool IsOpen { get; protected set; }
-        public bool IsClosed { get; protected set; }
-
-        public List<DeviceBuffer> Buffers { get; protected set; }
-        #endregion
-
-        #region Methods
-        internal void ThrowIfNotOpen()
-        {
-            if (!this.IsOpen)
-            {
-                throw new InvalidOperationException("This device is not open.");
-            }
-        }
+        
 
         public void Close()
         {
@@ -82,7 +67,13 @@ namespace Adrien.Compiler.PlaidML
             return new DeviceBuffer(this.context, this, shape);
         }
 
-        #endregion
+        internal void ThrowIfNotOpen()
+        {
+            if (!this.IsOpen)
+            {
+                throw new InvalidOperationException("This device is not open.");
+            }
+        }
 
     }
 }

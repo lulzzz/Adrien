@@ -14,7 +14,7 @@ namespace Adrien.Notation
             Indices = new SortedSet<Index>();
             for (int i = 0; i < dim; i++)
             {
-                Indices.Add(new Index(this, i, GenerateName(i, indexNameBase == string.Empty ? "i" : indexNameBase)));
+                Indices.Add(new Index(this, i, GenerateName(i, indexNameBase)));
             }
             this.Name = Indices.Select(i => i.Name).Aggregate((a, b) => a + b);
         }

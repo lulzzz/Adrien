@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 using Adrien.Compiler.PlaidML.Bindings;
 
@@ -10,15 +8,10 @@ namespace Adrien.Compiler.PlaidML
 {
     public abstract class PlaidMLApi<T> : CompilerApi<T>, IDisposable
     {
-        #region Constructors
-        public PlaidMLApi(Context ctx) : base()
-        {
-            ctx.ThrowIfNotAllocated();
-            this.context = ctx;
-        }
-        #endregion
+        protected Context context;
+        protected IntPtr ptr;
 
-        #region Properties
+        
         public Context Context
         {
             get
@@ -31,9 +24,28 @@ namespace Adrien.Compiler.PlaidML
         public VaiStatus LastStatus { get; protected set; }
         public string LastStatusString { get; protected set; }
         public string ManualConfigText { get; protected set; }
-        #endregion
+        
 
-        #region Methods
+        public PlaidMLApi(Context ctx) : base()
+        {
+            ctx.ThrowIfNotAllocated();
+            this.context = ctx;
+        }
+        
+
+        public static implicit operator IntPtr(PlaidMLApi<T> c)  
+        {
+            if (!c.IsAllocated)
+            {
+                throw new InvalidOperationException("This object is not allocated.");
+            }
+            else
+            {
+                return c.ptr;
+            }
+        }
+        
+
         public virtual void Free()
         {
             ThrowIfNotAllocated();
@@ -61,32 +73,12 @@ namespace Adrien.Compiler.PlaidML
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        #endregion
-
+        
         private void Dispose(bool disposing)
         {
             Free();
         }
-
         #endregion
 
-        #region Fields
-        protected Context context;
-        protected IntPtr ptr;
-        #endregion
-
-        #region Operators
-        public static implicit operator IntPtr(PlaidMLApi<T> c)  
-        {
-            if (!c.IsAllocated)
-            {
-                throw new InvalidOperationException("This object is not allocated.");
-            }
-            else
-            {
-                return c.ptr;
-            }
-        }
-        #endregion
     }
 }

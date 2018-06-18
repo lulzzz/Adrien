@@ -8,7 +8,8 @@ namespace Adrien.Compiler.PlaidML
 {
     public class Invocation : PlaidMLApi<Invocation>
     {
-        #region Constructors
+        public Invoker Invoker { get; protected set; }
+       
         public Invocation(Context ctx, Invoker invoker) : base(ctx)
         {
             ptr = plaidml.__Internal.PlaidmlScheduleInvocation(context, invoker);
@@ -24,19 +25,13 @@ namespace Adrien.Compiler.PlaidML
 
             }
         }
-        #endregion
+        
 
-        #region Overriden members
         public override void Free()
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeInvocation(this);
             ptr = IntPtr.Zero;
         }
-        #endregion
-
-        #region Properties
-        public Invoker Invoker { get; protected set; }
-        #endregion
     }
 }
