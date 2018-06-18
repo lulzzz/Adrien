@@ -8,22 +8,17 @@ namespace Adrien.Notation
 {
     public class TensorExpression : Term
     {
-        #region Constructors
+        internal override Expression LinqExpression { get; }
+        
+        internal override Name DefaultNameBase => "A";
+
+
         public TensorExpression(Expression e)
         {
             LinqExpression = e;
         }
-        #endregion
+        
 
-        #region Overriden members
-        internal override Name DefaultNameBase => "A";
-        #endregion
-
-        #region Properties
-        internal override Expression LinqExpression { get; }
-        #endregion
-
-        #region Operators
         public static TensorExpression operator - (TensorExpression left)
         {
             return new TensorExpression(Expression.Negate(left));
@@ -48,6 +43,6 @@ namespace Adrien.Notation
         {
             return new TensorExpression(Expression.Divide(left, right));
         }
-        #endregion
+        
     }
 }

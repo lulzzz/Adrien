@@ -8,7 +8,16 @@ namespace Adrien.Notation
 {
     public class IndexSet : Term
     {
-        #region Constructors
+        public static PropertyInfo IndicesArrayInfo { get; } = typeof(Index).GetProperty("IndicesArray");
+
+        public SortedSet<Index> Indices { get; protected set; }
+
+        public int DimensionCount => Indices.Count;
+        
+        internal override Name DefaultNameBase { get; } = "I";
+
+        internal override Expression LinqExpression => Expression.Constant(this);
+        
         public IndexSet(int dim, string indexNameBase="") : base()
         {
             Indices = new SortedSet<Index>();
@@ -24,24 +33,53 @@ namespace Adrien.Notation
             Indices = new SortedSet<Index>(indices);
             this.Name = Indices.Select(i => i.Name).Aggregate((a, b) => a + b);
         }
-        #endregion
-
-        #region Overriden members
-        internal override Name DefaultNameBase { get; } = "I"; 
-        internal override Expression LinqExpression => Expression.Constant(this);
-        #endregion
-
-        #region Properties
-        public static PropertyInfo IndicesArrayInfo { get; } = typeof(Index).GetProperty("IndicesArray");
-
-        public SortedSet<Index> Indices { get; protected set; }
-
         
         
-        public int DimensionCount => Indices.Count;
-        #endregion
+        public Index this[int index]
+        {
+            get
+            {
+                ThrowIfIndicesExceedDimensions(index);
+                return Indices.ElementAt(index); 
+            }
+        }
 
-        #region Methods
+        public static implicit operator Index(IndexSet s)
+        {
+            s.ThrowIfIndicesExceedDimensions(1);
+            return s[0];
+        }
+
+        public static implicit operator IndexSet((Index index1, Index index2) t)
+        {
+            return new IndexSet(t.index1, t.index2);
+        }
+
+        public static implicit operator IndexSet((Index index1, Index index2, Index index3) t)
+        {
+            return new IndexSet(t.index1, t.index2, t.index3);
+        }
+
+        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4) t)
+        {
+            return new IndexSet(t.index1, t.index2, t.index3, t.index4);
+        }
+
+        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4, Index index5) t)
+        {
+            return new IndexSet(t.index1, t.index2, t.index3, t.index4, t.index5);
+        }
+
+        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4, Index index5, Index index6) t)
+        {
+            return new IndexSet(t.index1, t.index2, t.index3, t.index4, t.index5, t.index6);
+        }
+
+        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4, Index index5, Index index6, Index index7) t)
+        {
+            return new IndexSet(t.index1, t.index2, t.index3, t.index4, t.index5, t.index6, t.index7);
+        }
+        
         public static IndexSet One(out Index index1, string nameBase = "")
         {
             IndexSet s = new IndexSet(1, nameBase);
@@ -144,53 +182,5 @@ namespace Adrien.Notation
                 throw new InvalidOperationException("These indices are not from the same index set.");
             }
         }
-        #endregion
-
-        #region Operators
-        public Index this[int index]
-        {
-            get
-            {
-                ThrowIfIndicesExceedDimensions(index);
-                return Indices.ElementAt(index); 
-            }
-        }
-
-        public static implicit operator Index(IndexSet s)
-        {
-            s.ThrowIfIndicesExceedDimensions(1);
-            return s[0];
-        }
-
-        public static implicit operator IndexSet((Index index1, Index index2) t)
-        {
-            return new IndexSet(t.index1, t.index2);
-        }
-
-        public static implicit operator IndexSet((Index index1, Index index2, Index index3) t)
-        {
-            return new IndexSet(t.index1, t.index2, t.index3);
-        }
-
-        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4) t)
-        {
-            return new IndexSet(t.index1, t.index2, t.index3, t.index4);
-        }
-
-        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4, Index index5) t)
-        {
-            return new IndexSet(t.index1, t.index2, t.index3, t.index4, t.index5);
-        }
-
-        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4, Index index5, Index index6) t)
-        {
-            return new IndexSet(t.index1, t.index2, t.index3, t.index4, t.index5, t.index6);
-        }
-
-        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4, Index index5, Index index6, Index index7) t)
-        {
-            return new IndexSet(t.index1, t.index2, t.index3, t.index4, t.index5, t.index6, t.index7);
-        }
-        #endregion
     }
 }

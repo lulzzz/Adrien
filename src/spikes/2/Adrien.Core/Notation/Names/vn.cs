@@ -6,7 +6,6 @@ namespace Adrien.Notation
 {
     public class vn : Name
     {
-        private vn(string name) : base(name) { }
         public static Name V1 = "V1";
         public static Name V2 = "V2";
         public static Name V3 = "V3";
@@ -33,5 +32,7 @@ namespace Adrien.Notation
         public static Name V24 = "V24";
         public static Name V25 = "V25";
         public static Name V26 = "V26";
+
+        private vn(string name) : base(name) { }
     }
 }

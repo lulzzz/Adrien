@@ -6,10 +6,10 @@ namespace Adrien
 {
     public class Driver
     {
-        #region Properties
         public static LoggerConfiguration LoggerConfiguration { get; protected set; }
         public static bool LoggerConfigured { get; protected set; }
-        #endregion
+        
+
         public static void CreateDefaultLogger(string logFilename = "Adrien.log")
         {
             LoggerConfiguration = new LoggerConfiguration()

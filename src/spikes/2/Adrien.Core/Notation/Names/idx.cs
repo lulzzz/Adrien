@@ -6,7 +6,6 @@ namespace Adrien.Notation
 {
     public class idx : Name
     {
-        private idx(string name) : base(name) { }
         public static Name a = "a";
         public static Name b = "b";
         public static Name c = "c";
@@ -60,5 +59,7 @@ namespace Adrien.Notation
         public static Name x0 = "x0";
         public static Name y0 = "y0";
         public static Name z0 = "z0";
+
+        private idx(string name) : base(name) { }
     }
 }

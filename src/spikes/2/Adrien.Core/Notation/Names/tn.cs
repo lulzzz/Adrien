@@ -6,7 +6,6 @@ namespace Adrien.Notation
 {
     public class tn : Name
     {
-        private tn(string name) : base(name) { }
         public static Name A = "A";
         public static Name B = "B";
         public static Name C = "C";
@@ -33,5 +32,7 @@ namespace Adrien.Notation
         public static Name X = "X";
         public static Name Y = "Y";
         public static Name Z = "Z";
+
+        private tn(string name) : base(name) { }
     }
 }

@@ -8,7 +8,18 @@ namespace Adrien.Notation
 {
     public class Tensor : Term
     {
-        #region Constructors
+        public int[] Dimensions { get; protected set; }
+
+        public int Rank => Dimensions.Length;
+
+        public (IndexSet IndexSet, TensorExpression Expression) Assignment { get; protected set; }
+
+        public bool IsAssigned => Assignment.IndexSet != null;
+
+        internal override Expression LinqExpression => Expression.Constant(this);
+
+        internal override Name DefaultNameBase { get; } = "A";
+
         public Tensor(params int[] dim) : base("T")
         {
             Dimensions = dim;
@@ -28,25 +39,6 @@ namespace Adrien.Notation
         {
             I = new IndexSet(dim.Length, indexNameBase);
         }
-
-        #endregion
-
-        #region Overriden members
-        internal override Expression LinqExpression => Expression.Constant(this);
-        internal override Name DefaultNameBase { get; } = "A";
-        #endregion
-
-        #region Properties
-        public int[] Dimensions { get; protected set; }
-
-        public int Rank => Dimensions.Length;
-
-        public (IndexSet IndexSet, TensorExpression Expression) Assignment { get; protected set; }
-
-        public bool IsAssigned => Assignment.IndexSet != null;
-        #endregion
-
-        #region Operators
 
         #region Indexers
         public static implicit operator TensorExpression(Tensor t)
@@ -210,23 +202,9 @@ namespace Adrien.Notation
         }
         #endregion
 
-        #endregion
-
-        #region Methods
-        internal void ThrowIfAlreadyAssiged()
-        {
-            if (Assignment.IndexSet != null)
-            {
-                throw new InvalidOperationException("This tensor variable has an existing assigment. You can only assign to a tensor variable once.");
-            }
-        }
-
-        internal void ThrowIfIndicesExceedRank(int c)
-        {
-            if (Rank < c) throw new ArgumentOutOfRangeException("The number of indices exceeds the dimensions of this tensor.");
-        }
 
         public static Tensor OneD(string name) => new Tensor(name, new int[1]);
+
         public static Tensor OneD(string name, string indexName, out Index index)
         {
             index = new IndexSet(1, indexName);
@@ -281,6 +259,18 @@ namespace Adrien.Notation
             (index1, index2, index3, index4, index5, index6, index7) = new IndexSet(7, indexNameBase);
             return new Tensor(name, new int[7]);
         }
-        #endregion
+
+        internal void ThrowIfAlreadyAssiged()
+        {
+            if (Assignment.IndexSet != null)
+            {
+                throw new InvalidOperationException("This tensor variable has an existing assigment. You can only assign to a tensor variable once.");
+            }
+        }
+
+        internal void ThrowIfIndicesExceedRank(int c)
+        {
+            if (Rank < c) throw new ArgumentOutOfRangeException("The number of indices exceeds the dimensions of this tensor.");
+        }
     }
 }

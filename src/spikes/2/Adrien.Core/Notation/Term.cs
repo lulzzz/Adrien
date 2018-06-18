@@ -9,10 +9,6 @@ namespace Adrien.Notation
     /// </summary>
     public abstract class Term : IEquatable<Term>
     {
-        private static readonly int A = 'A';
-        private static readonly int a = 'a';
-        private static readonly int Z = 'Z';
-        private static readonly int z = 'z';
 
         public string Id { get; protected set; }
 
@@ -21,6 +17,11 @@ namespace Adrien.Notation
         internal abstract Name DefaultNameBase { get; }
 
         internal abstract Expression LinqExpression { get; }
+
+        private static readonly int A = 'A';
+        private static readonly int a = 'a';
+        private static readonly int Z = 'Z';
+        private static readonly int z = 'z';
 
         internal Term()
         {
@@ -36,7 +37,6 @@ namespace Adrien.Notation
         {
             Name = new string(name, 1);
         }
-
 
         internal Term(Term t)
         
@@ -76,11 +76,10 @@ namespace Adrien.Notation
         }
         
 
-        #region Operators
         public static implicit operator Expression(Term e)
         {
             return e.LinqExpression;
         }
-        #endregion
+   
     }
 }
