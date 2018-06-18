@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Linq;
 using System.Linq.Expressions;
+
 namespace Adrien.Notation
 {
     public class Tensor : Term

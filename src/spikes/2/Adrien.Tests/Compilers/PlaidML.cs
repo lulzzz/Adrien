@@ -15,7 +15,7 @@ namespace Adrien.Tests.Compilers
 
         public PlaidMLCompilerTests()
         {
-            Driver.CreateDefaultLogger("Adrien.Tests.log");
+            CompilerDriver.CreateDefaultLogger("Adrien.Tests.log");
             context = new Context();
         }
 

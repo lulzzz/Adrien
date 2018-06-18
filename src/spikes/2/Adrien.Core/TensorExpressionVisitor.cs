@@ -14,11 +14,6 @@ namespace Adrien.Generators.Tile
         public TensorExpressionVisitor(Expression expr) : base()
         {
             Expression = expr;
-
         }
-
-        
-        
-        
     }
 }

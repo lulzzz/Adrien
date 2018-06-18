@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace Adrien.Notation
 {
-    public class TensorExpression : Term
+    public class TensorExpression : Term, IAlgebra<TensorExpression>
     {
         internal override Expression LinqExpression { get; }
         
@@ -17,32 +17,30 @@ namespace Adrien.Notation
         {
             LinqExpression = e;
         }
+
+
+        public static TensorExpression operator - (TensorExpression left) => left.Negate();
+
+        public static TensorExpression operator + (TensorExpression left, TensorExpression right) => left.Add(right);
+
+
+        public static TensorExpression operator - (TensorExpression left, TensorExpression right) => left.Subtract(right);
+
+
+        public static TensorExpression operator * (TensorExpression left, TensorExpression right) => left.Multiply(right);
+
+
+        public static TensorExpression operator / (TensorExpression left, TensorExpression right) => left.Divide(right);
         
 
-        public static TensorExpression operator - (TensorExpression left)
-        {
-            return new TensorExpression(Expression.Negate(left));
-        }
-
-        public static TensorExpression operator + (TensorExpression left, TensorExpression right)
-        {
-            return new TensorExpression(Expression.Add(left, right));
-        }
-
-        public static TensorExpression operator - (TensorExpression left, TensorExpression right)
-        {
-            return new TensorExpression(Expression.Subtract(left, right));
-        }
-
-        public static TensorExpression operator * (TensorExpression left, TensorExpression right)
-        {
-            return new TensorExpression(Expression.Multiply(left, right));
-        }
-
-        public static TensorExpression operator / (TensorExpression left, TensorExpression right)
-        {
-            return new TensorExpression(Expression.Divide(left, right));
-        }
+        public TensorExpression Negate() => new TensorExpression(Expression.Negate(this));
         
+        public TensorExpression Add(TensorExpression right) => new TensorExpression(Expression.Add(this, right));
+
+        public TensorExpression Subtract(TensorExpression right) => new TensorExpression(Expression.Subtract(this, right));
+
+        public TensorExpression Multiply(TensorExpression right) => new TensorExpression(Expression.Multiply(this, right));
+
+        public TensorExpression Divide(TensorExpression right) => new TensorExpression(Expression.Divide(this, right));
     }
 }

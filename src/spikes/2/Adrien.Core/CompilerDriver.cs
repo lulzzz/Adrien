@@ -4,7 +4,7 @@ using Serilog;
 
 namespace Adrien
 {
-    public class Driver
+    public class CompilerDriver
     {
         public static LoggerConfiguration LoggerConfiguration { get; protected set; }
         public static bool LoggerConfigured { get; protected set; }
