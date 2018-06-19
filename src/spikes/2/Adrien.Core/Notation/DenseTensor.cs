@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Adrien.TensorNotation
+namespace Adrien.Notation
 {
-    class DenseTensor
+    public class DenseTensor : Tensor
     {
     }
 }

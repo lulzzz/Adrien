@@ -7,9 +7,8 @@ namespace Adrien.Notation
     /// <summary>
     /// Abstracts a notation term
     /// </summary>
-    public abstract class Term : IEquatable<Term>
+    public abstract class Term : ITerm, IEquatable<Term>
     {
-
         public string Id { get; protected set; }
 
         public Name Name { get; protected set; }

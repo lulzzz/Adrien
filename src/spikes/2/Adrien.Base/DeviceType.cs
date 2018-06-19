@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Adrien.Notation
+namespace Adrien
 {
-    public class SparseTensor : Tensor
+    public enum DeviceType
     {
+        CPU,
+        GPU
     }
 }

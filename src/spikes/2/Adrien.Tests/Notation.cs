@@ -54,7 +54,6 @@ namespace Adrien.Tests
             var B = Tensor.TwoD("B");
             var C = Tensor.TwoD("C");
             C[a,b] = B[a,b] * C[b,a];
-            C[a, b] = A[a, b] * C[b];
             Assert.True(C.IsAssigned);
         }
     }

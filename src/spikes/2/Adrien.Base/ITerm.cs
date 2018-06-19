@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Adrien.Notation
+namespace Adrien
 {
-    public class SparseTensor : Tensor
+    public interface ITerm
     {
+        string Id { get; }
     }
 }

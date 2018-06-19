@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Adrien
 {
-    public interface IShape<T> where T : unmanaged
+    public interface IShape
     {
+        DataType DataType { get; }
         int[] Dimensions { get; }
         int Stride { get;  }
         int Rank { get; }

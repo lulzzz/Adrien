@@ -23,12 +23,9 @@ namespace Adrien.Notation
 
         public static TensorExpression operator + (TensorExpression left, TensorExpression right) => left.Add(right);
 
-
         public static TensorExpression operator - (TensorExpression left, TensorExpression right) => left.Subtract(right);
 
-
         public static TensorExpression operator * (TensorExpression left, TensorExpression right) => left.Multiply(right);
-
 
         public static TensorExpression operator / (TensorExpression left, TensorExpression right) => left.Divide(right);
         
