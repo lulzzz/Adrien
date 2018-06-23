@@ -1,0 +1,46 @@
+﻿<#@ template debug="true" hostspecific="true" language="C#" #>
+<#@ assembly name="netstandard.dll" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ assembly name="$(SolutionDir)..\..\..\lib\netstandard2.0\Humanizer.dll" #>
+<#@ assembly name="$(TargetDir)Adrien.Core.dll" #>
+<#@ import namespace="Adrien.Notation" #>
+<#@ output extension=".cs" #>
+using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Text;
+using System.Linq;
+using System.Linq.Expressions;
+using Humanizer;
+
+namespace Adrien.Notation
+{
+	public partial class Tensor
+	{<#for (int i = 2; i < 100; i++)
+	{
+	string tn = Tensor.RankToTensorName(i);
+	#>
+		
+		public static Tensor <#=tn#>D(string name, (<# for (int j = 1; j < i; j++) {#>int dim<#=j#>, <#}#>int dim<#=i#>) dim) =>
+			new Tensor(name, <# for (int j = 1; j < i; j++) {#>dim.dim<#=j#>, <#}#>dim.dim<#=i#>);
+
+		public static Tensor <#=tn#>D(string name, (<# for (int j = 1; j < i; j++) {#>int dim<#=j#>, <#}#>int dim<#=i#>) dim, string indexNameBase, out IndexSet I)
+		{
+			I = new IndexSet(indexNameBase,  <# for (int j = 1; j < i; j++){#>dim.dim<#=j#>, <#}#>dim.dim<#=i#>);
+			return Tensor.<#=tn#>D(name, dim);
+		}
+
+		public static Tensor <#=tn#>D(string name, (<# for (int j = 1; j < i; j++) {#>int dim<#=j#>, <#}#>int dim<#=i#>) dim, string indexNameBase,
+			<#for (int j = 1; j < i; j++) {#>out Index index<#=j#>, <#}#>out Index index<#=i#>)
+		{
+			Tensor t = new Tensor(name, indexNameBase, out IndexSet I, <#for (int j = 1; j < i; j++){#>dim.dim<#=j#>, <#}#>dim.dim<#=i#>);
+			<#for (int j = 1; j <= i; j++) {#>index<#=j#> = new Index(I, <#=j-1#>, dim.dim<#=j#>, t.GenerateName(<#=j-1#>, indexNameBase));
+			<#}#>return t;
+		}
+	<#}#>
+	}
+}

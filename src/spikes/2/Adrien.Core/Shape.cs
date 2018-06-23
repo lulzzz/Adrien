@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Adrien
 {
-    public class TensorShape<T> : IShape where T : unmanaged
+    public class Shape<T> //: IShape where T : unmanaged
     {
         public int[] Dimensions { get; }
 

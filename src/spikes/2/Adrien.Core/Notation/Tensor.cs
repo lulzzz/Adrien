@@ -4,10 +4,11 @@ using System.Reflection;
 using System.Text;
 using System.Linq;
 using System.Linq.Expressions;
+using Humanizer;
 
 namespace Adrien.Notation
 {
-    public class Tensor : Term
+    public partial class Tensor : Term
     {
         public int[] Dimensions { get; protected set; }
 
@@ -31,14 +32,21 @@ namespace Adrien.Notation
             Dimensions = dim;
         }
 
-        public Tensor(string name, out IndexSet I, string indexNameBase, params int[] dim) : this(name, dim)
-        {
-            I = new IndexSet(dim.Length, indexNameBase);
-        }
-
         public Tensor(string name, string indexNameBase, out IndexSet I, params int[] dim) : this(name, dim)
         {
-            I = new IndexSet(dim.Length, indexNameBase);
+            I = new IndexSet(indexNameBase, dim);
+        }
+
+       
+
+        public static string RankToTensorName(int rank)
+        {
+            string[] names = rank.ToWords().Split('-');
+            for(int i = 0; i < names.Length; i++)
+            {
+                names[i] = char.ToUpper(names[i][0]) + names[i].Substring(1);
+            }
+            return string.Join("", names);
         }
 
         #region Indexers
@@ -204,15 +212,16 @@ namespace Adrien.Notation
         #endregion
 
 
-        public static Tensor OneD(string name) => new Tensor(name, new int[1]);
+        /*
+        public static Tensor OneD(string name, int dim1) => new Tensor(name, new int[] { dim1 });
 
-        public static Tensor OneD(string name, string indexName, out Index index)
+        public static Tensor OneD(string name, (int dim1, int dim2) dim, string indexName, out Index index)
         {
             index = new IndexSet(1, indexName);
-            return new Tensor(name, new int[1]);
+            return new Tensor(name, new int[] { dim.dim1, dim.dim2 });
         }
 
-        public static Tensor TwoD(string name) => new Tensor(name, new int[2]);
+        public static Tensor TwoD(string name) => new Tensor(name);
         public static Tensor TwoD(string name, string indexNameBase, out IndexSet I) => new Tensor(name, out I, indexNameBase, new int[2]);
         public static Tensor TwoD(string name, string indexNameBase, out Index index1, out Index index2)
         {
@@ -260,7 +269,7 @@ namespace Adrien.Notation
             (index1, index2, index3, index4, index5, index6, index7) = new IndexSet(7, indexNameBase);
             return new Tensor(name, new int[7]);
         }
-
+        */
         internal void ThrowIfAlreadyAssiged()
         {
             if (Assignment.IndexSet != null)

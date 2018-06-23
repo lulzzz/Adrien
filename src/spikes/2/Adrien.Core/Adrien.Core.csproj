@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Platforms>AnyCPU;x64</Platforms>
+    <Platforms>AnyCPU;x64;x86</Platforms>
     <RootNamespace>Adrien</RootNamespace>
   </PropertyGroup>
 
@@ -10,7 +10,13 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
   <ItemGroup>
+    <PackageReference Include="AgileObjects.ReadableExpressions" Version="1.11.0" />
+    <PackageReference Include="Humanizer.Core" Version="2.3.3" />
     <PackageReference Include="Sawmill" Version="2.1.0" />
     <PackageReference Include="Serilog" Version="2.7.1" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
@@ -24,6 +30,25 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Adrien.Base\Adrien.Base.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Notation\TensorConstructors.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TensorConstructors.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Notation\TensorConstructors.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TensorConstructors.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

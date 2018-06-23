@@ -18,12 +18,12 @@ namespace Adrien.Notation
 
         internal override Expression LinqExpression => Expression.Constant(this);
         
-        public IndexSet(int dim, string indexNameBase="") : base()
+        public IndexSet(string indexNameBase="", params int[] dim) : base()
         {
             Indices = new SortedSet<Index>();
-            for (int i = 0; i < dim; i++)
+            for (int i = 0; i < dim.Length; i++)
             {
-                Indices.Add(new Index(this, i, GenerateName(i, indexNameBase)));
+                Indices.Add(new Index(this, i, dim[i], GenerateName(i, indexNameBase)));
             }
             this.Name = Indices.Select(i => i.Name).Aggregate((a, b) => a + b);
         }
@@ -32,6 +32,10 @@ namespace Adrien.Notation
         {
             Indices = new SortedSet<Index>(indices);
             this.Name = Indices.Select(i => i.Name).Aggregate((a, b) => a + b);
+            foreach(Index index in indices)
+            {
+                index.Set = this;
+            }
         }
         
         
@@ -79,7 +83,7 @@ namespace Adrien.Notation
         {
             return new IndexSet(t.index1, t.index2, t.index3, t.index4, t.index5, t.index6, t.index7);
         }
-        
+        /*
         public static IndexSet One(out Index index1, string nameBase = "")
         {
             IndexSet s = new IndexSet(1, nameBase);
@@ -110,7 +114,7 @@ namespace Adrien.Notation
             (index1, index2, index3, index4) = s;
             return s;
         }
-
+        */
         #region Deconstructors
         public void Deconstruct(out Index index1, out Index index2)
         {
