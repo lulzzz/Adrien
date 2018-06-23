@@ -29,6 +29,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Notation\TensorIndexers.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TensorIndexers.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Adrien.Base\Adrien.Base.csproj" />
   </ItemGroup>
 
@@ -42,12 +50,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>TensorConstructors.tt</DependentUpon>
     </Compile>
+    <Compile Update="Notation\TensorIndexers.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TensorIndexers.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Notation\TensorConstructors.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TensorConstructors.cs</LastGenOutput>
+    </None>
+    <None Update="Notation\TensorIndexers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TensorIndexers.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
