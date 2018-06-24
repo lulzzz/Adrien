@@ -20,10 +20,9 @@ namespace Adrien.Notation
 			get
 			{
 				ThrowIfIndicesExceedRank(<#=i#>);
-				return new TensorExpression(Expression.MakeIndex(Expression.Constant(new TensorExpression[<#for (int j = 1; j < i; j++) {#>,<#}#>] 
+				return new TensorExpression(Expression.MakeIndex(Expression.Constant(new Tensor[<#for (int j = 1; j < i; j++) {#>,<#}#>] 
 				<#for (int j = 1; j <= i; j++) {#>{<#}#>this<#for (int j = 1; j <= i; j++) {#>}<#}#>), null, new Expression[] {
 					<#for (int j = 1; j < i; j++) {#>Expression.Parameter(typeof(int), index<#=j#>.Name), <#}#>Expression.Parameter(typeof(int), index<#=i#>.Name)}));
-				
 			}
 			set
 			{

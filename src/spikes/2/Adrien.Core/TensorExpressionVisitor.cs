@@ -7,26 +7,59 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-using Adrien;
+using Adrien.Notation;
+using Adrien.Trees;
 
 namespace Adrien
 {
     public class TensorExpressionVisitor : ExpressionVisitor
     {
-        public Expression Expression { get; protected set; }
+        public ExpressionTree Tree { get; set; }
 
-        public List<string> VariableNames { get; protected set; }
+        internal Expression Expr;
+
+        internal TreeNode CurrentNode { get; set; }
+
         public TensorExpressionVisitor(Expression expr) : base()
         {
-            VariableNames = new List<string>();
-            Expression = expr;
+            Expr = expr;
+            CurrentNode = Tree = new ExpressionTree();
         }
 
+        internal static TReturn FlattenConstantExpressionValue<TReturn>(ConstantExpression node)
+        {
+            Array a = (Array)node.Value;
+            return a.Flatten<TReturn>().First();
+        }
         protected override Expression VisitConstant(ConstantExpression node)
         {
-            return base.VisitConstant(node);
+            ValueNode v = null;
+            if (CurrentNode is ValueNode)
+            {
+                throw new InvalidOperationException("The current expression tree node is not an operator node.");
+            }
+            if (node.Value is Array)
+            {
+                v = new ValueNode((OperatorNode)CurrentNode, FlattenConstantExpressionValue<Tensor>(node));
+            }
+            else throw new InvalidOperationException($"Can't convert ConstantExpression {node.Value.GetType().Name} to Tensor.");
+
+            if (Tree.Nodes.Add(v))
+            {
+                CurrentNode = v;
+                return base.VisitConstant(node);
+            }
+            else
+            {
+                throw new Exception("Could not add value node to expression tree.");
+            }
+                            
         }
 
-        
+        public void Visit()
+        {
+            this.Visit(Expr);
+        }
+
     }
 }

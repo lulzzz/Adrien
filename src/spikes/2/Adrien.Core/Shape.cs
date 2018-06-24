@@ -13,5 +13,7 @@ namespace Adrien
         public int Stride { get; }
 
         public int Rank => Dimensions.Length;
+
+        protected virtual int[] dim { get; }
     }
 }

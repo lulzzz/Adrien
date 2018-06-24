@@ -26,15 +26,14 @@ namespace Adrien.Notation
             Dimension = dim;
         }
         
+
+        public static implicit operator Int32(Index i) => i.Order;
+
         public int CompareTo(Index i)
         {
             return this.Order.CompareTo(i.Order);
         }
         
-
-
-
-       
     }
 
 }

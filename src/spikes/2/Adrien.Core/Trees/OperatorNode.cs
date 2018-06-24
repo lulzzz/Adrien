@@ -11,5 +11,10 @@ namespace Adrien.Trees
         public TreeNode Left { get; protected set; }
 
         public TreeNode Right { get; protected set; }
+
+        public OperatorNode(int id, int? parentId, Op op) : base(id, parentId)
+        {
+            Op = op;
+        }
     }
 }

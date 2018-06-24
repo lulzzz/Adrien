@@ -12,7 +12,7 @@ using Adrien.Notation;
 
 namespace Adrien.Trees
 {
-    public class ExpressionTree : TreeNode, IExpressionTree
+    public class ExpressionTree : OperatorNode, IExpressionTree
     {
         public Expression LinqExpression { get; protected set; }
 
@@ -20,13 +20,18 @@ namespace Adrien.Trees
 
         public IEnumerable<ITreeNode> Children => Nodes.Cast<ITreeNode>();
 
-        public ExpressionTree(Term term)
+
+        public ExpressionTree() : base(0, null, Op.Add)
         {
-            this.Id = 0;
             Nodes = new HashSet<TreeNode>();
+        }
+
+        public ExpressionTree(Term term) : this()
+        {
             this.LinqExpression = term.LinqExpression;
         }
 
+ 
         public bool Build()
         {
             LinqExpression.DescendantsAndSelf().OfType<ConstantExpression>();

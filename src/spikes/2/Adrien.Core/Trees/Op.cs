@@ -6,6 +6,7 @@ namespace Adrien.Trees
 {
     public enum Op
     {
+        Assign,
         Log,
         Log10,
         Add,

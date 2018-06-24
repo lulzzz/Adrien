@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Sawmill;
+using Sawmill.Expressions;
+
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Adrien.Notation
@@ -12,6 +16,19 @@ namespace Adrien.Notation
         
         internal override Name DefaultNameBase => "A";
 
+        public List<Tensor> Tensors
+        {
+            get
+            {
+                return LinqExpression.DescendantsAndSelf()
+                    .OfType<ConstantExpression>()
+                    .Select(e => e.Value)
+                    .Cast<Array>()
+                    .Select(a => a.Flatten<Tensor>().First())
+                    .ToList();
+            }
+        }
+            
 
         public TensorExpression(Expression e)
         {
