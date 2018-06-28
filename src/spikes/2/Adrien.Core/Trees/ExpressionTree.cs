@@ -21,7 +21,7 @@ namespace Adrien.Trees
         public IEnumerable<ITreeNode> Children => Nodes.Cast<ITreeNode>();
 
 
-        public ExpressionTree() : base(0, null, Op.Add)
+        public ExpressionTree() : base(0, null, Op.Assign)
         {
             Nodes = new HashSet<TreeNode>();
         }
@@ -31,12 +31,26 @@ namespace Adrien.Trees
             this.LinqExpression = term.LinqExpression;
         }
 
- 
-        public bool Build()
+        public int CountChildren(TreeNode node)
         {
-            LinqExpression.DescendantsAndSelf().OfType<ConstantExpression>();
-            return false;
-            
+            int Count(int start, TreeNode tn)
+            {
+                if (tn is ValueNode)
+                {
+                    return start;
+                }
+                else if (tn is OperatorNode)
+                {
+                    OperatorNode on = (OperatorNode)tn;
+                    int lcount = Count(start + 1, on.Left);
+                    int rcount = on.Right != null ? Count(lcount + 1, on.Right) : lcount;
+                    return rcount;
+                }
+                else throw new Exception("Unknown tree node type.");
+            }
+            return Count(0, node);
         }
+
+        public int CountChildren() => CountChildren(this);
     }
 }

@@ -11,7 +11,7 @@ namespace Adrien.Notation
     public class Index : Term, IComparable<Index>
     {
         public IndexSet Set { get; internal set; }
-        public int Order { get; protected set; }
+        public int Order { get; internal set; }
         public int Dimension { get; internal set; }
         public static PropertyInfo OrderInfo { get; } = typeof(Index).GetProperty("Order");
 

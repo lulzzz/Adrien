@@ -4,6 +4,12 @@ using System.Text;
 
 namespace Adrien.Trees
 {
+    public enum TreeNodePosition
+    {
+        LEFT = 1,
+        RIGHT = 2
+    }
+
     public abstract class TreeNode : ITreeNode
     {
         public int Id { get; internal set; }
@@ -18,10 +24,8 @@ namespace Adrien.Trees
             ParentId = parentId;
         }
 
-        public TreeNode(TreeNode parent, bool left = true)
+        public TreeNode(TreeNode parent, TreeNodePosition pos) : this(parent.Id + (int) pos, parent.Id)
         {
-            ParentId = parent.Id;
-            Id = left ? ParentId.Value + 1 : ParentId.Value + 2;
         }
     }
 }

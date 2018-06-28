@@ -16,5 +16,10 @@ namespace Adrien.Trees
         {
             Op = op;
         }
+
+        public OperatorNode(OperatorNode parent, Op op, TreeNodePosition pos) : base(parent, pos)
+        {
+            Op = op;
+        }
     }
 }
