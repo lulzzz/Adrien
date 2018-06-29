@@ -72,10 +72,8 @@ namespace Adrien
                     this.Visit(node.Object);
                 }
 
-
-                ValueNode tv = Context.LastTreeNodeAsValue;
                 Tensor t = Context.LastTreeValueNodeAs<Tensor>();
-
+         
                 Index[] indices = new Index[node.Arguments.Count];
 
                 for (int i = 0; i < node.Arguments.Count; i++)

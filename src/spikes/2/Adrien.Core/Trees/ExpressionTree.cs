@@ -45,7 +45,7 @@ namespace Adrien.Trees
  
         public int CountChildren(TreeNode node)
         {
-            int Count(int start, TreeNode tn)
+            int Count(int start, ITreeNode tn)
             {
                 if (tn is ValueNode)
                 {

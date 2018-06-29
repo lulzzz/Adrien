@@ -9,11 +9,8 @@ using Adrien.Trees;
 
 namespace Adrien
 {
-    public class ExpressionVisitorContext : TreeVisitorContext<Op, Expression>
+    public class ExpressionVisitorContext : TreeBuilderContext
     {
-        public ExpressionVisitorContext(ExpressionTree tree) : base(tree)
-        {
-            
-        }
+        public ExpressionVisitorContext(ExpressionTree tree) : base(tree) {}
     }
 }

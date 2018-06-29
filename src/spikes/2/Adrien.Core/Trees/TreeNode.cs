@@ -16,7 +16,6 @@ namespace Adrien.Trees
 
         public int? ParentId { get; internal set; }
 
-        public bool Equals(ITreeNode other) => this.Id == other.Id;
 
         public TreeNode(int id, int? parentId = null)
         {
@@ -27,5 +26,10 @@ namespace Adrien.Trees
         public TreeNode(TreeNode parent, TreeNodePosition pos) : this(parent.Id + (int) pos, parent.Id)
         {
         }
+
+
+        public bool Equals(ITreeNode other) => this.Id == other.Id;
+
+        
     }
 }
