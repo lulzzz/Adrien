@@ -7,5 +7,6 @@ namespace Adrien
     public interface IExpressionTree : ITreeNode
     {
         IEnumerable<ITreeNode> Children { get; }
+        bool AddNode(ITreeNode n);
     }
 }

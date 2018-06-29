@@ -21,14 +21,14 @@ namespace Adrien
 
         internal Expression LinqExpression;
 
-        internal ExpressionVisitorContext Context { get; set; }
+        internal TreeBuilderContext Context { get; set; }
 
 
         public TensorExpressionVisitor(Expression expr, bool visit = true) : base()
         {
             LinqExpression = expr;
             Tree = new ExpressionTree();
-            Context = new ExpressionVisitorContext(Tree);
+            Context = new TreeBuilderContext(Tree);
             if (visit)
             {
                 Visit();

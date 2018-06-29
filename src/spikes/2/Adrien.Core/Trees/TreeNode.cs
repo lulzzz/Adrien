@@ -23,9 +23,7 @@ namespace Adrien.Trees
             ParentId = parentId;
         }
 
-        public TreeNode(TreeNode parent, TreeNodePosition pos) : this(parent.Id + (int) pos, parent.Id)
-        {
-        }
+        public TreeNode(ITreeNode parent, TreeNodePosition pos) : this(parent.Id + (int) pos, parent.Id) {}
 
 
         public bool Equals(ITreeNode other) => this.Id == other.Id;

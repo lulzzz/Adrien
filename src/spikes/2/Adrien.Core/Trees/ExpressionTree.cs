@@ -23,12 +23,12 @@ namespace Adrien.Trees
 
         public List<ValueNode> ValueNodes => this.Nodes.OfType<ValueNode>().ToList();
 
-        protected HashSet<TreeNode> Nodes { get; set; }
+        protected HashSet<ITreeNode> Nodes { get; set; }
 
 
         public ExpressionTree() : base(0, null, Op.Assign)
         {
-            Nodes = new HashSet<TreeNode>();
+            Nodes = new HashSet<ITreeNode>();
         }
 
         public ExpressionTree(Term term) : this()
@@ -41,7 +41,7 @@ namespace Adrien.Trees
 
         public OperatorNode OperatorNodeAt(int index) => (Nodes.ElementAt(index) as OperatorNode) ?? throw new Exception($"The element at {index} is not an operator node.");
 
-        public bool AddNode(TreeNode n) => Nodes.Add(n);
+        public bool AddNode(ITreeNode n) => Nodes.Add(n);
  
         public int CountChildren(TreeNode node)
         {

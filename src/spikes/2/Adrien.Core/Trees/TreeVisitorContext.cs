@@ -10,15 +10,15 @@ namespace Adrien.Trees
 {
     public abstract class TreeVisitorContext<TTreeNode> : ITreeVisitorContext<Op, TTreeNode>
     {
-        public IExpressionTree Tree { get; }
+        public IExpressionTree Tree { get; protected set; }
 
-        public Stack<TTreeNode> Operands { get; }
+        public Stack<TTreeNode> Operands { get; protected set; }
 
-        public Stack<Op> Operators { get; }
+        public Stack<Op> Operators { get; protected set; }
 
-        public Stack<object> O { get; }
+        public Stack<object> O { get; protected set; }
 
-        public Stack<ITreeNode> TreeNodeStack { get; }
+        public Stack<ITreeNode> TreeNodeStack { get; protected set; }
 
         public Op CurrentOp => Operators.Peek();
 
@@ -37,10 +37,6 @@ namespace Adrien.Trees
             this.O = new Stack<object>();
         }
 
-
-        public abstract void OpNodeAction(Op op);
-
-        public abstract void ValueAction(ValueNode node);
 
         public T LastTreeValueNodeAs<T>()
         {

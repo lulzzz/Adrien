@@ -36,6 +36,6 @@ namespace Adrien.Trees
             Value = value;
         }
 
-        public ValueNode(OperatorNode parent, object value, TreeNodePosition pos) : this(parent.Id + (int)pos, parent.Id, value) {}
+        public ValueNode(ITreeOperatorNode<Op> parent, object value, TreeNodePosition pos) : this(parent.Id + (int)pos, parent.Id, value) {}
     }
 }
