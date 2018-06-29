@@ -16,14 +16,21 @@ namespace Adrien.Trees
 
         public int? ParentId { get; internal set; }
 
+        public ITreeNode Parent { get; internal set; }
 
-        public TreeNode(int id, int? parentId = null)
+        public abstract string Label { get;  }
+
+
+        public TreeNode(ITreeNode parent, TreeNodePosition pos) : this(parent.Id + (int) pos, parent.Id)
+        {
+            Parent = parent;
+        }
+
+        protected TreeNode(int id, int? parentId = null)
         {
             Id = id;
             ParentId = parentId;
         }
-
-        public TreeNode(ITreeNode parent, TreeNodePosition pos) : this(parent.Id + (int) pos, parent.Id) {}
 
 
         public bool Equals(ITreeNode other) => this.Id == other.Id;

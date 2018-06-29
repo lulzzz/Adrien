@@ -6,17 +6,23 @@ using Adrien.Notation;
 
 namespace Adrien.Trees
 {
-    public enum ValueNodeType
-    {
-        TENSOR,
-        INDEXSET
-    }
-
     public class ValueNode: TreeNode, ITreeValueNode
     {
         public ValueNodeType NodeType { get; internal set; }
 
         public object Value { get; internal set; }
+
+        public override string Label
+        {
+            get
+            {
+                switch (this.Value)
+                {
+                    case Term t: return t.Name;
+                    default: throw new Exception($"Unknown value: {Value}.");
+                }
+            }
+        }
 
         public ValueNode(int id, int? parentId, object value) : base(id, parentId)
         {
@@ -36,6 +42,16 @@ namespace Adrien.Trees
             Value = value;
         }
 
-        public ValueNode(ITreeOperatorNode<Op> parent, object value, TreeNodePosition pos) : this(parent.Id + (int)pos, parent.Id, value) {}
+        public ValueNode(ITreeOperatorNode<Op> parent, object value, TreeNodePosition pos) : this(parent.Id + (int)pos, parent.Id, value)
+        {
+            Parent = parent;
+        }
+
+        public T ValueAs<T>() where T : class
+        {
+            return (Value as T) ?? throw new Exception();
+        }
+
+ 
     }
 }

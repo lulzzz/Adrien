@@ -12,14 +12,20 @@ namespace Adrien.Trees
 
         public ITreeNode Right { get; protected set; }
 
+        public override string Label => Op.ToString();
+
+        
         public OperatorNode(int id, int? parentId, Op op) : base(id, parentId)
         {
             Op = op;
         }
+        
 
         public OperatorNode(ITreeOperatorNode<Op> parent, Op op, TreeNodePosition pos) : base(parent, pos)
         {
             Op = op;
         }
+
+        
     }
 }

@@ -9,5 +9,9 @@ namespace Adrien
         int Id { get; }
 
         int? ParentId { get; }
+
+        ITreeNode Parent { get; }
+
+        string Label { get; }
     }
 }

@@ -8,12 +8,16 @@ namespace Adrien.Trees
     {
         public IExpressionTree Tree { get; set; }
 
-        internal TreeVisitorContext<TOp, ITreeNode> Context { get; set; }
+        public TreeVisitorContext<TOp, ITreeNode> Context { get; protected set; }
 
         public TreeVisitor(IExpressionTree tree, bool visit = true) : base()
         {
-          
             Tree = tree;
+            if (visit)
+            {
+                Visit(tree);
+                AfterVisit();
+            }
         }
 
 
@@ -46,5 +50,8 @@ namespace Adrien.Trees
                 }
             }
         }
+
+        public abstract void AfterVisit();
+        
     }
 }

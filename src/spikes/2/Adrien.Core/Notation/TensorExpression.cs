@@ -8,6 +8,7 @@ using Sawmill.Expressions;
 using System.Linq;
 using System.Linq.Expressions;
 
+using Adrien.Trees;
 namespace Adrien.Notation
 {
     public class TensorExpression : Term, IAlgebra<TensorExpression>
@@ -28,7 +29,8 @@ namespace Adrien.Notation
                     .ToList();
             }
         }
-            
+
+        public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression, true).Tree;
 
         public TensorExpression(Expression e)
         {
@@ -56,5 +58,7 @@ namespace Adrien.Notation
         public TensorExpression Multiply(TensorExpression right) => new TensorExpression(Expression.Multiply(this, right));
 
         public TensorExpression Divide(TensorExpression right) => new TensorExpression(Expression.Divide(this, right));
+
+        
     }
 }
