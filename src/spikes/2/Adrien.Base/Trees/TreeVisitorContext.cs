@@ -4,46 +4,43 @@ using System.Text;
 
 using System.Linq;
 
-
-
 namespace Adrien.Trees
 {
-    public abstract class TreeVisitorContext<TTreeNode> : ITreeVisitorContext<Op, TTreeNode>
+    public abstract class TreeVisitorContext<TOp, TTreeNode> : ITreeVisitorContext<TOp, TTreeNode>
     {
         public IExpressionTree Tree { get; protected set; }
 
         public Stack<TTreeNode> Operands { get; protected set; }
 
-        public Stack<Op> Operators { get; protected set; }
+        public Stack<TOp> Operators { get; protected set; }
 
         public Stack<object> O { get; protected set; }
 
         public Stack<ITreeNode> TreeNodeStack { get; protected set; }
 
-        public Op CurrentOp => Operators.Peek();
+        public TOp CurrentOp => Operators.Peek();
 
-        public ITreeOperatorNode<Op> LastTreeNodeAsOperator => (TreeNodeStack.Peek() as OperatorNode) ?? throw new Exception("The current tree node is not an operator node.");
+        public ITreeOperatorNode<TOp> LastTreeNodeAsOperator => (TreeNodeStack.Peek() as ITreeOperatorNode<TOp>) ?? throw new Exception("The current tree node is not an operator node.");
 
-        public ITreeValueNode LastTreeNodeAsValue => (TreeNodeStack.Peek() as ITreeValueNode) ?? throw new Exception("The current tree node is not a value node.");
+        public ITreeValueNode LastTreeNodeAsValueNode => (TreeNodeStack.Peek() as ITreeValueNode) ?? throw new Exception("The current tree node is not a value node.");
 
 
         public TreeVisitorContext(IExpressionTree tree)
         {
             this.Tree = tree;
-            this.TreeNodeStack = new Stack<ITreeNode>(tree.Children.Cast<TreeNode>());
+            this.TreeNodeStack = new Stack<ITreeNode>(tree.Children);
             this.TreeNodeStack.Push(Tree);
             this.Operands = new Stack<TTreeNode>();
-            this.Operators = new Stack<Op>();
+            this.Operators = new Stack<TOp>();
             this.O = new Stack<object>();
         }
-
+        
 
         public T LastTreeValueNodeAs<T>()
         {
-            ValueNode v = (TreeNodeStack.Peek() as ValueNode) ?? throw new Exception("The current tree node is not a value node.");
-            if (v.Value is T)
+            if (LastTreeNodeAsValueNode.Value is T)
             {
-                return (T)v.Value;
+                return (T) LastTreeNodeAsValueNode.Value;
             }
             else
             {
@@ -51,14 +48,14 @@ namespace Adrien.Trees
             }
         }
 
-        public ITreeVisitorContext<Op, TTreeNode> Operation(Op op)
+        public ITreeVisitorContext<TOp, TTreeNode> Operation(TOp op)
         {
             Operators.Push(op);
             O.Push(Operators.Peek());
             return this;
         }
 
-        public ITreeVisitorContext<Op, TTreeNode> Operand (TTreeNode operand)
+        public ITreeVisitorContext<TOp, TTreeNode> Operand (TTreeNode operand)
         {
             Operands.Push(operand);
             O.Push(Operands.Peek());
@@ -68,7 +65,7 @@ namespace Adrien.Trees
         
         public void Dispose()
         {
-            if (O.Peek() is Op)
+            if (O.Peek() is TOp)
             {
                 Operators.Pop();
             }

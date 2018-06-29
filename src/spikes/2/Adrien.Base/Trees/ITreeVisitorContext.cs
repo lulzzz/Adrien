@@ -20,7 +20,7 @@ namespace Adrien
 
         ITreeOperatorNode<TOp> LastTreeNodeAsOperator { get; }
 
-        ITreeValueNode LastTreeNodeAsValue { get; }
+        ITreeValueNode LastTreeNodeAsValueNode { get; }
 
         ITreeVisitorContext<TOp, TTreeNode> Operation(TOp op);
 

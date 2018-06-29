@@ -12,7 +12,7 @@ namespace Adrien.Trees
         INDEXSET
     }
 
-    public class ValueNode: TreeNode
+    public class ValueNode: TreeNode, ITreeValueNode
     {
         public ValueNodeType NodeType { get; internal set; }
 

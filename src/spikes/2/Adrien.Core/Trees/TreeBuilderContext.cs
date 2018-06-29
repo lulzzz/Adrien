@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Adrien.Trees
 {
-    public class TreeBuilderContext : TreeVisitorContext<Expression>
+    public class TreeBuilderContext : TreeVisitorContext<Op, Expression>
     {
        
         public TreeBuilderContext(IExpressionTree tree) : base(tree)

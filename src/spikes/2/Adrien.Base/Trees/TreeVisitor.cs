@@ -4,23 +4,24 @@ using System.Text;
 
 namespace Adrien.Trees
 {
-    public class TreeVisitor : ITreeVisitor<Op>
+    public abstract class TreeVisitor<TOp> : ITreeVisitor<TOp>
     {
-        public ExpressionTree Tree { get; set; }
+        public IExpressionTree Tree { get; set; }
 
-        internal TreeVisitorContext<TreeNode> Context { get; set; }
+        internal TreeVisitorContext<TOp, ITreeNode> Context { get; set; }
 
-        public TreeVisitor(ExpressionTree tree, bool visit = true) : base()
+        public TreeVisitor(IExpressionTree tree, bool visit = true) : base()
         {
           
             Tree = tree;
         }
 
+
         public void Visit(ITreeNode tn)
         {
-            if (tn is ITreeOperatorNode<Op>)
+            if (tn is ITreeOperatorNode<TOp>)
             {
-                VisitInternal(tn as ITreeOperatorNode<Op>);
+                VisitInternal(tn as ITreeOperatorNode<TOp>);
             }
             else
             {
@@ -29,12 +30,9 @@ namespace Adrien.Trees
 
         }
 
-        public void VisitLeaf(ITreeValueNode node)
-        {
-
-        }
-
-        public void VisitInternal(ITreeOperatorNode<Op> on)
+        public abstract void VisitLeaf(ITreeValueNode node);
+        
+        public virtual void VisitInternal(ITreeOperatorNode<TOp> on)
         {
             using (var op = Context.Operation(on.Op))
             {
