@@ -43,9 +43,20 @@ namespace Adrien.Notation
             this.Id = t.Id;
         }
         
+
         public bool Equals(Term other)
         {
             return this.Id == other.Id;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Term ? this.Equals(obj as Term) : false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Id.GetHashCode();
         }
 
         protected string GenerateName(int index, string indexNameBase)

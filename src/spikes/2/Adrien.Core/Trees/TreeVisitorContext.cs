@@ -2,37 +2,37 @@
 using System.Collections.Generic;
 using System.Text;
 
+using System.Linq;
 using System.Linq.Expressions;
 
-using Adrien.Trees;
 
-namespace Adrien
+namespace Adrien.Trees
 {
-    public class ExpressionVisitorContext : IDisposable
+    public class TreeVisitorContext<TOp, TOperand> : IDisposable
     {
         public ExpressionTree Tree { get; }
 
-        public Stack<Expression> Operands { get; }
+        public Stack<TOperand> Operands { get; }
 
-        public Stack<Op> Operators { get; }
+        public Stack<TOp> Operators { get; }
 
         public Stack<object> O { get; }
 
         public Stack<TreeNode> TreeNodeStack { get; }
 
-        public Op CurrentOp => Operators.Peek();
+        public TOp CurrentOp => Operators.Peek();
 
         public OperatorNode LastTreeNodeAsOperator => (TreeNodeStack.Peek() as OperatorNode) ?? throw new Exception("The current tree node is not an operator node.");
 
         public ValueNode LastTreeNodeAsValue => (TreeNodeStack.Peek() as ValueNode) ?? throw new Exception("The current tree node is not a value node.");
 
-        public ExpressionVisitorContext(ExpressionTree tree)
+        public TreeVisitorContext(ExpressionTree tree)
         {
             this.Tree = tree;
-            this.TreeNodeStack = new Stack<TreeNode>(tree.Nodes);
+            this.TreeNodeStack = new Stack<TreeNode>(tree.Children.Cast<TreeNode>());
             this.TreeNodeStack.Push(Tree);
-            this.Operands = new Stack<Expression>();
-            this.Operators = new Stack<Op>();
+            this.Operands = new Stack<TOperand>();
+            this.Operators = new Stack<TOp>();
             this.O = new Stack<object>();
         }
 
@@ -49,14 +49,14 @@ namespace Adrien
             }
         }
 
-        public ExpressionVisitorContext Operation(Op op)
+        public TreeVisitorContext<TOp, TOperand> Operation(TOp op)
         {
             Operators.Push(op);
             O.Push(Operators.Peek());
             return this;
         }
 
-        public ExpressionVisitorContext Operand (Expression operand)
+        public TreeVisitorContext<TOp, TOperand> Operand (TOperand operand)
         {
             Operands.Push(operand);
             O.Push(Operands.Peek());
@@ -67,28 +67,22 @@ namespace Adrien
         {
             TreeNodePosition pos = LastTreeNodeAsOperator.Left == null ? TreeNodePosition.LEFT : TreeNodePosition.RIGHT;
             OperatorNode on = new OperatorNode(LastTreeNodeAsOperator, op, pos);
-            this.Tree.Nodes.Add(on);
+            this.Tree.AddNode(on);
             this.TreeNodeStack.Push(on);
             return on;
             
         }
 
-        public bool AddValueNode(OperatorNode parent, object value)
+        public ValueNode AddValueNode(OperatorNode parent, object value)
         {
             TreeNodePosition pos = parent.Left == null ? TreeNodePosition.LEFT : TreeNodePosition.RIGHT;
             ValueNode vn = new ValueNode(parent, value, pos);
-            if (this.Tree.Nodes.Add(vn))
-            {
-                this.TreeNodeStack.Push(vn);
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            this.Tree.AddNode(vn);
+            this.TreeNodeStack.Push(vn);
+            return vn;    
         }
 
-        public bool AddValueNode(object value) => AddValueNode(LastTreeNodeAsOperator, value);
+        public ValueNode AddValueNode(object value) => AddValueNode(LastTreeNodeAsOperator, value);
 
         public void Dispose()
         {

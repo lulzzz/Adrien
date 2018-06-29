@@ -7,7 +7,6 @@ using System.Linq.Expressions;
 using Sawmill;
 using Sawmill.Expressions;
 
-
 using Adrien.Notation;
 
 namespace Adrien.Trees
@@ -16,9 +15,15 @@ namespace Adrien.Trees
     {
         public Expression LinqExpression { get; protected set; }
 
-        public HashSet<TreeNode> Nodes { get; protected set; }
-
         public IEnumerable<ITreeNode> Children => Nodes.Cast<ITreeNode>();
+
+        public int Count => Nodes.Count;
+
+        public List<OperatorNode> OperatorNodes => this.Nodes.OfType<OperatorNode>().ToList();
+
+        public List<ValueNode> ValueNodes => this.Nodes.OfType<ValueNode>().ToList();
+
+        protected HashSet<TreeNode> Nodes { get; set; }
 
 
         public ExpressionTree() : base(0, null, Op.Assign)
@@ -31,6 +36,13 @@ namespace Adrien.Trees
             this.LinqExpression = term.LinqExpression;
         }
 
+
+        public ValueNode ValueNodeAt(int index) => (Nodes.ElementAt(index) as ValueNode) ?? throw new Exception($"The node at {index} is not a value node.");
+
+        public OperatorNode OperatorNodeAt(int index) => (Nodes.ElementAt(index) as OperatorNode) ?? throw new Exception($"The element at {index} is not an operator node.");
+
+        public bool AddNode(TreeNode n) => Nodes.Add(n);
+ 
         public int CountChildren(TreeNode node)
         {
             int Count(int start, TreeNode tn)
