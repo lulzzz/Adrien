@@ -4,27 +4,27 @@ using System.Text;
 
 namespace Adrien.Trees
 {
-    public interface ITreeVisitorContext<TOp, TTreeNode> : IDisposable
+    public interface ITreeVisitorContext<TOp, TInternal, TLeaf> : IDisposable
     {
         IExpressionTree Tree { get; }
 
-        Stack<TTreeNode> Operands { get; }
+        Stack<TLeaf> LeafNodes { get; }
 
-        Stack<TOp> Operators { get; }
+        Stack<TInternal> InternalNodes { get; }
 
         Stack<object> O { get; }
 
         Stack<ITreeNode> TreeNodeStack { get; }
 
-        TOp CurrentOp { get; }
+        TInternal InternalNode { get; }
 
         ITreeOperatorNode<TOp> LastTreeNodeAsOperator { get; }
 
         ITreeValueNode LastTreeNodeAsValueNode { get; }
 
-        ITreeVisitorContext<TOp, TTreeNode> Operation(TOp op);
+        ITreeVisitorContext<TOp, TInternal, TLeaf> Internal(TInternal node);
 
-        ITreeVisitorContext<TOp, TTreeNode> Operand(TTreeNode operand);
+        ITreeVisitorContext<TOp, TInternal, TLeaf> Leaf(TLeaf node);
 
     }
 }

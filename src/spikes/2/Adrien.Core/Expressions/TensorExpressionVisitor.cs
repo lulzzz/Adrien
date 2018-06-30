@@ -64,10 +64,10 @@ namespace Adrien
                             
         protected override Expression VisitIndex(IndexExpression node)
         {
-            using (var op = Context.Operation(node.NodeType.ToOp()))
+            using (var op = Context.Internal(node.NodeType.ToOp()))
             {
-                OperatorNode on = Context.AddOperatorNode(Context.CurrentOp);
-                using (var opnd = Context.Operand(node.Object))
+                OperatorNode on = Context.AddOperatorNode(Context.InternalNode);
+                using (var opnd = Context.Leaf(node.Object))
                 {
                     this.Visit(node.Object);
                 }
@@ -78,7 +78,7 @@ namespace Adrien
 
                 for (int i = 0; i < node.Arguments.Count; i++)
                 {
-                    using (var opnd = Context.Operand(node.Arguments[i]))
+                    using (var opnd = Context.Leaf(node.Arguments[i]))
                     {
                         base.Visit(node.Arguments[i]);
                         Index ix = new Index(null, i, t.Dimensions[i], (node.Arguments[1].As<ParameterExpression>().Name));

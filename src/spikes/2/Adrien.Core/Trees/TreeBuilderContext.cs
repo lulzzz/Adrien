@@ -8,18 +8,10 @@ using System.Linq.Expressions;
 
 namespace Adrien.Trees
 {
-    public class TreeBuilderContext : TreeVisitorContext<Op, Expression>
+    public class TreeBuilderContext : TreeVisitorContext<Op, Op, Expression>
     {
-       
-        public TreeBuilderContext(IExpressionTree tree) : base(tree)
-        {
-            this.Tree = tree;
-            this.TreeNodeStack = new Stack<ITreeNode>(tree.Children.Cast<TreeNode>());
-            this.TreeNodeStack.Push(Tree);
-            this.Operands = new Stack<Expression>();
-            this.Operators = new Stack<Op>();
-            this.O = new Stack<object>();
-        }
+        public TreeBuilderContext(IExpressionTree tree) : base(tree) {}
+
 
         public OperatorNode AddOperatorNode(Op op)
         {
@@ -28,21 +20,25 @@ namespace Adrien.Trees
             this.Tree.AddNode(on);
             this.TreeNodeStack.Push(on);
             return on;
-            
         }
 
         public ValueNode AddValueNode(ITreeOperatorNode<Op> parent, object value)
         {
             TreeNodePosition pos = parent.Left == null ? TreeNodePosition.LEFT : TreeNodePosition.RIGHT;
             ValueNode vn = new ValueNode(parent, value, pos);
+            if (pos == TreeNodePosition.LEFT)
+            {
+                parent.Left = vn;
+            }
+            else
+            {
+                parent.Right = vn;
+            }
             this.Tree.AddNode(vn);
             this.TreeNodeStack.Push(vn);
             return vn;    
         }
 
         public ValueNode AddValueNode(object value) => AddValueNode(LastTreeNodeAsOperator, value);
-
-        
-
     }
 }

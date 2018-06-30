@@ -6,19 +6,21 @@ using System.Linq;
 
 namespace Adrien.Trees
 {
-    public abstract class TreeVisitorContext<TOp, TTreeNode> : ITreeVisitorContext<TOp, TTreeNode>
+    public abstract class TreeVisitorContext<TOp, TInternal, TLeaf> : ITreeVisitorContext<TOp, TInternal, TLeaf>
     {
         public IExpressionTree Tree { get; protected set; }
 
-        public Stack<TTreeNode> Operands { get; protected set; }
+        public Stack<TLeaf> LeafNodes { get; protected set; }
 
-        public Stack<TOp> Operators { get; protected set; }
+        public Stack<TInternal> InternalNodes { get; protected set; }
 
         public Stack<object> O { get; protected set; }
 
         public Stack<ITreeNode> TreeNodeStack { get; protected set; }
 
-        public TOp CurrentOp => Operators.Peek();
+        public bool IsInternal => InternalNodes.Count > 0;
+
+        public TInternal InternalNode => InternalNodes.Peek();
 
         public ITreeOperatorNode<TOp> LastTreeNodeAsOperator => (TreeNodeStack.Peek() as ITreeOperatorNode<TOp>) ?? throw new Exception("The current tree node is not an operator node.");
 
@@ -30,8 +32,8 @@ namespace Adrien.Trees
             this.Tree = tree;
             this.TreeNodeStack = new Stack<ITreeNode>(tree.Children);
             this.TreeNodeStack.Push(Tree);
-            this.Operands = new Stack<TTreeNode>();
-            this.Operators = new Stack<TOp>();
+            this.LeafNodes = new Stack<TLeaf>();
+            this.InternalNodes = new Stack<TInternal>();
             this.O = new Stack<object>();
         }
         
@@ -48,30 +50,31 @@ namespace Adrien.Trees
             }
         }
 
-        public ITreeVisitorContext<TOp, TTreeNode> Operation(TOp op)
+        public ITreeVisitorContext<TOp, TInternal, TLeaf> Internal(TInternal ctx)
         {
-            Operators.Push(op);
-            O.Push(Operators.Peek());
+            InternalNodes.Push(ctx);
+            O.Push(InternalNodes.Peek());
             return this;
         }
-
-        public ITreeVisitorContext<TOp, TTreeNode> Operand (TTreeNode operand)
+        
+        public ITreeVisitorContext<TOp, TInternal, TLeaf> Leaf (TLeaf ctx)
         {
-            Operands.Push(operand);
-            O.Push(Operands.Peek());
+            LeafNodes.Push(ctx);
+            O.Push(LeafNodes.Peek());
             return this;
         }
 
         
         public void Dispose()
         {
-            if (O.Peek() is TOp)
+        
+            if (O.Peek() is TInternal)
             {
-                Operators.Pop();
+                InternalNodes.Pop();
             }
-            if (O.Peek() is TTreeNode)
+            else if (O.Peek() is TLeaf)
             {
-                Operands.Pop();
+                LeafNodes.Pop();
             }
             O.Pop();
         }

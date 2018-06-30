@@ -8,8 +8,8 @@ namespace Adrien
     {
         TOp Op { get; }
 
-        ITreeNode Left { get; }
+        ITreeNode Left { get; set; }
 
-        ITreeNode Right { get; }
+        ITreeNode Right { get; set; }
     }
 }

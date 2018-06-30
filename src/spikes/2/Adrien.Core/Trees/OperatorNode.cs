@@ -8,9 +8,9 @@ namespace Adrien.Trees
     {
         public Op Op { get; protected set; }
 
-        public ITreeNode Left { get; protected set; }
+        public ITreeNode Left { get; set; }
 
-        public ITreeNode Right { get; protected set; }
+        public ITreeNode Right { get; set; }
 
         public override string Label => Op.ToString();
 
