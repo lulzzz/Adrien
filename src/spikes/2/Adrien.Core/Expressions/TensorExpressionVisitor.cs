@@ -47,6 +47,7 @@ namespace Adrien
             return a.Flatten<TReturn>().First();
         }
 
+        
         protected override Expression VisitConstant(ConstantExpression node)
         {
             Tensor t = null;
@@ -64,31 +65,36 @@ namespace Adrien
                             
         protected override Expression VisitIndex(IndexExpression node)
         {
-            using (var op = Context.Internal(node.NodeType.ToOp()))
+            OperatorNode on = Context.AddOperatorNode(Op.Summation);
+            using (var ctx = Context.Internal(on))
             {
-                OperatorNode on = Context.AddOperatorNode(Context.InternalNode);
-                using (var opnd = Context.Leaf(node.Object))
-                {
-                    this.Visit(node.Object);
-                }
-
-                Tensor t = Context.LastTreeValueNodeAs<Tensor>();
-         
-                Index[] indices = new Index[node.Arguments.Count];
-
-                for (int i = 0; i < node.Arguments.Count; i++)
-                {
-                    using (var opnd = Context.Leaf(node.Arguments[i]))
-                    {
-                        base.Visit(node.Arguments[i]);
-                        Index ix = new Index(null, i, t.Dimensions[i], (node.Arguments[1].As<ParameterExpression>().Name));
-                        indices[i] = ix;
-                    }
-                }
-
-                Context.AddValueNode(on, new IndexSet(indices));
+                base.VisitIndex(node);
             }
+
+            Tensor t = Context.Tensors.Last();
+            if (t.Dimensions.Length != Context.TensorIndicesQueue.Count)
+            {
+                throw new Exception($"Tensor {t.Name} has {t.Dimensions.Length} dimensions but the tensor indices queue has length {Context.TensorIndicesQueue.Count}.");
+            }
+
+            Index[] indices = new Index[node.Arguments.Count];
+           
+            for (int i = 0; i < t.Dimensions.Length; i++)
+            {
+                indices[i] = Context.TensorIndicesQueue.Dequeue();        
+            }
+
+            Context.AddValueNode(on, new IndexSet(indices));
+            
             return node;
+        }
+
+        protected override Expression VisitParameter(ParameterExpression node)
+        {
+            Tensor t = Context.Tensors.Last();
+            int i = Context.TensorIndicesQueue.Count;
+            Context.TensorIndicesQueue.Enqueue(new Index(null, i, t.Dimensions[i], node.Name));
+            return base.VisitParameter(node);
         }
     }
 }

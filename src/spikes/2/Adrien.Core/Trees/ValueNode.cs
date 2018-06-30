@@ -24,7 +24,13 @@ namespace Adrien.Trees
             }
         }
 
-        public ValueNode(int id, int? parentId, object value) : base(id, parentId)
+
+        public ValueNode(ITreeOperatorNode<Op> parent, object value, TreeNodePosition pos) : this(parent.Id + (int)pos, parent.Id, value)
+        {
+            Parent = parent;
+        }
+
+        protected ValueNode(int id, int? parentId, object value) : base(id, parentId)
         {
             switch (value)
             {
@@ -42,10 +48,6 @@ namespace Adrien.Trees
             Value = value;
         }
 
-        public ValueNode(ITreeOperatorNode<Op> parent, object value, TreeNodePosition pos) : this(parent.Id + (int)pos, parent.Id, value)
-        {
-            Parent = parent;
-        }
 
         public T ValueAs<T>() where T : class
         {

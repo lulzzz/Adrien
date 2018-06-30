@@ -10,17 +10,17 @@ namespace Adrien.Trees
     {
         public IExpressionTree Tree { get; protected set; }
 
-        public Stack<TLeaf> LeafNodes { get; protected set; }
+        public Stack<TLeaf> ContextLeafNodes { get; protected set; }
 
-        public Stack<TInternal> InternalNodes { get; protected set; }
+        public Stack<TInternal> ContextInternalNodes { get; protected set; }
 
         public Stack<object> O { get; protected set; }
 
         public Stack<ITreeNode> TreeNodeStack { get; protected set; }
 
-        public bool IsInternal => InternalNodes.Count > 0;
+        public bool IsInternal => ContextInternalNodes.Count > 0;
 
-        public TInternal InternalNode => InternalNodes.Peek();
+        public TInternal InternalNode => ContextInternalNodes.Peek();
 
         public ITreeOperatorNode<TOp> LastTreeNodeAsOperator => (TreeNodeStack.Peek() as ITreeOperatorNode<TOp>) ?? throw new Exception("The current tree node is not an operator node.");
 
@@ -32,8 +32,8 @@ namespace Adrien.Trees
             this.Tree = tree;
             this.TreeNodeStack = new Stack<ITreeNode>(tree.Children);
             this.TreeNodeStack.Push(Tree);
-            this.LeafNodes = new Stack<TLeaf>();
-            this.InternalNodes = new Stack<TInternal>();
+            this.ContextLeafNodes = new Stack<TLeaf>();
+            this.ContextInternalNodes = new Stack<TInternal>();
             this.O = new Stack<object>();
         }
         
@@ -52,15 +52,15 @@ namespace Adrien.Trees
 
         public ITreeVisitorContext<TOp, TInternal, TLeaf> Internal(TInternal ctx)
         {
-            InternalNodes.Push(ctx);
-            O.Push(InternalNodes.Peek());
+            ContextInternalNodes.Push(ctx);
+            O.Push(ContextInternalNodes.Peek());
             return this;
         }
         
         public ITreeVisitorContext<TOp, TInternal, TLeaf> Leaf (TLeaf ctx)
         {
-            LeafNodes.Push(ctx);
-            O.Push(LeafNodes.Peek());
+            ContextLeafNodes.Push(ctx);
+            O.Push(ContextLeafNodes.Peek());
             return this;
         }
 
@@ -70,11 +70,11 @@ namespace Adrien.Trees
         
             if (O.Peek() is TInternal)
             {
-                InternalNodes.Pop();
+                ContextInternalNodes.Pop();
             }
             else if (O.Peek() is TLeaf)
             {
-                LeafNodes.Pop();
+                ContextLeafNodes.Pop();
             }
             O.Pop();
         }

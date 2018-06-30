@@ -8,9 +8,9 @@ namespace Adrien.Trees
     {
         IExpressionTree Tree { get; }
 
-        Stack<TLeaf> LeafNodes { get; }
+        Stack<TLeaf> ContextLeafNodes { get; }
 
-        Stack<TInternal> InternalNodes { get; }
+        Stack<TInternal> ContextInternalNodes { get; }
 
         Stack<object> O { get; }
 

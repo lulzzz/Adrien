@@ -26,7 +26,8 @@ namespace Adrien.Trees
             Parent = parent;
         }
 
-        protected TreeNode(int id, int? parentId = null)
+        
+        protected TreeNode(int id, int? parentId)
         {
             Id = id;
             ParentId = parentId;

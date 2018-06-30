@@ -12,7 +12,7 @@ using Adrien.Notation;
 
 namespace Adrien.Tests
 {
-    public class ExpressionVisitorTests
+    public class TensorExpressionVisitorTests
     {
         [Fact]
         public void CanParseIndexExpression()
@@ -21,13 +21,19 @@ namespace Adrien.Tests
             var B = Tensor.TwoD("B", (6, 7));
             var C = Tensor.TwoD("C", (8, 9));
             TensorExpression te = A[a, b];
+
             Assert.Single(te.Tensors);
             Assert.Equal(A, te.Tensors.First());
+
             TensorExpressionVisitor v = new TensorExpressionVisitor(te);
+
             Assert.Equal(3, v.Tree.Count);
             Assert.Equal(Trees.Op.Summation, v.Tree.OperatorNodeAt(0).Op);
+            Assert.NotNull(v.Tree.OperatorNodeAt(0).Left);
+            Assert.NotNull(v.Tree.OperatorNodeAt(0).Right);
             Assert.IsType<Tensor>(v.Tree.ValueNodeAt(1).Value);
             Assert.IsType<IndexSet>(v.Tree.ValueNodeAt(2).Value);
+
             IndexSet s = v.Tree.ValueNodeAt(2).Value as IndexSet;
             Assert.Equal(2, s.Indices.Count);
             Assert.Equal(4, s.Indices.ElementAt(0).Dimension);
