@@ -50,6 +50,7 @@ namespace Adrien
         
         protected override Expression VisitConstant(ConstantExpression node)
         {
+            base.VisitConstant(node);
             Tensor t = null;
             if (node.Value is Array)
             {
@@ -69,32 +70,41 @@ namespace Adrien
             using (var ctx = Context.Internal(on))
             {
                 base.VisitIndex(node);
-            }
 
-            Tensor t = Context.Tensors.Last();
-            if (t.Dimensions.Length != Context.TensorIndicesQueue.Count)
-            {
-                throw new Exception($"Tensor {t.Name} has {t.Dimensions.Length} dimensions but the tensor indices queue has length {Context.TensorIndicesQueue.Count}.");
-            }
+                Tensor t = Context.Tensors.First();
+                if (t.Dimensions.Length != Context.TensorIndicesQueue.Count)
+                {
+                    throw new Exception($"Tensor {t.Name} has {t.Dimensions.Length} dimensions but the tensor indices queue has length {Context.TensorIndicesQueue.Count}.");
+                }
 
-            Index[] indices = new Index[node.Arguments.Count];
-           
-            for (int i = 0; i < t.Dimensions.Length; i++)
-            {
-                indices[i] = Context.TensorIndicesQueue.Dequeue();        
-            }
+                Index[] indices = new Index[node.Arguments.Count];
 
-            Context.AddValueNode(on, new IndexSet(indices));
-            
+                for (int i = 0; i < t.Dimensions.Length; i++)
+                {
+                    indices[i] = Context.TensorIndicesQueue.Dequeue();
+                }
+
+                Context.AddValueNode(new IndexSet(indices));
+            }
             return node;
         }
 
         protected override Expression VisitParameter(ParameterExpression node)
         {
-            Tensor t = Context.Tensors.Last();
+            base.VisitParameter(node);
+            Tensor t = Context.Tensors.First();
             int i = Context.TensorIndicesQueue.Count;
             Context.TensorIndicesQueue.Enqueue(new Index(null, i, t.Dimensions[i], node.Name));
-            return base.VisitParameter(node);
+            return node;
+        }
+
+        protected override Expression VisitBinary(BinaryExpression node)
+        {
+            using (var ctx = Context.Internal(Context.AddOperatorNode(node.NodeType.ToOp())))
+            {
+                base.VisitBinary(node);
+            }
+            return node;
         }
     }
 }

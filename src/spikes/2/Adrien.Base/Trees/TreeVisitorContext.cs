@@ -14,7 +14,7 @@ namespace Adrien.Trees
 
         public Stack<TInternal> ContextInternalNodes { get; protected set; }
 
-        public Stack<object> O { get; protected set; }
+        public Stack<object> ContextNodes { get; protected set; }
 
         public Stack<ITreeNode> TreeNodeStack { get; protected set; }
 
@@ -34,7 +34,7 @@ namespace Adrien.Trees
             this.TreeNodeStack.Push(Tree);
             this.ContextLeafNodes = new Stack<TLeaf>();
             this.ContextInternalNodes = new Stack<TInternal>();
-            this.O = new Stack<object>();
+            this.ContextNodes = new Stack<object>();
         }
         
 
@@ -53,14 +53,14 @@ namespace Adrien.Trees
         public ITreeVisitorContext<TOp, TInternal, TLeaf> Internal(TInternal ctx)
         {
             ContextInternalNodes.Push(ctx);
-            O.Push(ContextInternalNodes.Peek());
+            ContextNodes.Push(ContextInternalNodes.Peek());
             return this;
         }
         
         public ITreeVisitorContext<TOp, TInternal, TLeaf> Leaf (TLeaf ctx)
         {
             ContextLeafNodes.Push(ctx);
-            O.Push(ContextLeafNodes.Peek());
+            ContextNodes.Push(ContextLeafNodes.Peek());
             return this;
         }
 
@@ -68,15 +68,15 @@ namespace Adrien.Trees
         public void Dispose()
         {
         
-            if (O.Peek() is TInternal)
+            if (ContextNodes.Peek() is TInternal)
             {
                 ContextInternalNodes.Pop();
             }
-            else if (O.Peek() is TLeaf)
+            else if (ContextNodes.Peek() is TLeaf)
             {
                 ContextLeafNodes.Pop();
             }
-            O.Pop();
+            ContextNodes.Pop();
         }
 
     }

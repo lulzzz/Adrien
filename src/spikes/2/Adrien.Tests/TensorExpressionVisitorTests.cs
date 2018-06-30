@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using Xunit;
 
 using Adrien.Notation;
+using Adrien.Trees;
 
 namespace Adrien.Tests
 {
@@ -38,6 +39,25 @@ namespace Adrien.Tests
             Assert.Equal(2, s.Indices.Count);
             Assert.Equal(4, s.Indices.ElementAt(0).Dimension);
             Assert.Equal("b", s.Indices.ElementAt(1).Name);
+        }
+
+        [Fact]
+        public void CanParseBinaryExpression()
+        {
+            var A = Tensor.FiveD("A", (4, 3, 145, 11, 2), "a", out Index i, out Index j, out Index k, out Index l, out Index m);
+            var B = Tensor.TwoD("B", (6, 7));
+            var C = Tensor.ThreeD("C", (8, 9, 10));
+            var O = B[i, j] * C[i, j, k];
+            ExpressionTree tree = O.ToTree();
+            Assert.Equal(7, tree.Count);
+            Assert.Equal(Op.Mul, tree.OperatorNodeAt(0).Op);
+            Assert.Equal(Op.Summation, tree.OperatorNodeAt(1).Op);
+            Assert.Equal(Op.Summation, tree.OperatorNodeAt(4).Op);
+            OperatorNode on = tree.OperatorNodeAt(4);
+            Assert.IsType<ValueNode>(on.Left);
+            ValueNode vn = on.Left as ValueNode;
+            Assert.Equal(ValueNodeType.TENSOR, vn.NodeType);
+            Assert.Equal(C, vn.ValueAs<Tensor>());
         }
     }
 }

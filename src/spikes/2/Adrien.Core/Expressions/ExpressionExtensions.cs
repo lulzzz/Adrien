@@ -19,8 +19,10 @@ namespace Adrien.Trees
             {
                 case ExpressionType.Index:
                     return Op.Summation;
+                case ExpressionType.Multiply:
+                    return Op.Mul;
                 default:
-                    throw new Exception($"Unknown expression type: {et}.");
+                    throw new Exception($"Cannot translate expression type: {et} to tensor Op.");
             }
         }
 

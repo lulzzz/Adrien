@@ -12,7 +12,7 @@ namespace Adrien.Trees
 
         Stack<TInternal> ContextInternalNodes { get; }
 
-        Stack<object> O { get; }
+        Stack<object> ContextNodes { get; }
 
         Stack<ITreeNode> TreeNodeStack { get; }
 
