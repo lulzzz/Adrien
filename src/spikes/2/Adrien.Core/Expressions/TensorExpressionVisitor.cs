@@ -47,7 +47,6 @@ namespace Adrien
             return a.Flatten<TReturn>().First();
         }
 
-        
         protected override Expression VisitConstant(ConstantExpression node)
         {
             base.VisitConstant(node);
@@ -72,14 +71,14 @@ namespace Adrien
                 base.VisitIndex(node);
 
                 Tensor t = Context.Tensors.First();
-                if (t.Dimensions.Length != Context.TensorIndicesQueue.Count)
+                if (t.Dimensions.Length < Context.TensorIndicesQueue.Count)
                 {
-                    throw new Exception($"Tensor {t.Name} has {t.Dimensions.Length} dimensions but the tensor indices queue has length {Context.TensorIndicesQueue.Count}.");
+                    throw new Exception($"Tensor {t.Name.Label} has {t.Dimensions.Length} dimensions but the tensor indices queue has length {Context.TensorIndicesQueue.Count}.");
                 }
 
-                Index[] indices = new Index[node.Arguments.Count];
-
-                for (int i = 0; i < t.Dimensions.Length; i++)
+                Index[] indices = new Index[Context.TensorIndicesQueue.Count];
+                
+                for (int i = 0; i < indices.Length; i++)
                 {
                     indices[i] = Context.TensorIndicesQueue.Dequeue();
                 }
@@ -95,6 +94,15 @@ namespace Adrien
             Tensor t = Context.Tensors.First();
             int i = Context.TensorIndicesQueue.Count;
             Context.TensorIndicesQueue.Enqueue(new Index(null, i, t.Dimensions[i], node.Name));
+            return node;
+        }
+
+        protected override Expression VisitUnary(UnaryExpression node)
+        {
+            using (var ctx = Context.Internal(Context.AddOperatorNode(node.NodeType.ToOp())))
+            {
+                base.VisitUnary(node);
+            }
             return node;
         }
 

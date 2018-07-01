@@ -26,8 +26,11 @@ namespace Adrien.Tests
             TensorExpression te = A[a, b];
 
             GraphDiagram d = new GraphDiagram(te.ToTree());
-            Assert.Equal(3, d.Graph.NodeCount);
-            Assert.Equal(2, d.Graph.EdgeCount);
+            Assert.Equal(4, d.Graph.NodeCount);
+            Assert.Equal(3, d.Graph.EdgeCount);
+
+            te = A[a, b] * C[a, b];
+            d = new GraphDiagram(te.ToTree());
         }
     }
 }

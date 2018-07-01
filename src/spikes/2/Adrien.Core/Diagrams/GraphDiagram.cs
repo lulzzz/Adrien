@@ -14,9 +14,11 @@ using Microsoft.Msagl.Layout.Layered;
 using Microsoft.Msagl.Drawing;
 using Node = Microsoft.Msagl.Drawing.Node;
 using Edge = Microsoft.Msagl.Drawing.Edge;
+using Label = Microsoft.Msagl.Drawing.Label;
 
 using GeometryNode = Microsoft.Msagl.Core.Layout.Node;
 using GeometryEdge = Microsoft.Msagl.Core.Layout.Edge;
+using GeometryLabel = Microsoft.Msagl.Core.Layout.Label;
 using GeometryPoint = Microsoft.Msagl.Core.Geometry.Point;
 
 using AGL.Drawing.Gdi;
@@ -43,34 +45,37 @@ namespace Adrien.Diagrams
             {
                 GeometryGraph = new GeometryGraph()
             };
-            this.Visit(Tree.Children.ElementAt(0));
+            this.Visit(Tree);
             AfterVisit();
         }
 
 
         public override void VisitLeaf(ITreeValueNode node)
         {
+            Node srcNode = Context.InternalNode;
             Node graphNode;
             switch (node.Value)
             {
                 case Term t:
-                    graphNode = Graph.AddNode(t.Name);       
+                    graphNode = Graph.AddNode(t.Id);
+                    graphNode.Label = new Label(t.Name);
                     break;
                 default: throw new Exception($"Unknown value in ValueNode: {node.Value} of type {node.Value.GetType().Name}.");
             }
-            if (Context.IsInternal)
-            {
-                Graph.AddEdge(Context.InternalNode.LabelText, "foo", graphNode.LabelText);
-            }
+            
+            Graph.AddEdge(srcNode.Id, graphNode.Id);
         }
 
         public override void VisitInternal(ITreeOperatorNode<Op> on)
         {
-            Node graphNode = Graph.AddNode(on.Op.ToString());
-            if (Context.IsInternal)
+            Node srcNode = Context.IsInternal ? Context.InternalNode : null;
+            Node graphNode = Graph.AddNode(on.Id.ToString());
+            graphNode.Label = new Label(on.Op.ToString());
+            if (srcNode != null)
             {
-                Graph.AddEdge(Context.InternalNode.Label.Text, "foo", graphNode.LabelText);
+                Graph.AddEdge(srcNode.Id, graphNode.Id);
             }
+
             using (var context = Context.Internal(graphNode))
             {
                 base.VisitInternal(on);
@@ -81,13 +86,13 @@ namespace Adrien.Diagrams
         {
             LayoutSettings = new SugiyamaLayoutSettings
             {
-                Transformation = PlaneTransformation.Rotation(Math.PI / 2),
+                Transformation = PlaneTransformation.Rotation(Math.PI),
                 EdgeRoutingSettings = { EdgeRoutingMode = EdgeRoutingMode.Spline },
                 MinNodeHeight = 10,
                 MinNodeWidth = 20,
 
             };
-            LayoutSettings.NodeSeparation *= 2;
+            //LayoutSettings.NodeSeparation *= 2;
             Graph.LayoutAlgorithmSettings = LayoutSettings;
 
             
@@ -104,17 +109,17 @@ namespace Adrien.Diagrams
             }
             
             Graph.GeometryGraph.UpdateBoundingBox();
-            using (Bitmap bmp = new Bitmap(400, 400, PixelFormat.Format32bppPArgb))
+            using (Bitmap bmp = new Bitmap(1200, 1200, PixelFormat.Format32bppPArgb))
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                Rectangle rect = new Rectangle(0, 0, 400, 400);
+                Rectangle rect = new Rectangle(0, 0, 1200, 1200);
                 
                 g.Clear(System.Drawing.Color.White);
                 
-                GdiUtils.SetGraphTransform(Graph.GeometryGraph, rect, g);
+                GraphDiagramUtil.SetGraphTransform(Graph.GeometryGraph, rect, g);
                 LayeredLayout layout = new LayeredLayout(Graph.GeometryGraph, LayoutSettings);
                 layout.Run();
-                GdiUtils.DrawFromGraph(rect, Graph.GeometryGraph, g);
+                GraphDiagramUtil.DrawFromGraph(rect, Graph.GeometryGraph, g);
                 bmp.Save("graph.bmp", ImageFormat.Bmp);
             }
         }
