@@ -27,7 +27,7 @@ using Adrien.Trees;
 
 namespace Adrien.Diagrams
 {
-    public class GraphDiagram : TreeVisitor<Op, Node, Node>
+    public class GraphDiagram : TreeVisitor<TensorOp, Node, Node>
     {
         public Graph Graph { get; protected set; }
 
@@ -66,7 +66,7 @@ namespace Adrien.Diagrams
             Graph.AddEdge(srcNode.Id, graphNode.Id);
         }
 
-        public override void VisitInternal(ITreeOperatorNode<Op> on)
+        public override void VisitInternal(ITreeOperatorNode<TensorOp> on)
         {
             Node srcNode = Context.IsInternal ? Context.InternalNode : null;
             Node graphNode = Graph.AddNode(on.Id.ToString());

@@ -13,14 +13,14 @@ namespace Adrien.Trees
     public static class ExpressionExtensions
     {
         [DebuggerStepThrough]
-        public static Op ToOp(this ExpressionType et)
+        public static TensorOp ToOp(this ExpressionType et)
         {
             switch(et)
             {
                 case ExpressionType.Index:
-                    return Op.Summation;
+                    return TensorOp.Summation;
                 case ExpressionType.Multiply:
-                    return Op.Mul;
+                    return TensorOp.Mul;
                 default:
                     throw new Exception($"Cannot translate expression type: {et} to tensor Op.");
             }

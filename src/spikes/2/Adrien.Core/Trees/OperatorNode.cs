@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Adrien.Trees
 {
-    public class OperatorNode : TreeNode, ITreeOperatorNode<Op>
+    public class OperatorNode : TreeNode, ITreeOperatorNode<TensorOp>
     {
-        public Op Op { get; protected set; }
+        public TensorOp Op { get; protected set; }
 
         public ITreeNode Left { get; set; }
 
@@ -15,12 +15,12 @@ namespace Adrien.Trees
         public override string Label => Op.ToString();
 
 
-        public OperatorNode(ITreeOperatorNode<Op> parent, Op op, TreeNodePosition pos) : base(parent, pos)
+        public OperatorNode(ITreeOperatorNode<TensorOp> parent, TensorOp op, TreeNodePosition pos) : base(parent, pos)
         {
             Op = op;
         }
 
-        protected OperatorNode(int id, int? parentId, Op op) : base(id, parentId)
+        protected OperatorNode(int id, int? parentId, TensorOp op) : base(id, parentId)
         {
             Op = op;
         }

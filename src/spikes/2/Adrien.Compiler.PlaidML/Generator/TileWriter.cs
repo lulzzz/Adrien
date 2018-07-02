@@ -7,7 +7,7 @@ using Adrien.Trees;
 
 namespace Adrien.Compiler.PlaidML.Generator
 {
-    public class TileWriter : LanguageWriter<Op> 
+    public class TileWriter : LanguageWriter<TensorOp> 
     {
     }
 }

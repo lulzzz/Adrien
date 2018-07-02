@@ -65,7 +65,7 @@ namespace Adrien
                             
         protected override Expression VisitIndex(IndexExpression node)
         {
-            OperatorNode on = Context.AddOperatorNode(Op.Summation);
+            OperatorNode on = Context.AddOperatorNode(TensorOp.Summation);
             using (var ctx = Context.Internal(on))
             {
                 base.VisitIndex(node);

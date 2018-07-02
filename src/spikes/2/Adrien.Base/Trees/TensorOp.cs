@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Adrien.Trees
 {
-    public enum Op
+    public enum TensorOp
     {
         NoOp,
         Assign,

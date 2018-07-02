@@ -29,7 +29,7 @@ namespace Adrien.Tests
             TensorExpressionVisitor v = new TensorExpressionVisitor(te);
 
             Assert.Equal(3, v.Tree.Count);
-            Assert.Equal(Trees.Op.Summation, v.Tree.OperatorNodeAt(0).Op);
+            Assert.Equal(Trees.TensorOp.Summation, v.Tree.OperatorNodeAt(0).Op);
             Assert.NotNull(v.Tree.OperatorNodeAt(0).Left);
             Assert.NotNull(v.Tree.OperatorNodeAt(0).Right);
             Assert.IsType<Tensor>(v.Tree.ValueNodeAt(1).Value);
@@ -50,9 +50,9 @@ namespace Adrien.Tests
             var O = B[i, j] * C[i, j, k];
             ExpressionTree tree = O.ToTree();
             Assert.Equal(7, tree.Count);
-            Assert.Equal(Op.Mul, tree.OperatorNodeAt(0).Op);
-            Assert.Equal(Op.Summation, tree.OperatorNodeAt(1).Op);
-            Assert.Equal(Op.Summation, tree.OperatorNodeAt(4).Op);
+            Assert.Equal(TensorOp.Mul, tree.OperatorNodeAt(0).Op);
+            Assert.Equal(TensorOp.Summation, tree.OperatorNodeAt(1).Op);
+            Assert.Equal(TensorOp.Summation, tree.OperatorNodeAt(4).Op);
             OperatorNode on = tree.OperatorNodeAt(4);
             Assert.IsType<ValueNode>(on.Left);
             ValueNode vn = on.Left as ValueNode;

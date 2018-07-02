@@ -26,7 +26,7 @@ namespace Adrien.Trees
         protected HashSet<ITreeNode> Nodes { get; set; }
 
 
-        public ExpressionTree() : base(0, null, Op.Assign)
+        public ExpressionTree() : base(0, null, TensorOp.Assign)
         {
             Nodes = new HashSet<ITreeNode>();
         }

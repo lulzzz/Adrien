@@ -9,13 +9,13 @@ using Adrien.Notation;
 
 namespace Adrien.Trees
 {
-    public class TreeBuilderContext : TreeVisitorContext<Op, OperatorNode, ValueNode>
+    public class TreeBuilderContext : TreeVisitorContext<TensorOp, OperatorNode, ValueNode>
     {
         public IEnumerable<Tensor> Tensors => this.TreeNodeStack.OfType<ITreeValueNode>().Where(n => n.NodeType == ValueNodeType.TENSOR).Select(v => v.ValueAs<Tensor>());
 
         public Queue<Index> TensorIndicesQueue { get; }
 
-        public ITreeOperatorNode<Op> InternalNodeAsOperatorNode => (InternalNode as ITreeOperatorNode<Op>) ?? throw new Exception("The current context node is not an operator node.");
+        public ITreeOperatorNode<TensorOp> InternalNodeAsOperatorNode => (InternalNode as ITreeOperatorNode<TensorOp>) ?? throw new Exception("The current context node is not an operator node.");
 
         public ExpressionTree ExpressionTree { get; }
 
@@ -26,9 +26,9 @@ namespace Adrien.Trees
         }
 
 
-        public OperatorNode AddOperatorNode(Op op)
+        public OperatorNode AddOperatorNode(TensorOp op)
         {
-            ITreeOperatorNode<Op> parent = TreeNodeStack.Count > 1 ? InternalNodeAsOperatorNode : ExpressionTree;
+            ITreeOperatorNode<TensorOp> parent = TreeNodeStack.Count > 1 ? InternalNodeAsOperatorNode : ExpressionTree;
             TreeNodePosition pos = parent.Left == null ? TreeNodePosition.LEFT : TreeNodePosition.RIGHT;
             OperatorNode on = new OperatorNode(parent, op, pos);
             if (pos == TreeNodePosition.LEFT)
@@ -51,7 +51,7 @@ namespace Adrien.Trees
                 Tensor t = value as Tensor;
                 throw new Exception($"Attempting to add new value node for Tensor {t.Name} but the tensor indices queue still has {TensorIndicesQueue.Count} elements and last element: {TensorIndicesQueue.Peek().Name}");
             }
-            ITreeOperatorNode<Op> parent = InternalNodeAsOperatorNode;
+            ITreeOperatorNode<TensorOp> parent = InternalNodeAsOperatorNode;
             TreeNodePosition pos = parent.Left == null ? TreeNodePosition.LEFT : TreeNodePosition.RIGHT;
             ValueNode vn = new ValueNode(parent, value, pos);
             if (pos == TreeNodePosition.LEFT)

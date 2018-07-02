@@ -7,7 +7,7 @@ using Adrien.Trees;
 
 namespace Adrien.Compiler.PlaidML.Generator
 {
-    public class TileGeneratorContext : LanguageGeneratorContext<TileWriter>
+    public class TileGeneratorContext : LanguageGeneratorContext<TensorOp, TileWriter>
     {
         public TileGeneratorContext(IExpressionTree tree) : base(tree)
         {

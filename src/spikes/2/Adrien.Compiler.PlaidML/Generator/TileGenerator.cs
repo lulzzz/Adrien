@@ -7,14 +7,14 @@ using Adrien.Trees;
 
 namespace Adrien.Compiler.PlaidML.Generator
 {
-    public class TileGenerator : LanguageGenerator<Op>
+    public class TileGenerator : LanguageGenerator<TensorOp>
     {
         public TileGenerator(IExpressionTree tree) : base(tree)
         {
 
         }
 
-        public override void VisitInternal(ITreeOperatorNode<Op> on)
+        public override void VisitInternal(ITreeOperatorNode<TensorOp> on)
         {
             base.VisitInternal(on);
         }
