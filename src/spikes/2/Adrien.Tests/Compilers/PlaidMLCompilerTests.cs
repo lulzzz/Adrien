@@ -7,6 +7,8 @@ using Xunit;
 using Adrien.Compiler.PlaidML;
 using Adrien.Compiler.PlaidML.Bindings;
 
+using N=Adrien.Notation;
+
 namespace Adrien.Tests.Compilers
 {
     public class PlaidMLCompilerTests
@@ -148,6 +150,13 @@ namespace Adrien.Tests.Compilers
             Invocation inv = invoker.Invoke();
             MemoryView<Int32> R = o.CreateMemoryView<Int32>(false);
             Assert.Equal(6, R.Length);
+        }
+
+        [Fact]
+        public void CanGenerateTileFunction()
+        {
+            var A = N.Tensor.TwoD("A", (8, 17), "a", out N.Index a, out N.Index b);
+            
         }
     }
 }

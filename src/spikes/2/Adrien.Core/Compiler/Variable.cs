@@ -5,7 +5,7 @@ using System.Text;
 
 using Adrien.Notation;
 
-namespace Adrien
+namespace Adrien.Compiler
 {
     public class Variable<T> where T : unmanaged
     {

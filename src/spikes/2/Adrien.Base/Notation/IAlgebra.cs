@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Adrien.Notation
 {
-    public interface IAlgebra<TTerm> where TTerm : Term
+    public interface IAlgebra<TTerm> where TTerm : ITerm
     {
         TTerm Negate();
         TTerm Add(TTerm right);

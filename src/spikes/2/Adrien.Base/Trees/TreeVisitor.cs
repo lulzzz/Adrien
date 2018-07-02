@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Adrien.Trees
 {
-    public abstract class TreeVisitor<TOp, TContextInternal, TContextLeaf> : ITreeVisitor<TOp>
+    public abstract class TreeVisitor<TOp, TInternalContext, TLeafContext> : ITreeVisitor<TOp>
     {
         public IExpressionTree Tree { get; set; }
 
-        public TreeVisitorContext<TOp, TContextInternal, TContextLeaf> Context { get; protected set; }
+        public TreeVisitorContext<TOp, TInternalContext, TLeafContext> Context { get; protected set; }
 
         public TreeVisitor(IExpressionTree tree, bool visit = true) : base()
         {

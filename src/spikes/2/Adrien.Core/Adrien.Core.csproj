@@ -26,10 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Generators\Tile\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Notation\TensorIndexers.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

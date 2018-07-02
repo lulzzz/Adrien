@@ -22,6 +22,7 @@ namespace Adrien.Notation
 
         internal override Name DefaultNameBase { get; } = "A";
 
+
         public Tensor(params int[] dim) : base("A")
         {
             Dimensions = dim;
@@ -37,7 +38,8 @@ namespace Adrien.Notation
             I = new IndexSet(indexNameBase, dim);
         }
 
-               
+        
+        
         public static implicit operator TensorExpression(Tensor e)
         {
             return new TensorExpression(e.LinqExpression);

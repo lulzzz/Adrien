@@ -9,7 +9,7 @@ using Serilog;
 using SerilogTimings;
 using SerilogTimings.Extensions;
 
-namespace Adrien
+namespace Adrien.Compiler
 {
     public abstract class CompilerApi<T>
     {

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Adrien.Generators
+namespace Adrien.Compiler
 {
-    public enum LanguageName
+    public enum DeviceType
     {
-        TILE
+        CPU,
+        GPU
     }
 }
