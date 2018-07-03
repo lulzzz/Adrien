@@ -11,7 +11,7 @@ namespace Adrien.Compiler.PlaidML.Generator
     {
         public TileGeneratorContext(IExpressionTree tree) : base(tree)
         {
-
+         
         }
     }
 }

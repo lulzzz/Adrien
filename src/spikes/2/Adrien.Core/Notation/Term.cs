@@ -13,6 +13,8 @@ namespace Adrien.Notation
 
         public Name Name { get; protected set; }
 
+        public string Label => this.Name.Label;
+
         internal abstract Name DefaultNameBase { get; }
 
         internal abstract Expression LinqExpression { get; }

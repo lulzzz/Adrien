@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+
+using Adrien.Notation;
+using Adrien.Trees;
 
 namespace Adrien.Generator
 {
     public abstract class LanguageWriter<TOp>
     {
-        public int Length => Writer.Length;
-
         protected Dictionary<string, object> Options { get; }
 
-        protected readonly StringBuilder Writer = new StringBuilder();
+        protected abstract Dictionary<TOp, string> OperatorMap { get; }
 
+        
         protected LanguageWriter(Dictionary<string, object> options = null)
         {
             if (options != null)
@@ -21,20 +24,22 @@ namespace Adrien.Generator
         }
 
 
-        
-        public void Write(string text)
+        public virtual string WriteValueText(ITreeValueNode vn)
         {
-            this.Writer.Append(text);
+            switch (vn.NodeType)
+            {
+                case ValueNodeType.TENSOR:
+                    return vn.Label;
+                case ValueNodeType.INDEXSET:
+                    IEnumerable<ITerm> indices = vn.ValueAs<IEnumerable<ITerm>>();
+                    return indices.Select(i => i.Label).Aggregate((a, b) => a + ", " + b);
+                default: throw new Exception($"Unknown value type: {vn.NodeType.ToString()}.");
+            }
         }
 
-        public void WriteFormatted(string format, params object[] values)
-        {
-            Writer.AppendFormat(format, values);
-        }
+        public virtual string WriteOperator(TOp op, params string[] operands) => string.Format(OperatorMap[op], operands);
 
-        public void WriteOperator(TOp op)
-        {
-            Writer.Append(op.ToString());
-        }
+        public virtual string GetOperatorText(ITreeOperatorNode<TOp> on) => OperatorMap[on.Op];
+
     }
 }

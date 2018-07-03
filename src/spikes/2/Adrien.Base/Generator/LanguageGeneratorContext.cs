@@ -6,7 +6,7 @@ using Adrien.Trees;
 
 namespace Adrien.Generator
 {
-    public abstract class LanguageGeneratorContext<TOp, TWriter> : TreeVisitorContext<TOp, TWriter, TWriter> where TWriter : LanguageWriter<TOp>
+    public abstract class LanguageGeneratorContext<TOp, TWriter> : TreeVisitorContext<TOp, string, string >
     {
         public LanguageGeneratorContext(IExpressionTree tree) : base(tree)
         {

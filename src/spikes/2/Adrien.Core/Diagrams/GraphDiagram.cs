@@ -45,8 +45,7 @@ namespace Adrien.Diagrams
             {
                 GeometryGraph = new GeometryGraph()
             };
-            this.Visit(Tree);
-            AfterVisit();
+            this.VisitTree();
         }
 
 
@@ -76,7 +75,7 @@ namespace Adrien.Diagrams
                 Graph.AddEdge(srcNode.Id, graphNode.Id);
             }
 
-            using (var context = Context.Internal(graphNode))
+            using (Context.Internal(graphNode))
             {
                 base.VisitInternal(on);
             }

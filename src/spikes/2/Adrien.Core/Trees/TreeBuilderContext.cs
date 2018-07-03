@@ -11,6 +11,12 @@ namespace Adrien.Trees
 {
     public class TreeBuilderContext : TreeVisitorContext<TensorOp, OperatorNode, ValueNode>
     {
+        public Stack<ITreeNode> TreeNodeStack { get; protected set; }
+
+        public ITreeOperatorNode<TensorOp> LastTreeNodeAsOperator => (TreeNodeStack.Peek() as ITreeOperatorNode<TensorOp>) ?? throw new Exception("The current tree node is not an operator node.");
+
+        public ITreeValueNode LastTreeNodeAsValueNode => (TreeNodeStack.Peek() as ITreeValueNode) ?? throw new Exception("The current tree node is not a value node.");
+
         public IEnumerable<Tensor> Tensors => this.TreeNodeStack.OfType<ITreeValueNode>().Where(n => n.NodeType == ValueNodeType.TENSOR).Select(v => v.ValueAs<Tensor>());
 
         public Queue<Index> TensorIndicesQueue { get; }
@@ -22,9 +28,22 @@ namespace Adrien.Trees
         public TreeBuilderContext(ExpressionTree tree) : base(tree)
         {
             ExpressionTree = tree;
+            this.TreeNodeStack = new Stack<ITreeNode>(tree.Children);
+            this.TreeNodeStack.Push(Tree);
             TensorIndicesQueue = new Queue<Index>();
         }
 
+        public T LastTreeValueNodeAs<T>()
+        {
+            if (LastTreeNodeAsValueNode.Value is T)
+            {
+                return (T)LastTreeNodeAsValueNode.Value;
+            }
+            else
+            {
+                throw new Exception($"The current tree value node is not of type {typeof(T)}.");
+            }
+        }
 
         public OperatorNode AddOperatorNode(TensorOp op)
         {

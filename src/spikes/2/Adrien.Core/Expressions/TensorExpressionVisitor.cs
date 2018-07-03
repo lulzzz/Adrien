@@ -66,7 +66,7 @@ namespace Adrien
         protected override Expression VisitIndex(IndexExpression node)
         {
             OperatorNode on = Context.AddOperatorNode(TensorOp.Summation);
-            using (var ctx = Context.Internal(on))
+            using (Context.Internal(on))
             {
                 base.VisitIndex(node);
 
@@ -77,7 +77,6 @@ namespace Adrien
                 }
 
                 Index[] indices = new Index[Context.TensorIndicesQueue.Count];
-                
                 for (int i = 0; i < indices.Length; i++)
                 {
                     indices[i] = Context.TensorIndicesQueue.Dequeue();
@@ -85,6 +84,8 @@ namespace Adrien
 
                 Context.AddValueNode(new IndexSet(indices));
             }
+
+            
             return node;
         }
 
@@ -99,7 +100,7 @@ namespace Adrien
 
         protected override Expression VisitUnary(UnaryExpression node)
         {
-            using (var ctx = Context.Internal(Context.AddOperatorNode(node.NodeType.ToOp())))
+            using (Context.Internal(Context.AddOperatorNode(node.NodeType.ToOp())))
             {
                 base.VisitUnary(node);
             }
@@ -108,7 +109,7 @@ namespace Adrien
 
         protected override Expression VisitBinary(BinaryExpression node)
         {
-            using (var ctx = Context.Internal(Context.AddOperatorNode(node.NodeType.ToOp())))
+            using (Context.Internal(Context.AddOperatorNode(node.NodeType.ToOp())))
             {
                 base.VisitBinary(node);
             }

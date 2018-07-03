@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -6,7 +7,7 @@ using System.Reflection;
 
 namespace Adrien.Notation
 {
-    public class IndexSet : Term
+    public class IndexSet : Term, IEnumerable<ITerm>
     {
         public static PropertyInfo IndicesArrayInfo { get; } = typeof(Index).GetProperty("IndicesArray");
 
@@ -18,6 +19,7 @@ namespace Adrien.Notation
 
         internal override Expression LinqExpression => Expression.Constant(this);
         
+
         public IndexSet(string indexNameBase="", params int[] dim) : base()
         {
             Indices = new SortedSet<Index>();
@@ -83,38 +85,18 @@ namespace Adrien.Notation
         {
             return new IndexSet(t.index1, t.index2, t.index3, t.index4, t.index5, t.index6, t.index7);
         }
-        /*
-        public static IndexSet One(out Index index1, string nameBase = "")
+
+
+        public IEnumerator<ITerm> GetEnumerator()
         {
-            IndexSet s = new IndexSet(1, nameBase);
-            index1 = s[0];
-            return s;
+            foreach (Index i in Indices)
+            {
+                yield return (i as ITerm);
+            }
         }
 
-        public static IndexSet Two(out Index index1, out Index index2, string nameBase = "")
-        {
-            IndexSet s = new IndexSet(2, nameBase);
-            index1 = s[0];
-            index2 = s[1];
-            return s;
-        }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        public static IndexSet Three(out Index index1, out Index index2, out Index index3, string nameBase = "")
-        {
-            IndexSet s = new IndexSet(3, nameBase);
-            index1 = s[0];
-            index2 = s[1];
-            index3 = s[2];
-            return s;
-        }
-
-        public static IndexSet Four(out Index index1, out Index index2, out Index index3, out Index index4, string nameBase = "")
-        {
-            IndexSet s = new IndexSet(4, nameBase);
-            (index1, index2, index3, index4) = s;
-            return s;
-        }
-        */
         #region Deconstructors
         public void Deconstruct(out Index index1, out Index index2)
         {

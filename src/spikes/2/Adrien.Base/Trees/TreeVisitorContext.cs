@@ -6,77 +6,70 @@ using System.Linq;
 
 namespace Adrien.Trees
 {
-    public abstract class TreeVisitorContext<TOp, TInternal, TLeaf> : ITreeVisitorContext<TOp, TInternal, TLeaf>
+    public abstract class TreeVisitorContext<TOp, TInternal, TLeaf> : Stack<object>, ITreeVisitorContext<TOp, TInternal, TLeaf>
     {
         public IExpressionTree Tree { get; protected set; }
 
-        public Stack<TLeaf> ContextLeafNodes { get; protected set; }
+        public bool IsInternal => this.Count > 0 && this.Peek() is TInternal;
 
-        public Stack<TInternal> ContextInternalNodes { get; protected set; }
+        public bool IsLeaf => this.Count > 0 && this.Peek() is TLeaf;
 
-        public Stack<object> ContextNodes { get; protected set; }
+        public TInternal InternalNode => this.Peek() is TInternal ? (TInternal) this.Peek() : throw new Exception("The last context node is not a internal node.");
 
-        public Stack<ITreeNode> TreeNodeStack { get; protected set; }
+        public TLeaf LeafNode => this.Peek() is TInternal ? (TLeaf) this.Peek() : throw new Exception("The last context node is not a leaf node.");
 
-        public bool IsInternal => ContextInternalNodes.Count > 0;
-
-        public TInternal InternalNode => ContextInternalNodes.Peek();
-
-        public ITreeOperatorNode<TOp> LastTreeNodeAsOperator => (TreeNodeStack.Peek() as ITreeOperatorNode<TOp>) ?? throw new Exception("The current tree node is not an operator node.");
-
-        public ITreeValueNode LastTreeNodeAsValueNode => (TreeNodeStack.Peek() as ITreeValueNode) ?? throw new Exception("The current tree node is not a value node.");
-
-
-        public TreeVisitorContext(IExpressionTree tree)
+        public TreeVisitorContext(IExpressionTree tree) : base()
         {
             this.Tree = tree;
-            this.TreeNodeStack = new Stack<ITreeNode>(tree.Children);
-            this.TreeNodeStack.Push(Tree);
-            this.ContextLeafNodes = new Stack<TLeaf>();
-            this.ContextInternalNodes = new Stack<TInternal>();
-            this.ContextNodes = new Stack<object>();
         }
-        
 
-        public T LastTreeValueNodeAs<T>()
+
+        public new void Push(object node)
         {
-            if (LastTreeNodeAsValueNode.Value is T)
+            if (node is TLeaf || node is TInternal)
             {
-                return (T) LastTreeNodeAsValueNode.Value;
+                base.Push(node);
             }
-            else
-            {
-                throw new Exception($"The current tree value node is not of type {typeof(T)}.");
-            }
+            else throw new Exception("The object to push is not a leaf or internal context node.");
         }
 
+        //public new void Pop() => throw new NotSupportedException("Use the PopInternal() or PopLeaf() methods to pop context nodes.");
+
+        public TInternal PopInternal()
+        {
+            if (this.IsInternal)
+            {
+                return (TInternal) base.Pop();
+            }
+            else return InternalNode;
+        }
+
+        public TLeaf PopLeaf()
+        {
+            if (this.IsLeaf)
+            {
+                return (TLeaf) base.Pop();
+            }
+            else return LeafNode;
+        }
+
+     
         public ITreeVisitorContext<TOp, TInternal, TLeaf> Internal(TInternal ctx)
         {
-            ContextInternalNodes.Push(ctx);
-            ContextNodes.Push(ContextInternalNodes.Peek());
+            this.Push(ctx);
             return this;
         }
         
         public ITreeVisitorContext<TOp, TInternal, TLeaf> Leaf (TLeaf ctx)
         {
-            ContextLeafNodes.Push(ctx);
-            ContextNodes.Push(ContextLeafNodes.Peek());
+            this.Push(ctx);
             return this;
         }
 
         
         public void Dispose()
         {
-        
-            if (ContextNodes.Peek() is TInternal)
-            {
-                ContextInternalNodes.Pop();
-            }
-            else if (ContextNodes.Peek() is TLeaf)
-            {
-                ContextLeafNodes.Pop();
-            }
-            ContextNodes.Pop();
+            this.Pop();
         }
 
     }

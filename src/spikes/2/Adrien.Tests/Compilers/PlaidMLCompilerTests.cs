@@ -6,6 +6,7 @@ using Xunit;
 
 using Adrien.Compiler.PlaidML;
 using Adrien.Compiler.PlaidML.Bindings;
+using Adrien.Compiler.PlaidML.Generator;
 
 using N=Adrien.Notation;
 
@@ -156,7 +157,8 @@ namespace Adrien.Tests.Compilers
         public void CanGenerateTileFunction()
         {
             var A = N.Tensor.TwoD("A", (8, 17), "a", out N.Index a, out N.Index b);
-            
+            var B = N.Tensor.TwoD("B", (8, 17));
+            TileGenerator g = new TileGenerator((A[a, b] * B[a, b]).ToTree());
         }
     }
 }

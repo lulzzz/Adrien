@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Adrien.Trees
 {
-    public abstract class TreeVisitor<TOp, TInternalContext, TLeafContext> : ITreeVisitor<TOp>
+    public abstract class TreeVisitor<TOp, TInternalContext, TLeafContext> : ITreeVisitor<TOp> where TInternalContext : class where TLeafContext : class
     {
         public IExpressionTree Tree { get; set; }
 
@@ -15,12 +15,11 @@ namespace Adrien.Trees
             Tree = tree;
             if (visit)
             {
-                Visit(tree);
-                AfterVisit();
+                VisitTree();
             }
         }
 
-
+        
         public void Visit(ITreeNode tn)
         {
             if (tn is ITreeOperatorNode<TOp>)
@@ -31,7 +30,13 @@ namespace Adrien.Trees
             {
                 VisitLeaf(tn as ITreeValueNode);
             }
+           
+        }
 
+        public void VisitTree()
+        {
+            Visit(Tree);
+            AfterVisit();
         }
 
         public abstract void VisitLeaf(ITreeValueNode node);
