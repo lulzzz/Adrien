@@ -6,6 +6,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using Humanizer;
 
+using Adrien.Trees;
+
 namespace Adrien.Notation
 {
     public partial class Tensor : Term
@@ -40,11 +42,22 @@ namespace Adrien.Notation
 
         
         
-        public static implicit operator TensorExpression(Tensor e)
+        public static implicit operator TensorExpression(Tensor t)
         {
-            return new TensorExpression(e.LinqExpression);
+            return new TensorExpression(t.LinqExpression);
         }
 
+        public static implicit operator ExpressionTree(Tensor t)
+        {
+            if (t.IsAssigned)
+            {
+                return t.Assignment.Expression.ToTree((t, t.Assignment.IndexSet));
+            }
+            else
+            {
+                return new TensorExpression(t.LinqExpression).ToTree();
+            }
+        }
         public static Tensor operator - (Tensor left) => null;
 
         public static Tensor operator + (Tensor left, TensorExpression right) => null;
@@ -55,7 +68,19 @@ namespace Adrien.Notation
 
         public static Tensor operator / (Tensor left, Tensor right) => null;
 
+        public Tensor With(out Tensor with)
+        {
+            with = new Tensor(this.GenerateName(1, this.Name), this.Dimensions);
+            return with;
+        }
 
+        public Tensor With(out Tensor with, params int[] dim)
+        {
+            with = new Tensor(this.GenerateName(1, this.Name), dim);
+            return with;
+        }
+
+        
         public static string RankToTensorName(int rank)
         {
             string[] names = rank.ToWords().Split('-');

@@ -25,10 +25,21 @@ namespace Adrien.Trees
 
         protected HashSet<ITreeNode> Nodes { get; set; }
 
-
         public ExpressionTree() : base(0, null, TensorOp.Assign)
         {
             Nodes = new HashSet<ITreeNode>();
+            this.Left = new ValueNode(this, null, TreeNodePosition.LEFT, ValueNodeType.VARIABLE);
+            AddNode(this.Left);
+        }
+
+        public ExpressionTree(Tensor outputTensor, IndexSet outputIndices) : base(0, null, TensorOp.Assign)
+        {
+            Nodes = new HashSet<ITreeNode>();
+            OperatorNode n = new OperatorNode(this, TensorOp.Summation, TreeNodePosition.LEFT);
+            n.Left = new ValueNode(n, outputTensor, TreeNodePosition.LEFT);
+            n.Right = new ValueNode(n, outputIndices, TreeNodePosition.RIGHT);
+            this.Left = n;
+            AddNode(n);
         }
 
         public ExpressionTree(Term term) : this()

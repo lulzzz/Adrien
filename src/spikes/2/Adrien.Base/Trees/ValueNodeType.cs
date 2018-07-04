@@ -7,6 +7,7 @@ namespace Adrien.Trees
     public enum ValueNodeType
     {
         TENSOR,
-        INDEXSET
+        INDEXSET,
+        VARIABLE
     }
 }

@@ -19,6 +19,7 @@ namespace Adrien.Trees
                 switch (this.Value)
                 {
                     case Term t: return t.Name;
+                    case null: return "[]";
                     default: throw new Exception($"Unknown value: {Value}.");
                 }
             }
@@ -28,6 +29,11 @@ namespace Adrien.Trees
         public ValueNode(ITreeOperatorNode<TensorOp> parent, object value, TreeNodePosition pos) : this(parent.Id + (int)pos, parent.Id, value)
         {
             Parent = parent;
+        }
+
+        public ValueNode(ITreeOperatorNode<TensorOp> parent, object value, TreeNodePosition pos, ValueNodeType type) : this(parent, value, pos)
+        {
+            NodeType = type;
         }
 
         protected ValueNode(int id, int? parentId, object value) : base(id, parentId)
@@ -40,6 +46,9 @@ namespace Adrien.Trees
 
                 case IndexSet _:
                     NodeType = ValueNodeType.INDEXSET;
+                    break;
+                case null:
+                    NodeType = ValueNodeType.VARIABLE;
                     break;
 
                 default:

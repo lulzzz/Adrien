@@ -30,8 +30,10 @@ namespace Adrien.Notation
             }
         }
 
-        public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression, true).Tree;
+        public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression, null, true).Tree;
 
+        public ExpressionTree ToTree((Tensor tensor, IndexSet indices) output) => new TensorExpressionVisitor(this.LinqExpression, output, true).Tree;
+       
         public TensorExpression(Expression e)
         {
             LinqExpression = e;

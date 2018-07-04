@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Adrien
+namespace Adrien.Trees
 {
     public interface ITreeNode : IEquatable<ITreeNode>
     {

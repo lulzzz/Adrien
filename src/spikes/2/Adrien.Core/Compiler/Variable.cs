@@ -9,26 +9,30 @@ namespace Adrien.Compiler
 {
     public class Variable<T> : IVariable<T> where T : unmanaged
     {
-        public Tensor Term { get; protected set; }
+        public Tensor Tensor { get; protected set; }
 
         public Memory<T> Memory { get; protected set; }
 
         public bool Initialized { get; protected set; }
 
-        public string Name => Term.Name;
+        public string Name => Tensor.Name;
 
-        public int[] Dimensions => Term.Dimensions;
+        public int[] Dimensions => Tensor.Dimensions;
 
-        public int Rank => Term.Rank;
+        public int Rank => Tensor.Rank;
+
+        public DataType DataType => GetDataType();
+
+        public int Stride { get; protected set; }
 
         public object Data { get; protected set; }
 
-        public Variable(Tensor term)
+        public Variable(Tensor tensor)
         {
-            Term = term;
+            Tensor = tensor;
         }
 
-        public Variable(Tensor term, Array array) : this(term)
+        public Variable(Tensor tensor, Array array) : this(tensor)
         {
             int[] zeroindex = new int[array.Rank];
             object zeroelement = array.GetValue(zeroindex);
@@ -36,16 +40,16 @@ namespace Adrien.Compiler
             {
                 throw new ArgumentException($"The array must have type {typeof(T).Name} to initialize this variable.");
             }
-            if (array.Rank != term.Rank)
+            if (array.Rank != tensor.Rank)
             {
-                throw new ArgumentException($"The array rank is {array.Rank} but the tensor rank is {term.Rank}.");
+                throw new ArgumentException($"The array rank is {array.Rank} but the tensor rank is {tensor.Rank}.");
             }
             for (int i = 0; i < array.Rank; i++)
             {
                 int dim = array.GetLowerBound(i) == 0 ? array.GetUpperBound(i) + 1 : array.GetUpperBound(i) - array.GetLowerBound(i);
-                if ( dim != term.Dimensions[i])
+                if ( dim != tensor.Dimensions[i])
                 {
-                    throw new ArgumentException($"The array dimension {i} has size {dim} but tensor dimension {i} has size {term.Dimensions[i]}.");
+                    throw new ArgumentException($"The array dimension {i} has size {dim} but tensor dimension {i} has size {tensor.Dimensions[i]}.");
                 }
             }
 

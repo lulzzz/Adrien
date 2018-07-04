@@ -12,7 +12,7 @@ namespace Adrien.Compiler.PlaidML.Generator
     {
         protected override Dictionary<TensorOp, string> OperatorMap { get; } = new Dictionary<TensorOp, string>
         {
-            { TensorOp.Assign, "{0}" },
+            { TensorOp.Assign, "{0} = {1}" },
             { TensorOp.Summation, "{0}[{1}]" },
             { TensorOp.Mul, "{0} * {1}" }
         };

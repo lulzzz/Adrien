@@ -52,17 +52,20 @@ namespace Adrien.Diagrams
         public override void VisitLeaf(ITreeValueNode node)
         {
             Node srcNode = Context.InternalNode;
-            Node graphNode;
+            Node graphNode = null;
             switch (node.Value)
             {
                 case Term t:
                     graphNode = Graph.AddNode(t.Id);
                     graphNode.Label = new Label(t.Name);
                     break;
+                case null: break;
                 default: throw new Exception($"Unknown value in ValueNode: {node.Value} of type {node.Value.GetType().Name}.");
             }
-            
-            Graph.AddEdge(srcNode.Id, graphNode.Id);
+            if (graphNode != null)
+            {
+                Graph.AddEdge(srcNode.Id, graphNode.Id);
+            }
         }
 
         public override void VisitInternal(ITreeOperatorNode<TensorOp> on)

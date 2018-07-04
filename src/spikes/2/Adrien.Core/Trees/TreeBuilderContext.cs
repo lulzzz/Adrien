@@ -28,7 +28,7 @@ namespace Adrien.Trees
         public TreeBuilderContext(ExpressionTree tree) : base(tree)
         {
             ExpressionTree = tree;
-            this.TreeNodeStack = new Stack<ITreeNode>(tree.Children);
+            this.TreeNodeStack = new Stack<ITreeNode>();
             this.TreeNodeStack.Push(Tree);
             TensorIndicesQueue = new Queue<Index>();
         }

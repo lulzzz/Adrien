@@ -32,6 +32,9 @@ namespace Adrien.Tests
 
             Tensor C = Tensor.ThreeD("C", (5, 6, 7), "a", out IndexSet abc);
             Assert.IsType<IndexExpression>((Expression) C[abc]);
+
+            Tensor D = Tensor.TwoD("D", (11, 12)).With(out Tensor E);
+            Assert.Equal("E", E.Name);
         }
 
         [Fact]

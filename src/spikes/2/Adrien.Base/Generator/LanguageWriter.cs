@@ -30,6 +30,8 @@ namespace Adrien.Generator
             {
                 case ValueNodeType.TENSOR:
                     return vn.Label;
+                case ValueNodeType.VARIABLE:
+                    return "[]";
                 case ValueNodeType.INDEXSET:
                     IEnumerable<ITerm> indices = vn.ValueAs<IEnumerable<ITerm>>();
                     return indices.Select(i => i.Label).Aggregate((a, b) => a + ", " + b);
