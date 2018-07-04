@@ -42,7 +42,7 @@ namespace Adrien.Compiler
             }
             for (int i = 0; i < array.Rank; i++)
             {
-                int dim = array.GetUpperBound(i) - array.GetLowerBound(i);
+                int dim = array.GetLowerBound(i) == 0 ? array.GetUpperBound(i) + 1 : array.GetUpperBound(i) - array.GetLowerBound(i);
                 if ( dim != term.Dimensions[i])
                 {
                     throw new ArgumentException($"The array dimension {i} has size {dim} but tensor dimension {i} has size {term.Dimensions[i]}.");
