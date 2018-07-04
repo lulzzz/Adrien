@@ -8,6 +8,8 @@ namespace Adrien.Generator
 {
     public abstract class LanguageGenerator<TOp, TWriter> : TreeVisitor<TOp, string, string> where TWriter : LanguageWriter<TOp>
     {
+        public string Text => this.Context.InternalNode;
+
         protected TWriter Writer { get; set; }
 
 
@@ -36,6 +38,14 @@ namespace Adrien.Generator
         public override void VisitLeaf(ITreeValueNode node)
         {
             Context.Push(Writer.WriteValueText(node));
+        }
+
+        public override void AfterVisit()
+        {
+            if (Context.Count != 1)
+            {
+                throw new Exception($"Context has {Context.Count} nodes, not 1.");
+            }
         }
     }
 }

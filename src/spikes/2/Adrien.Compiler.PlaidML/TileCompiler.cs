@@ -4,7 +4,7 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class TileCompiler : PlaidMLApi<TileCompiler>
+    public class TileCompiler<TKernel> : PlaidMLApi<TileCompiler<TKernel>> where TKernel : unmanaged
     {
         public bool Initialized => IsAllocated;
 
@@ -16,8 +16,9 @@ namespace Adrien.Compiler.PlaidML
 
         public int DeviceCount => DeviceEnumerator.Count;
         
+        public IKernel<TKernel> Kernel { get; }
 
-        public TileCompiler() : base(new Context())
+        public TileCompiler(IKernel<TKernel> kernel) : base(new Context())
         {    
             SessionId = Settings.StartNewSession();
             DeviceEnumerator = new DeviceEnumerator(context);
@@ -25,6 +26,7 @@ namespace Adrien.Compiler.PlaidML
             {
                 return;
             }
+            Kernel = kernel;
             IsAllocated = true;
         }
        

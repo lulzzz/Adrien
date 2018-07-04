@@ -8,9 +8,8 @@ namespace Adrien.Generator
 {
     public abstract class LanguageGeneratorContext<TOp, TWriter> : TreeVisitorContext<TOp, string, string >
     {
-        public LanguageGeneratorContext(IExpressionTree tree) : base(tree)
-        {
-            
-        }
+        public string CurrentText => this.Peek() as string;
+
+        public LanguageGeneratorContext(IExpressionTree tree) : base(tree) {}
     }
 }

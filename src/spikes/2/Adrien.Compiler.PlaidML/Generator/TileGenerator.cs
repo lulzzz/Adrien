@@ -15,11 +15,5 @@ namespace Adrien.Compiler.PlaidML.Generator
             Writer = new TileWriter();
             this.VisitTree();
         }
-
-        public override void AfterVisit()
-        {
-            
-        }
-
     }
 }
