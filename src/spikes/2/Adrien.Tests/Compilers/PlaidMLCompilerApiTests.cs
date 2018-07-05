@@ -12,11 +12,11 @@ using N=Adrien.Notation;
 
 namespace Adrien.Tests.Compilers
 {
-    public class PlaidMLCompilerTests
+    public class PlaidMLCompilerApiTests
     {
         protected Context context;
 
-        public PlaidMLCompilerTests()
+        public PlaidMLCompilerApiTests()
         {
             CompilerDriver.CreateDefaultLogger("Adrien.Tests.log");
             context = new Context();

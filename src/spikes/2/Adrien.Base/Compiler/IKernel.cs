@@ -9,10 +9,12 @@ namespace Adrien.Compiler
     {
         DeviceType DeviceType { get; }
 
-        IVariable<T> Ouput { get; }
-
-        IVariable<T>[] Inputs { get; }
-
         IExpressionTree ExpressionTree { get; }
+
+        IVariable<T> Output { get; }
+
+        IVariable<T>[] Input { get; }
+
+        
     }
 }

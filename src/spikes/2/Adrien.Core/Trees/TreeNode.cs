@@ -4,12 +4,6 @@ using System.Text;
 
 namespace Adrien.Trees
 {
-    public enum TreeNodePosition
-    {
-        LEFT = 1,
-        RIGHT = 2
-    }
-
     public abstract class TreeNode : ITreeNode
     {
         public int Id { get; internal set; }
@@ -18,19 +12,27 @@ namespace Adrien.Trees
 
         public ITreeNode Parent { get; internal set; }
 
-        public abstract string Label { get;  }
+        public TreeNodePosition Position { get; internal set; }
 
+        public abstract string Label { get; }
 
-        public TreeNode(ITreeNode parent, TreeNodePosition pos) : this(parent.Id + (int) pos, parent.Id)
-        {
-            Parent = parent;
-        }
+        public ITreeNode Left { get; internal set; }
 
-        
-        protected TreeNode(int id, int? parentId)
+        public ITreeNode Right { get; internal set; }
+
+        public bool IsOperator => this is OperatorNode;
+
+        public bool IsValue => this is ValueNode;
+
+        public bool HasLeft => this is OperatorNode && (this as OperatorNode).Left != null;
+
+        public bool HasRight => this is OperatorNode && (this as OperatorNode).Right != null;
+ 
+        protected TreeNode(int id, int? parentId, TreeNodePosition pos)
         {
             Id = id;
             ParentId = parentId;
+            Position = pos;
         }
 
 

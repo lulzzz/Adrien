@@ -48,17 +48,8 @@ namespace Adrien.Trees
         public OperatorNode AddOperatorNode(TensorOp op)
         {
             ITreeOperatorNode<TensorOp> parent = TreeNodeStack.Count > 1 ? InternalNodeAsOperatorNode : ExpressionTree;
-            TreeNodePosition pos = parent.Left == null ? TreeNodePosition.LEFT : TreeNodePosition.RIGHT;
-            OperatorNode on = new OperatorNode(parent, op, pos);
-            if (pos == TreeNodePosition.LEFT)
-            {
-                parent.Left = on;
-            }
-            else
-            {
-                parent.Right = on;
-            }
-            this.Tree.AddNode(on);
+            OperatorNode on = ExpressionTree.CreateOperatorNode(parent as OperatorNode, op);
+            ExpressionTree.AddNode(on);
             this.TreeNodeStack.Push(on);
             return on;
         }
@@ -71,17 +62,8 @@ namespace Adrien.Trees
                 throw new Exception($"Attempting to add new value node for Tensor {t.Name} but the tensor indices queue still has {TensorIndicesQueue.Count} elements and last element: {TensorIndicesQueue.Peek().Name}");
             }
             ITreeOperatorNode<TensorOp> parent = InternalNodeAsOperatorNode;
-            TreeNodePosition pos = parent.Left == null ? TreeNodePosition.LEFT : TreeNodePosition.RIGHT;
-            ValueNode vn = new ValueNode(parent, value, pos);
-            if (pos == TreeNodePosition.LEFT)
-            {
-                parent.Left = vn;
-            }
-            else
-            {
-                parent.Right = vn;
-            }
-            this.Tree.AddNode(vn);
+            ValueNode vn = ExpressionTree.CreateValueNode(parent as OperatorNode, value);
+            ExpressionTree.AddNode(vn);
             this.TreeNodeStack.Push(vn);
             return vn;
         }

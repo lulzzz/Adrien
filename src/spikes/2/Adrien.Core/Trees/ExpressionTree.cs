@@ -15,64 +15,137 @@ namespace Adrien.Trees
     {
         public Expression LinqExpression { get; protected set; }
 
-        public IEnumerable<ITreeNode> Children => Nodes.Cast<ITreeNode>();
+        public IEnumerable<ITreeNode> Children => HashSet.Cast<ITreeNode>();
 
-        public int Count => Nodes.Count;
 
-        public List<OperatorNode> OperatorNodes => this.Nodes.OfType<OperatorNode>().ToList();
+        public ITreeNode Output => this.Left;
 
-        public List<ValueNode> ValueNodes => this.Nodes.OfType<ValueNode>().ToList();
+        public bool OutputIsTensor => (Output != null) && Output is OperatorNode;
+
+        public Tensor OutputTensor => OutputIsTensor ? ((Output as OperatorNode).Left as ValueNode).ValueAs<Tensor>() : null;
+
+        public int Count => HashSet.Count;
+
+        public List<OperatorNode> OperatorNodes => this.HashSet.OfType<OperatorNode>().ToList();
+
+        public List<ValueNode> ValueNodes => this.HashSet.OfType<ValueNode>().ToList();
 
         public ITreeNode Root => this;
 
-        protected HashSet<ITreeNode> Nodes { get; set; }
+        protected HashSet<ITreeNode> HashSet { get; } = new HashSet<ITreeNode>();
 
-        public ExpressionTree() : base(0, null, TensorOp.Assign)
+        public ExpressionTree() : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
         {
-            Nodes = new HashSet<ITreeNode>();
-            this.Left = new ValueNode(this, null, TreeNodePosition.LEFT, ValueNodeType.VARIABLE);
-            AddNode(this.Left);
+            AddNode(CreateValueNode(this, null));
         }
 
-        public ExpressionTree(Tensor outputTensor, IndexSet outputIndices) : base(0, null, TensorOp.Assign)
+        public ExpressionTree(Tensor outputTensor, IndexSet outputIndices) : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
         {
-            Nodes = new HashSet<ITreeNode>();
-            OperatorNode n = new OperatorNode(this, TensorOp.Summation, TreeNodePosition.LEFT);
-            n.Left = new ValueNode(n, outputTensor, TreeNodePosition.LEFT);
-            n.Right = new ValueNode(n, outputIndices, TreeNodePosition.RIGHT);
-            this.Left = n;
-            AddNode(n);
+            OperatorNode n = AddNode(CreateOperatorNode(this, TensorOp.Summation)) as OperatorNode;
+            AddNode(CreateValueNode(n, outputTensor));
+            AddNode(CreateValueNode(n, outputIndices));
         }
 
         public ExpressionTree(Term term) : this()
         {
             this.LinqExpression = term.LinqExpression;
         }
+        
+        public OperatorNode CreateOperatorNode(OperatorNode parent, TensorOp op)
+        {
+            if (parent.HasLeft && parent.HasRight)
+            {
+                throw new Exception($"Parent tree node with id {parent.Id} already has both left and right children.");
+            }
+            TreeNodePosition pos = parent.HasLeft ? TreeNodePosition.RIGHT : TreeNodePosition.LEFT;
+            int nid = pos == TreeNodePosition.LEFT ? CountChildren(parent) + 1 : CountChildren(parent) + 2;
+            OperatorNode node = new OperatorNode(nid, parent.Id, pos, op);
+            node.Parent = parent;
+            return node;
+        }
 
+        public ValueNode CreateValueNode(OperatorNode parent, object value)
+        {
+            if (parent.HasLeft && parent.HasRight)
+            {
+                throw new Exception($"Parent tree node with id {parent.Id} already has both left and right children.");
+            }
+            TreeNodePosition pos = parent.HasLeft ? TreeNodePosition.RIGHT : TreeNodePosition.LEFT;
+            int nid = pos == TreeNodePosition.LEFT ? CountChildren(parent) + 1 : CountChildren(parent) + 2;
+            ValueNode node = new ValueNode(nid, parent.Id, pos, value);
+            node.Parent = parent;
+            return node;
+        }
 
-        public ValueNode ValueNodeAt(int index) => (Nodes.ElementAt(index) as ValueNode) ?? throw new Exception($"The node at {index} is not a value node.");
+        public ITreeNode AddNode(ITreeNode n)
+        {
+            TreeNode parent, node;
+            if (n is TreeNode)
+            {
+                node = n as TreeNode;
+            }
+            else
+            {
+                throw new ArgumentException($"Argument node is not type TreeNode.");
+            }
 
-        public OperatorNode OperatorNodeAt(int index) => (Nodes.ElementAt(index) as OperatorNode) ?? throw new Exception($"The element at {index} is not an operator node.");
+            if (n.Parent is TreeNode)
+            {
+                parent = n.Parent as TreeNode;
+            }
+            else
+            {
+                throw new ArgumentException($"Argument node's parent is not type TreeNode.");
+            }
 
-        public bool AddNode(ITreeNode n) => Nodes.Add(n);
- 
+            if (node.Position == TreeNodePosition.LEFT)
+            {
+                if (parent.HasLeft)
+                {
+                    throw new Exception($"Parent tree node with id {parent.Id} already has a left child.");
+                }
+                else
+                {
+                    parent.Left = node;
+                }
+            }
+            else
+            {
+                if (parent.HasRight)
+                {
+                    throw new Exception($"Parent tree node with id {parent.Id} already has a right child.");
+                }
+                else
+                {
+                    parent.Right = node;
+                }
+            }
+            HashSet.Add(node);
+            return node;
+        }
+
+        public ValueNode ValueNodeAt(int index) => (HashSet.ElementAt(index) as ValueNode) ?? throw new Exception($"The element at index {index} is not a value node.");
+
+        public OperatorNode OperatorNodeAt(int index) => (HashSet.ElementAt(index) as OperatorNode) ?? throw new Exception($"The element at {index} is not an operator node.");
+
         public int CountChildren(TreeNode node)
         {
             int Count(int start, ITreeNode tn)
             {
-                if (tn is ValueNode)
+                if (tn is null || tn is ValueNode)
                 {
                     return start;
                 }
                 else if (tn is OperatorNode)
                 {
                     OperatorNode on = (OperatorNode)tn;
-                    int lcount = Count(start + 1, on.Left);
+                    int lcount = on.Left != null ? Count(start + 1, on.Left) : start + 1;
                     int rcount = on.Right != null ? Count(lcount + 1, on.Right) : lcount;
                     return rcount;
                 }
-                else throw new Exception("Unknown tree node type.");
+                else throw new Exception($"Unknown tree node type: {node.GetType().Name}");
             }
+
             return Count(0, node);
         }
 

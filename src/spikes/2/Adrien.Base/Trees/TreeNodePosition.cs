@@ -4,8 +4,9 @@ using System.Text;
 
 namespace Adrien.Trees
 {
-    public interface ITreeOperatorNode<TOp> : ITreeNode
+    public enum TreeNodePosition
     {
-        TOp Op { get; }
+        LEFT = 1,
+        RIGHT = 2
     }
 }

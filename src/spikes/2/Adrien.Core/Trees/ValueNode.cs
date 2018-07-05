@@ -25,18 +25,8 @@ namespace Adrien.Trees
             }
         }
 
-
-        public ValueNode(ITreeOperatorNode<TensorOp> parent, object value, TreeNodePosition pos) : this(parent.Id + (int)pos, parent.Id, value)
-        {
-            Parent = parent;
-        }
-
-        public ValueNode(ITreeOperatorNode<TensorOp> parent, object value, TreeNodePosition pos, ValueNodeType type) : this(parent, value, pos)
-        {
-            NodeType = type;
-        }
-
-        protected ValueNode(int id, int? parentId, object value) : base(id, parentId)
+        
+        internal ValueNode(int id, int? parentId, TreeNodePosition pos, object value) : base(id, parentId, pos)
         {
             switch (value)
             {

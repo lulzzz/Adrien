@@ -10,8 +10,22 @@ namespace Adrien.Trees
 
         int? ParentId { get; }
 
+        TreeNodePosition Position { get; }
+
         ITreeNode Parent { get; }
 
+        ITreeNode Left { get; }
+
+        ITreeNode Right { get; }
+
         string Label { get; }
+
+        bool IsOperator { get; }
+
+        bool IsValue { get; }
+
+        bool HasLeft { get; }
+
+        bool HasRight { get; }
     }
 }
