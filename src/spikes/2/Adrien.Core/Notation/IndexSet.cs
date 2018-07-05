@@ -27,7 +27,7 @@ namespace Adrien.Notation
             {
                 Indices.Add(new Index(this, i, dim[i], GenerateName(i, indexNameBase)));
             }
-            this.Name = Indices.Select(i => i.Name).Aggregate((a, b) => a + b);
+            this.Name = dim.Length > 0 ? Indices.Select(i => i.Name).Aggregate((a, b) => a + b) : new Name(indexNameBase);
         }
 
         public IndexSet(params Index[] indices) : base()

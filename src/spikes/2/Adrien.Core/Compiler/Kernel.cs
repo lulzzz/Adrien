@@ -25,7 +25,7 @@ namespace Adrien.Compiler
 
         public Tensor OutputTensor => Tree.OutputTensor;
 
-        public Kernel(Tensor output, params Variable<T>[] input)
+        public Kernel(Tensor output, params Var<T>[] input)
         {
             if (!output.IsAssigned)
             { 

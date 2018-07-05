@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 
 using Adrien.Trees;
+
 namespace Adrien.Notation
 {
     public class TensorExpression : Term, IAlgebra<TensorExpression>

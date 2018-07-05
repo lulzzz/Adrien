@@ -56,6 +56,10 @@ namespace Adrien
                 t = FlattenConstantExpressionValue<Tensor>(node);
                     
             }
+            else if (node.Value is Tensor)
+            {
+                t = node.Value as Tensor;
+            }
             else throw new InvalidOperationException($"Can't convert ConstantExpression {node.ToReadableString()} of type {node.Value.GetType().Name} to type Tensor.");
 
             Context.AddValueNode(t);

@@ -36,11 +36,13 @@ namespace Adrien.Trees
 
         public ExpressionTree() : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
         {
+            HashSet.Add(this);
             AddNode(CreateValueNode(this, null));
         }
 
         public ExpressionTree(Tensor outputTensor, IndexSet outputIndices) : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
         {
+            HashSet.Add(this);
             OperatorNode n = AddNode(CreateOperatorNode(this, TensorOp.Summation)) as OperatorNode;
             AddNode(CreateValueNode(n, outputTensor));
             AddNode(CreateValueNode(n, outputIndices));

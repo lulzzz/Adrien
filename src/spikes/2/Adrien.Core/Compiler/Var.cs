@@ -7,7 +7,7 @@ using Adrien.Notation;
 
 namespace Adrien.Compiler
 {
-    public class Variable<T> : IVariable<T> where T : unmanaged
+    public class Var<T> : IVariable<T> where T : unmanaged
     {
         public Tensor Tensor { get; protected set; }
 
@@ -27,12 +27,12 @@ namespace Adrien.Compiler
 
         public object Data { get; protected set; }
 
-        public Variable(Tensor tensor)
+        public Var(Tensor tensor)
         {
             Tensor = tensor;
         }
 
-        public Variable(Tensor tensor, Array array) : this(tensor)
+        public Var(Tensor tensor, Array array) : this(tensor)
         {
             int[] zeroindex = new int[array.Rank];
             object zeroelement = array.GetValue(zeroindex);

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Xunit;
 
+
 using Adrien.Notation;
 using Adrien.Trees;
 

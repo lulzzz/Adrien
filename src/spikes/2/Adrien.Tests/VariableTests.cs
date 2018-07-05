@@ -17,10 +17,10 @@ namespace Adrien.Tests
             int[,] array1 = new int[,] { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 }, { 10, 11, 12 } };
             int[,] array2 = new int[,] { { 1, 2, 3 } };
             var V1 = new Vector();
-            Assert.Throws<ArgumentException>(() => new Variable<UInt64>(V1, array1));
-            Assert.Throws<ArgumentException>(() => new Variable<UInt64>(V1, array2));
+            Assert.Throws<ArgumentException>(() => new Var<UInt64>(V1, array1));
+            Assert.Throws<ArgumentException>(() => new Var<UInt64>(V1, array2));
             var A = Tensor.TwoD("A", (4, 3), "a", out Index a, out Index b);
-            Assert.True(new Variable<int>(A, array1).Initialized);
+            Assert.True(new Var<int>(A, array1).Initialized);
         }
     }
 }
