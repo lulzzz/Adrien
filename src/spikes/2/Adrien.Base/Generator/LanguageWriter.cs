@@ -12,7 +12,7 @@ namespace Adrien.Generator
     {
         protected Dictionary<string, object> Options { get; }
 
-        protected abstract Dictionary<TOp, string> OperatorMap { get; }
+        protected abstract Dictionary<TOp, string> OperatorTemplate { get; }
 
         
         protected LanguageWriter(Dictionary<string, object> options = null)
@@ -39,9 +39,9 @@ namespace Adrien.Generator
             }
         }
 
-        public virtual string WriteOperator(TOp op, params string[] operands) => string.Format(OperatorMap[op], operands);
+        public virtual string WriteOperator(TOp op, params string[] operands) => string.Format(OperatorTemplate[op], operands);
 
-        public virtual string GetOperatorText(ITreeOperatorNode<TOp> on) => OperatorMap[on.Op];
+        public virtual string GetOperatorText(ITreeOperatorNode<TOp> on) => OperatorTemplate[on.Op];
 
     }
 }

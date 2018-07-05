@@ -40,7 +40,7 @@ namespace Adrien.Generator
             Context.Push(Writer.WriteValueText(node));
         }
 
-        public override void AfterVisit()
+        public override void AfterVisitTree()
         {
             if (Context.Count != 1)
             {

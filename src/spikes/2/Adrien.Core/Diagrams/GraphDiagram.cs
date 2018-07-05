@@ -84,7 +84,7 @@ namespace Adrien.Diagrams
             }
         }
 
-        public override void AfterVisit()
+        public override void AfterVisitTree()
         {
             LayoutSettings = new SugiyamaLayoutSettings
             {

@@ -36,7 +36,7 @@ namespace Adrien.Trees
         public void VisitTree()
         {
             Visit(Tree);
-            AfterVisit();
+            AfterVisitTree();
         }
 
         public abstract void VisitLeaf(ITreeValueNode node);
@@ -53,7 +53,7 @@ namespace Adrien.Trees
             }            
         }
 
-        public abstract void AfterVisit();
+        public abstract void AfterVisitTree();
         
     }
 }

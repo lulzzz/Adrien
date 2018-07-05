@@ -23,6 +23,8 @@ namespace Adrien.Trees
 
         public List<ValueNode> ValueNodes => this.Nodes.OfType<ValueNode>().ToList();
 
+        public ITreeNode Root => this;
+
         protected HashSet<ITreeNode> Nodes { get; set; }
 
         public ExpressionTree() : base(0, null, TensorOp.Assign)

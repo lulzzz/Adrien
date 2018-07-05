@@ -29,12 +29,20 @@ namespace Adrien.Tests
             Assert.Equal("k", k.Name);
             Assert.IsType<IndexExpression>((Expression) B[i]);
             Assert.IsType<IndexExpression>((Expression) B[ijk]);
+        }
 
+        [Fact]
+        public void CanUseFluentTensorConstruction()
+        {
             Tensor C = Tensor.ThreeD("C", (5, 6, 7), "a", out IndexSet abc);
-            Assert.IsType<IndexExpression>((Expression) C[abc]);
+            Assert.IsType<IndexExpression>((Expression)C[abc]);
 
             Tensor D = Tensor.TwoD("D", (11, 12)).With(out Tensor E);
             Assert.Equal("E", E.Name);
+            Assert.Equal(12, E.Dimensions[1]);
+
+            E.With(out Tensor F, 20, 21, 22, 23);
+            Assert.Equal(4, F.Rank);
         }
 
         [Fact]

@@ -9,6 +9,6 @@ namespace Adrien.Trees
         void Visit(ITreeNode node);
         void VisitInternal(ITreeOperatorNode<TOp> node);
         void VisitLeaf(ITreeValueNode node);
-        void AfterVisit();
+        void AfterVisitTree();
     }
 }
