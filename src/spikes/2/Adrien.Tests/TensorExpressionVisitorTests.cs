@@ -29,14 +29,14 @@ namespace Adrien.Tests
 
             TensorExpressionVisitor v = new TensorExpressionVisitor(te);
 
-            Assert.Equal(4, v.Tree.Count);
-            Assert.Equal(TensorOp.Summation, v.Tree.OperatorNodeAt(1).Op);
-            Assert.NotNull(v.Tree.OperatorNodeAt(1).Left);
-            Assert.NotNull(v.Tree.OperatorNodeAt(1).Right);
-            Assert.IsType<Tensor>(v.Tree.ValueNodeAt(2).Value);
-            Assert.IsType<IndexSet>(v.Tree.ValueNodeAt(3).Value);
+            Assert.Equal(5, v.Tree.Count);
+            Assert.Equal(TensorOp.Summation, v.Tree.OperatorNodeAtIndex(2).Op);
+            Assert.NotNull(v.Tree.OperatorNodeAtIndex(2).Left);
+            Assert.NotNull(v.Tree.OperatorNodeAtIndex(2).Right);
+            Assert.IsType<Tensor>(v.Tree.ValueNodeAtIndex(3).Value);
+            Assert.IsType<IndexSet>(v.Tree.ValueNodeAtIndex(4).Value);
 
-            IndexSet s = v.Tree.ValueNodeAt(3).ValueAs<IndexSet>();
+            IndexSet s = v.Tree.ValueNodeAtIndex(4).ValueAs<IndexSet>();
             Assert.Equal(2, s.Indices.Count);
             Assert.Equal(4, s.Indices.ElementAt(0).Dimension);
             Assert.Equal("b", s.Indices.ElementAt(1).Name);
@@ -50,11 +50,11 @@ namespace Adrien.Tests
             var C = Tensor.ThreeD("C", (8, 9, 10));
             var O = B[i, j] * C[i, j, k];
             ExpressionTree tree = O.ToTree();
-            Assert.Equal(8, tree.Count);
-            Assert.Equal(TensorOp.Mul, tree.OperatorNodeAt(1).Op);
-            Assert.Equal(TensorOp.Summation, tree.OperatorNodeAt(2).Op);
-            Assert.Equal(TensorOp.Summation, tree.OperatorNodeAt(5).Op);
-            OperatorNode on = tree.OperatorNodeAt(5);
+            Assert.Equal(9, tree.Count);
+            Assert.Equal(TensorOp.Mul, tree.OperatorNodeAtIndex(2).Op);
+            Assert.Equal(TensorOp.Summation, tree.OperatorNodeAtIndex(3).Op);
+            Assert.Equal(TensorOp.Summation, tree.OperatorNodeAtIndex(6).Op);
+            OperatorNode on = tree.OperatorNodeAtIndex(6);
             Assert.IsType<ValueNode>(on.Left);
             ValueNode vn = on.Left as ValueNode;
             Assert.Equal(ValueNodeType.TENSOR, vn.NodeType);

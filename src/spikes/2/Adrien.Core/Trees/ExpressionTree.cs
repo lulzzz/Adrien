@@ -118,9 +118,9 @@ namespace Adrien.Trees
             return node;
         }
 
-        public ValueNode ValueNodeAt(int index) => (HashSet.ElementAt(index) as ValueNode) ?? throw new Exception($"The element at index {index} is not a value node.");
+        public ValueNode ValueNodeAtIndex(int index) => (HashSet.ElementAt(index) as ValueNode) ?? throw new Exception($"The element at index {index} is not a value node.");
 
-        public OperatorNode OperatorNodeAt(int index) => (HashSet.ElementAt(index) as OperatorNode) ?? throw new Exception($"The element at {index} is not an operator node.");
+        public OperatorNode OperatorNodeAtIndex(int index) => (HashSet.ElementAt(index) as OperatorNode) ?? throw new Exception($"The element at {index} is not an operator node.");
 
         public int CountChildren(TreeNode node)
         {

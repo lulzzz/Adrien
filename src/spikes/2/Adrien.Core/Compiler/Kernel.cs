@@ -35,7 +35,6 @@ namespace Adrien.Compiler
             }
             Tree = output.Assignment.Expression.ToTree((output, output.Assignment.IndexSet));
             Input = input;
-            
         }
     }
 }
