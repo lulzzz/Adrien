@@ -66,25 +66,25 @@ namespace Adrien.Notation
         }
         public static Tensor operator + (Tensor left, Tensor right)
         {
-            string name = "Add_" + left.Name + right.Name;
+            string name = "Add_" + left.Name + "_" + right.Name;
             return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression) left + (TensorExpression) right)) };
         }
 
         public static Tensor operator - (Tensor left, Tensor right)
         {
-            string name = "Sub_" + left.Name + right.Name;
+            string name = "Sub_" + left.Name + "_" + right.Name;
             return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left - (TensorExpression)right)) };
         }
 
         public static Tensor operator * (Tensor left, Tensor right)
         {
-            string name = "Mul_" + left.Name + right.Name;
+            string name = "Mul_" + left.Name + "_" + right.Name;
             return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left * (TensorExpression)right)) };
         }
 
         public static Tensor operator / (Tensor left, Tensor right)
         {
-            string name = "Div_" + left.Name + right.Name;
+            string name = "Div_" + left.Name + "_" + right.Name;
             return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left / (TensorExpression)right)) };
         }
 

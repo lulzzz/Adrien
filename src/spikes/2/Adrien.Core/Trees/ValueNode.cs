@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using Adrien.Notation;
+using Sawmill;
 
 namespace Adrien.Trees
 {
@@ -47,6 +48,10 @@ namespace Adrien.Trees
             Value = value;
         }
 
+
+        public override Children<ITreeNode> GetChildren() => Children.None<ITreeNode>();
+
+        public override ITreeNode SetChildren(Children<ITreeNode> newChildren) => this;
 
         public T ValueAs<T>() where T : class
         {

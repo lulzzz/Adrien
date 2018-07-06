@@ -55,10 +55,6 @@ namespace Adrien.Trees
         
         public OperatorNode CreateOperatorNode(OperatorNode parent, TensorOp op)
         {
-            if (parent.HasLeft && parent.HasRight)
-            {
-                throw new Exception($"Parent tree node with id {parent.Id} already has both left and right children.");
-            }
             TreeNodePosition pos = parent.HasLeft ? TreeNodePosition.RIGHT : TreeNodePosition.LEFT;
             int nid = pos == TreeNodePosition.LEFT ? CountChildren(parent) + 1 : CountChildren(parent) + 2;
             OperatorNode node = new OperatorNode(nid, parent.Id, pos, op);
@@ -68,10 +64,6 @@ namespace Adrien.Trees
 
         public ValueNode CreateValueNode(OperatorNode parent, object value)
         {
-            if (parent.HasLeft && parent.HasRight)
-            {
-                throw new Exception($"Parent tree node with id {parent.Id} already has both left and right children.");
-            }
             TreeNodePosition pos = parent.HasLeft ? TreeNodePosition.RIGHT : TreeNodePosition.LEFT;
             int nid = pos == TreeNodePosition.LEFT ? CountChildren(parent) + 1 : CountChildren(parent) + 2;
             ValueNode node = new ValueNode(nid, parent.Id, pos, value);
@@ -152,5 +144,6 @@ namespace Adrien.Trees
         }
 
         public int CountChildren() => CountChildren(this);
+
     }
 }

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 
+using Sawmill;
+
 using Adrien.Notation;
 using Adrien.Trees;
 
@@ -21,7 +23,7 @@ namespace Adrien.Compiler
 
         public List<Tensor> TensorNodes => Tree.ValueNodes.Where(n => n.NodeType == ValueNodeType.TENSOR).Select(n => n.ValueAs<Tensor>()).ToList();
 
-        public List<Tensor> InputTensors => TensorNodes.Where(t => !t.IsAssigned).ToList();
+        public List<Tensor> InputTensors => TensorNodes.Where(t => t.Label != OutputTensor.Name.Label).ToList();
 
         public Tensor OutputTensor => Tree.OutputTensor;
 

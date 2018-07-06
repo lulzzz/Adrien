@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Sawmill;
+
 namespace Adrien.Trees
 {
     public abstract class TreeNode : ITreeNode
@@ -35,9 +37,13 @@ namespace Adrien.Trees
             Position = pos;
         }
 
+        public abstract Children<ITreeNode> GetChildren();
+
+        public abstract ITreeNode SetChildren(Children<ITreeNode> newChildren);
+
+        public ITreeNode RewriteChildren(Func<ITreeNode, ITreeNode> transformer)
+            => this.DefaultRewriteChildren(transformer);
 
         public bool Equals(ITreeNode other) => this.Id == other.Id;
-
-        
     }
 }

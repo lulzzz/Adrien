@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Xunit;
@@ -21,6 +22,7 @@ namespace Adrien.Tests
             Kernel<int> k = new Kernel<int>(C);
 
             Assert.Equal(C, k.OutputTensor);
+            //Assert.Equal(2, k.InputTensors.Count);
 
             var V1 = new Vector("V1", out Index i).With(out Vector V2).With(out Vector V3);
             V3[i] = V1 + V2;

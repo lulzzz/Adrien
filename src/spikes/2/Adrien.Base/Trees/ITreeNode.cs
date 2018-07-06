@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Sawmill;
 namespace Adrien.Trees
 {
-    public interface ITreeNode : IEquatable<ITreeNode>
+    public interface ITreeNode : IEquatable<ITreeNode>, IRewritable<ITreeNode>
     {
         int Id { get; }
 
