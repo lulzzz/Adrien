@@ -15,14 +15,15 @@ namespace Adrien.Tests
         [Fact]
         public void CanConstructKernel()
         {
-            var A = Tensor.ThreeD("A", (2, 2, 2), "a", out Index a, out Index b, out Index c)
-                        .With(out Tensor B)
-                        .With(out Tensor C);
+            var A = Tensor.ThreeD("A", (2, 2, 2), "a", out Index a, out Index b, out Index c);
+            var B = Tensor.ThreeD("B", (2, 2, 2));
+            var C = Tensor.ThreeD("C", (2, 2, 2));
+
             C[a, b] = A[a, b] * B[b, a];
             Kernel<int> k = new Kernel<int>(C);
 
             Assert.Equal(C, k.OutputTensor);
-            //Assert.Equal(2, k.InputTensors.Count);
+            Assert.Equal(2, k.InputTensors.Count);
 
             var V1 = new Vector("V1", out Index i).With(out Vector V2).With(out Vector V3);
             V3[i] = V1 + V2;

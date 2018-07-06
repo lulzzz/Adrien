@@ -35,6 +35,8 @@ namespace Adrien.Tests
             children = tree.Right.GetChildren();
             Assert.Equal(right, children.First);
             Assert.Equal(left, children.Second);
+
+            
         }
     }
 }

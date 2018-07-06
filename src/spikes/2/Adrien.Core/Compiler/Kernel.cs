@@ -21,7 +21,7 @@ namespace Adrien.Compiler
 
         public ExpressionTree Tree { get; protected set; }
 
-        public List<Tensor> TensorNodes => Tree.ValueNodes.Where(n => n.NodeType == ValueNodeType.TENSOR).Select(n => n.ValueAs<Tensor>()).ToList();
+        public List<Tensor> TensorNodes => Tree.Root.DescendantsAndSelf().OfType<ValueNode>().Where(n => n.NodeType == ValueNodeType.TENSOR).Select(n => n.ValueAs<Tensor>()).ToList();
 
         public List<Tensor> InputTensors => TensorNodes.Where(t => t.Label != OutputTensor.Name.Label).ToList();
 
