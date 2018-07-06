@@ -9,14 +9,6 @@
 <#@ assembly name="$(TargetDir)Adrien.Core.dll" #>
 <#@ import namespace="Adrien.Notation" #>
 <#@ output extension=".cs" #>
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using System.Linq;
-using System.Linq.Expressions;
-using Humanizer;
-
 namespace Adrien.Notation
 {
 	public partial class Tensor
@@ -42,5 +34,11 @@ namespace Adrien.Notation
 			<#}#>return t;
 		}
 	<#}#>
+<#for (int i = 2; i < 100; i++)
+{
+		string n = Tensor.RankToTensorName(i);
+#>
+		public (<# for (int j = 1; j < i; j++) {#>Tensor, <#}#>Tensor) <#=n#>() => (this<# for (int j = 1; j < i; j++) {#>, new Tensor(this.GenerateName(<#=j#>, this.Name), this.Dimensions)<#}#>);
+<#}#>
 	}
 }

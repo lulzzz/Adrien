@@ -15,9 +15,9 @@ namespace Adrien.Tests
         [Fact]
         public void CanConstructKernel()
         {
-            var A = Tensor.ThreeD("A", (2, 2, 2), "a", out Index a, out Index b, out Index c);
-            var B = Tensor.ThreeD("B", (2, 2, 2));
-            var C = Tensor.ThreeD("C", (2, 2, 2));
+            var (A, B, C) = Tensor.ThreeD("A", (2, 2, 2), "a", out Index a, out Index b, out Index c)
+                .Three();
+            
 
             C[a, b] = A[a, b] * B[b, a];
             Kernel<int> k = new Kernel<int>(C);

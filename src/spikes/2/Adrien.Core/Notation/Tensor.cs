@@ -25,6 +25,7 @@ namespace Adrien.Notation
 
         internal override Name DefaultNameBase { get; } = "A";
 
+        protected (Tensor tensor, int index)? GeneratorContext { get; set; }
 
         public Tensor(params int[] dim) : base("A")
         {
@@ -99,16 +100,26 @@ namespace Adrien.Notation
 
         public Tensor Divide(Tensor right) => this / right;
 
-        public Tensor With(out Tensor with)
+        public Tensor With(out Tensor with) 
         {
-            with = new Tensor(this.GenerateName(1, this.Name), this.Dimensions);
-            return this;
+            GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
+            with = new Tensor(this.GenerateName(GeneratorContext.Value.index, this.Name), this.Dimensions);
+            this.GeneratorContext = (this.GeneratorContext.Value.tensor, this.GeneratorContext.Value.index + 1);
+            return this.GeneratorContext.Value.tensor;
         }
+
 
         public Tensor With(out Tensor with, params int[] dim)
         {
-            with = new Tensor(this.GenerateName(1, this.Name), dim);
-            return this;
+
+            GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
+            if (dim.Length != GeneratorContext.Value.tensor.Dimensions.Length)
+            {
+                throw new ArgumentException($"The rank of the new tensor must be the same as the original: {dim.Length}.");
+            }
+            with = new Tensor(this.GenerateName(GeneratorContext.Value.index, this.Name), dim);
+            this.GeneratorContext = (this.GeneratorContext.Value.tensor, this.GeneratorContext.Value.index + 1);
+            return this.GeneratorContext.Value.tensor;
         }
 
         public Var<T> Var<T>(Array array) where T : unmanaged => new Var<T>(this, array);
@@ -122,6 +133,10 @@ namespace Adrien.Notation
             }
             return string.Join("", names);
         }
+
+        
+
+        //public (Tensor, Tensor, Tensor) Three() => (this, new Tensor(this.GenerateName(1, this.Name), this.Dimensions));
 
         [DebuggerStepThrough]
         internal void ThrowIfAlreadyAssiged()

@@ -34,15 +34,26 @@ namespace Adrien.Tests
         [Fact]
         public void CanUseFluentTensorConstruction()
         {
-            Tensor C = Tensor.ThreeD("C", (5, 6, 7), "a", out IndexSet abc);
-            Assert.IsType<IndexExpression>((Expression)C[abc]);
+            Tensor D = Tensor.TwoD("D", (11, 12))
+                .With(out Tensor E)
+                .With(out Tensor F, 4, 3);
 
-            Tensor D = Tensor.TwoD("D", (11, 12)).With(out Tensor E);
+            Assert.Equal("D", D.Name);
+            Assert.Equal(12, D.Dimensions[1]);
+
             Assert.Equal("E", E.Name);
             Assert.Equal(12, E.Dimensions[1]);
 
-            E.With(out Tensor F, 20, 21, 22, 23);
-            Assert.Equal(4, F.Rank);
+            Assert.Equal("F", F.Name);
+            Assert.Equal(4, F.Dimensions[0]);
+            Assert.Equal(3, F.Dimensions[1]);
+            Assert.Equal(2, F.Rank);
+            Assert.Throws<ArgumentException>(() => F.With(out Tensor G, 3, 2, 1));
+            var (H, I, J) = Tensor.ThreeD("H", (2, 2, 2)).Three();
+            Assert.Equal("H", H.Label);
+            Assert.Equal("I", I.Label);
+            Assert.Equal("J", J.Label);
+            Assert.Equal(3, J.Rank);
         }
 
         [Fact]
