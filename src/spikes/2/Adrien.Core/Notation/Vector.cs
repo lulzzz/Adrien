@@ -11,23 +11,33 @@ namespace Adrien.Notation
         internal override Name DefaultNameBase => "V0";
 
 
-        public Vector(string name) : base(name, 1) {}
+        public Vector(string name, int length) : base(name, length) {}
 
-        public Vector() : this(vn.V1) { }
+        public Vector(int length) : this(vn.V1, length) { }
 
-        public Vector(string name, string indexName, out Index i) : base(name, 1)
+        public Vector(string name, string indexName, out Index i, int length) : base(name, length)
         {
             i = new Index(null, 1, 1, indexName);
         }
 
-        public Vector(string name, out Index i) : this(name, "i", out i) {}
+        public Vector(string name, out Index i, int length) : this(name, "i", out i, length) {}
 
         public Vector With(out Vector with)
         {
-            with = new Vector(this.GenerateName(1, this.Name));
-            return this;
+            GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
+            with = new Vector(this.GenerateName(GeneratorContext.Value.index, this.Name), this.Dimensions[0]);
+            this.GeneratorContext = (this.GeneratorContext.Value.tensor, this.GeneratorContext.Value.index + 1);
+            return this.GeneratorContext.Value.tensor as Vector;
         }
 
-        public Var<T> Var<T>(params int[] array) where T : unmanaged => new Var<T>(this, array);
+        public Vector With(out Vector with, int length)
+        {
+
+            GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
+            with = new Vector(this.GenerateName(GeneratorContext.Value.index, this.Name), length);
+            this.GeneratorContext = (this.GeneratorContext.Value.tensor, this.GeneratorContext.Value.index + 1);
+            return this.GeneratorContext.Value.tensor as Vector;
+        }
+
     }
 }

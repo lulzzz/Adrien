@@ -17,6 +17,20 @@ namespace Adrien.Notation
 
         public int Rank => Dimensions.Length;
 
+        public int NumberofElements
+        {
+            get
+            {
+                var n = 1;
+                for (int i = 0; i < Dimensions.Length; i++)
+                {
+                    n *= Dimensions[i];
+                }
+                return n;
+            }
+        }
+            
+        
         public (IndexSet IndexSet, TensorExpression Expression) Assignment { get; protected set; }
 
         public bool IsAssigned => Assignment.IndexSet != null;
@@ -108,21 +122,25 @@ namespace Adrien.Notation
             return this.GeneratorContext.Value.tensor;
         }
 
-
         public Tensor With(out Tensor with, params int[] dim)
         {
 
             GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
             if (dim.Length != GeneratorContext.Value.tensor.Dimensions.Length)
             {
-                throw new ArgumentException($"The rank of the new tensor must be the same as the original: {dim.Length}.");
+                throw new ArgumentException($"The rank of the new tensor must be the same as the original: {dim.Length}.");                                                                            
             }
             with = new Tensor(this.GenerateName(GeneratorContext.Value.index, this.Name), dim);
             this.GeneratorContext = (this.GeneratorContext.Value.tensor, this.GeneratorContext.Value.index + 1);
             return this.GeneratorContext.Value.tensor;
         }
 
+
+        internal Var<T> Var<T>() where T : unmanaged => new Var<T>(this);
+
         public Var<T> Var<T>(Array array) where T : unmanaged => new Var<T>(this, array);
+
+        public Var<T> Var<T>(params T[] data) where T : unmanaged => new Var<T>(this, data);
 
         public static string RankToTensorName(int rank)
         {

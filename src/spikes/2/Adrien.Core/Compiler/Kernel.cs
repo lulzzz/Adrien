@@ -36,5 +36,20 @@ namespace Adrien.Compiler
             Tree = output.Assignment.Expression.ToTree((output, output.Assignment.IndexSet));
             Input = input;
         }
+
+        public Kernel(Tensor output)
+        {
+            if (!output.IsAssigned)
+            {
+                throw new ArgumentException($"The output tensor {output.Label} must be assigned an input expression.");
+            }
+            Tree = output.Assignment.Expression.ToTree((output, output.Assignment.IndexSet));
+            Input = InputTensors.Select(t => t.Var<int>() as IVariable<T>).ToArray();
+        }
+
+        public IVariable<T> this[int index]
+        {
+            get => Input[index];
+        }
     }
 }
