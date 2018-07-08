@@ -12,7 +12,7 @@ using Adrien.Notation;
 
 namespace Adrien.Compiler
 {
-    public class Var<T> : IVariable<T>, INDArray where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
+    public class Var<T> : IVariable<T>, INDArray<T> where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         public Tensor Tensor { get; protected set; }
 
@@ -200,20 +200,20 @@ namespace Adrien.Compiler
         public int ItemSize => Unsafe.SizeOf<T>();
 
 
-        public Var<T> Zeros()
+        public IVariable<T> Zeros()
         {
             this.Span.Fill(GM<T>.Const(0));
             return this;
         }
 
         
-        public Var<T> Ones()
+        public IVariable<T> Ones()
         {
             this.Span.Fill(GM<T>.Const(1));
             return this;
         }
 
-        public Var<T> Random()
+        public IVariable<T> Random()
         {
             for (int i = 0; i <= Size; i++)
             {

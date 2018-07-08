@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Adrien.Compiler
 {
-    public interface INDArray
+    public interface INDArray<T> where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         int NDim { get; }
 
@@ -16,10 +16,10 @@ namespace Adrien.Compiler
 
         int ItemSize { get; }
 
-        IV Zeros();
+        IVariable<T> Zeros();
 
-        void Ones();
+        IVariable<T> Ones();
 
-        void Random();
+        IVariable<T> Random();
     }
 }
