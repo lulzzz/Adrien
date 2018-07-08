@@ -21,13 +21,14 @@ namespace Adrien.Tests
 
             C[a, b] = A[a, b] * B[b, a];
             Kernel<int> k = new Kernel<int>(C);
-            
+
             Assert.Equal(C, k.OutputTensor);
             Assert.Equal(2, k.InputTensors.Count);
 
             var V1 = new Vector("V1", out Index i, 3).With(out Vector V2).With(out Vector V3);
             V3[i] = V1 + V2;
             Kernel<int> vk1 = new Kernel<int>(V3);
+
         }
     }
 }

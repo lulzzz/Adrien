@@ -14,7 +14,5 @@ namespace Adrien.Compiler
         IVariable<T> Output { get; }
 
         IVariable<T>[] Input { get; }
-
-        
     }
 }

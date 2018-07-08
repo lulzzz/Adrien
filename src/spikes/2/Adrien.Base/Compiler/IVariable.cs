@@ -14,9 +14,9 @@ namespace Adrien.Compiler
 
         int Rank { get; }
 
-        MemoryHandle Handle { get; }
+        int Size { get; }
 
-        Memory<T> Memory { get; }
+        MemoryHandle Handle { get; }
 
         bool Initialized { get; }
     }

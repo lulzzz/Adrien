@@ -35,7 +35,8 @@ namespace Adrien.Notation
 
         public bool IsAssigned => Assignment.IndexSet != null;
 
-        internal override Expression LinqExpression => this.IsAssigned ? this.Assignment.Expression.LinqExpression : Expression.Constant(this, typeof(Tensor));
+        internal override Expression LinqExpression => this.IsAssigned ? 
+            this.Assignment.Expression.LinqExpression : Expression.Constant(this, typeof(Tensor));
 
         internal override Name DefaultNameBase { get; } = "A";
 
@@ -82,25 +83,29 @@ namespace Adrien.Notation
         public static Tensor operator + (Tensor left, Tensor right)
         {
             string name = "Add_" + left.Name + "_" + right.Name;
-            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression) left + (TensorExpression) right)) };
+            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression) left 
+                + (TensorExpression) right)) };
         }
 
         public static Tensor operator - (Tensor left, Tensor right)
         {
             string name = "Sub_" + left.Name + "_" + right.Name;
-            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left - (TensorExpression)right)) };
+            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left 
+                - (TensorExpression)right)) };
         }
 
         public static Tensor operator * (Tensor left, Tensor right)
         {
             string name = "Mul_" + left.Name + "_" + right.Name;
-            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left * (TensorExpression)right)) };
+            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left 
+                * (TensorExpression)right)) };
         }
 
         public static Tensor operator / (Tensor left, Tensor right)
         {
             string name = "Div_" + left.Name + "_" + right.Name;
-            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left / (TensorExpression)right)) };
+            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left 
+                / (TensorExpression)right)) };
         }
 
 
@@ -128,7 +133,8 @@ namespace Adrien.Notation
             GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
             if (dim.Length != GeneratorContext.Value.tensor.Dimensions.Length)
             {
-                throw new ArgumentException($"The rank of the new tensor must be the same as the original: {dim.Length}.");                                                                            
+                throw new ArgumentException($"The rank of the new tensor must be the same as the original: " +
+                $"{dim.Length}.");                                                                            
             }
             with = new Tensor(this.GenerateName(GeneratorContext.Value.index, this.Name), dim);
             this.GeneratorContext = (this.GeneratorContext.Value.tensor, this.GeneratorContext.Value.index + 1);
@@ -136,11 +142,13 @@ namespace Adrien.Notation
         }
 
 
-        internal Var<T> Var<T>() where T : unmanaged => new Var<T>(this);
+        internal Var<T> Var<T>() where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible => new Var<T>(this);
 
-        public Var<T> Var<T>(Array array) where T : unmanaged => new Var<T>(this, array);
+        public Var<T> Var<T>(Array array) where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible 
+            => new Var<T>(this, array);
 
-        public Var<T> Var<T>(params T[] data) where T : unmanaged => new Var<T>(this, data);
+        public Var<T> Var<T>(params T[] data) where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible 
+            => new Var<T>(this, data);
 
         public static string RankToTensorName(int rank)
         {
@@ -152,23 +160,21 @@ namespace Adrien.Notation
             return string.Join("", names);
         }
 
-        
-
-        //public (Tensor, Tensor, Tensor) Three() => (this, new Tensor(this.GenerateName(1, this.Name), this.Dimensions));
-
         [DebuggerStepThrough]
         internal void ThrowIfAlreadyAssiged()
         {
             if (Assignment.IndexSet != null)
             {
-                throw new InvalidOperationException("This tensor variable has an existing assigment. You can only assign to a tensor variable once.");
+                throw new InvalidOperationException("This tensor variable has an existing assigment. + " +
+                    $"You can only assign to a tensor variable once.");
             }
         }
 
         [DebuggerStepThrough]
         internal void ThrowIfIndicesExceedRank(int c)
         {
-            if (Rank < c) throw new ArgumentOutOfRangeException("The number of indices exceeds the dimensions of this tensor.");
+            if (Rank < c) throw new ArgumentOutOfRangeException("The number of indices exceeds the dimensions of " +
+                $"this tensor.");
         }
     }
 }
