@@ -22,7 +22,7 @@ namespace Adrien.Compiler.PlaidML
         public Settings settings { get; protected set; }
         
 
-        public Context(string eventLogFileName, string manualConfigText = "")
+        public Context(string eventLogFileName, Settings.UseConfigFile configFile)
         {            
             ptr = @base.__Internal.VaiAllocCtx();
             if (ptr.IsZero())
@@ -48,13 +48,14 @@ namespace Adrien.Compiler.PlaidML
                 ReportApiCallError("vai_set_event_log");
             }
 
-            settings = new Settings(manualConfigText);
-
-            IsAllocated = true;
+            settings = new Settings(configFile);
+            IsAllocated = settings.IsLoaded;
         }
 
-        public Context() : this("PlaidML.log") {}
+        public Context() : this("PlaidML.log", Settings.UseConfigFile.Default) {}
         
+        public Context(Settings.UseConfigFile configFile) : this("PlaidML.log", configFile) {}
+
 
         public static implicit operator IntPtr(Context c)
         {

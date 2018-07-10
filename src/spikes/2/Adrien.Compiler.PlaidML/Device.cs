@@ -18,11 +18,11 @@ namespace Adrien.Compiler.PlaidML
         {
             if (devconf != null)
             {
-                ptr = plaidml.__Internal.PlaidmlOpenDevice(context, devconf);
+                ptr = plaidml.__Internal.PlaidmlOpenDevice(_Context, devconf);
             }
             else
             {
-                ptr = plaidml.__Internal.PlaidmlOpenDevice(context, IntPtr.Zero);
+                ptr = plaidml.__Internal.PlaidmlOpenDevice(_Context, IntPtr.Zero);
             }
             if (ptr.IsZero())
             {
@@ -64,7 +64,7 @@ namespace Adrien.Compiler.PlaidML
 
         public DeviceBuffer CreateBuffer(Shape shape)
         {
-            return new DeviceBuffer(this.context, this, shape);
+            return new DeviceBuffer(this._Context, this, shape);
         }
 
         internal void ThrowIfNotOpen()

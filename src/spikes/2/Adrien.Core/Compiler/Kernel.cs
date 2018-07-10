@@ -17,14 +17,14 @@ namespace Adrien.Compiler
 
         public IVariable<T> Output { get; protected set; }
 
-        public IVariable<T>[] Input { get; protected set; }
+        public IReadOnlyList<IVariable<T>> Input { get; protected set; }
 
         public ExpressionTree Tree { get; protected set; }
 
-        public List<Tensor> Tensors => Tree.Root.DescendantsAndSelf().OfType<ValueNode>()
+        public IReadOnlyList<Tensor> Tensors => Tree.Root.DescendantsAndSelf().OfType<ValueNode>()
             .Where(n => n.NodeType == ValueNodeType.TENSOR).Distinct().Select(n => n.ValueAs<Tensor>()).ToList();
 
-        public List<Tensor> InputTensors => Tensors.Where(t => t.Label != OutputTensor.Name.Label).ToList();
+        public IReadOnlyList<Tensor> InputTensors => Tensors.Where(t => t.Label != OutputTensor.Name.Label).ToList();
 
         public Tensor OutputTensor => Tree.OutputTensor;
 
@@ -54,7 +54,7 @@ namespace Adrien.Compiler
             }
             DeviceType = deviceType;
             Tree = output.Assignment.Expression.ToTree((output, output.Assignment.IndexSet));
-            Input = InputTensors.Select(t => t.Var<T>() as IVariable<T>).ToArray();
+            Input = InputTensors.Select(t => t.Var(new T[t.NumberofElements]) as IVariable<T>).ToList();
         }
 
         public IVariable<T> this[int index]
@@ -70,8 +70,6 @@ namespace Adrien.Compiler
                     return Input[index];
                 }
             }    
-                
-               
         }
 
         public IVariable<T> this[Tensor index]

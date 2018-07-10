@@ -6,14 +6,14 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class Tensor : Variable
+    public class DeviceTensor : Variable
     {
         public Device Device { get; protected set; }
         public DeviceBuffer Buffer { get; protected set; }
         public Shape Shape { get; protected set; }
 
 
-        public Tensor(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context, name)
+        public DeviceTensor(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context, name)
         {
             if (buffer == null)
             {
@@ -24,7 +24,7 @@ namespace Adrien.Compiler.PlaidML
                     return;
                 }
             }
-            ptr = plaidml.__Internal.PlaidmlAllocTensor(context, buffer, shape);
+            ptr = plaidml.__Internal.PlaidmlAllocTensor(_Context, buffer, shape);
             if (ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_tensor");

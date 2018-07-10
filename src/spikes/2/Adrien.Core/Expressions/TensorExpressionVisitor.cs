@@ -13,7 +13,7 @@ using AgileObjects.ReadableExpressions;
 using Adrien.Notation;
 using Adrien.Trees;
 
-namespace Adrien
+namespace Adrien.Trees
 {
     public class TensorExpressionVisitor : ExpressionVisitor
     {
@@ -67,7 +67,7 @@ namespace Adrien
            
         }
                             
-        protected override Expression VisitIndex(IndexExpression node)
+        protected override Expression VisitIndex(System.Linq.Expressions.IndexExpression node)
         {
             OperatorNode on = Context.AddOperatorNode(TensorOp.Summation);
             using (Context.Internal(on))

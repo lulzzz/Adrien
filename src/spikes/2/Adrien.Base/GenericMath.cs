@@ -4,20 +4,18 @@ using System.Text;
 
 namespace Adrien
 {
-    public static class GM<TData> where TData : unmanaged, IEquatable<TData>, IComparable<TData>, IConvertible
+    public static class GenericMath<TData> where TData : unmanaged, IEquatable<TData>, IComparable<TData>, IConvertible
     {
-        #region Conunmanagedor
-        static GM()
+        public static Random Rng { get; } = new Random();
+
+
+        static GenericMath()
         {
 
         }
-        #endregion
+       
 
-        #region Properties
-        public static Random Rng { get; } = new Random();
-        #endregion
-
-        #region Methods
+        
         public static TData Const<TValue>(TValue v) where TValue : unmanaged, IEquatable<TValue>, IComparable<TValue>, 
             IConvertible
         {
@@ -209,9 +207,8 @@ namespace Adrien
                     throw new ArgumentException($"Cannot multiply type {nameof(TData)}.");
             }
             return (Const(factor), Const(max));
-
         }
-        #endregion
+        
 
     }
 }

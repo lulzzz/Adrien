@@ -12,7 +12,7 @@ namespace Adrien.Compiler.PlaidML
         
         public Invoker(Context ctx, Function f, params Variable[] inputs) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocInvoker(context, f);
+            ptr = plaidml.__Internal.PlaidmlAllocInvoker(_Context, f);
             if (ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_invoker");
@@ -47,7 +47,7 @@ namespace Adrien.Compiler.PlaidML
 
         public Invoker(Context ctx, Function f, Variable[] inputs, Variable[] outputs) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocInvoker(context, f); 
+            ptr = plaidml.__Internal.PlaidmlAllocInvoker(_Context, f); 
             if (ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_invoker");
@@ -112,7 +112,7 @@ namespace Adrien.Compiler.PlaidML
             }
             else
             {
-                return new Shape(this.context, r);
+                return new Shape(this._Context, r);
             }
 
         }
@@ -142,7 +142,7 @@ namespace Adrien.Compiler.PlaidML
 
         public Invocation Invoke()
         {
-            return new Invocation(context, this);
+            return new Invocation(_Context, this);
         }
 
         internal void ThrowifInputVariablesNotSet()

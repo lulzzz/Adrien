@@ -9,6 +9,14 @@ namespace Adrien.Compiler.PlaidML
 {
     public class Settings : CompilerApi<Settings>
     {
+        public enum UseConfigFile
+        {
+            Default,
+            Experimental,
+            Envirronment,
+            User
+        }
+          
         public static string CONFIG_VAR = "PLAIDML_CONFIG";
         public static string CONFIG_FILE_VAR = "PLAIDML_CONFIG_FILE";
         public static string DEVICE_IDS_VAR = "PLAIDML_DEVICE_IDS";
@@ -20,15 +28,20 @@ namespace Adrien.Compiler.PlaidML
         public static string PLAIDML_EXPERIMENTAL_CONFIG_VAR = "PLAIDML_EXPERIMENTAL_CONFIG";
         public static string PLAIDML_DEFAULT_CONFIG_VAR = "PLAIDML_DEFAULT_CONFIG";
 
-        public static string[] ENV_SETTINGS_VARS = { CONFIG_VAR, CONFIG_FILE_VAR, DEVICE_IDS_VAR, EXPERIMENTAL_VAR, SESSION_VAR, SETTINGS_VAR, TELEMETRY_VAR };
+        public static string[] ENV_SETTINGS_VARS = { CONFIG_VAR, CONFIG_FILE_VAR, DEVICE_IDS_VAR,
+            EXPERIMENTAL_VAR, SESSION_VAR, SETTINGS_VAR, TELEMETRY_VAR };
 
-        public static FileInfo EnvironmentConfigFile = Environment.GetEnvironmentVariable(SETTINGS_VAR).IsNotNullOrEmpty()
+        public static FileInfo EnvironmentConfigFile = 
+            Environment.GetEnvironmentVariable(SETTINGS_VAR).IsNotNullOrEmpty()
             ? new FileInfo(Environment.GetEnvironmentVariable(SETTINGS_VAR))
             : null;
 
-        public static FileInfo UserConfigFile = new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), ".plaidml"));
+        public static FileInfo UserConfigFile = 
+            new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
+                ".plaidml"));
 
-        public static FileInfo DefaultConfigFile = Environment.GetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR).IsNotNullOrEmpty()
+        public static FileInfo DefaultConfigFile = 
+            Environment.GetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR).IsNotNullOrEmpty()
             ? new FileInfo(Environment.GetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR))
             : new FileInfo(GetAssemblyDirectoryFullPath("config.json"));
 
@@ -75,12 +88,14 @@ namespace Adrien.Compiler.PlaidML
         {
             if (Environment.GetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR).IsNullOrEmpty())
             {
-                Environment.SetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR, GetAssemblyDirectoryFullPath("config.json"));
+                Environment.SetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR, 
+                    GetAssemblyDirectoryFullPath("config.json"));
             }
 
             if (Environment.GetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR).IsNullOrEmpty())
             {
-                Environment.SetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR, GetAssemblyDirectoryFullPath("experimental.json"));
+                Environment.SetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR, 
+                    GetAssemblyDirectoryFullPath("experimental.json"));
             }
         }
 
@@ -91,7 +106,7 @@ namespace Adrien.Compiler.PlaidML
                 ConfigFile = EnvironmentConfigFile;
                 Info("Using PlaidML environment settings file {0}.", EnvironmentConfigFile.FullName);
             }
-            if (UserConfigFile.Exists)
+            else if (UserConfigFile.Exists)
             {
                 ConfigFile = UserConfigFile;
                 Info("Using PlaidML user settings file {0}.", UserConfigFile.FullName); 
@@ -105,10 +120,24 @@ namespace Adrien.Compiler.PlaidML
             Load();
         }
  
+        public Settings(UseConfigFile config)
+        {
+            if (config == UseConfigFile.Default)
+            {
+                ConfigFile = DefaultConfigFile;
+                Info("Using PlaidML default settings file {0}.", ConfigFile.FullName);
+            }
+            else
+            {
+                ConfigFile = ExperimentalConfigFile;
+                Info("Using PlaidML experimental settings file {0}.", ConfigFile.FullName);
+            }
+            Load();
+        }
+
 
         public object this[string key]
         {
-
             get
             {
                 ThrowIfNotLoaded();

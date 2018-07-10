@@ -1,14 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
+
+using Newtonsoft.Json;
 
 using Adrien.Compiler.PlaidML.Bindings;
+using Adrien.Compiler.PlaidML.Generator;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class TileCompiler<TKernel> : PlaidMLApi<TileCompiler<TKernel>> where TKernel : unmanaged
+    public class TileCompiler<TKernel> : PlaidMLApi<TileCompiler<TKernel>>, ICompiler<TKernel> 
+        where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
     {
-        public bool Initialized => IsAllocated;
+        public Dictionary<string, object> Options { get; }
 
-        public Settings Settings => context.settings;
+        public bool Initialized { get; protected set; }
+
+        public Settings Settings => _Context.settings;
 
         public string SessionId { get; protected set; }
 
@@ -18,49 +25,78 @@ namespace Adrien.Compiler.PlaidML
         
         public IKernel<TKernel> Kernel { get; }
 
-        public TileCompiler(IKernel<TKernel> kernel) : base(new Context())
-        {    
+        public Device KernelDevice { get; protected set; }
+
+        public Dictionary<string, object> KernelDeviceProperties { get; protected set; }
+
+        public TileGenerator TileGenerator { get; protected set; }
+
+        public TileCompiler(IKernel<TKernel> kernel, Dictionary<string, object> options = null) : base(new Context())
+        {
+            if (!_Context.IsAllocated)
+            {
+                return;
+            }
+            Options = options;
             SessionId = Settings.StartNewSession();
-            DeviceEnumerator = new DeviceEnumerator(context);
+            DeviceEnumerator = new DeviceEnumerator(_Context);
             if (!DeviceEnumerator.IsAllocated)
             {
                 return;
             }
-            Kernel = kernel;
+            if (DeviceEnumerator.ValidDevices.Count < 1)
+            {
+                Error("No valid devices available.");
+                return;
+            }
             IsAllocated = true;
+            Kernel = kernel;
+            Initialized = true;
         }
        
 
         public Device OpenFirstDevice()
         {
-            ThrowIfNotInitialized();
+            ThrowIfNotAllocated();
             if (DeviceEnumerator.Count == 0)
             {
                 throw new Exception("No devices were enumerated.");
             }
             else
             {
-                return new Device(context, DeviceEnumerator.ValidDevices[0]);
+                return new Device(_Context, DeviceEnumerator.ValidDevices[0]);
             }
         }
 
         public Shape CreateShape<T>(params int[] dimensions) where T : unmanaged
         {
-            ThrowIfNotInitialized();
+            ThrowIfNotAllocated();
             PlaidmlDatatype datatype = Shape.ToDataType<T>();
-            return new Shape(context, datatype, dimensions);
+            return new Shape(_Context, datatype, dimensions);
         }
 
-        public Tensor CreateTensor(Device device, Shape shape, string name)
+        public DeviceTensor CreateTensor(Device device, Shape shape, string name)
         {
-            ThrowIfNotInitialized();
-            return new Tensor(device, shape, name);
+            ThrowIfNotAllocated();
+            return new DeviceTensor(device, shape, name);
         }
 
         public Function CreateFunction(string code)
         {
+            ThrowIfNotAllocated();
+            return new Function(_Context, code);
+        }
+
+
+        public bool Compile()
+        {
             ThrowIfNotInitialized();
-            return new Function(context, code);
+            KernelDevice = OpenFirstDevice();
+            KernelDeviceProperties = JsonConvert.DeserializeObject<Dictionary<string, object>>
+                (KernelDevice.DeviceConfig.Details);
+            TileGenerator = new TileGenerator(Kernel.ExpressionTree);
+           
+            return true;
         }
 
         internal void ThrowIfNotInitialized()

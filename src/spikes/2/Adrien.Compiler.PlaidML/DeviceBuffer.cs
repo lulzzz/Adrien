@@ -21,7 +21,7 @@ namespace Adrien.Compiler.PlaidML
                 Error("plaidml_get_shape_buffer_size returned 0.");
                 return;
             }
-            ptr = plaidml.__Internal.PlaidmlAllocBuffer(context, device, SizeInBytes);
+            ptr = plaidml.__Internal.PlaidmlAllocBuffer(_Context, device, SizeInBytes);
             if (ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_buffer");

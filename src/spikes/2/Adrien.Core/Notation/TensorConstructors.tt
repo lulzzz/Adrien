@@ -33,6 +33,16 @@ namespace Adrien.Notation
 			<#for (int j = 1; j <= i; j++) {#>index<#=j#> = new Index(I, <#=j-1#>, dim.dim<#=j#>, t.GenerateName(<#=j-1#>, indexNameBase));
 			<#}#>return t;
 		}
+
+		public static Tensor <#=tn#>D((<# for (int j = 1; j < i; j++) {#>int dim<#=j#>, <#}#>int dim<#=i#>) dim,
+			<#for (int j = 1; j < i; j++) {#>out Index index<#=j#>, <#}#>out Index index<#=i#>)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, <#for (int j = 1; j < i; j++){#>dim.dim<#=j#>, <#}#>dim.dim<#=i#>);
+			<#for (int j = 1; j <= i; j++) {#>index<#=j#> = new Index(I, <#=j-1#>, dim.dim<#=j#>, t.GenerateName(<#=j-1#>, "i"));
+			<#}#>return t;
+
+		}
+
 	<#}#>
 <#for (int i = 2; i < 100; i++)
 {

@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Adrien.Notation
 {
-    public interface IAlgebra<TTerm> where TTerm : ITerm
+    public interface IAlgebra<TTerm, TResult> where TTerm : ITerm where TResult : ITerm
     {
-        TTerm Negate();
-        TTerm Add(TTerm right);
-        TTerm Subtract(TTerm right);
-        TTerm Multiply(TTerm right);
-        TTerm Divide(TTerm right);
+        TResult Negate();
+        TResult Add(TTerm right);
+        TResult Subtract(TTerm right);
+        TResult Multiply(TTerm right);
+        TResult Divide(TTerm right);
     }
 }

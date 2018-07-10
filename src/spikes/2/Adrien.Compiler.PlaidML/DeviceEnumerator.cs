@@ -14,7 +14,7 @@ namespace Adrien.Compiler.PlaidML
             get
             {
                 ThrowIfNotAllocated();
-                return (int)plaidml.__Internal.PlaidmlGetDevconfCount(this.context, this, true);
+                return (int)plaidml.__Internal.PlaidmlGetDevconfCount(this._Context, this, true);
             }
         }
 
@@ -23,7 +23,7 @@ namespace Adrien.Compiler.PlaidML
             get
             {
 
-                int count = (int)plaidml.__Internal.PlaidmlGetDevconfCount(this.context, this, true);
+                int count = (int)plaidml.__Internal.PlaidmlGetDevconfCount(this._Context, this, true);
                 if (count == 0)
                 {
                     return null;
@@ -31,7 +31,7 @@ namespace Adrien.Compiler.PlaidML
                 List<DeviceConfig> vd = new List<DeviceConfig>(count);
                 for (int i = 0; i < count; i++)
                 {
-                    vd.Add(new DeviceConfig(context, this, (ulong)i));
+                    vd.Add(new DeviceConfig(_Context, this, (ulong)i));
                 }
                 return vd;
             }
@@ -40,14 +40,14 @@ namespace Adrien.Compiler.PlaidML
 
         public DeviceEnumerator(Context ctx) : base(ctx)
         {
-            if (context.settings.IsManualConfig)
+            if (_Context.settings.IsManualConfig)
             {
-                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(context, context.settings.Config, IntPtr.Zero, IntPtr.Zero);
+                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(_Context, _Context.settings.Config, IntPtr.Zero, IntPtr.Zero);
 
             }
             else
             {
-                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumerator(context, IntPtr.Zero, IntPtr.Zero);
+                ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumerator(_Context, IntPtr.Zero, IntPtr.Zero);
 
             }
             if (ptr.IsZero())

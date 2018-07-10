@@ -78,5 +78,18 @@ namespace Adrien.Tests
             C[a,b] = B[a,b] * C[b,a];
             Assert.True(C.IsAssigned);
         }
+
+        [Fact]
+        public void CanUseIndexExpressions()
+        {
+            
+            var (A, B, C) = Tensor.TwoD((4, 3), out Index i, out Index j).Three();
+            var (M, N, O) = Tensor.ThreeD("M", (7, 9, 6), "m", out Index m, out Index n, out Index o).Three();
+            A[i + 5, j + 10] = B[i, j] + C[i, j];
+            Assert.True(A.IsAssigned);
+            Assert.True(A.Assignment.IndexSet[0].Type == IndexType.Expression);
+            M[6, n - 4] = M[7] + N[n];
+            Assert.True(M.IsAssigned);
+        }
     }
 }

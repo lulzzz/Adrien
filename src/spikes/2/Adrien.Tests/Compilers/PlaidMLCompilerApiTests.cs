@@ -118,7 +118,7 @@ namespace Adrien.Tests.Compilers
         {
             Device device = new Device(context);
             Shape s1 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT64, 2, 3);
-            Tensor t = new Tensor(device, s1, "t");
+            DeviceTensor t = new DeviceTensor(device, s1, "t");
             MemoryView<Int64> v = t.CreateMemoryView<long>();
             Int64[,] array = { { 0, 1, 3 }, { 4, 5, 6 } };
             v.CopyFrom(array.Flatten<Int64>().ToArray());
@@ -136,8 +136,8 @@ namespace Adrien.Tests.Compilers
                                 O[i: N] = +(I[k]), i - k < N;
                             }";
             Function f = new Function(context, code);
-            Tensor i = new Tensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "I");
-            Tensor o = new Tensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
+            DeviceTensor i = new DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "I");
+            DeviceTensor o = new DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
             
             Int32[] input_data = { 0, 1, 3,  4, 5, 6 };
             i.CopyFrom(input_data);

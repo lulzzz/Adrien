@@ -10,6 +10,8 @@ namespace Adrien.Generator
     {
         public string Text => this.Context.InternalNode;
 
+        public bool Success { get; protected set; }
+
         protected TWriter Writer { get; set; }
 
 

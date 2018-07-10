@@ -27,7 +27,7 @@ namespace Adrien.Compiler.PlaidML
             set
             {
                 ThrowIfNotAllocated();
-                bool r = plaidml.__Internal.PlaidmlSetShapeOffset(this.context, this, value);
+                bool r = plaidml.__Internal.PlaidmlSetShapeOffset(this._Context, this, value);
                 if (!r)
                 {
                     ReportApiCallError("plaidml_shape_offset");
@@ -71,7 +71,7 @@ namespace Adrien.Compiler.PlaidML
       
         public Shape(Context ctx, PlaidmlDatatype datatype, params int[] dimensions) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocShape(context, datatype);
+            ptr = plaidml.__Internal.PlaidmlAllocShape(_Context, datatype);
             if (ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_shape");
@@ -189,7 +189,7 @@ namespace Adrien.Compiler.PlaidML
         public bool AddDimension(ulong length, long stride)
         {
             ThrowIfNotAllocated();
-            bool r = plaidml.__Internal.PlaidmlAddDimension(context, this, length, stride);
+            bool r = plaidml.__Internal.PlaidmlAddDimension(_Context, this, length, stride);
             if (!r)
             {
                 ReportApiCallError("plaidml_add_dimension");

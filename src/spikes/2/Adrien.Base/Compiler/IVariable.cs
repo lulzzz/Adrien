@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Adrien.Compiler
 {
-    public interface IVariable<T> where T : unmanaged
+    public interface IVariable<T> : INDArray<T> where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         string Name { get; }
        
@@ -14,11 +14,15 @@ namespace Adrien.Compiler
 
         int Rank { get; }
 
-        int Size { get; }
-
         MemoryHandle Handle { get; }
 
         bool Initialized { get; }
+
+        ref T Read(int index);
+
+        void Write(int index, T value);
+
+        ref T this[int index] { get; }
     }
 }
 

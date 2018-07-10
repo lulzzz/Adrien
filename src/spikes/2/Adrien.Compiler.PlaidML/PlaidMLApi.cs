@@ -8,18 +8,18 @@ namespace Adrien.Compiler.PlaidML
 {
     public abstract class PlaidMLApi<T> : CompilerApi<T>, IDisposable
     {
-        protected Context context;
+        protected Context _Context;
         protected IntPtr ptr;
 
-        
         public Context Context
         {
             get
             {
                 ThrowIfNotAllocated();
-                return context;
+                return _Context;
             }
         }
+
         public bool IsAllocated { get; protected set; } = false;
         public VaiStatus LastStatus { get; protected set; }
         public string LastStatusString { get; protected set; }
@@ -29,7 +29,7 @@ namespace Adrien.Compiler.PlaidML
         public PlaidMLApi(Context ctx) : base()
         {
             ctx.ThrowIfNotAllocated();
-            this.context = ctx;
+            this._Context = ctx;
         }
         
 
@@ -66,10 +66,8 @@ namespace Adrien.Compiler.PlaidML
         protected void ReportApiCallError(string call) => Error("Call to {0} returned null or false. Status : {1} {2}", call,
             LastStatus = @base.VaiLastStatus(), LastStatusString = @base.VaiLastStatusStr());
 
-        #region Disposer
         void IDisposable.Dispose()
         {
-            ThrowIfNotAllocated();
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -78,7 +76,6 @@ namespace Adrien.Compiler.PlaidML
         {
             Free();
         }
-        #endregion
-
+        
     }
 }

@@ -12,7 +12,7 @@ using Adrien.Notation;
 
 namespace Adrien.Compiler
 {
-    public class Var<T> : IVariable<T>, INDArray<T> where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
+    public class Var<T> : IVariable<T>, IDisposable where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         public Tensor Tensor { get; protected set; }
 
@@ -22,15 +22,13 @@ namespace Adrien.Compiler
 
         public int Rank => Tensor.Rank;
 
+        public int Stride { get; protected set; }
+
         public int Size => Tensor.NumberofElements;
 
         public bool Initialized { get; protected set; }
 
         public MemoryHandle Handle { get; protected set; }
-
-        public int Stride { get; protected set; }
-
-        public object Data { get; protected set; }
 
         public unsafe Span<T> Span => new Span<T>(Handle.Pointer, Tensor.NumberofElements);
 
@@ -43,11 +41,16 @@ namespace Adrien.Compiler
 
         internal Var(Tensor tensor, params T[] data)
         {
-            if (tensor.NumberofElements != data.Length)
+            if (data.Length ==0)
+            {
+                throw new ArgumentException($"Zero data elements specified.");
+            }
+            else if (tensor.NumberofElements != data.Length)
             {
                 throw new ArgumentException($"The number of data elements specified ({data.Length}) "
                     + $"does not mach the number of elements in tensor {tensor.Label} : {tensor.NumberofElements}.");
             }
+
             Tensor = tensor;
             Memory<T> m = new Memory<T>(data);
             Handle = m.Pin();
@@ -144,7 +147,7 @@ namespace Adrien.Compiler
 
         public void CopyFrom(params T[] data)
         {
-            ThrowIf1DArrayLenthIsNotTensorSize(data);
+            ThrowIf1DArrayLengthIsNotTensorSize(data);
             Span<T> source = new Span<T>(data);
             bool r = source.TryCopyTo(this.Span);
             if (!r)
@@ -153,13 +156,54 @@ namespace Adrien.Compiler
             }
         }
 
+        public void CopyTo(T[] destination)
+        {
+            ThrowIf1DArrayLengthIsNotTensorSize(destination);
+            Span<T> dest  = new Span<T>(destination);
+            bool r = this.Span.TryCopyTo(dest);
+            if (!r)
+            {
+                throw new Exception("Copy operation failed.");
+            }
+        }
+
+        public IVariable<T> Fill(T c)
+        {
+            this.Span.Fill(c);
+            return this;
+        }
+
+        #region INDArray implementation
+        public int NDim => Rank;
+
+        public int[] Shape => Dimensions;
+
+        public Type DType => typeof(T);
+
+        public int ItemSize => Unsafe.SizeOf<T>();
+
+        public IVariable<T> Zeros() => Fill(GenericMath<T>.Const(0));
+
+        public IVariable<T> Ones() => Fill(GenericMath<T>.Const(1));
+
+        public IVariable<T> Random()
+        {
+            for (int i = 0; i <= Size; i++)
+            {
+                Write(i, GenericMath<T>.Random());
+            }
+            return this;
+        }
+
+        #endregion
+
         internal unsafe void* PtrTo(int index)
         {
             return Unsafe.Add<T>(Handle.Pointer, index);
         }
 
 
-        internal void ThrowIf1DArrayLenthIsNotTensorSize(params T[] data)
+        internal void ThrowIf1DArrayLengthIsNotTensorSize(params T[] data)
         {
             if (this.Tensor.NumberofElements != data.Length)
             {
@@ -190,39 +234,19 @@ namespace Adrien.Compiler
             }
         }
 
-        #region INDArray implementation
-        public int NDim => Rank;
-
-        public int[] Shape => Dimensions;
-
-        public Type DType => typeof(T);
-
-        public int ItemSize => Unsafe.SizeOf<T>();
-
-
-        public IVariable<T> Zeros()
+        void IDisposable.Dispose()
         {
-            this.Span.Fill(GM<T>.Const(0));
-            return this;
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
-        
-        public IVariable<T> Ones()
+        private void Dispose(bool disposing)
         {
-            this.Span.Fill(GM<T>.Const(1));
-            return this;
-        }
-
-        public IVariable<T> Random()
-        {
-            for (int i = 0; i <= Size; i++)
+            if (disposing)
             {
-                Write(i, GM<T>.Random());
+                Handle.Dispose();
             }
-            return this;
         }
-
-        #endregion
 
         public static DataType GetDataType()
         {

@@ -7,11 +7,12 @@ using System.Linq.Expressions;
 using Humanizer;
 
 using Adrien.Compiler;
+//using Adrien.Expressions;
 using Adrien.Trees;
 
 namespace Adrien.Notation
 {
-    public partial class Tensor : Term, IAlgebra<Tensor>
+    public partial class Tensor : Term, IAlgebra<Tensor, TensorExpression>
     {
         public int[] Dimensions { get; protected set; }
 
@@ -30,7 +31,6 @@ namespace Adrien.Notation
             }
         }
             
-        
         public (IndexSet IndexSet, TensorExpression Expression) Assignment { get; protected set; }
 
         public bool IsAssigned => Assignment.IndexSet != null;
@@ -75,49 +75,31 @@ namespace Adrien.Notation
                 return new TensorExpression(t.LinqExpression).ToTree();
             }
         }
-        public static Tensor operator - (Tensor left)
-        {
-            string name = "Negate_" + left.Name;
-            return new Tensor(name) { Assignment = (new IndexSet(name), (-(TensorExpression)left)) };
-        }
-        public static Tensor operator + (Tensor left, Tensor right)
-        {
-            string name = "Add_" + left.Name + "_" + right.Name;
-            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression) left 
-                + (TensorExpression) right)) };
-        }
+        public static TensorExpression operator - (Tensor left) => left.Negate();
+        
 
-        public static Tensor operator - (Tensor left, Tensor right)
-        {
-            string name = "Sub_" + left.Name + "_" + right.Name;
-            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left 
-                - (TensorExpression)right)) };
-        }
+        public static TensorExpression operator + (Tensor left, Tensor right) => left.Add(right);
+        
 
-        public static Tensor operator * (Tensor left, Tensor right)
-        {
-            string name = "Mul_" + left.Name + "_" + right.Name;
-            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left 
-                * (TensorExpression)right)) };
-        }
+        public static TensorExpression operator - (Tensor left, Tensor right) => left.Subtract(right);
+       
 
-        public static Tensor operator / (Tensor left, Tensor right)
-        {
-            string name = "Div_" + left.Name + "_" + right.Name;
-            return new Tensor(name) { Assignment = (new IndexSet(name), ((TensorExpression)left 
-                / (TensorExpression)right)) };
-        }
+        public static TensorExpression operator * (Tensor left, Tensor right) => left.Multiply(right);
+        
+
+        public static TensorExpression operator / (Tensor left, Tensor right) => left.Divide(right);
+        
 
 
-        public Tensor Negate() => - this;
+        public TensorExpression Negate() => - (TensorExpression) this;
 
-        public Tensor Add(Tensor right) => this + right;
+        public TensorExpression Add(Tensor right) => (TensorExpression) this + right;
 
-        public Tensor Subtract(Tensor right) => this - right;
+        public TensorExpression Subtract(Tensor right) => (TensorExpression) this - right;
 
-        public Tensor Multiply(Tensor right) => this * right;
+        public TensorExpression Multiply(Tensor right) => (TensorExpression) this * right;
 
-        public Tensor Divide(Tensor right) => this / right;
+        public TensorExpression Divide(Tensor right) => (TensorExpression) this / right;
 
         public Tensor With(out Tensor with) 
         {
@@ -140,9 +122,6 @@ namespace Adrien.Notation
             this.GeneratorContext = (this.GeneratorContext.Value.tensor, this.GeneratorContext.Value.index + 1);
             return this.GeneratorContext.Value.tensor;
         }
-
-
-        internal Var<T> Var<T>() where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible => new Var<T>(this);
 
         public Var<T> Var<T>(Array array) where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible 
             => new Var<T>(this, array);

@@ -71,7 +71,7 @@ namespace Adrien.Compiler.PlaidML
        
         public DeviceConfig(Context ctx, DeviceEnumerator enumerator, ulong index) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlGetDevconf(context, enumerator, index);
+            ptr = plaidml.__Internal.PlaidmlGetDevconf(_Context, enumerator, index);
             if (ptr.IsZero())
             {
                 ReportApiCallError("plaidml_get_devconf");
@@ -91,7 +91,7 @@ namespace Adrien.Compiler.PlaidML
             unsafe
             {
                 ulong* sizeRequired = stackalloc ulong[1];
-                bool r = plaidml.__Internal.PlaidmlQueryDevconf(context, this, property, IntPtr.Zero, 0, sizeRequired);
+                bool r = plaidml.__Internal.PlaidmlQueryDevconf(_Context, this, property, IntPtr.Zero, 0, sizeRequired);
                 if (!r)
                 {
                     ReportApiCallError("plaidml_query_dev_conf");
@@ -106,7 +106,7 @@ namespace Adrien.Compiler.PlaidML
                     string result = ""; ;
                     int bufferSize = (int)*sizeRequired;
                     IntPtr buffer = Marshal.AllocHGlobal(bufferSize);
-                    r = plaidml.__Internal.PlaidmlQueryDevconf(context, this, property, buffer, *sizeRequired, sizeRequired);
+                    r = plaidml.__Internal.PlaidmlQueryDevconf(_Context, this, property, buffer, *sizeRequired, sizeRequired);
                     if (!r)
                     {
                         ReportApiCallError("plaidml_query_dev_conf");

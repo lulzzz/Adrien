@@ -18,17 +18,17 @@ namespace Adrien.Tests
             var (A, B, C) = Tensor.ThreeD("A", (2, 2, 2), "a", out Index a, out Index b, out Index c)
                 .Three();
             
-
             C[a, b] = A[a, b] * B[b, a];
             Kernel<int> k = new Kernel<int>(C);
-
+            
+            Assert.Equal(3, k.Tensors.Count);
             Assert.Equal(C, k.OutputTensor);
             Assert.Equal(2, k.InputTensors.Count);
-
-            var V1 = new Vector("V1", out Index i, 3).With(out Vector V2).With(out Vector V3);
-            V3[i] = V1 + V2;
-            Kernel<int> vk1 = new Kernel<int>(V3);
-
+            Assert.Equal(8, k[A].Size);
+            k[A].Ones();
+            Assert.Equal(1, k.Input[0][0]);
+            k[A].Zeros();
+            Assert.Equal(0, k.Input[0][0]);
         }
     }
 }

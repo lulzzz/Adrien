@@ -19,6 +19,17 @@
 			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwoD((int dim1, int dim2) dim,
+			out Index index1, out Index index2)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThreeD(string name, (int dim1, int dim2, int dim3) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3);
@@ -38,6 +49,18 @@
 			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThreeD((int dim1, int dim2, int dim3) dim,
+			out Index index1, out Index index2, out Index index3)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FourD(string name, (int dim1, int dim2, int dim3, int dim4) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4);
@@ -58,6 +81,19 @@
 			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FourD((int dim1, int dim2, int dim3, int dim4) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FiveD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5);
@@ -79,6 +115,20 @@
 			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FiveD((int dim1, int dim2, int dim3, int dim4, int dim5) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6);
@@ -101,6 +151,21 @@
 			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SevenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7);
@@ -124,6 +189,22 @@
 			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SevenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EightD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8);
@@ -148,6 +229,23 @@
 			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EightD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NineD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9);
@@ -173,6 +271,24 @@
 			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NineD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10);
@@ -199,6 +315,25 @@
 			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ElevenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11);
@@ -226,6 +361,26 @@
 			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ElevenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TwelveD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12);
@@ -254,6 +409,27 @@
 			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwelveD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThirteenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13);
@@ -283,6 +459,28 @@
 			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThirteenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FourteenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14);
@@ -313,6 +511,29 @@
 			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FourteenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FifteenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15);
@@ -344,6 +565,30 @@
 			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FifteenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixteenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16);
@@ -376,6 +621,31 @@
 			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixteenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SeventeenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17);
@@ -409,6 +679,32 @@
 			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SeventeenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EighteenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18);
@@ -443,6 +739,33 @@
 			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EighteenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NineteenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19);
@@ -478,6 +801,34 @@
 			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NineteenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TwentyD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20);
@@ -514,6 +865,35 @@
 			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwentyD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TwentyOneD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21);
@@ -551,6 +931,36 @@
 			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwentyOneD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TwentyTwoD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22);
@@ -589,6 +999,37 @@
 			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwentyTwoD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TwentyThreeD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23);
@@ -628,6 +1069,38 @@
 			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwentyThreeD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TwentyFourD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24);
@@ -668,6 +1141,39 @@
 			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwentyFourD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TwentyFiveD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25);
@@ -709,6 +1215,40 @@
 			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwentyFiveD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TwentySixD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26);
@@ -751,6 +1291,41 @@
 			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwentySixD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TwentySevenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27);
@@ -794,6 +1369,42 @@
 			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwentySevenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TwentyEightD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28);
@@ -838,6 +1449,43 @@
 			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwentyEightD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor TwentyNineD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29);
@@ -883,6 +1531,44 @@
 			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, indexNameBase));
 			return t;
 		}
+
+		public static Tensor TwentyNineD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThirtyD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30);
@@ -929,6 +1615,45 @@
 			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThirtyD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThirtyOneD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31);
@@ -976,6 +1701,46 @@
 			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThirtyOneD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThirtyTwoD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32);
@@ -1024,6 +1789,47 @@
 			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThirtyTwoD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThirtyThreeD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33);
@@ -1073,6 +1879,48 @@
 			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThirtyThreeD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThirtyFourD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34);
@@ -1123,6 +1971,49 @@
 			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThirtyFourD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThirtyFiveD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35);
@@ -1174,6 +2065,50 @@
 			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThirtyFiveD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThirtySixD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36);
@@ -1226,6 +2161,51 @@
 			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThirtySixD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThirtySevenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37);
@@ -1279,6 +2259,52 @@
 			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThirtySevenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThirtyEightD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38);
@@ -1333,6 +2359,53 @@
 			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThirtyEightD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor ThirtyNineD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39);
@@ -1388,6 +2461,54 @@
 			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, indexNameBase));
 			return t;
 		}
+
+		public static Tensor ThirtyNineD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FortyD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40);
@@ -1444,6 +2565,55 @@
 			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FortyD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FortyOneD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41);
@@ -1501,6 +2671,56 @@
 			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FortyOneD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FortyTwoD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42);
@@ -1559,6 +2779,57 @@
 			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FortyTwoD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FortyThreeD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43);
@@ -1618,6 +2889,58 @@
 			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FortyThreeD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FortyFourD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44);
@@ -1678,6 +3001,59 @@
 			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FortyFourD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FortyFiveD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45);
@@ -1739,6 +3115,60 @@
 			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FortyFiveD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FortySixD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46);
@@ -1801,6 +3231,61 @@
 			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FortySixD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FortySevenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47);
@@ -1864,6 +3349,62 @@
 			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FortySevenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FortyEightD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48);
@@ -1928,6 +3469,63 @@
 			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FortyEightD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FortyNineD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49);
@@ -1993,6 +3591,64 @@
 			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FortyNineD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FiftyD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50);
@@ -2059,6 +3715,65 @@
 			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FiftyD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FiftyOneD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51);
@@ -2126,6 +3841,66 @@
 			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FiftyOneD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FiftyTwoD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52);
@@ -2194,6 +3969,67 @@
 			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FiftyTwoD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FiftyThreeD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53);
@@ -2263,6 +4099,68 @@
 			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FiftyThreeD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FiftyFourD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54);
@@ -2333,6 +4231,69 @@
 			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FiftyFourD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FiftyFiveD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55);
@@ -2404,6 +4365,70 @@
 			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FiftyFiveD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FiftySixD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56);
@@ -2476,6 +4501,71 @@
 			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FiftySixD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FiftySevenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57);
@@ -2549,6 +4639,72 @@
 			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FiftySevenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FiftyEightD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58);
@@ -2623,6 +4779,73 @@
 			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FiftyEightD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor FiftyNineD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59);
@@ -2698,6 +4921,74 @@
 			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, indexNameBase));
 			return t;
 		}
+
+		public static Tensor FiftyNineD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixtyD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60);
@@ -2774,6 +5065,75 @@
 			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixtyD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixtyOneD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61);
@@ -2851,6 +5211,76 @@
 			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixtyOneD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixtyTwoD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62);
@@ -2929,6 +5359,77 @@
 			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixtyTwoD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixtyThreeD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63);
@@ -3008,6 +5509,78 @@
 			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixtyThreeD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixtyFourD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64);
@@ -3088,6 +5661,79 @@
 			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixtyFourD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixtyFiveD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65);
@@ -3169,6 +5815,80 @@
 			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixtyFiveD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixtySixD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66);
@@ -3251,6 +5971,81 @@
 			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixtySixD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixtySevenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67);
@@ -3334,6 +6129,82 @@
 			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixtySevenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixtyEightD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68);
@@ -3418,6 +6289,83 @@
 			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixtyEightD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SixtyNineD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69);
@@ -3503,6 +6451,84 @@
 			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SixtyNineD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SeventyD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70);
@@ -3589,6 +6615,85 @@
 			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SeventyD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SeventyOneD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71);
@@ -3676,6 +6781,86 @@
 			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SeventyOneD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SeventyTwoD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72);
@@ -3764,6 +6949,87 @@
 			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SeventyTwoD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SeventyThreeD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73);
@@ -3853,6 +7119,88 @@
 			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SeventyThreeD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SeventyFourD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74);
@@ -3943,6 +7291,89 @@
 			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SeventyFourD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SeventyFiveD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75);
@@ -4034,6 +7465,90 @@
 			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SeventyFiveD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SeventySixD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76);
@@ -4126,6 +7641,91 @@
 			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SeventySixD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SeventySevenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77);
@@ -4219,6 +7819,92 @@
 			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SeventySevenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SeventyEightD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78);
@@ -4313,6 +7999,93 @@
 			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SeventyEightD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor SeventyNineD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79);
@@ -4408,6 +8181,94 @@
 			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, indexNameBase));
 			return t;
 		}
+
+		public static Tensor SeventyNineD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EightyD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80);
@@ -4504,6 +8365,95 @@
 			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EightyD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EightyOneD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81);
@@ -4601,6 +8551,96 @@
 			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EightyOneD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EightyTwoD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82);
@@ -4699,6 +8739,97 @@
 			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EightyTwoD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EightyThreeD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83);
@@ -4798,6 +8929,98 @@
 			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EightyThreeD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EightyFourD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84);
@@ -4898,6 +9121,99 @@
 			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EightyFourD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EightyFiveD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85);
@@ -4999,6 +9315,100 @@
 			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EightyFiveD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EightySixD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86);
@@ -5101,6 +9511,101 @@
 			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EightySixD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EightySevenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87);
@@ -5204,6 +9709,102 @@
 			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EightySevenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EightyEightD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88);
@@ -5308,6 +9909,103 @@
 			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EightyEightD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor EightyNineD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89);
@@ -5413,6 +10111,104 @@
 			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, indexNameBase));
 			return t;
 		}
+
+		public static Tensor EightyNineD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88, out Index index89)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NinetyD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90);
@@ -5519,6 +10315,105 @@
 			index90 = new Index(I, 89, dim.dim90, t.GenerateName(89, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NinetyD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88, out Index index89, out Index index90)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, "i"));
+			index90 = new Index(I, 89, dim.dim90, t.GenerateName(89, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NinetyOneD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91);
@@ -5626,6 +10521,106 @@
 			index91 = new Index(I, 90, dim.dim91, t.GenerateName(90, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NinetyOneD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88, out Index index89, out Index index90, out Index index91)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, "i"));
+			index90 = new Index(I, 89, dim.dim90, t.GenerateName(89, "i"));
+			index91 = new Index(I, 90, dim.dim91, t.GenerateName(90, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NinetyTwoD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92);
@@ -5734,6 +10729,107 @@
 			index92 = new Index(I, 91, dim.dim92, t.GenerateName(91, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NinetyTwoD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88, out Index index89, out Index index90, out Index index91, out Index index92)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, "i"));
+			index90 = new Index(I, 89, dim.dim90, t.GenerateName(89, "i"));
+			index91 = new Index(I, 90, dim.dim91, t.GenerateName(90, "i"));
+			index92 = new Index(I, 91, dim.dim92, t.GenerateName(91, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NinetyThreeD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93);
@@ -5843,6 +10939,108 @@
 			index93 = new Index(I, 92, dim.dim93, t.GenerateName(92, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NinetyThreeD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88, out Index index89, out Index index90, out Index index91, out Index index92, out Index index93)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, "i"));
+			index90 = new Index(I, 89, dim.dim90, t.GenerateName(89, "i"));
+			index91 = new Index(I, 90, dim.dim91, t.GenerateName(90, "i"));
+			index92 = new Index(I, 91, dim.dim92, t.GenerateName(91, "i"));
+			index93 = new Index(I, 92, dim.dim93, t.GenerateName(92, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NinetyFourD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94);
@@ -5953,6 +11151,109 @@
 			index94 = new Index(I, 93, dim.dim94, t.GenerateName(93, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NinetyFourD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88, out Index index89, out Index index90, out Index index91, out Index index92, out Index index93, out Index index94)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, "i"));
+			index90 = new Index(I, 89, dim.dim90, t.GenerateName(89, "i"));
+			index91 = new Index(I, 90, dim.dim91, t.GenerateName(90, "i"));
+			index92 = new Index(I, 91, dim.dim92, t.GenerateName(91, "i"));
+			index93 = new Index(I, 92, dim.dim93, t.GenerateName(92, "i"));
+			index94 = new Index(I, 93, dim.dim94, t.GenerateName(93, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NinetyFiveD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94, int dim95) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94, dim.dim95);
@@ -6064,6 +11365,110 @@
 			index95 = new Index(I, 94, dim.dim95, t.GenerateName(94, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NinetyFiveD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94, int dim95) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88, out Index index89, out Index index90, out Index index91, out Index index92, out Index index93, out Index index94, out Index index95)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94, dim.dim95);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, "i"));
+			index90 = new Index(I, 89, dim.dim90, t.GenerateName(89, "i"));
+			index91 = new Index(I, 90, dim.dim91, t.GenerateName(90, "i"));
+			index92 = new Index(I, 91, dim.dim92, t.GenerateName(91, "i"));
+			index93 = new Index(I, 92, dim.dim93, t.GenerateName(92, "i"));
+			index94 = new Index(I, 93, dim.dim94, t.GenerateName(93, "i"));
+			index95 = new Index(I, 94, dim.dim95, t.GenerateName(94, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NinetySixD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94, int dim95, int dim96) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94, dim.dim95, dim.dim96);
@@ -6176,6 +11581,111 @@
 			index96 = new Index(I, 95, dim.dim96, t.GenerateName(95, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NinetySixD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94, int dim95, int dim96) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88, out Index index89, out Index index90, out Index index91, out Index index92, out Index index93, out Index index94, out Index index95, out Index index96)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94, dim.dim95, dim.dim96);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, "i"));
+			index90 = new Index(I, 89, dim.dim90, t.GenerateName(89, "i"));
+			index91 = new Index(I, 90, dim.dim91, t.GenerateName(90, "i"));
+			index92 = new Index(I, 91, dim.dim92, t.GenerateName(91, "i"));
+			index93 = new Index(I, 92, dim.dim93, t.GenerateName(92, "i"));
+			index94 = new Index(I, 93, dim.dim94, t.GenerateName(93, "i"));
+			index95 = new Index(I, 94, dim.dim95, t.GenerateName(94, "i"));
+			index96 = new Index(I, 95, dim.dim96, t.GenerateName(95, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NinetySevenD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94, int dim95, int dim96, int dim97) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94, dim.dim95, dim.dim96, dim.dim97);
@@ -6289,6 +11799,112 @@
 			index97 = new Index(I, 96, dim.dim97, t.GenerateName(96, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NinetySevenD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94, int dim95, int dim96, int dim97) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88, out Index index89, out Index index90, out Index index91, out Index index92, out Index index93, out Index index94, out Index index95, out Index index96, out Index index97)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94, dim.dim95, dim.dim96, dim.dim97);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, "i"));
+			index90 = new Index(I, 89, dim.dim90, t.GenerateName(89, "i"));
+			index91 = new Index(I, 90, dim.dim91, t.GenerateName(90, "i"));
+			index92 = new Index(I, 91, dim.dim92, t.GenerateName(91, "i"));
+			index93 = new Index(I, 92, dim.dim93, t.GenerateName(92, "i"));
+			index94 = new Index(I, 93, dim.dim94, t.GenerateName(93, "i"));
+			index95 = new Index(I, 94, dim.dim95, t.GenerateName(94, "i"));
+			index96 = new Index(I, 95, dim.dim96, t.GenerateName(95, "i"));
+			index97 = new Index(I, 96, dim.dim97, t.GenerateName(96, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NinetyEightD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94, int dim95, int dim96, int dim97, int dim98) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94, dim.dim95, dim.dim96, dim.dim97, dim.dim98);
@@ -6403,6 +12019,113 @@
 			index98 = new Index(I, 97, dim.dim98, t.GenerateName(97, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NinetyEightD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94, int dim95, int dim96, int dim97, int dim98) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88, out Index index89, out Index index90, out Index index91, out Index index92, out Index index93, out Index index94, out Index index95, out Index index96, out Index index97, out Index index98)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94, dim.dim95, dim.dim96, dim.dim97, dim.dim98);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, "i"));
+			index90 = new Index(I, 89, dim.dim90, t.GenerateName(89, "i"));
+			index91 = new Index(I, 90, dim.dim91, t.GenerateName(90, "i"));
+			index92 = new Index(I, 91, dim.dim92, t.GenerateName(91, "i"));
+			index93 = new Index(I, 92, dim.dim93, t.GenerateName(92, "i"));
+			index94 = new Index(I, 93, dim.dim94, t.GenerateName(93, "i"));
+			index95 = new Index(I, 94, dim.dim95, t.GenerateName(94, "i"));
+			index96 = new Index(I, 95, dim.dim96, t.GenerateName(95, "i"));
+			index97 = new Index(I, 96, dim.dim97, t.GenerateName(96, "i"));
+			index98 = new Index(I, 97, dim.dim98, t.GenerateName(97, "i"));
+			return t;
+
+		}
+
 			
 		public static Tensor NinetyNineD(string name, (int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94, int dim95, int dim96, int dim97, int dim98, int dim99) dim) =>
 			new Tensor(name, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94, dim.dim95, dim.dim96, dim.dim97, dim.dim98, dim.dim99);
@@ -6518,6 +12241,114 @@
 			index99 = new Index(I, 98, dim.dim99, t.GenerateName(98, indexNameBase));
 			return t;
 		}
+
+		public static Tensor NinetyNineD((int dim1, int dim2, int dim3, int dim4, int dim5, int dim6, int dim7, int dim8, int dim9, int dim10, int dim11, int dim12, int dim13, int dim14, int dim15, int dim16, int dim17, int dim18, int dim19, int dim20, int dim21, int dim22, int dim23, int dim24, int dim25, int dim26, int dim27, int dim28, int dim29, int dim30, int dim31, int dim32, int dim33, int dim34, int dim35, int dim36, int dim37, int dim38, int dim39, int dim40, int dim41, int dim42, int dim43, int dim44, int dim45, int dim46, int dim47, int dim48, int dim49, int dim50, int dim51, int dim52, int dim53, int dim54, int dim55, int dim56, int dim57, int dim58, int dim59, int dim60, int dim61, int dim62, int dim63, int dim64, int dim65, int dim66, int dim67, int dim68, int dim69, int dim70, int dim71, int dim72, int dim73, int dim74, int dim75, int dim76, int dim77, int dim78, int dim79, int dim80, int dim81, int dim82, int dim83, int dim84, int dim85, int dim86, int dim87, int dim88, int dim89, int dim90, int dim91, int dim92, int dim93, int dim94, int dim95, int dim96, int dim97, int dim98, int dim99) dim,
+			out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7, out Index index8, out Index index9, out Index index10, out Index index11, out Index index12, out Index index13, out Index index14, out Index index15, out Index index16, out Index index17, out Index index18, out Index index19, out Index index20, out Index index21, out Index index22, out Index index23, out Index index24, out Index index25, out Index index26, out Index index27, out Index index28, out Index index29, out Index index30, out Index index31, out Index index32, out Index index33, out Index index34, out Index index35, out Index index36, out Index index37, out Index index38, out Index index39, out Index index40, out Index index41, out Index index42, out Index index43, out Index index44, out Index index45, out Index index46, out Index index47, out Index index48, out Index index49, out Index index50, out Index index51, out Index index52, out Index index53, out Index index54, out Index index55, out Index index56, out Index index57, out Index index58, out Index index59, out Index index60, out Index index61, out Index index62, out Index index63, out Index index64, out Index index65, out Index index66, out Index index67, out Index index68, out Index index69, out Index index70, out Index index71, out Index index72, out Index index73, out Index index74, out Index index75, out Index index76, out Index index77, out Index index78, out Index index79, out Index index80, out Index index81, out Index index82, out Index index83, out Index index84, out Index index85, out Index index86, out Index index87, out Index index88, out Index index89, out Index index90, out Index index91, out Index index92, out Index index93, out Index index94, out Index index95, out Index index96, out Index index97, out Index index98, out Index index99)
+		{
+			Tensor t = new Tensor("A", "i", out IndexSet I, dim.dim1, dim.dim2, dim.dim3, dim.dim4, dim.dim5, dim.dim6, dim.dim7, dim.dim8, dim.dim9, dim.dim10, dim.dim11, dim.dim12, dim.dim13, dim.dim14, dim.dim15, dim.dim16, dim.dim17, dim.dim18, dim.dim19, dim.dim20, dim.dim21, dim.dim22, dim.dim23, dim.dim24, dim.dim25, dim.dim26, dim.dim27, dim.dim28, dim.dim29, dim.dim30, dim.dim31, dim.dim32, dim.dim33, dim.dim34, dim.dim35, dim.dim36, dim.dim37, dim.dim38, dim.dim39, dim.dim40, dim.dim41, dim.dim42, dim.dim43, dim.dim44, dim.dim45, dim.dim46, dim.dim47, dim.dim48, dim.dim49, dim.dim50, dim.dim51, dim.dim52, dim.dim53, dim.dim54, dim.dim55, dim.dim56, dim.dim57, dim.dim58, dim.dim59, dim.dim60, dim.dim61, dim.dim62, dim.dim63, dim.dim64, dim.dim65, dim.dim66, dim.dim67, dim.dim68, dim.dim69, dim.dim70, dim.dim71, dim.dim72, dim.dim73, dim.dim74, dim.dim75, dim.dim76, dim.dim77, dim.dim78, dim.dim79, dim.dim80, dim.dim81, dim.dim82, dim.dim83, dim.dim84, dim.dim85, dim.dim86, dim.dim87, dim.dim88, dim.dim89, dim.dim90, dim.dim91, dim.dim92, dim.dim93, dim.dim94, dim.dim95, dim.dim96, dim.dim97, dim.dim98, dim.dim99);
+			index1 = new Index(I, 0, dim.dim1, t.GenerateName(0, "i"));
+			index2 = new Index(I, 1, dim.dim2, t.GenerateName(1, "i"));
+			index3 = new Index(I, 2, dim.dim3, t.GenerateName(2, "i"));
+			index4 = new Index(I, 3, dim.dim4, t.GenerateName(3, "i"));
+			index5 = new Index(I, 4, dim.dim5, t.GenerateName(4, "i"));
+			index6 = new Index(I, 5, dim.dim6, t.GenerateName(5, "i"));
+			index7 = new Index(I, 6, dim.dim7, t.GenerateName(6, "i"));
+			index8 = new Index(I, 7, dim.dim8, t.GenerateName(7, "i"));
+			index9 = new Index(I, 8, dim.dim9, t.GenerateName(8, "i"));
+			index10 = new Index(I, 9, dim.dim10, t.GenerateName(9, "i"));
+			index11 = new Index(I, 10, dim.dim11, t.GenerateName(10, "i"));
+			index12 = new Index(I, 11, dim.dim12, t.GenerateName(11, "i"));
+			index13 = new Index(I, 12, dim.dim13, t.GenerateName(12, "i"));
+			index14 = new Index(I, 13, dim.dim14, t.GenerateName(13, "i"));
+			index15 = new Index(I, 14, dim.dim15, t.GenerateName(14, "i"));
+			index16 = new Index(I, 15, dim.dim16, t.GenerateName(15, "i"));
+			index17 = new Index(I, 16, dim.dim17, t.GenerateName(16, "i"));
+			index18 = new Index(I, 17, dim.dim18, t.GenerateName(17, "i"));
+			index19 = new Index(I, 18, dim.dim19, t.GenerateName(18, "i"));
+			index20 = new Index(I, 19, dim.dim20, t.GenerateName(19, "i"));
+			index21 = new Index(I, 20, dim.dim21, t.GenerateName(20, "i"));
+			index22 = new Index(I, 21, dim.dim22, t.GenerateName(21, "i"));
+			index23 = new Index(I, 22, dim.dim23, t.GenerateName(22, "i"));
+			index24 = new Index(I, 23, dim.dim24, t.GenerateName(23, "i"));
+			index25 = new Index(I, 24, dim.dim25, t.GenerateName(24, "i"));
+			index26 = new Index(I, 25, dim.dim26, t.GenerateName(25, "i"));
+			index27 = new Index(I, 26, dim.dim27, t.GenerateName(26, "i"));
+			index28 = new Index(I, 27, dim.dim28, t.GenerateName(27, "i"));
+			index29 = new Index(I, 28, dim.dim29, t.GenerateName(28, "i"));
+			index30 = new Index(I, 29, dim.dim30, t.GenerateName(29, "i"));
+			index31 = new Index(I, 30, dim.dim31, t.GenerateName(30, "i"));
+			index32 = new Index(I, 31, dim.dim32, t.GenerateName(31, "i"));
+			index33 = new Index(I, 32, dim.dim33, t.GenerateName(32, "i"));
+			index34 = new Index(I, 33, dim.dim34, t.GenerateName(33, "i"));
+			index35 = new Index(I, 34, dim.dim35, t.GenerateName(34, "i"));
+			index36 = new Index(I, 35, dim.dim36, t.GenerateName(35, "i"));
+			index37 = new Index(I, 36, dim.dim37, t.GenerateName(36, "i"));
+			index38 = new Index(I, 37, dim.dim38, t.GenerateName(37, "i"));
+			index39 = new Index(I, 38, dim.dim39, t.GenerateName(38, "i"));
+			index40 = new Index(I, 39, dim.dim40, t.GenerateName(39, "i"));
+			index41 = new Index(I, 40, dim.dim41, t.GenerateName(40, "i"));
+			index42 = new Index(I, 41, dim.dim42, t.GenerateName(41, "i"));
+			index43 = new Index(I, 42, dim.dim43, t.GenerateName(42, "i"));
+			index44 = new Index(I, 43, dim.dim44, t.GenerateName(43, "i"));
+			index45 = new Index(I, 44, dim.dim45, t.GenerateName(44, "i"));
+			index46 = new Index(I, 45, dim.dim46, t.GenerateName(45, "i"));
+			index47 = new Index(I, 46, dim.dim47, t.GenerateName(46, "i"));
+			index48 = new Index(I, 47, dim.dim48, t.GenerateName(47, "i"));
+			index49 = new Index(I, 48, dim.dim49, t.GenerateName(48, "i"));
+			index50 = new Index(I, 49, dim.dim50, t.GenerateName(49, "i"));
+			index51 = new Index(I, 50, dim.dim51, t.GenerateName(50, "i"));
+			index52 = new Index(I, 51, dim.dim52, t.GenerateName(51, "i"));
+			index53 = new Index(I, 52, dim.dim53, t.GenerateName(52, "i"));
+			index54 = new Index(I, 53, dim.dim54, t.GenerateName(53, "i"));
+			index55 = new Index(I, 54, dim.dim55, t.GenerateName(54, "i"));
+			index56 = new Index(I, 55, dim.dim56, t.GenerateName(55, "i"));
+			index57 = new Index(I, 56, dim.dim57, t.GenerateName(56, "i"));
+			index58 = new Index(I, 57, dim.dim58, t.GenerateName(57, "i"));
+			index59 = new Index(I, 58, dim.dim59, t.GenerateName(58, "i"));
+			index60 = new Index(I, 59, dim.dim60, t.GenerateName(59, "i"));
+			index61 = new Index(I, 60, dim.dim61, t.GenerateName(60, "i"));
+			index62 = new Index(I, 61, dim.dim62, t.GenerateName(61, "i"));
+			index63 = new Index(I, 62, dim.dim63, t.GenerateName(62, "i"));
+			index64 = new Index(I, 63, dim.dim64, t.GenerateName(63, "i"));
+			index65 = new Index(I, 64, dim.dim65, t.GenerateName(64, "i"));
+			index66 = new Index(I, 65, dim.dim66, t.GenerateName(65, "i"));
+			index67 = new Index(I, 66, dim.dim67, t.GenerateName(66, "i"));
+			index68 = new Index(I, 67, dim.dim68, t.GenerateName(67, "i"));
+			index69 = new Index(I, 68, dim.dim69, t.GenerateName(68, "i"));
+			index70 = new Index(I, 69, dim.dim70, t.GenerateName(69, "i"));
+			index71 = new Index(I, 70, dim.dim71, t.GenerateName(70, "i"));
+			index72 = new Index(I, 71, dim.dim72, t.GenerateName(71, "i"));
+			index73 = new Index(I, 72, dim.dim73, t.GenerateName(72, "i"));
+			index74 = new Index(I, 73, dim.dim74, t.GenerateName(73, "i"));
+			index75 = new Index(I, 74, dim.dim75, t.GenerateName(74, "i"));
+			index76 = new Index(I, 75, dim.dim76, t.GenerateName(75, "i"));
+			index77 = new Index(I, 76, dim.dim77, t.GenerateName(76, "i"));
+			index78 = new Index(I, 77, dim.dim78, t.GenerateName(77, "i"));
+			index79 = new Index(I, 78, dim.dim79, t.GenerateName(78, "i"));
+			index80 = new Index(I, 79, dim.dim80, t.GenerateName(79, "i"));
+			index81 = new Index(I, 80, dim.dim81, t.GenerateName(80, "i"));
+			index82 = new Index(I, 81, dim.dim82, t.GenerateName(81, "i"));
+			index83 = new Index(I, 82, dim.dim83, t.GenerateName(82, "i"));
+			index84 = new Index(I, 83, dim.dim84, t.GenerateName(83, "i"));
+			index85 = new Index(I, 84, dim.dim85, t.GenerateName(84, "i"));
+			index86 = new Index(I, 85, dim.dim86, t.GenerateName(85, "i"));
+			index87 = new Index(I, 86, dim.dim87, t.GenerateName(86, "i"));
+			index88 = new Index(I, 87, dim.dim88, t.GenerateName(87, "i"));
+			index89 = new Index(I, 88, dim.dim89, t.GenerateName(88, "i"));
+			index90 = new Index(I, 89, dim.dim90, t.GenerateName(89, "i"));
+			index91 = new Index(I, 90, dim.dim91, t.GenerateName(90, "i"));
+			index92 = new Index(I, 91, dim.dim92, t.GenerateName(91, "i"));
+			index93 = new Index(I, 92, dim.dim93, t.GenerateName(92, "i"));
+			index94 = new Index(I, 93, dim.dim94, t.GenerateName(93, "i"));
+			index95 = new Index(I, 94, dim.dim95, t.GenerateName(94, "i"));
+			index96 = new Index(I, 95, dim.dim96, t.GenerateName(95, "i"));
+			index97 = new Index(I, 96, dim.dim97, t.GenerateName(96, "i"));
+			index98 = new Index(I, 97, dim.dim98, t.GenerateName(97, "i"));
+			index99 = new Index(I, 98, dim.dim99, t.GenerateName(98, "i"));
+			return t;
+
+		}
+
 			public (Tensor, Tensor) Two() => (this, new Tensor(this.GenerateName(1, this.Name), this.Dimensions));
 		public (Tensor, Tensor, Tensor) Three() => (this, new Tensor(this.GenerateName(1, this.Name), this.Dimensions), new Tensor(this.GenerateName(2, this.Name), this.Dimensions));
 		public (Tensor, Tensor, Tensor, Tensor) Four() => (this, new Tensor(this.GenerateName(1, this.Name), this.Dimensions), new Tensor(this.GenerateName(2, this.Name), this.Dimensions), new Tensor(this.GenerateName(3, this.Name), this.Dimensions));

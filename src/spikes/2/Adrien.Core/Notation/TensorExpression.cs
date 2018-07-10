@@ -8,15 +8,16 @@ using Sawmill.Expressions;
 using System.Linq;
 using System.Linq.Expressions;
 
+using Adrien.Notation;
 using Adrien.Trees;
 
 namespace Adrien.Notation
 {
-    public class TensorExpression : Term, IAlgebra<TensorExpression>
+    public class TensorExpression : Term, IAlgebra<TensorExpression, TensorExpression>
     {
         internal override Expression LinqExpression { get; }
         
-        internal override Name DefaultNameBase => "A";
+        internal override Name DefaultNameBase => "tensor_expr0";
 
         public List<Tensor> Tensors
         {
@@ -31,6 +32,19 @@ namespace Adrien.Notation
             }
         }
 
+        public List<IndexSet> IndexSets
+        {
+            get
+            {
+                return LinqExpression.DescendantsAndSelf()
+                    .OfType<ConstantExpression>()
+                    .Select(e => e.Value)
+                    .Cast<Array>()
+                    .Select(a => a.Flatten<IndexSet>().FirstOrDefault())?
+                    .ToList();
+                    
+            }
+        }
         public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression, null, true).Tree;
 
         public ExpressionTree ToTree((Tensor tensor, IndexSet indices) output) => new TensorExpressionVisitor(this.LinqExpression, output, true).Tree;

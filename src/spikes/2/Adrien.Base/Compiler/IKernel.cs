@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 
 using Adrien.Trees;
+
 namespace Adrien.Compiler
 {
-    public interface IKernel<T> where T : unmanaged
+    public interface IKernel<T> where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         DeviceType DeviceType { get; }
 
@@ -13,6 +14,6 @@ namespace Adrien.Compiler
 
         IVariable<T> Output { get; }
 
-        IVariable<T>[] Input { get; }
+        IReadOnlyList<IVariable<T>> Input { get; }
     }
 }

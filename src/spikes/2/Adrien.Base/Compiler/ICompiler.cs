@@ -4,8 +4,12 @@ using System.Text;
 
 namespace Adrien.Compiler
 {
-    public interface ICompiler<T> where T : unmanaged
+    public interface ICompiler<T> : IDisposable where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
-        bool Compile(IKernel<T> kernel);
+        Dictionary<string, object> Options { get; }
+
+        bool Initialized { get; }
+           
+        bool Compile();
     }
 }

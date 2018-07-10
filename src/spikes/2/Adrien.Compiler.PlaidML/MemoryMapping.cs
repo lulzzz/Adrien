@@ -20,7 +20,7 @@ namespace Adrien.Compiler.PlaidML
                 ThrowIfNotValid();
                 unsafe
                 {
-                    void *_r = plaidml.__Internal.PlaidmlGetMappingBase(context, this);
+                    void *_r = plaidml.__Internal.PlaidmlGetMappingBase(_Context, this);
                     return new IntPtr(_r);
                 }
             }
@@ -32,7 +32,7 @@ namespace Adrien.Compiler.PlaidML
             {
                 ThrowIfNotAllocated();
                 ThrowIfNotValid();
-                return plaidml.__Internal.PlaidmlGetMappingSize(context, this);
+                return plaidml.__Internal.PlaidmlGetMappingSize(_Context, this);
             }
         }
 
@@ -73,7 +73,7 @@ namespace Adrien.Compiler.PlaidML
         {
             ThrowIfNotAllocated();
             ThrowIfNotValid();
-            bool r = plaidml.__Internal.PlaidmlWritebackMapping(context, this);
+            bool r = plaidml.__Internal.PlaidmlWritebackMapping(_Context, this);
             if (!r)
             {
                 ReportApiCallError("plaidml_writeback_mapping");
