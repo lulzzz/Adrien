@@ -7,7 +7,6 @@ using System.Linq.Expressions;
 using Humanizer;
 
 using Adrien.Compiler;
-//using Adrien.Expressions;
 using Adrien.Trees;
 
 namespace Adrien.Notation
@@ -57,11 +56,33 @@ namespace Adrien.Notation
             I = new IndexSet(indexNameBase, dim);
         }
 
-        
-        
+        public TensorExpression this[IndexSet I]
+        {
+            get
+            {
+                ThrowIfIndicesExceedRank(1);
+
+                int[] tdim = new int[I.Indices.Count];
+                int[] tidx = new int[I.Indices.Count];
+                for (int i= 0; i < tdim.Length; i++)
+                {
+                    tdim[i] = 1;
+                }
+                Array t = Array.CreateInstance(typeof(Tensor), tdim);
+                t.SetValue(this, tidx);
+                Expression[] e = I.Indices.Select(i => Expression.Parameter(typeof(int), i.Name)).ToArray();
+                return new TensorExpression(Expression.ArrayAccess(Expression.Constant(t), e));
+            }
+            set
+            {
+                ThrowIfAlreadyAssiged();
+                Assignment = (I, value);
+            }
+        }
+
         public static implicit operator TensorExpression(Tensor t)
         {
-            return new TensorExpression(t.LinqExpression);
+            return new TensorExpression(Expression.Constant(t));
         }
 
         public static implicit operator ExpressionTree(Tensor t)

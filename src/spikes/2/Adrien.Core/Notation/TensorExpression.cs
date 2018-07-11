@@ -19,32 +19,8 @@ namespace Adrien.Notation
         
         internal override Name DefaultNameBase => "tensor_expr0";
 
-        public List<Tensor> Tensors
-        {
-            get
-            {
-                return LinqExpression.DescendantsAndSelf()
-                    .OfType<ConstantExpression>()
-                    .Select(e => e.Value)
-                    .Cast<Array>()
-                    .Select(a => a.Flatten<Tensor>().First())
-                    .ToList();
-            }
-        }
-
-        public List<IndexSet> IndexSets
-        {
-            get
-            {
-                return LinqExpression.DescendantsAndSelf()
-                    .OfType<ConstantExpression>()
-                    .Select(e => e.Value)
-                    .Cast<Array>()
-                    .Select(a => a.Flatten<IndexSet>().FirstOrDefault())?
-                    .ToList();
-                    
-            }
-        }
+        public List<Tensor> Tensors => LinqExpression.GetConstants<Tensor>();
+        
         public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression, null, true).Tree;
 
         public ExpressionTree ToTree((Tensor tensor, IndexSet indices) output) => new TensorExpressionVisitor(this.LinqExpression, output, true).Tree;
@@ -52,6 +28,7 @@ namespace Adrien.Notation
         public TensorExpression(Expression e)
         {
             LinqExpression = e;
+            Name = GetNameFromLinqExpression(LinqExpression);
         }
 
 

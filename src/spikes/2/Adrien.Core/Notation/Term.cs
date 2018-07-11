@@ -44,7 +44,11 @@ namespace Adrien.Notation
         {
             this.Id = t.Id;
         }
-        
+
+        public static implicit operator Expression(Term e)
+        {
+            return e.LinqExpression;
+        }
 
         public bool Equals(Term other)
         {
@@ -87,12 +91,30 @@ namespace Adrien.Notation
             }
             else throw new ArgumentException($"Unknown name base {indexNameBase}");
         }
-        
 
-        public static implicit operator Expression(Term e)
+
+        protected string GetNameFromLinqExpression(Expression expr)
         {
-            return e.LinqExpression;
+            switch (expr)
+            {
+                case ConstantExpression ce:
+                    switch (ce.Value)
+                    {
+                        case int i: return i.ToString();
+                        case Term t: return t.Name;
+                        case Array a: return a.Flatten<Tensor>().First().Name;
+                        default: throw new Exception($"Unknown contrant expressionvalue type: {ce.Value.GetType()}.");
+                    };
+                case BinaryExpression be:
+                    return be.NodeType.ToString() + "_" + GetNameFromLinqExpression(be.Left)
+                        + "_" + GetNameFromLinqExpression(be.Right);
+                case ParameterExpression pe:
+                    return pe.Name;
+                case IndexExpression ie:
+                    return ie.NodeType.ToString() + "_" + GetNameFromLinqExpression(ie.Object) + "_" + ie.Arguments.Select(e => GetNameFromLinqExpression(e))
+                        .Aggregate((s1, s2) => s1 + "_" + s2);
+                default: throw new Exception($"Unknown expression type: {expr.NodeType.ToString()} {expr.GetType().Name}.");
+            }
         }
-   
     }
 }

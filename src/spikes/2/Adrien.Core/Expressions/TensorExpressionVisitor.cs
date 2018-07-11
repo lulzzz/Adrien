@@ -67,7 +67,7 @@ namespace Adrien.Trees
            
         }
                             
-        protected override Expression VisitIndex(System.Linq.Expressions.IndexExpression node)
+        protected override Expression VisitIndex(IndexExpression node)
         {
             OperatorNode on = Context.AddOperatorNode(TensorOp.Summation);
             using (Context.Internal(on))

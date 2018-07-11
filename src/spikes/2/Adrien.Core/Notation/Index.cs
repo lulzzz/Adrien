@@ -41,12 +41,13 @@ namespace Adrien.Notation
         public Index(TensorIndexExpression expr)
         { 
             Type = IndexType.Expression;
+            Name = GetNameFromLinqExpression(expr.LinqExpression);
             IndexExpression = expr;
         }
 
         public Index(int i)
         {
-            Name = "int_" + 5;
+            Name = "int_" + i.ToString();
             Type = IndexType.Expression;
             IndexExpression = new TensorIndexExpression(Expression.Constant(i));
         }
@@ -101,6 +102,7 @@ namespace Adrien.Notation
             return base.GetHashCode();
         }
 
+
         public Type GetIndexType()
         {
             if (Type == IndexType.Constant)
@@ -120,6 +122,9 @@ namespace Adrien.Notation
             return this.Order.CompareTo(i.Order);
         }
 
+
+
+    
         private static Index DummyBinary(Index l, Index r) => null;
 
         private static Index DummyBinary(TensorIndexExpression l, Index r) => null;

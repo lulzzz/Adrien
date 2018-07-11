@@ -32,6 +32,10 @@ namespace Adrien.Notation
 
         public IndexSet(params Index[] indices) : base()
         {
+            for (int i = 0; i < indices.Length; i++)
+            {
+                indices[i].Order = i;
+            }
             Indices = new SortedSet<Index>(indices);
             this.Name = Indices.Select(i => i.Name).Aggregate((a, b) => a + b);
             foreach(Index index in indices)
@@ -48,12 +52,6 @@ namespace Adrien.Notation
                 ThrowIfIndicesExceedDimensions(index);
                 return Indices.ElementAt(index); 
             }
-        }
-
-        public static implicit operator Index(IndexSet s)
-        {
-            s.ThrowIfIndicesExceedDimensions(1);
-            return s[0];
         }
 
         public static implicit operator IndexSet((Index index1, Index index2) t)
