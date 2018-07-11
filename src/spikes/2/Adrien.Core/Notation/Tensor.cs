@@ -82,7 +82,7 @@ namespace Adrien.Notation
 
         public static implicit operator TensorExpression(Tensor t)
         {
-            return new TensorExpression(Expression.Constant(t));
+            return new TensorExpression(t.LinqExpression);
         }
 
         public static implicit operator ExpressionTree(Tensor t)

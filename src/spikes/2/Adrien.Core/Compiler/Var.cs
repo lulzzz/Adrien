@@ -8,9 +8,10 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
+using Adrien.Compiler;
 using Adrien.Notation;
 
-namespace Adrien.Compiler
+namespace Adrien
 {
     public class Var<T> : IVariable<T>, IDisposable where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
@@ -182,11 +183,11 @@ namespace Adrien.Compiler
 
         public int ItemSize => Unsafe.SizeOf<T>();
 
-        public IVariable<T> Zeros() => Fill(GenericMath<T>.Const(0));
+        public INDArray Zeros() => Fill(GenericMath<T>.Const(0));
 
-        public IVariable<T> Ones() => Fill(GenericMath<T>.Const(1));
+        public INDArray Ones() => Fill(GenericMath<T>.Const(1));
 
-        public IVariable<T> Random()
+        public INDArray Random()
         {
             for (int i = 0; i <= Size; i++)
             {

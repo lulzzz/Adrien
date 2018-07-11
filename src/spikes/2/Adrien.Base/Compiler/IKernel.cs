@@ -15,5 +15,15 @@ namespace Adrien.Compiler
         IVariable<T> Output { get; }
 
         IReadOnlyList<IVariable<T>> Input { get; }
+
+        bool CompileBeforeRun { get; set; }
+
+        ICompiler Compiler { get; }
+
+        bool CompileSuccess { get; }
+
+        IRunnable<T> CompilerResult { get; }
+
+        bool Compile();
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Adrien.Compiler
 {
-    public interface IVariable<T> : INDArray<T> where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
+    public interface IVariable<T> : INDArray where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         string Name { get; }
        

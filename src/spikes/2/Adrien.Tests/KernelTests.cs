@@ -19,6 +19,7 @@ namespace Adrien.Tests
                 .Three();
             
             C[a, b] = A[a, b] * B[b, a];
+            
             Kernel<int> k = new Kernel<int>(C);
             
             Assert.Equal(3, k.Tensors.Count);

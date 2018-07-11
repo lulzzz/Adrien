@@ -18,7 +18,8 @@ namespace Adrien.Compiler
         UINT64,
         FLOAT16,
         FLOAT32,
-        FLOAT64
+        FLOAT64,
+        UTF8
     }
 }
 

@@ -8,10 +8,11 @@ using Adrien.Compiler.PlaidML.Generator;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class TileCompiler<TKernel> : PlaidMLApi<TileCompiler<TKernel>>, ICompiler<TKernel> 
-        where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
+    public class TileCompiler : PlaidMLApi<TileCompiler>, ICompiler 
     {
         public Dictionary<string, object> Options { get; }
+
+        public ITensorContext TensorContext { get; }
 
         public bool Initialized { get; protected set; }
 
@@ -22,16 +23,15 @@ namespace Adrien.Compiler.PlaidML
         public DeviceEnumerator DeviceEnumerator { get; protected set; }
 
         public int DeviceCount => DeviceEnumerator.Count;
-        
-        public IKernel<TKernel> Kernel { get; }
-
+       
         public Device KernelDevice { get; protected set; }
 
         public Dictionary<string, object> KernelDeviceProperties { get; protected set; }
 
         public TileGenerator TileGenerator { get; protected set; }
 
-        public TileCompiler(IKernel<TKernel> kernel, Dictionary<string, object> options = null) : base(new Context())
+
+        public TileCompiler(Dictionary<string, object> options = null) : base(new Context())
         {
             if (!_Context.IsAllocated)
             {
@@ -50,7 +50,9 @@ namespace Adrien.Compiler.PlaidML
                 return;
             }
             IsAllocated = true;
-            Kernel = kernel;
+            KernelDevice = OpenFirstDevice();
+            KernelDeviceProperties = JsonConvert.DeserializeObject<Dictionary<string, object>>
+               (KernelDevice.DeviceConfig.Details);
             Initialized = true;
         }
        
@@ -88,15 +90,17 @@ namespace Adrien.Compiler.PlaidML
         }
 
 
-        public bool Compile()
+        public bool Compile<TKernel>(IKernel<TKernel> kernel, out IRunnable<TKernel> result) where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
         {
+            result = null;
             ThrowIfNotInitialized();
-            KernelDevice = OpenFirstDevice();
-            KernelDeviceProperties = JsonConvert.DeserializeObject<Dictionary<string, object>>
-                (KernelDevice.DeviceConfig.Details);
-            TileGenerator = new TileGenerator(Kernel.ExpressionTree);
-           
-            return true;
+            TileGenerator = new TileGenerator(kernel.ExpressionTree);
+            if (!TileGenerator.Success)
+            {
+
+                return false;
+            }
+            return false;
         }
 
         internal void ThrowIfNotInitialized()

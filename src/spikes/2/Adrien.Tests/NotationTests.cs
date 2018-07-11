@@ -30,7 +30,7 @@ namespace Adrien.Tests
             Assert.Equal("k", k.Name);
             Assert.Equal(1, j.Order);
 
-
+            A[0] = B;
             Assert.IsType<IndexExpression>((Expression) B[i]);
             Assert.IsType<IndexExpression>((Expression) B[ijk]);
             B[ijk] = A[i];

@@ -22,41 +22,69 @@ namespace Adrien.Compiler
         public ExpressionTree Tree { get; protected set; }
 
         public IReadOnlyList<Tensor> Tensors => Tree.Root.DescendantsAndSelf().OfType<ValueNode>()
-            .Where(n => n.NodeType == ValueNodeType.TENSOR).Distinct().Select(n => n.ValueAs<Tensor>()).ToList();
+            .Where(n => n.NodeType == ValueNodeType.TENSOR)
+            .Distinct()
+            .Select(n => n.ValueAs<Tensor>())
+            .ToList();
 
         public IReadOnlyList<Tensor> InputTensors => Tensors.Where(t => t.Label != OutputTensor.Name.Label).ToList();
 
         public Tensor OutputTensor => Tree.OutputTensor;
 
+        public ICompiler Compiler { get; protected set; }
 
-        public Kernel(Tensor output, DeviceType deviceType = DeviceType.CPU, params Var<T>[] input)
+        public IRunnable<T> CompilerResult { get; protected set; }
+
+        public bool CompileSuccess { get; protected set; }
+
+        public bool CompileBeforeRun { get; set; }
+
+        public Func<Memory<T>[], Var<T>> Func
         {
-            if (!output.IsAssigned)
-            { 
-                throw new ArgumentException($"The output tensor {output.Label} must be assigned an input expression.");
-            }
-            if (input.Length != InputTensors.Count) 
+            get
             {
-                throw new ArgumentException($"This kernel has {InputTensors.Count} input tensors but only " + 
-                    $"{input.Length} input variables were specified as arguments.");                               
+                if (CompileBeforeRun || !CompileSuccess)
+                {
+                    Compile();
+                }
+                ThrowIfNotCompileSuccess();
+                return new Func<Memory<T>[], Var<T>>((input) =>
+                {   
+                    CompilerResult.Run(out Memory<T> output, input);
+                    return new Var<T>(OutputTensor, output);
+                });
             }
-            DeviceType = deviceType;
-            Tree = output.Assignment.Expression.ToTree((output, output.Assignment.IndexSet));
-            Input = input;
         }
 
-        public Kernel(Tensor output, DeviceType deviceType = DeviceType.CPU)
+        public Kernel(Tensor output)
         {
             if (!output.IsAssigned)
             {
                 throw new ArgumentException
                     ($"The output tensor {output.Label} must be assigned an input expression.");
             }
-            DeviceType = deviceType;
             Tree = output.Assignment.Expression.ToTree((output, output.Assignment.IndexSet));
             Input = InputTensors.Select(t => t.Var(new T[t.NumberofElements]) as IVariable<T>).ToList();
         }
 
+        public Kernel(ICompiler compiler, Tensor output, DeviceType deviceType = DeviceType.CPU) : this(output)
+        {
+            Compiler = compiler;
+            DeviceType = deviceType;
+        }
+
+        public Kernel(ICompiler compiler, Tensor output, DeviceType deviceType = DeviceType.CPU, params Var<T>[] input)
+            : this(compiler, output, deviceType)
+        {
+            if (input.Length != InputTensors.Count) 
+            {
+                throw new ArgumentException($"This kernel has {InputTensors.Count} input tensors but only " + 
+                    $"{input.Length} input variables were specified as arguments.");                               
+            }
+            Input = input;
+        }
+
+        
         public IVariable<T> this[int index]
         {
             get
@@ -78,6 +106,25 @@ namespace Adrien.Compiler
                 throw new ArgumentException($"The kernel does not contain an input variable bound to tensor " 
                     + $"{index.Label}");
             
+        }
+
+
+        public bool Compile()
+        {
+            CompileSuccess = Compiler.Compile(this, out IRunnable<T> result);
+            if (CompileSuccess)
+            {
+                CompilerResult = result;
+            }
+            return CompileSuccess;
+        }
+
+        protected void ThrowIfNotCompileSuccess()
+        {
+            if (!CompileSuccess)
+            {
+                throw new InvalidOperationException("The kernel was not compiled successfully..");
+            }
         }
     }
 }

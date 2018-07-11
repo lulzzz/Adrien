@@ -20,10 +20,12 @@ namespace Adrien.Tests.Compilers
                 .Three();
 
             C[a, b] = A[a, b] * B[b, a];
-            Kernel<int> k = new Kernel<int>(C);
-            TileCompiler<int> compiler = new TileCompiler<int>(k);
+            TileCompiler compiler = new TileCompiler();
             Assert.True(compiler.Initialized);
-            compiler.Compile();
+            Kernel<int> k = new Kernel<int>(compiler, C);
+            Assert.True(k.Compile());
+            
+            
         }
     }
 }
