@@ -9,18 +9,24 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class Context : CompilerApi<Context>
+    public class Context : CompilerApi<Context>, ITensorContext
     {
         protected IntPtr ptr;
+
         protected string logFileName;
+
         protected FileInfo logFile;
         
 
         public bool IsAllocated { get; protected set; }
+
         public VaiStatus LastStatus { get; protected set; }
+
         public string LastStatusString { get; protected set; }
+
         public Settings settings { get; protected set; }
-        
+
+        public List<INDArray> Tensors { get; } = new List<INDArray>();
 
         public Context(string eventLogFileName, Settings.UseConfigFile configFile)
         {            

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
+using System.Linq;
 
 using Newtonsoft.Json;
 
@@ -16,6 +18,8 @@ namespace Adrien.Compiler.PlaidML
 
         public bool Initialized { get; protected set; }
 
+        public CompilerStatus Status { get; protected set; }
+
         public Settings Settings => _Context.settings;
 
         public string SessionId { get; protected set; }
@@ -28,9 +32,7 @@ namespace Adrien.Compiler.PlaidML
 
         public Dictionary<string, object> KernelDeviceProperties { get; protected set; }
 
-        public TileGenerator TileGenerator { get; protected set; }
-
-
+        
         public TileCompiler(Dictionary<string, object> options = null) : base(new Context())
         {
             if (!_Context.IsAllocated)
@@ -70,6 +72,18 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
+        public Function CreateFunction(TileGenerator generator)
+        {
+            ThrowIfNotAllocated();
+            ThrowIfNotInitialized();
+            Function f = new Function(Context, generator.Text);
+            if (f.IsAllocated)
+            {
+                return f;
+            }
+            else return null;
+        }
+
         public Shape CreateShape<T>(params int[] dimensions) where T : unmanaged
         {
             ThrowIfNotAllocated();
@@ -77,10 +91,10 @@ namespace Adrien.Compiler.PlaidML
             return new Shape(_Context, datatype, dimensions);
         }
 
-        public DeviceTensor CreateTensor(Device device, Shape shape, string name)
+        public DeviceTensor CreateTensor(Shape shape, string name)
         {
             ThrowIfNotAllocated();
-            return new DeviceTensor(device, shape, name);
+            return new DeviceTensor(KernelDevice, shape, name);
         }
 
         public Function CreateFunction(string code)
@@ -90,16 +104,26 @@ namespace Adrien.Compiler.PlaidML
         }
 
 
-        public bool Compile<TKernel>(IKernel<TKernel> kernel, out IRunnable<TKernel> result) where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
+        public bool Compile<TKernel>(IKernel<TKernel> kernel, out IRunnable<TKernel> result) 
+            where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
         {
             result = null;
             ThrowIfNotInitialized();
-            TileGenerator = new TileGenerator(kernel.ExpressionTree);
-            if (!TileGenerator.Success)
+            Status = CompilerStatus.Compiling;
+            TileGenerator g = new TileGenerator(kernel.ExpressionTree);
+            if (!g.Success)
             {
-
+                Status = CompilerStatus.ErrorGeneratingCode;
                 return false;
             }
+            Function f = CreateFunction(g);
+            List<DeviceTensor> inputTensors = kernel.Input
+                .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Name))
+                .ToList();
+            DeviceTensor outputTensor = CreateTensor(CreateShape<TKernel>(kernel.Output.Dimensions),
+                kernel.Output.Name);
+
+            //kernel.
             return false;
         }
 

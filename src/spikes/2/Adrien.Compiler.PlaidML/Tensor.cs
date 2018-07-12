@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
-using System.Text;
+
 
 using Adrien.Compiler.PlaidML.Bindings;
 
@@ -9,9 +10,14 @@ namespace Adrien.Compiler.PlaidML
     public class DeviceTensor : Variable
     {
         public Device Device { get; protected set; }
-        public DeviceBuffer Buffer { get; protected set; }
+
+        public DeviceBuffer TensorBuffer { get; protected set; }
+
         public Shape Shape { get; protected set; }
 
+        public MemoryMapping MemoryMapping { get; protected set; }
+        
+        public bool IsMemoryMapped { get; protected set; }
 
         public DeviceTensor(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context, name)
         {
@@ -24,6 +30,7 @@ namespace Adrien.Compiler.PlaidML
                     return;
                 }
             }
+
             ptr = plaidml.__Internal.PlaidmlAllocTensor(_Context, buffer, shape);
             if (ptr.IsZero())
             {
@@ -33,7 +40,7 @@ namespace Adrien.Compiler.PlaidML
             else
             {
                 Device = device;
-                Buffer = buffer;
+                TensorBuffer = buffer;
                 Shape = shape;
                 DataType = Shape.DataType;
                 IsAllocated = true;
@@ -41,17 +48,11 @@ namespace Adrien.Compiler.PlaidML
         }
         
 
-        public MemoryView<T> CreateMemoryView<T>(bool discard = true) where T : unmanaged
+        public MemoryView<T> CreateView<T>(MemoryMapType mapType) where T : unmanaged
         {
             ThrowIfNotAllocated();
-            return new MemoryView<T>(new MemoryMapping(Buffer, discard));
+            return TensorBuffer.CreateMemoryView<T>(mapType);
         }
-
-        public bool CopyFrom<T>(T[] array) where T : unmanaged
-        {
-            ThrowIfNotAllocated();
-            MemoryView<T> v = CreateMemoryView<T>();
-            return v.CopyFromAndFree(array);
-        }
+        
     }
 }

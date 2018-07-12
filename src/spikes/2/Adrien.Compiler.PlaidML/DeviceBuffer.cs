@@ -9,10 +9,21 @@ namespace Adrien.Compiler.PlaidML
     public class DeviceBuffer : PlaidMLApi<DeviceBuffer>
     {
         public Device Device { get; protected set; }
+
         public Shape Shape { get; protected set; }
+
         public ulong SizeInBytes { get; protected set; }
         
-        
+        public IntPtr BufferPointer
+        {
+            get
+            {
+                ThrowIfNotAllocated();
+                return ptr;
+            }
+        }
+
+
         public DeviceBuffer(Context ctx, Device device, Shape shape) : base(ctx)
         {
             SizeInBytes = plaidml.__Internal.PlaidmlGetShapeBufferSize(shape);
@@ -34,15 +45,25 @@ namespace Adrien.Compiler.PlaidML
                 Shape = shape;
                 IsAllocated = true;
             }
-
         }
-        
+
 
         public override void Free()
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeBuffer(this);
             ptr = IntPtr.Zero;
+        }
+
+        public MemoryMapping CreateMemoryMapping(MemoryMapType type)
+        {
+            return type == MemoryMapType.Discard ? new MemoryMapping(this, true) : new MemoryMapping(this, false);
+        }
+
+        public MemoryView<T> CreateMemoryView<T>(MemoryMapType type) where T : unmanaged
+        {
+            return type == MemoryMapType.Discard ? new MemoryView<T>(new MemoryMapping(this, true)) :
+                new MemoryView<T>(new MemoryMapping(this, false));
         }
     }
 }

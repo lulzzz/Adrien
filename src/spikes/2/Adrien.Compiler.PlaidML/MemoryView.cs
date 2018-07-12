@@ -19,7 +19,9 @@ namespace Adrien.Compiler.PlaidML
 
         public int Length => (int)Shape.ElementCount;
 
-        public Span<T> Span => Mapping.GetSpan<T>();
+        public Span<T> MemoryMappingSpan => Mapping.GetSpan<T>();
+
+        public bool IsValid => Mapping.IsValid;
 
         public bool IsDirty { get; protected set; }
         
@@ -31,21 +33,21 @@ namespace Adrien.Compiler.PlaidML
         }
 
         
-        public T this[int index]
+        public ref T this[int index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return Read(index);
-            }
-            set
-            {
-                Write(index, value);
+                ThrowIfNotAllocated();
+                return ref Read(index);
             }
         }
         
         
-        public override void Free() => Mapping.Free();
+        public override void Free()
+        {
+            Mapping.Free();
+        }
         
         public bool Writeback()
         {
@@ -60,20 +62,16 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
-        public void WritebackandFree()
-        {
-            Writeback();
-            Free();
-        }
+       
         public bool CopyFrom(T[] array)
         {
-            ThrowIfNotValid();
+            ThrowIfNotAllocated();
             if (array.Length != this.Length)
             {
                 throw new ArgumentOutOfRangeException($"The length of the array {array.Length} does not match the length of the view {Length}.");
             }
             Span<T> a = new Span<T>(array);
-            a.CopyTo(Span);
+            a.CopyTo(MemoryMappingSpan);
             return Writeback();
         }
 
@@ -88,7 +86,7 @@ namespace Adrien.Compiler.PlaidML
             return copy;
         }
 
-        protected void ThrowIfNotValid() => Mapping.ThrowIfNotValid();
+        
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected void ThrowIfIndexOutsideRange(int index)
@@ -103,7 +101,6 @@ namespace Adrien.Compiler.PlaidML
         protected unsafe ref T Read(int index)
         {
             ThrowIfNotAllocated();
-            ThrowIfNotValid();
             ThrowIfIndexOutsideRange(index);
             return ref Unsafe.Add(ref Unsafe.AsRef<T>(BaseAddress.ToPointer()), index);
         }
@@ -112,7 +109,6 @@ namespace Adrien.Compiler.PlaidML
         protected unsafe void Write(int index, T value)
         {
             ThrowIfNotAllocated();
-            ThrowIfNotValid();
             ThrowIfIndexOutsideRange(index);
             ref T v = ref Unsafe.Add(ref Unsafe.AsRef<T>(BaseAddress.ToPointer()), index);
             v = value;

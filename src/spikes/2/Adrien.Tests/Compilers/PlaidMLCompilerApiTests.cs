@@ -119,11 +119,11 @@ namespace Adrien.Tests.Compilers
             Device device = new Device(context);
             Shape s1 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT64, 2, 3);
             DeviceTensor t = new DeviceTensor(device, s1, "t");
-            MemoryView<Int64> v = t.CreateMemoryView<long>();
+            MemoryView<Int64> v = t.CreateView<Int64>(MemoryMapType.Discard);
             Int64[,] array = { { 0, 1, 3 }, { 4, 5, 6 } };
-            v.CopyFrom(array.Flatten<Int64>().ToArray());
-            v.Free();
-            MemoryView<Int64> v2 = t.CreateMemoryView<long>();
+            v.CopyFromAndFree(array.Flatten<Int64>().ToArray());
+            Assert.Throws<InvalidOperationException>(() => v.Free());
+            MemoryView<Int64> v2 = t.CreateView<long>(MemoryMapType.Retain);
             Assert.Equal(3, v2[2]);
             Assert.Equal(6, v2[5]);
         }
@@ -140,8 +140,8 @@ namespace Adrien.Tests.Compilers
             DeviceTensor o = new DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
             
             Int32[] input_data = { 0, 1, 3,  4, 5, 6 };
-            i.CopyFrom(input_data);
-            MemoryView<Int32> v = i.CreateMemoryView<Int32>(false);
+            i.CreateView<Int32>(MemoryMapType.Discard).CopyFrom(input_data);
+            MemoryView<Int32> v = i.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(3, v[2]);
             Invoker invoker = new Invoker(context, f, new Variable[] { i }, new Variable[] { o });
             //Invoker invoker = new Invoker(context, f, i);
@@ -149,7 +149,7 @@ namespace Adrien.Tests.Compilers
             Assert.True(x.ElementCount == 6);
             Assert.True(invoker.AllVariablesSet);
             Invocation inv = invoker.Invoke();
-            MemoryView<Int32> R = o.CreateMemoryView<Int32>(false);
+            MemoryView<Int32> R = o.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(6, R.Length);
         }
 

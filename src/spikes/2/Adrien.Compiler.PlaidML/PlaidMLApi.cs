@@ -31,7 +31,11 @@ namespace Adrien.Compiler.PlaidML
             ctx.ThrowIfNotAllocated();
             this._Context = ctx;
         }
-        
+
+        public PlaidMLApi() : base()
+        {
+            _Context = new Context();
+        }
 
         public static implicit operator IntPtr(PlaidMLApi<T> c)  
         {
@@ -58,7 +62,7 @@ namespace Adrien.Compiler.PlaidML
         {
             if (!IsAllocated)
             {
-                throw new InvalidOperationException($"This object is not allocated");
+                throw new InvalidOperationException($"This object is not allocated.");
             }
         }
 

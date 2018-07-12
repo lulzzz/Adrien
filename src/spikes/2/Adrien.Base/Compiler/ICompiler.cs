@@ -10,8 +10,11 @@ namespace Adrien.Compiler
 
         ITensorContext TensorContext { get; }
 
+        CompilerStatus Status { get; }
+
         bool Initialized { get; }
        
-        bool Compile<T>(IKernel<T> kernel, out IRunnable<T> result)  where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible;
+        bool Compile<T>(IKernel<T> kernel, out IRunnable<T> result)  where T : unmanaged, IEquatable<T>, 
+            IComparable<T>, IConvertible;
     }
 }
