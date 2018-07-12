@@ -25,7 +25,7 @@ namespace Adrien.Tests
             Assert.Equal(3, k.Tensors.Count);
             Assert.Equal(C, k.OutputTensor);
             Assert.Equal(2, k.InputTensors.Count);
-            Assert.Equal(8, k[A].Size);
+            Assert.Equal(8, k[A].ElementCount);
             k[A].Ones();
             Assert.Equal(1, k.Input[0][0]);
             k[A].Zeros();

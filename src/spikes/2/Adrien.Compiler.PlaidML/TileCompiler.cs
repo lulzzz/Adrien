@@ -91,10 +91,10 @@ namespace Adrien.Compiler.PlaidML
             return new Shape(_Context, datatype, dimensions);
         }
 
-        public DeviceTensor CreateTensor(Shape shape, string name)
+        public TensorVariable CreateTensor(Shape shape, string name)
         {
             ThrowIfNotAllocated();
-            return new DeviceTensor(KernelDevice, shape, name);
+            return new TensorVariable(KernelDevice, shape, name);
         }
 
         public Function CreateFunction(string code)
@@ -117,13 +117,13 @@ namespace Adrien.Compiler.PlaidML
                 return false;
             }
             Function f = CreateFunction(g);
-            List<DeviceTensor> inputTensors = kernel.Input
+            List<TensorVariable> inputTensors = kernel.Input
                 .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Name))
                 .ToList();
-            DeviceTensor outputTensor = CreateTensor(CreateShape<TKernel>(kernel.Output.Dimensions),
+            TensorVariable outputTensor = CreateTensor(CreateShape<TKernel>(kernel.Output.Dimensions),
                 kernel.Output.Name);
 
-            //kernel.
+            //inputTensors.
             return false;
         }
 

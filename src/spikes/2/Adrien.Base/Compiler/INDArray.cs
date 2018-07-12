@@ -6,11 +6,13 @@ namespace Adrien.Compiler
 {
     public interface INDArray
     {
+        string Name { get; }
+
         int NDim { get; }
 
-        int[] Shape { get; }
+        int[] DeviceBufferShape { get; }
 
-        int Size { get; }
+        int ElementCount { get; }
 
         Type DType { get; }
 

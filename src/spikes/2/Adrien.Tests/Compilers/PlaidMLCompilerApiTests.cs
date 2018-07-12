@@ -8,7 +8,7 @@ using Adrien.Compiler.PlaidML;
 using Adrien.Compiler.PlaidML.Bindings;
 using Adrien.Compiler.PlaidML.Generator;
 
-using N=Adrien.Notation;
+using Adrien.Notation;
 
 namespace Adrien.Tests.Compilers
 {
@@ -114,16 +114,16 @@ namespace Adrien.Tests.Compilers
         }
 
         [Fact]
-        public void CanConstructMemoryView()
+        public void CanConstructTensorVariableView()
         {
             Device device = new Device(context);
             Shape s1 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT64, 2, 3);
-            DeviceTensor t = new DeviceTensor(device, s1, "t");
-            MemoryView<Int64> v = t.CreateView<Int64>(MemoryMapType.Discard);
+            TensorVariable t = new TensorVariable(device, s1, "t");
+            TensorVariableView<Int64> v = t.CreateView<Int64>(MemoryMapType.Discard);
             Int64[,] array = { { 0, 1, 3 }, { 4, 5, 6 } };
             v.CopyFromAndFree(array.Flatten<Int64>().ToArray());
             Assert.Throws<InvalidOperationException>(() => v.Free());
-            MemoryView<Int64> v2 = t.CreateView<long>(MemoryMapType.Retain);
+            TensorVariableView<Int64> v2 = t.CreateView<long>(MemoryMapType.Retain);
             Assert.Equal(3, v2[2]);
             Assert.Equal(6, v2[5]);
         }
@@ -136,12 +136,12 @@ namespace Adrien.Tests.Compilers
                                 O[i: N] = +(I[k]), i - k < N;
                             }";
             Function f = new Function(context, code);
-            DeviceTensor i = new DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "I");
-            DeviceTensor o = new DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
+            TensorVariable i = new TensorVariable(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "I");
+            TensorVariable o = new TensorVariable(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
             
             Int32[] input_data = { 0, 1, 3,  4, 5, 6 };
             i.CreateView<Int32>(MemoryMapType.Discard).CopyFrom(input_data);
-            MemoryView<Int32> v = i.CreateView<Int32>(MemoryMapType.Retain);
+            TensorVariableView<Int32> v = i.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(3, v[2]);
             Invoker invoker = new Invoker(context, f, new Variable[] { i }, new Variable[] { o });
             //Invoker invoker = new Invoker(context, f, i);
@@ -149,15 +149,15 @@ namespace Adrien.Tests.Compilers
             Assert.True(x.ElementCount == 6);
             Assert.True(invoker.AllVariablesSet);
             Invocation inv = invoker.Invoke();
-            MemoryView<Int32> R = o.CreateView<Int32>(MemoryMapType.Retain);
-            Assert.Equal(6, R.Length);
+            TensorVariableView<Int32> R = o.CreateView<Int32>(MemoryMapType.Retain);
+            Assert.Equal(6, R.ElementCount);
         }
 
         [Fact]
         public void CanGenerateTileFunction()
         {
-            var A = N.Tensor.TwoD("A", (8, 17), "a", out N.Index a, out N.Index b);
-            var B = N.Tensor.TwoD("B", (8, 17));
+            var A = Tensor.TwoD("A", (8, 17), "a", out Index a, out Index b);
+            var B = Tensor.TwoD("B", (8, 17));
             TileGenerator g = new TileGenerator((A[a, b] * B[a, b]).ToTree());
             Assert.Equal("A[a, b] * B[a, b]", g.Text);
             g = new TileGenerator(A[b].ToTree());

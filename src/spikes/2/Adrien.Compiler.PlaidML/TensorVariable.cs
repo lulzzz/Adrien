@@ -7,19 +7,15 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class DeviceTensor : Variable
+    public class TensorVariable : Variable
     {
         public Device Device { get; protected set; }
 
-        public DeviceBuffer TensorBuffer { get; protected set; }
+        public DeviceBuffer DeviceBuffer { get; protected set; }
 
         public Shape Shape { get; protected set; }
 
-        public MemoryMapping MemoryMapping { get; protected set; }
-        
-        public bool IsMemoryMapped { get; protected set; }
-
-        public DeviceTensor(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context, name)
+        public TensorVariable(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context, name)
         {
             if (buffer == null)
             {
@@ -39,8 +35,9 @@ namespace Adrien.Compiler.PlaidML
             }
             else
             {
+                Name = name;
                 Device = device;
-                TensorBuffer = buffer;
+                DeviceBuffer = buffer;
                 Shape = shape;
                 DataType = Shape.DataType;
                 IsAllocated = true;
@@ -48,11 +45,12 @@ namespace Adrien.Compiler.PlaidML
         }
         
 
-        public MemoryView<T> CreateView<T>(MemoryMapType mapType) where T : unmanaged
+        public TensorVariableView<T> CreateView<T>(MemoryMapType mapType) 
+            where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
         {
             ThrowIfNotAllocated();
-            return TensorBuffer.CreateMemoryView<T>(mapType);
-        }
-        
+            return new TensorVariableView<T>(this, mapType);
+        }  
+
     }
 }

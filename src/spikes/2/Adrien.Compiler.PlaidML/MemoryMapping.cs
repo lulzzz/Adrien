@@ -36,6 +36,8 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
+        public MemoryHandle MemoryHandle { get; protected set; }
+
         public bool IsValid { get; protected set; }
 
         public int Pins { get; protected set; }
@@ -66,6 +68,7 @@ namespace Adrien.Compiler.PlaidML
                 Buffer = buffer;
                 IsAllocated = true;
                 IsValid = true;
+                Pin(0);
             }
         }
 
@@ -78,10 +81,11 @@ namespace Adrien.Compiler.PlaidML
             ptr = IntPtr.Zero;
         }
 
-        public bool Writeback()
+        public virtual bool Writeback()
         {
             ThrowIfNotAllocated();
             ThrowIfNotValid();
+            Unpin();
             ThrowIfPinned();
             bool r = plaidml.__Internal.PlaidmlWritebackMapping(_Context, this);
             if (!r)
@@ -95,7 +99,7 @@ namespace Adrien.Compiler.PlaidML
             return r;
         }
 
-        public unsafe Span<T> GetSpan<T>() where T : unmanaged
+        public unsafe Span<T> GetSpan<T>() where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
         {
             ThrowIfNotAllocated();
             ThrowIfNotValid();
@@ -107,11 +111,13 @@ namespace Adrien.Compiler.PlaidML
             ThrowIfNotAllocated();
             ThrowIfNotValid();
             Pins++;
-            return new MemoryHandle(BaseAddress.ToPointer(), default, this);
+            return MemoryHandle;
         }
 
         public void Unpin()
         {
+            ThrowIfNotAllocated();
+            ThrowIfNotValid();
             Pins--;
         }
 

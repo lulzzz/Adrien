@@ -25,14 +25,25 @@ namespace Adrien
 
         public int Stride { get; protected set; }
 
-        public int Size => Tensor.NumberofElements;
+        public int ElementCount => Tensor.NumberofElements;
 
         public bool Initialized { get; protected set; }
 
-        public MemoryHandle Handle { get; protected set; }
+        public MemoryHandle MemoryHandle { get; protected set; }
 
-        public unsafe Span<T> Span => new Span<T>(Handle.Pointer, Tensor.NumberofElements);
+        public int Pins { get; protected set; }
 
+        public bool IsPinned => Pins > 0;
+
+        public unsafe Span<T> Span
+        {
+            get
+            {
+                ThrowIfNotInitialized();
+                ThrowIfHandleIsNull();
+                return new Span<T>(MemoryHandle.Pointer, Tensor.NumberofElements);
+            }
+        }
 
         
         internal Var(Tensor tensor)
@@ -53,8 +64,7 @@ namespace Adrien
             }
 
             Tensor = tensor;
-            Memory<T> m = new Memory<T>(data);
-            Handle = m.Pin();
+            MemoryHandle = new Memory<T>(data).Pin();
             Initialized = true;
         }
 
@@ -87,19 +97,19 @@ namespace Adrien
                 throw new Exception("Could not allocate GCHandle for array.");
             }
             
-            Handle = new MemoryHandle(h.AddrOfPinnedObject().ToPointer(), h);
+            MemoryHandle = new MemoryHandle(h.AddrOfPinnedObject().ToPointer(), h, this);
             Initialized = true;
         }
 
         internal Var(Tensor tensor, Memory<T> memory) : this(tensor)
         {
-            Handle = memory.Pin();
+            MemoryHandle = memory.Pin();
             Initialized = true;
         }
 
-        internal Var(Tensor tensor, MemoryHandle handle) : this(tensor)
+        internal unsafe Var(Tensor tensor, MemoryHandle handle) : this(tensor)
         {
-            Handle = handle;
+            MemoryHandle = handle;
             Initialized = true;
         }
 
@@ -109,6 +119,8 @@ namespace Adrien
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
+                ThrowIfNotInitialized();
+                ThrowIfHandleIsNull();
                 ThrowIfIndexOutOfRange(index);
                 return ref this.Read(index);
             }
@@ -117,37 +129,54 @@ namespace Adrien
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe ref T Read(int index)
         {
-            // return ref Unsafe.Add(ref Unsafe.AsRef<T>(Handle.Pointer), index);
-            return ref Read<T>(index); 
-            
+            ThrowIfNotInitialized();
+            ThrowIfHandleIsNull();
+            ThrowIfIndexOutOfRange(index);
+            return ref Read<T>(index);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public unsafe ref C Read<C>(int index) where C : unmanaged
+        {
+            ThrowIfNotInitialized();
+            ThrowIfHandleIsNull();
+            ThrowIfIndexOutOfRange(index);
+            return ref Unsafe.AsRef<C>(PtrTo(index));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe void Write(int index, T value)
         {
+            ThrowIfNotInitialized();
+            ThrowIfHandleIsNull();
+            ThrowIfIndexOutOfRange(index);
             Unsafe.Write(PtrTo(index), value);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe void Write<C>(int index, C value) where C : unmanaged
         {
+            ThrowIfNotInitialized();
+            ThrowIfHandleIsNull();
+            ThrowIfIndexOutOfRange(index);
             Unsafe.Write(PtrTo(index), value);
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public unsafe ref C Read<C> (int index) where C : unmanaged
-        {
-            return ref Unsafe.AsRef<C>(PtrTo(index));
-        }
+        
 
-        public static unsafe implicit operator IntPtr(Var<T> buffer)
+        
+        public static unsafe implicit operator IntPtr(Var<T> var)
         {
-            return new IntPtr(buffer.Handle.Pointer);
+            var.ThrowIfNotInitialized();
+            var.ThrowIfHandleIsNull();
+            return new IntPtr(var.MemoryHandle.Pointer);
         }
 
 
         public void CopyFrom(params T[] data)
         {
+            ThrowIfNotInitialized();
+            ThrowIfHandleIsNull();
             ThrowIf1DArrayLengthIsNotTensorSize(data);
             Span<T> source = new Span<T>(data);
             bool r = source.TryCopyTo(this.Span);
@@ -157,15 +186,21 @@ namespace Adrien
             }
         }
 
-        public void CopyTo(T[] destination)
+        public void CopyTo(Span<T> destination)
         {
             ThrowIf1DArrayLengthIsNotTensorSize(destination);
-            Span<T> dest  = new Span<T>(destination);
-            bool r = this.Span.TryCopyTo(dest);
+            ThrowIfNotInitialized();
+            ThrowIfHandleIsNull();
+            bool r = this.Span.TryCopyTo(destination);
             if (!r)
             {
                 throw new Exception("Copy operation failed.");
             }
+        }
+
+        public void CopyTo(T[] destination)
+        {
+            CopyTo(new Span<T>(destination));
         }
 
         public IVariable<T> Fill(T c)
@@ -174,10 +209,27 @@ namespace Adrien
             return this;
         }
 
+        public MemoryHandle Pin(int elementIndex)
+        {
+            ThrowIfNotInitialized();
+            Pins++;
+            return MemoryHandle;
+        }
+
+        public void Unpin()
+        {
+            if (Pins == 0)
+            {
+                throw new InvalidOperationException("The memory for this variable is not pinned.");
+            }
+            Pins--;
+        }
+
+
         #region INDArray implementation
         public int NDim => Rank;
 
-        public int[] Shape => Dimensions;
+        public int[] DeviceBufferShape => Dimensions;
 
         public Type DType => typeof(T);
 
@@ -189,7 +241,7 @@ namespace Adrien
 
         public INDArray Random()
         {
-            for (int i = 0; i <= Size; i++)
+            for (int i = 0; i <= ElementCount; i++)
             {
                 Write(i, GenericMath<T>.Random());
             }
@@ -200,24 +252,49 @@ namespace Adrien
 
         internal unsafe void* PtrTo(int index)
         {
-            return Unsafe.Add<T>(Handle.Pointer, index);
+            return Unsafe.Add<T>(MemoryHandle.Pointer, index);
         }
 
+        internal void ThrowIfNotInitialized()
+        {
+            if (!Initialized)
+            {
+                throw new InvalidOperationException("This variable is not initialized.");
+
+            }
+        }
+
+        internal unsafe void ThrowIfHandleIsNull()
+        {
+            if (MemoryHandle.Pointer == null)
+            {
+                throw new InvalidOperationException("This memory handle pointer is null.");
+
+            }
+        }
+        internal void ThrowIf1DArrayLenthIsNotTensorSize(Array data)
+        {
+            if (this.Tensor.NumberofElements != data.Length)
+            {
+                throw new ArgumentException($"The number of data elements ({data.Length}) does not match " +
+                    $"the number of elements in tensor {Tensor.Label} : {Tensor.NumberofElements}.");
+            }
+        }
 
         internal void ThrowIf1DArrayLengthIsNotTensorSize(params T[] data)
         {
             if (this.Tensor.NumberofElements != data.Length)
             {
-                throw new ArgumentException($"The number of data elements specified ({data.Length}) does not match " +
+                throw new ArgumentException($"The number of data elements ({data.Length}) does not match " +
                     $"the number of elements in tensor {Tensor.Label} : {Tensor.NumberofElements}.");
             }
         }
 
-        internal void ThrowIf1DArrayLenthIsNotTensorSize(Array data)
+        internal void ThrowIf1DArrayLengthIsNotTensorSize(Span<T> data)
         {
             if (this.Tensor.NumberofElements != data.Length)
             {
-                throw new ArgumentException($"The number of data elements specified ({data.Length}) does not match " +
+                throw new ArgumentException($"The number of data elements ({data.Length}) does not match " +
                     $"the number of elements in tensor {Tensor.Label} : {Tensor.NumberofElements}.");
             }
         }
@@ -235,6 +312,14 @@ namespace Adrien
             }
         }
 
+        internal void ThrowIfPinned()
+        {
+            if (IsPinned)
+            {
+                throw new InvalidOperationException("The memory for this variable is still pinned and cannot be freed.");
+            }
+        }
+
         void IDisposable.Dispose()
         {
             Dispose(true);
@@ -245,7 +330,8 @@ namespace Adrien
         {
             if (disposing)
             {
-                Handle.Dispose();
+                ThrowIfPinned();
+                MemoryHandle.Dispose();
             }
         }
 

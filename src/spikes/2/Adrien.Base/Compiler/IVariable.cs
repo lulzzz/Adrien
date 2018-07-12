@@ -6,15 +6,13 @@ using System.Text;
 
 namespace Adrien.Compiler
 {
-    public interface IVariable<T> : INDArray where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
+    public interface IVariable<T> : INDArray, IPinnable where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
-        string Name { get; }
-       
         int[] Dimensions { get; }
 
         int Rank { get; }
 
-        MemoryHandle Handle { get; }
+        MemoryHandle MemoryHandle { get; }
 
         bool Initialized { get; }
 
