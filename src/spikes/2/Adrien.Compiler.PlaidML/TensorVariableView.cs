@@ -70,20 +70,6 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
-       
-        public bool CopyFrom(T[] array)
-        {
-            ThrowIfNotAllocated();
-            ThrowIfNotValid();
-            if (array.Length != this.ElementCount)
-            {
-                throw new ArgumentOutOfRangeException($"The length of the array {array.Length} does not match the length of the view {ElementCount}.");
-            }
-            Span<T> a = new Span<T>(array);
-            a.CopyTo(Span);
-            return Writeback();
-        }
-
         public bool CopyFromAndFree(T[] array)
         {
             bool copy = CopyFrom(array);
@@ -129,23 +115,6 @@ namespace Adrien.Compiler.PlaidML
             return this;
         }
 
-        internal unsafe void* PtrTo(int index)
-        {
-            ThrowIfNotAllocated();
-            ThrowIfNotValid();
-            ThrowIfIndexOutsideRange(index);
-            return Unsafe.Add<T>(BaseAddress.ToPointer(), index);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected void ThrowIfIndexOutsideRange(int index)
-        {
-            if (index < 0 || index >= ElementCount)
-            {
-                throw new IndexOutOfRangeException();
-            }
-        }
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe ref T Read(int index)
         {
@@ -165,5 +134,38 @@ namespace Adrien.Compiler.PlaidML
             v = value;
             IsDirty = true;
         }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal unsafe void* PtrTo(int index)
+        {
+            ThrowIfNotAllocated();
+            ThrowIfNotValid();
+            ThrowIfIndexOutsideRange(index);
+            return Unsafe.Add<T>(BaseAddress.ToPointer(), index);
+        }
+
+        protected bool CopyFrom(T[] array)
+        {
+            ThrowIfNotAllocated();
+            ThrowIfNotValid();
+            if (array.Length != this.ElementCount)
+            {
+                throw new ArgumentOutOfRangeException($"The length of the array {array.Length} does not match the length of the view {ElementCount}.");
+            }
+            Span<T> a = new Span<T>(array);
+            a.CopyTo(Span);
+            return Writeback();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected void ThrowIfIndexOutsideRange(int index)
+        {
+            if (index < 0 || index >= ElementCount)
+            {
+                throw new IndexOutOfRangeException();
+            }
+        }
+
+ 
     }
 }

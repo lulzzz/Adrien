@@ -12,9 +12,9 @@ namespace Adrien.Compiler
 
         IExpressionTree ExpressionTree { get; }
 
-        IVariable<T> Output { get; }
+        IReadOnlyList<IVariableShape> Input { get; }
 
-        IReadOnlyList<IVariable<T>> Input { get; }
+        IVariableShape Output { get; }
 
         bool CompileBeforeRun { get; set; }
 

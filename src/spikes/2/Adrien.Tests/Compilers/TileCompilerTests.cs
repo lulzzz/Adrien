@@ -24,8 +24,6 @@ namespace Adrien.Tests.Compilers
             Assert.True(compiler.Initialized);
             Kernel<int> k = new Kernel<int>(compiler, C);
             Assert.True(k.Compile());
-            
-            
         }
     }
 }

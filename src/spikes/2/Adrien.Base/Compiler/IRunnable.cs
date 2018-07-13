@@ -6,6 +6,10 @@ namespace Adrien.Compiler
 {
     public interface IRunnable<T> where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
-        bool Run(out Memory<T> output, params Memory<T>[] input);
+        IReadOnlyList<IVariable<T>> Output { get; }
+
+        IReadOnlyList<IVariable<T>> Input { get; }
+
+        bool Run();
     }
 }

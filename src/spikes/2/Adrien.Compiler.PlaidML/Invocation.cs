@@ -6,11 +6,12 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class Invocation : PlaidMLApi<Invocation>
+    public class Invocation<T> : PlaidMLApi<Invocation<T>>
+        where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
-        public Invoker Invoker { get; protected set; }
+        public Invoker<T> Invoker { get; protected set; }
        
-        public Invocation(Context ctx, Invoker invoker) : base(ctx)
+        public Invocation(Context ctx, Invoker<T> invoker) : base(ctx)
         {
             ptr = plaidml.__Internal.PlaidmlScheduleInvocation(_Context, invoker);
             if(ptr.IsZero())

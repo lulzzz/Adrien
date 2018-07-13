@@ -11,9 +11,11 @@ using Adrien.Trees;
 
 namespace Adrien.Notation
 {
-    public partial class Tensor : Term, IAlgebra<Tensor, TensorExpression>
+    public partial class Tensor : Term, IAlgebra<Tensor, TensorExpression>, IVariableShape
     {
         public int[] Dimensions { get; protected set; }
+
+        public int[] Stride { get; protected set; }
 
         public int Rank => Dimensions.Length;
 
@@ -41,14 +43,16 @@ namespace Adrien.Notation
 
         protected (Tensor tensor, int index)? GeneratorContext { get; set; }
 
-        public Tensor(params int[] dim) : base("A")
-        {
-            Dimensions = dim;
-        }
 
         public Tensor(string name, params int [] dim) : base(name)
         {
             Dimensions = dim;
+            Stride = GenericMath<int>.StrideInElements(Dimensions);
+        }
+
+        public Tensor(params int[] dim) : this("A", dim)
+        {
+
         }
 
         public Tensor(string name, string indexNameBase, out IndexSet I, params int[] dim) : this(name, dim)

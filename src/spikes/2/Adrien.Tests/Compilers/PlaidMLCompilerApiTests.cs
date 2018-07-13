@@ -140,17 +140,19 @@ namespace Adrien.Tests.Compilers
             TensorVariable o = new TensorVariable(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
             
             Int32[] input_data = { 0, 1, 3,  4, 5, 6 };
-            i.CreateView<Int32>(MemoryMapType.Discard).CopyFrom(input_data);
+            i.CreateView<Int32>(MemoryMapType.Discard).CopyFromAndFree(input_data);
+      
             TensorVariableView<Int32> v = i.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(3, v[2]);
-            Invoker invoker = new Invoker(context, f, new Variable[] { i }, new Variable[] { o });
-            //Invoker invoker = new Invoker(context, f, i);
+            Invoker<Int32> invoker = new Invoker<Int32>(context, f, new Variable[] { i }, new Variable[] { o });
+          
             Shape x = invoker.GetOutputShape("O");
             Assert.True(x.ElementCount == 6);
             Assert.True(invoker.AllVariablesSet);
-            Invocation inv = invoker.Invoke();
+            Invocation<Int32> inv = invoker.Invoke();
             TensorVariableView<Int32> R = o.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(6, R.ElementCount);
+            Assert.Equal(4, R[2]);
         }
 
         [Fact]

@@ -1,19 +1,29 @@
 ﻿using System;
 using System.Buffers;
 using System.Collections.Generic;
-
+using System.Linq;
 
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class TensorVariable : Variable
+    public class TensorVariable : Variable, IVariableShape
     {
         public Device Device { get; protected set; }
 
         public DeviceBuffer DeviceBuffer { get; protected set; }
 
         public Shape Shape { get; protected set; }
+
+        public int Rank => Convert.ToInt32(Shape.DimensionCount);
+
+        public int[] Dimensions => Shape.Dimensions.Select(d => Convert.ToInt32(d.length)).ToArray();
+
+        public int[] Stride => Shape.Dimensions.Select(d => Convert.ToInt32(d.stride)).ToArray();
+
+        public string Label => Name;
+
+        public string Id { get; set; }
 
         public TensorVariable(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context, name)
         {

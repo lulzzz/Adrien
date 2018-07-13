@@ -57,7 +57,41 @@ namespace Adrien.Compiler.PlaidML
                (KernelDevice.DeviceConfig.Details);
             Initialized = true;
         }
-       
+
+        public bool Compile<TKernel>(IKernel<TKernel> kernel, out IRunnable<TKernel> result)
+            where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
+        {
+            result = null;
+            ThrowIfNotInitialized();
+            Status = CompilerStatus.Compiling;
+            TileGenerator g = new TileGenerator(kernel.ExpressionTree);
+            if (!g.Success)
+            {
+                Status = CompilerStatus.ErrorGeneratingCode;
+                return false;
+            }
+            Function f = CreateFunction(g);
+            if (!f.IsAllocated)
+            {
+                return false;
+            }
+            
+            Variable[] inputTensors = kernel.Input
+                .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Label))
+                .ToArray();
+            Variable outputTensor = CreateTensor(CreateShape<TKernel>(kernel.Output.Dimensions),
+                kernel.Output.Label);
+            Invoker<TKernel> invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
+            if (invoker.IsAllocated && invoker.AllVariablesSet)
+            {
+                result = invoker;
+                return true;
+            }
+            else
+            {
+                return false;
+            }   
+        }
 
         public Device OpenFirstDevice()
         {
@@ -74,14 +108,15 @@ namespace Adrien.Compiler.PlaidML
 
         public Function CreateFunction(TileGenerator generator)
         {
-            ThrowIfNotAllocated();
             ThrowIfNotInitialized();
-            Function f = new Function(Context, generator.Text);
-            if (f.IsAllocated)
-            {
-                return f;
-            }
-            else return null;
+            return new Function(Context, generator.Text);
+           
+        }
+
+        public Function CreateFunction(string code)
+        {
+            ThrowIfNotAllocated();
+            return new Function(_Context, code);
         }
 
         public Shape CreateShape<T>(params int[] dimensions) where T : unmanaged
@@ -97,36 +132,7 @@ namespace Adrien.Compiler.PlaidML
             return new TensorVariable(KernelDevice, shape, name);
         }
 
-        public Function CreateFunction(string code)
-        {
-            ThrowIfNotAllocated();
-            return new Function(_Context, code);
-        }
-
-
-        public bool Compile<TKernel>(IKernel<TKernel> kernel, out IRunnable<TKernel> result) 
-            where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
-        {
-            result = null;
-            ThrowIfNotInitialized();
-            Status = CompilerStatus.Compiling;
-            TileGenerator g = new TileGenerator(kernel.ExpressionTree);
-            if (!g.Success)
-            {
-                Status = CompilerStatus.ErrorGeneratingCode;
-                return false;
-            }
-            Function f = CreateFunction(g);
-            List<TensorVariable> inputTensors = kernel.Input
-                .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Name))
-                .ToList();
-            TensorVariable outputTensor = CreateTensor(CreateShape<TKernel>(kernel.Output.Dimensions),
-                kernel.Output.Name);
-
-            //inputTensors.
-            return false;
-        }
-
+   
         internal void ThrowIfNotInitialized()
         {
             if (!Initialized)

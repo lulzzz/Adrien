@@ -17,7 +17,8 @@ namespace Adrien.Tests
         {
             var (A, B, C) = Tensor.ThreeD("A", (2, 2, 2), "a", out Index a, out Index b, out Index c)
                 .Three();
-            
+
+            var D = Tensor.ThreeD("D", (2, 2, 2));
             C[a, b] = A[a, b] * B[b, a];
             
             Kernel<int> k = new Kernel<int>(C);
@@ -25,11 +26,10 @@ namespace Adrien.Tests
             Assert.Equal(3, k.Tensors.Count);
             Assert.Equal(C, k.OutputTensor);
             Assert.Equal(2, k.InputTensors.Count);
-            Assert.Equal(8, k[A].ElementCount);
-            k[A].Ones();
-            Assert.Equal(1, k.Input[0][0]);
-            k[A].Zeros();
-            Assert.Equal(0, k.Input[0][0]);
+            Assert.Equal("A", k[A].Label);
+            Assert.Throws<ArgumentException>(() => k[D]);
+            Assert.Equal(3, k[A].Rank);
+            Assert.Equal(4, k[B].Stride[0]);
         }
     }
 }

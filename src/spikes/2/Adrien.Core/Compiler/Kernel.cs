@@ -15,9 +15,9 @@ namespace Adrien.Compiler
 
         public IExpressionTree ExpressionTree => Tree;
 
-        public IVariable<T> Output { get; protected set; }
+        public IVariableShape Output { get; protected set; }
 
-        public IReadOnlyList<IVariable<T>> Input { get; protected set; }
+        public IReadOnlyList<IVariableShape> Input { get; protected set; }
 
         public ExpressionTree Tree { get; protected set; }
 
@@ -50,8 +50,9 @@ namespace Adrien.Compiler
                 ThrowIfNotCompileSuccess();
                 return new Func<Memory<T>[], Var<T>>((input) =>
                 {   
-                    CompilerResult.Run(out Memory<T> output, input);
-                    return new Var<T>(OutputTensor, output);
+                    CompilerResult.Run();
+                    return null;
+                    //return new Var<T>(OutputTensor, output);
                 });
             }
         }
@@ -64,7 +65,8 @@ namespace Adrien.Compiler
                     ($"The output tensor {output.Label} must be assigned an input expression.");
             }
             Tree = output.Assignment.Expression.ToTree((output, output.Assignment.IndexSet));
-            Input = InputTensors.Select(t => t.Var(new T[t.NumberofElements]) as IVariable<T>).ToList();
+            Input = InputTensors;
+            Output = output;
         }
 
         public Kernel(ICompiler compiler, Tensor output, DeviceType deviceType = DeviceType.CPU) : this(output)
@@ -73,23 +75,12 @@ namespace Adrien.Compiler
             DeviceType = deviceType;
         }
 
-        public Kernel(ICompiler compiler, Tensor output, DeviceType deviceType = DeviceType.CPU, params Var<T>[] input)
-            : this(compiler, output, deviceType)
-        {
-            if (input.Length != InputTensors.Count) 
-            {
-                throw new ArgumentException($"This kernel has {InputTensors.Count} input tensors but only " + 
-                    $"{input.Length} input variables were specified as arguments.");                               
-            }
-            Input = input;
-        }
-
         
-        public IVariable<T> this[int index]
+        public IVariableShape this[int index]
         {
             get
             {
-                if (index < 0 || index >= Input.Count())
+                if (index < 0 || index > Input.Count() - 1)
                 {
                     throw new IndexOutOfRangeException();
                 }
@@ -100,14 +91,12 @@ namespace Adrien.Compiler
             }    
         }
 
-        public IVariable<T> this[Tensor index]
+        public IVariableShape this[Tensor index]
         {
-            get => Input.SingleOrDefault(t => t.Name == index.Name) ?? 
+            get => Input.SingleOrDefault(t => t.Label == index.Name) ?? 
                 throw new ArgumentException($"The kernel does not contain an input variable bound to tensor " 
-                    + $"{index.Label}");
-            
+                    + $"{index.Label}");   
         }
-
 
         public bool Compile()
         {

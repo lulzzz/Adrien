@@ -48,6 +48,10 @@ namespace Adrien.Generator
             {
                 throw new Exception($"Context has {Context.Count} nodes, not 1.");
             }
+            else
+            {
+                Success = true;
+            }
         }
     }
 }

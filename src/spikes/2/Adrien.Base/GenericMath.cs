@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Adrien
 {
@@ -9,14 +10,10 @@ namespace Adrien
         public static Random Rng { get; } = new Random();
 
 
-        static GenericMath()
-        {
+        static GenericMath() {}
 
-        }
-       
 
-        
-        public static TData Const<TValue>(TValue v) where TValue : unmanaged, IEquatable<TValue>, IComparable<TValue>, 
+        public static TData Const<TValue>(TValue v) where TValue : unmanaged, IEquatable<TValue>, IComparable<TValue>,
             IConvertible
         {
             return (TData)Convert.ChangeType(v, typeof(TData));
@@ -208,7 +205,37 @@ namespace Adrien
             }
             return (Const(factor), Const(max));
         }
-        
 
+        public static int[] StrideInElements(int[] dim)
+        {
+            int[] stride = new int[dim.Length];
+            float s = 1;
+            for (int i = 0; i < dim.Length; i++)
+            {
+                if (dim[i] > 0)
+                {
+                    s *= Convert.ToSingle(dim[i]);
+                }
+            }
+            for (int i = 0; i < dim.Length; i++)
+            {
+                if (dim[i] > 0)
+                {
+                    s /= Convert.ToSingle(dim[i]);
+                    stride[i] = Convert.ToInt32(s);
+                }
+            }
+            return stride;
+        }
+
+        public static int[] StrideInBytes<T>(int[] dim)
+        {
+            int[] stride = StrideInElements(dim);
+            for (int i = 0; i < stride.Length; i++)
+            {
+                stride[i] *= Unsafe.SizeOf<T>();
+            }
+            return stride;
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace Adrien.Trees
                     return TensorOp.Mul;
                 case ExpressionType.Add: return TensorOp.Add;
                 default:
-                    throw new Exception($"Cannot translate expression type: {et} to tensor Op.");
+                    throw new Exception($"Cannot translate expression type: {et} to TensorOp.");
             }
         }
 
