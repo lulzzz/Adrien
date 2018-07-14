@@ -144,7 +144,7 @@ namespace Adrien.Tests.Compilers
       
             TensorVariableView<Int32> v = i.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(3, v[2]);
-            Invoker<Int32> invoker = new Invoker<Int32>(context, f, new Variable[] { i }, new Variable[] { o });
+            Invoker<Int32> invoker = new Invoker<Int32>(context, f, new TensorVariable[] { i }, new TensorVariable[] { o });
           
             Shape x = invoker.GetOutputShape("O");
             Assert.True(x.ElementCount == 6);

@@ -21,9 +21,9 @@ namespace Adrien
 
         public int[] Dimensions => Tensor.Dimensions;
 
-        public int Rank => Tensor.Rank;
+        public int[] Stride => Tensor.Stride;
 
-        public int Stride { get; protected set; }
+        public int Rank => Tensor.Rank;
 
         public int ElementCount => Tensor.NumberofElements;
 
@@ -51,7 +51,8 @@ namespace Adrien
             Tensor = tensor;
         }
 
-        internal Var(Tensor tensor, params T[] data)
+        internal Var(Tensor tensor, params T[] data) : this(tensor, (Array)data) {}
+         /*
         {
             if (data.Length ==0)
             {
@@ -65,8 +66,9 @@ namespace Adrien
 
             Tensor = tensor;
             MemoryHandle = new Memory<T>(data).Pin();
+            Pins = 1;
             Initialized = true;
-        }
+        }*/
 
         internal unsafe Var(Tensor tensor, Array array) : this(tensor)
         {
@@ -96,20 +98,15 @@ namespace Adrien
             {
                 throw new Exception("Could not allocate GCHandle for array.");
             }
-            
             MemoryHandle = new MemoryHandle(h.AddrOfPinnedObject().ToPointer(), h, this);
+            Pins = 1;
             Initialized = true;
         }
 
         internal Var(Tensor tensor, Memory<T> memory) : this(tensor)
         {
             MemoryHandle = memory.Pin();
-            Initialized = true;
-        }
-
-        internal unsafe Var(Tensor tensor, MemoryHandle handle) : this(tensor)
-        {
-            MemoryHandle = handle;
+            Pins = 1;
             Initialized = true;
         }
 
@@ -162,29 +159,20 @@ namespace Adrien
             Unsafe.Write(PtrTo(index), value);
         }
 
-        
 
-        
-        public static unsafe implicit operator IntPtr(Var<T> var)
-        {
-            var.ThrowIfNotInitialized();
-            var.ThrowIfHandleIsNull();
-            return new IntPtr(var.MemoryHandle.Pointer);
-        }
-
-
-        public void CopyFrom(params T[] data)
+        public void CopyFrom(Span<T> data)
         {
             ThrowIfNotInitialized();
             ThrowIfHandleIsNull();
             ThrowIf1DArrayLengthIsNotTensorSize(data);
-            Span<T> source = new Span<T>(data);
-            bool r = source.TryCopyTo(this.Span);
+            bool r = data.TryCopyTo(Span);
             if (!r)
             {
                 throw new Exception("Copy operation failed.");
             }
         }
+
+        public void CopyFrom(params T[] data) => CopyFrom(new Span<T>(data));
 
         public void CopyTo(Span<T> destination)
         {
@@ -198,10 +186,7 @@ namespace Adrien
             }
         }
 
-        public void CopyTo(T[] destination)
-        {
-            CopyTo(new Span<T>(destination));
-        }
+        public void CopyTo(T[] destination) => CopyTo(new Span<T>(destination));
 
         public IVariable<T> Fill(T c)
         {
@@ -342,7 +327,7 @@ namespace Adrien
             {
                 case Boolean _:
                     return DataType.BOOLEAN;
-                   
+
                 case SByte _:
                     return DataType.INT8;
 
@@ -376,7 +361,7 @@ namespace Adrien
                 default:
                     throw new NotSupportedException($"Unsupported .NET type:{typeof(T).Name}");
             }
-            
+
         }
     }
 }

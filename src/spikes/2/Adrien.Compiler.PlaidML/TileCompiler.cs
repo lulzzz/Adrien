@@ -76,12 +76,12 @@ namespace Adrien.Compiler.PlaidML
                 return false;
             }
             
-            Variable[] inputTensors = kernel.Input
+            TensorVariable[] inputTensorVariables = kernel.InputShapes
                 .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Label))
                 .ToArray();
-            Variable outputTensor = CreateTensor(CreateShape<TKernel>(kernel.Output.Dimensions),
-                kernel.Output.Label);
-            Invoker<TKernel> invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
+            TensorVariable outputTensorVariable = CreateTensor(CreateShape<TKernel>(kernel.OutputShape.Dimensions),
+                kernel.OutputShape.Label);
+            Invoker<TKernel> invoker = new Invoker<TKernel>(Context, f, outputTensorVariable, inputTensorVariables);
             if (invoker.IsAllocated && invoker.AllVariablesSet)
             {
                 result = invoker;
@@ -92,6 +92,41 @@ namespace Adrien.Compiler.PlaidML
                 return false;
             }   
         }
+
+        public bool Compile<TKernel>(IEnumerable<IVariableShape> inputShapes, IVariableShape outputShape, string code, 
+            out IRunnable<TKernel> result)
+                where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
+        {
+            result = null;
+            ThrowIfNotInitialized();
+            Status = CompilerStatus.Compiling;
+            Function f = CreateFunction(code);
+            if (!f.IsAllocated)
+            {
+                return false;
+            }
+
+            TensorVariable[] inputTensors = inputShapes
+                .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Label))
+                .ToArray();
+            TensorVariable outputTensor = CreateTensor(CreateShape<TKernel>(outputShape.Dimensions),
+                outputShape.Label);
+            Invoker<TKernel> invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
+            if (invoker.IsAllocated && invoker.AllVariablesSet)
+            {
+                result = invoker;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool Compile<TKernel>(IVariableShape inputShape, IVariableShape outputShape, string code,
+            out IRunnable<TKernel> result)
+            where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
+            => Compile(new IVariableShape[] { inputShape }, outputShape, code, out result);
 
         public Device OpenFirstDevice()
         {

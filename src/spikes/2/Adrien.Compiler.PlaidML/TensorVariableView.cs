@@ -30,6 +30,8 @@ namespace Adrien.Compiler.PlaidML
 
         public int[] Dimensions => TensorVariable.Shape.Dimensions.Select(d => Convert.ToInt32(d.length)).ToArray();
 
+        public int[] Stride => TensorVariable.Shape.Dimensions.Select(d => Convert.ToInt32(d.stride)).ToArray();
+
         public int Rank => Convert.ToInt32(TensorVariable.Shape.DimensionCount);
 
         public Span<T> Span => GetSpan<T>();
@@ -70,16 +72,30 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
-        public bool CopyFromAndFree(T[] array)
+        public bool CopyFromAndFree(Span<T> src)
         {
-            bool copy = CopyFrom(array);
-            if (!copy)
+            bool copy = CopyFrom(src);
+            if (copy)
             {
-                return copy;
+                Free();
             }
-            Free();
             return copy;
         }
+
+        public bool CopyFromAndFree(T[] array) => CopyFromAndFree(new Span<T>(array));
+
+        public bool CopyToAndFree(Span<T> dest)
+        {
+            bool copy = CopyTo(dest);
+            if (copy)
+            {
+                Free();
+            }
+            return copy;
+        }
+
+        public bool CopyToAndFree(T[] array) => CopyToAndFree(new Span<T>(array));
+
 
         #region INDArray implementation
         public bool Initialized => IsAllocated;
@@ -144,17 +160,33 @@ namespace Adrien.Compiler.PlaidML
             return Unsafe.Add<T>(BaseAddress.ToPointer(), index);
         }
 
-        protected bool CopyFrom(T[] array)
+        protected bool CopyFrom(Span<T> src)
         {
             ThrowIfNotAllocated();
             ThrowIfNotValid();
-            if (array.Length != this.ElementCount)
+            if (src.Length != this.ElementCount)
             {
-                throw new ArgumentOutOfRangeException($"The length of the array {array.Length} does not match the length of the view {ElementCount}.");
+                throw new ArgumentOutOfRangeException($"The length of the source span: {src.Length} " + 
+                    $"does not match the length of the view {ElementCount}.");
             }
-            Span<T> a = new Span<T>(array);
-            a.CopyTo(Span);
-            return Writeback();
+            bool r = src.TryCopyTo(Span);
+            if (r)
+            {
+                return Writeback();
+            }
+            else return false;
+        }
+
+        protected bool CopyTo(Span<T> dest)
+        {
+            ThrowIfNotAllocated();
+            ThrowIfNotValid();
+            if (dest.Length != this.ElementCount)
+            {
+                throw new ArgumentOutOfRangeException($"The length of the source span: {dest.Length} " +
+                    $"does not match the length of the view {ElementCount}.");
+            }
+            return Span.TryCopyTo(dest);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

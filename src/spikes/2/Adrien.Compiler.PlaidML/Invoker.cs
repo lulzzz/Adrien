@@ -9,9 +9,9 @@ namespace Adrien.Compiler.PlaidML
     public class Invoker<T> : PlaidMLApi<Invoker<T>>, IRunnable<T> 
         where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
-        public IReadOnlyList<TensorVariable> OutputTensors { get; protected set; }
+        public TensorVariable OutputTensorVariable { get; protected set; }
 
-        public IReadOnlyList<TensorVariable> InputTensors { get; protected set; }
+        public IReadOnlyList<TensorVariable> InputTensorVariables { get; protected set; }
 
         public bool InputVariablesSet { get; protected set; }
 
@@ -19,12 +19,8 @@ namespace Adrien.Compiler.PlaidML
 
         public bool AllVariablesSet => InputVariablesSet && OutputVariablesSet;
         
-        public IReadOnlyList<IVariable<T>> Input { get; protected set; }
 
-        public IReadOnlyList<IVariable<T>> Output { get; protected set; }
-
-
-        public Invoker(Context ctx, Function f, Variable[] input, Variable[] output) : base(ctx)
+        public Invoker(Context ctx, Function f, TensorVariable[] input, TensorVariable[] output) : base(ctx)
         {
             ptr = plaidml.__Internal.PlaidmlAllocInvoker(_Context, f); 
             if (ptr.IsZero())
@@ -50,6 +46,7 @@ namespace Adrien.Compiler.PlaidML
             if (r)
             {
                 InputVariablesSet = true;
+                InputTensorVariables = input;
             }
             else
             {
@@ -75,46 +72,32 @@ namespace Adrien.Compiler.PlaidML
                 OutputVariablesSet = false;
                 return;
             }
-
-            if (AllVariablesSet)
-            {
-                Input = InputTensors.Select(t => t.CreateView<T>(MemoryMapType.Discard)).ToList();
-            }
-            
         }
 
-        public Invoker(Context ctx, Function f, Variable output, params Variable[] input)
-            : this(ctx, f, input, new Variable[] { output }) { }
+        public Invoker(Context ctx, Function f, TensorVariable output, params TensorVariable[] input)
+            : this(ctx, f, input, new TensorVariable[] { output }) { }
 
 
-        public bool Run()
+        public bool Run(IEnumerable<IVariable<T>> input, IVariable<T> output)
         {
             ThrowIfNotAllocated();
             ThrowifAllVariablesNotSet();
+            ThrowIfInputShapeMismatch(input);
 
-            foreach (var v in Input)
+            for(int i = 0; i < input.Count(); i++)
             {
-                var tv = (TensorVariableView<T>) v;
-                if (!tv.Writeback())
+                var iv = InputTensorVariables[i].CreateView<T>(MemoryMapType.Discard);
+                if (!iv.CopyFromAndFree(input.ElementAt(i).Span))
                 {
+                    iv.Free();
                     return false;
                 }
             }
 
-            foreach (var v in Output)
-            {
-                var tv = (TensorVariableView<T>) v;
-                if (!tv.Writeback())
-                {
-                    return false;
-                }
-            }
-
-            var c = this.Invoke();
+            var c = Invoke();
             if (c.IsAllocated)
             {
-                Input = InputTensors.Select(t => t.CreateView<T>(MemoryMapType.Retain)).ToList();
-                Output = OutputTensors.Select(t => t.CreateView<T>(MemoryMapType.Retain)).ToList();
+                OutputTensorVariable.CreateView<T>(MemoryMapType.Retain).CopyToAndFree(output.Span);
                 return true;
             }
             else
@@ -185,6 +168,32 @@ namespace Adrien.Compiler.PlaidML
             if (!AllVariablesSet)
             {
                 throw new InvalidOperationException("All variables are not allocated.");
+            }
+        }
+
+        internal void ThrowIfInputShapeMismatch(IEnumerable<IVariable<T>> input)
+        {
+           for (int i = 0; i < InputTensorVariables.Count; i++)
+           {
+                var iv = InputTensorVariables[i];
+                var id = input.ElementAt(i);
+
+                if (!iv.Dimensions.SequenceEqual(id.Dimensions))
+                {
+                    throw new ArgumentException($"The dimensions of kernel input tensor {iv.Name} do not match the " +
+                        $"dimensions of the input data variable {id.Name}.");
+                }
+                else if (iv.Rank != id.Rank)
+                {
+                    throw new ArgumentException($"The rank of kernel input tensor {iv.Name} does not match the " +
+                        $"rank of the input data variable {id.Name}.");
+                }
+                else if (!iv.Stride.SequenceEqual(id.Stride))
+                {
+                    throw new ArgumentException($"The stride of kernel input tensor {iv.Name} does not match the " +
+                        $"stride of the input data variable {id.Name}.");
+                }
+
             }
         }
     }

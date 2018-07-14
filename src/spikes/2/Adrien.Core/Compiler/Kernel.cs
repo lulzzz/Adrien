@@ -15,9 +15,9 @@ namespace Adrien.Compiler
 
         public IExpressionTree ExpressionTree => Tree;
 
-        public IVariableShape Output { get; protected set; }
+        public IVariableShape OutputShape { get; protected set; }
 
-        public IReadOnlyList<IVariableShape> Input { get; protected set; }
+        public IReadOnlyList<IVariableShape> InputShapes { get; protected set; }
 
         public ExpressionTree Tree { get; protected set; }
 
@@ -39,7 +39,7 @@ namespace Adrien.Compiler
 
         public bool CompileBeforeRun { get; set; }
 
-        public Func<Memory<T>[], Var<T>> Func
+        public Func<Var<T>[], Var<T>> Func
         {
             get
             {
@@ -48,11 +48,19 @@ namespace Adrien.Compiler
                     Compile();
                 }
                 ThrowIfNotCompileSuccess();
-                return new Func<Memory<T>[], Var<T>>((input) =>
-                {   
-                    CompilerResult.Run();
-                    return null;
-                    //return new Var<T>(OutputTensor, output);
+
+                return new Func<Var<T>[], Var<T>>((inputData) =>
+                {
+                    var output = OutputTensor.Var(new T[OutputTensor.NumberofElements]);
+                    if (CompilerResult.Run(inputData.ToList(), output))
+                    {
+                        return output;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                    
                 });
             }
         }
@@ -65,8 +73,8 @@ namespace Adrien.Compiler
                     ($"The output tensor {output.Label} must be assigned an input expression.");
             }
             Tree = output.Assignment.Expression.ToTree((output, output.Assignment.IndexSet));
-            Input = InputTensors;
-            Output = output;
+            InputShapes = InputTensors;
+            OutputShape = output;
         }
 
         public Kernel(ICompiler compiler, Tensor output, DeviceType deviceType = DeviceType.CPU) : this(output)
@@ -80,23 +88,24 @@ namespace Adrien.Compiler
         {
             get
             {
-                if (index < 0 || index > Input.Count() - 1)
+                if (index < 0 || index > InputShapes.Count() - 1)
                 {
                     throw new IndexOutOfRangeException();
                 }
                 else
                 {
-                    return Input[index];
+                    return InputShapes[index];
                 }
             }    
         }
 
         public IVariableShape this[Tensor index]
         {
-            get => Input.SingleOrDefault(t => t.Label == index.Name) ?? 
+            get => InputShapes.SingleOrDefault(t => t.Label == index.Name) ?? 
                 throw new ArgumentException($"The kernel does not contain an input variable bound to tensor " 
                     + $"{index.Label}");   
         }
+
 
         public bool Compile()
         {
