@@ -7,7 +7,7 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class TensorVariable : Variable, IVariableShape
+    public class DeviceTensor : Variable, IVariableShape
     {
         public Device Device { get; protected set; }
 
@@ -25,7 +25,7 @@ namespace Adrien.Compiler.PlaidML
 
         public string Id { get; set; }
 
-        public TensorVariable(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context, name)
+        public DeviceTensor(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context, name)
         {
             if (buffer == null)
             {

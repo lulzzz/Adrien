@@ -14,15 +14,17 @@ namespace Adrien.Tests.Compilers
     public class TileCompilerTests
     {
         [Fact]
-        public void CanCompileCode()
+        public void CanCompileVectorKernel()
         {
-            string code = @"function(I[M, N])-> (O) {
-                O[n: N] = > (I[m, n]);
+            string code = @"function(I[N])-> (O) {
+                O[i: N] = +(I[k]), i - k < N;
             }";
             TileCompiler c = new TileCompiler();
-            Assert.True(c.Compile(new Tensor("A", 5), new Tensor("B", 5), code, out IRunnable<int> result));
-            var output = new Tensor(5).Var(new int[5]);
-            result.Run(new IVariable<int>[] { new Tensor(5).Var(1, 2, 3, 4, 5) }, output);
+            Assert.True(c.Compile(5, code, out IRunnable<int> result));
+            var O = new Vector("O", 5).Var(new int[5]);
+            var I = new Vector("I", 5).Var(1, 2, 3, 4, 5);
+            Assert.Equal(RunStatus.Success, result.Run(O, I));
+            Assert.Equal(I[0] + I[1] + I[2] + I[3], O[3]);
         }
 
         [Fact]

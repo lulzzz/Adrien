@@ -8,6 +8,7 @@ namespace Adrien.Compiler
     {
         Success,
         Compiling,
-        ErrorGeneratingCode
+        ErrorGeneratingCode,
+        ErrorDuringCompilation
     }
 }

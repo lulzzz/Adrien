@@ -154,6 +154,7 @@ namespace Adrien.Notation
         public Var<T> Var<T>(params T[] data) where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible 
             => new Var<T>(this, data);
 
+
         public static string RankToTensorName(int rank)
         {
             string[] names = rank.ToWords().Split('-');

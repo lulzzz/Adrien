@@ -49,10 +49,10 @@ namespace Adrien.Compiler
                 }
                 ThrowIfNotCompileSuccess();
 
-                return new Func<Var<T>[], Var<T>>((inputData) =>
+                return new Func<Var<T>[], Var<T>>((input) =>
                 {
                     var output = OutputTensor.Var(new T[OutputTensor.NumberofElements]);
-                    if (CompilerResult.Run(inputData.ToList(), output))
+                    if (CompilerResult.Run(output, input) == RunStatus.Success)
                     {
                         return output;
                     }

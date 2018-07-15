@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 using Adrien.Compiler.PlaidML.Bindings;
@@ -9,18 +10,20 @@ namespace Adrien.Compiler.PlaidML
     public class Invoker<T> : PlaidMLApi<Invoker<T>>, IRunnable<T> 
         where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
-        public TensorVariable OutputTensorVariable { get; protected set; }
+        public DeviceTensor OutputTensor { get; protected set; }
 
-        public IReadOnlyList<TensorVariable> InputTensorVariables { get; protected set; }
+        public IReadOnlyList<DeviceTensor> InputTensors { get; protected set; }
 
-        public bool InputVariablesSet { get; protected set; }
+        public bool InputTensorsSet { get; protected set; }
 
-        public bool OutputVariablesSet { get; protected set; }
+        public bool OutputTensorsSet { get; protected set; }
 
-        public bool AllVariablesSet => InputVariablesSet && OutputVariablesSet;
-        
+        public bool AllVariablesSet => InputTensorsSet && OutputTensorsSet;
 
-        public Invoker(Context ctx, Function f, TensorVariable[] input, TensorVariable[] output) : base(ctx)
+       
+        public string RunStatusMessage { get; protected set; }
+
+        public Invoker(Context ctx, Function f, DeviceTensor[] input, DeviceTensor[] output) : base(ctx)
         {
             ptr = plaidml.__Internal.PlaidmlAllocInvoker(_Context, f); 
             if (ptr.IsZero())
@@ -45,12 +48,12 @@ namespace Adrien.Compiler.PlaidML
             }
             if (r)
             {
-                InputVariablesSet = true;
-                InputTensorVariables = input;
+                InputTensorsSet = true;
+                InputTensors = input;
             }
             else
             {
-                InputVariablesSet = false;
+                InputTensorsSet = false;
                 return;
             }
 
@@ -65,20 +68,21 @@ namespace Adrien.Compiler.PlaidML
             }
             if (r)
             {
-                OutputVariablesSet = true;
+                OutputTensorsSet = true;
+                OutputTensor = output[0];
             }
             else
             {
-                OutputVariablesSet = false;
+                OutputTensorsSet = false;
                 return;
             }
         }
 
-        public Invoker(Context ctx, Function f, TensorVariable output, params TensorVariable[] input)
-            : this(ctx, f, input, new TensorVariable[] { output }) { }
+        public Invoker(Context ctx, Function f, DeviceTensor output, params DeviceTensor[] input)
+            : this(ctx, f, input, new DeviceTensor[] { output }) { }
 
 
-        public bool Run(IEnumerable<IVariable<T>> input, IVariable<T> output)
+        public RunStatus Run(IVariable<T> output, params IVariable<T>[] input)
         {
             ThrowIfNotAllocated();
             ThrowifAllVariablesNotSet();
@@ -86,26 +90,36 @@ namespace Adrien.Compiler.PlaidML
 
             for(int i = 0; i < input.Count(); i++)
             {
-                var iv = InputTensorVariables[i].CreateView<T>(MemoryMapType.Discard);
+                var iv = InputTensors[i].CreateView<T>(MemoryMapType.Discard);
                 if (!iv.CopyFromAndFree(input.ElementAt(i).Span))
                 {
                     iv.Free();
-                    return false;
+                    RunStatusMessage = $"Could not copy data from input variable {input.ElementAt(i).Name} to " + 
+                        $"device tensor {iv.Name}.";
+                    return RunStatus.ErrorAllocatingInput;
                 }
             }
 
             var c = Invoke();
             if (c.IsAllocated)
             {
-                OutputTensorVariable.CreateView<T>(MemoryMapType.Retain).CopyToAndFree(output.Span);
-                return true;
+                if (OutputTensor.CreateView<T>(MemoryMapType.Retain).CopyToAndFree(output.Span))
+                {
+                    return RunStatus.Success;
+                }
+                else
+                {
+                    RunStatusMessage = c.LastStatusString;
+                    return RunStatus.ErrorAllocatingOutput;
+                }
             }
             else
             {
-                return false;
+                RunStatusMessage = c.LastStatusString;
+                return RunStatus.ErrorExecuting; 
             }
         }
-
+ 
         public Invocation<T> Invoke()
         {
             ThrowIfNotAllocated();
@@ -144,25 +158,25 @@ namespace Adrien.Compiler.PlaidML
             }
             if (r)
             {
-                OutputVariablesSet = true;
+                OutputTensorsSet = true;
             }
             else
             {
-                OutputVariablesSet = false;
+                OutputTensorsSet = false;
             }
             return r;
         }
 
- 
-
+        [DebuggerStepThrough]
         internal void ThrowifInputVariablesNotSet()
         {
-            if (!InputVariablesSet)
+            if (!InputTensorsSet)
             {
                 throw new InvalidOperationException("Input variables are not allocated.");
             }
         }
 
+        [DebuggerStepThrough]
         internal void ThrowifAllVariablesNotSet()
         {
             if (!AllVariablesSet)
@@ -171,11 +185,12 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
+        [DebuggerStepThrough]
         internal void ThrowIfInputShapeMismatch(IEnumerable<IVariable<T>> input)
         {
-           for (int i = 0; i < InputTensorVariables.Count; i++)
+           for (int i = 0; i < InputTensors.Count; i++)
            {
-                var iv = InputTensorVariables[i];
+                var iv = InputTensors[i];
                 var id = input.ElementAt(i);
 
                 if (!iv.Dimensions.SequenceEqual(id.Dimensions))

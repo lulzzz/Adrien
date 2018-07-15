@@ -12,7 +12,7 @@ namespace Adrien.Compiler.PlaidML
     public class TensorVariableView<T> : MemoryMapping, IVariable<T> 
         where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
-        public TensorVariable TensorVariable
+        public DeviceTensor TensorVariable
         {
             get
             {
@@ -38,10 +38,10 @@ namespace Adrien.Compiler.PlaidML
 
         public bool IsDirty { get; protected set; }
 
-        protected TensorVariable _TensorVariable;
+        protected DeviceTensor _TensorVariable;
 
 
-        public TensorVariableView(TensorVariable variable, MemoryMapType mapType) 
+        public TensorVariableView(DeviceTensor variable, MemoryMapType mapType) 
             : base(variable.DeviceBuffer, mapType == MemoryMapType.Discard ? true : false)
         {
             _TensorVariable = variable;
@@ -61,6 +61,10 @@ namespace Adrien.Compiler.PlaidML
         
         public override bool Writeback()
         {
+            ThrowIfNotAllocated();
+            ThrowIfNotValid();
+            Unpin();
+            ThrowIfPinned();
             if (base.Writeback())
             {
                 IsDirty = false;
@@ -89,6 +93,7 @@ namespace Adrien.Compiler.PlaidML
             bool copy = CopyTo(dest);
             if (copy)
             {
+                Unpin();
                 Free();
             }
             return copy;

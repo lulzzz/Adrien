@@ -118,7 +118,7 @@ namespace Adrien.Tests.Compilers
         {
             Device device = new Device(context);
             Shape s1 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT64, 2, 3);
-            TensorVariable t = new TensorVariable(device, s1, "t");
+            Compiler.PlaidML.DeviceTensor t = new Compiler.PlaidML.DeviceTensor(device, s1, "t");
             TensorVariableView<Int64> v = t.CreateView<Int64>(MemoryMapType.Discard);
             Int64[,] array = { { 0, 1, 3 }, { 4, 5, 6 } };
             v.CopyFromAndFree(array.Flatten<Int64>().ToArray());
@@ -136,15 +136,15 @@ namespace Adrien.Tests.Compilers
                                 O[i: N] = +(I[k]), i - k < N;
                             }";
             Function f = new Function(context, code);
-            TensorVariable i = new TensorVariable(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "I");
-            TensorVariable o = new TensorVariable(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
+            Compiler.PlaidML.DeviceTensor i = new Compiler.PlaidML.DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "I");
+            Compiler.PlaidML.DeviceTensor o = new Compiler.PlaidML.DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
             
             Int32[] input_data = { 0, 1, 3,  4, 5, 6 };
             i.CreateView<Int32>(MemoryMapType.Discard).CopyFromAndFree(input_data);
       
             TensorVariableView<Int32> v = i.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(3, v[2]);
-            Invoker<Int32> invoker = new Invoker<Int32>(context, f, new TensorVariable[] { i }, new TensorVariable[] { o });
+            Invoker<int> invoker = new Invoker<int>(context, f, new Compiler.PlaidML.DeviceTensor[] { i }, new Compiler.PlaidML.DeviceTensor[] { o });
           
             Shape x = invoker.GetOutputShape("O");
             Assert.True(x.ElementCount == 6);
@@ -158,8 +158,8 @@ namespace Adrien.Tests.Compilers
         [Fact]
         public void CanGenerateTileFunction()
         {
-            var A = Tensor.TwoD("A", (8, 17), "a", out Index a, out Index b);
-            var B = Tensor.TwoD("B", (8, 17));
+            var A = Notation.Tensor.TwoD("A", (8, 17), "a", out Index a, out Index b);
+            var B = Notation.Tensor.TwoD("B", (8, 17));
             TileGenerator g = new TileGenerator((A[a, b] * B[a, b]).ToTree());
             Assert.Equal("A[a, b] * B[a, b]", g.Text);
             g = new TileGenerator(A[b].ToTree());

@@ -52,24 +52,7 @@ namespace Adrien
         }
 
         internal Var(Tensor tensor, params T[] data) : this(tensor, (Array)data) {}
-         /*
-        {
-            if (data.Length ==0)
-            {
-                throw new ArgumentException($"Zero data elements specified.");
-            }
-            else if (tensor.NumberofElements != data.Length)
-            {
-                throw new ArgumentException($"The number of data elements specified ({data.Length}) "
-                    + $"does not mach the number of elements in tensor {tensor.Label} : {tensor.NumberofElements}.");
-            }
-
-            Tensor = tensor;
-            MemoryHandle = new Memory<T>(data).Pin();
-            Pins = 1;
-            Initialized = true;
-        }*/
-
+       
         internal unsafe Var(Tensor tensor, Array array) : this(tensor)
         {
             int[] zeroindex = new int[array.Rank];

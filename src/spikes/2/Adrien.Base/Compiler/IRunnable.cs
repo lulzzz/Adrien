@@ -6,6 +6,8 @@ namespace Adrien.Compiler
 {
     public interface IRunnable<T> where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
-        bool Run(IEnumerable<IVariable<T>> inputData, IVariable<T> output);
+        RunStatus Run(IVariable<T> output, params IVariable<T>[] input);
+
+        string RunStatusMessage { get; }
     }
 }
