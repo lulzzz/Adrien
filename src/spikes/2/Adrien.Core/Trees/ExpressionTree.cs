@@ -43,9 +43,16 @@ namespace Adrien.Trees
         public ExpressionTree(Tensor lhsTensor, IndexSet lhsIndices) : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
         {
             HashSet.Add(this);
-            OperatorNode n = AddNode(CreateOperatorNode(this, TensorOp.Summation)) as OperatorNode;
-            AddNode(CreateValueNode(n, lhsTensor));
-            AddNode(CreateValueNode(n, lhsIndices));
+            if (lhsIndices == null)
+            {
+                AddNode(CreateValueNode(this, lhsTensor));
+            }
+            else
+            {
+                OperatorNode n = AddNode(CreateOperatorNode(this, TensorOp.Summation)) as OperatorNode;
+                AddNode(CreateValueNode(n, lhsTensor));
+                AddNode(CreateValueNode(n, lhsIndices));
+            }
         }
 
         public ExpressionTree(Term term) : this()

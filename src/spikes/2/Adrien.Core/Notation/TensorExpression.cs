@@ -24,7 +24,7 @@ namespace Adrien.Notation
         
         public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression, null, true).Tree;
 
-        public ExpressionTree ToTree((Tensor tensor, IndexSet indices) output) => new TensorExpressionVisitor(this.LinqExpression, output, true).Tree;
+        public ExpressionTree ToTree((Tensor tensor, IndexSet indices) lhs) => new TensorExpressionVisitor(this.LinqExpression, lhs, true).Tree;
        
         public TensorExpression(Expression e)
         {
@@ -59,9 +59,9 @@ namespace Adrien.Notation
             GetDummyBinaryMethodInfo(this, right)));
 
         private static TensorExpression DummyBinary(Tensor l, Tensor r) => null;
-
         private static TensorExpression DummyBinary(TensorExpression l, Tensor r) => null;
         private static TensorExpression DummyBinary(Tensor l, TensorExpression r) => null;
+        private static TensorExpression DummyBinary(TensorExpression l, TensorExpression r) => null;
 
         private static MethodInfo GetDummyBinaryMethodInfo(TensorExpression l, TensorExpression r)
         {
@@ -80,6 +80,10 @@ namespace Adrien.Notation
             if (this.LinqExpression.NodeType == ExpressionType.Constant)
             {
                 return (this.LinqExpression as ConstantExpression).Type;
+            }
+            else if (this.LinqExpression.NodeType == ExpressionType.Index)
+            {
+                return (this.LinqExpression as IndexExpression).Object.Type.GetElementType();
             }
             else return typeof(TensorExpression);
 

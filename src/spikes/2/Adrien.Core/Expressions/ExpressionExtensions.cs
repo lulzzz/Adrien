@@ -47,7 +47,9 @@ namespace Adrien.Trees
                    
             return expr.DescendantsAndSelf()
                    .OfType<ConstantExpression>()
-                   .Where(e => e.Type ==typeof(Array))
+                   .Where(e => e.Type.BaseType == typeof(Array)
+                        && e.Type.HasElementType 
+                        && e.Type.GetElementType() == typeof(Tensor))
                    .Select(e => e.Value)
                    .Cast<Array>()
                    .Select(a => a.Flatten<T>().First())
