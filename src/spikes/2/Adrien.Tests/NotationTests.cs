@@ -69,10 +69,10 @@ namespace Adrien.Tests
             var B = Tensor.FiveD(tn.B, (4, 5, 6, 7, 8));
             Assert.Equal("B", B.Name);
             var I = new IndexSet("m0", B.Dimensions);
-            Assert.Equal("m1", I[0].Name);
+            Assert.Equal("m0", I[0].Name);
             var J = new IndexSet("i0", B.Dimensions);
-            Assert.Equal("i1", J[0].Name);
-            var (m1, m2, m3, m4, m5) = I;
+            Assert.Equal("i0", J[0].Name);
+            var (m0, m1, m2, m3, m4) = I;
             Assert.Equal("m4", m4.Name);
         }
 
@@ -97,6 +97,19 @@ namespace Adrien.Tests
             Assert.True(A.Assignment.IndexSet[0].Type == IndexType.Expression);
             M[6, n - 4] = M[7] + N[n];
             Assert.True(M.IsAssigned);
+        }
+
+        [Fact]
+        public void CanConstructVectorExpression()
+        {
+            var (V0, V1) = new Vector(5).Two();
+            Assert.Equal("V0", V0.Name);
+            Assert.Equal("V1", V1.Name);
+            var (c0, c1, c2) = new Scalar().Three();
+
+            V1.x = c0 * V0 + c1;
+            Assert.True(V1.IsAssigned);
+            Assert.Equal(3, V1.Assignment.Expression.Tensors.Count);
         }
     }
 }

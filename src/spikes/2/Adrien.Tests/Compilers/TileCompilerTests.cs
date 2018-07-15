@@ -25,6 +25,15 @@ namespace Adrien.Tests.Compilers
             var I = new Vector("I", 5).Var(1, 2, 3, 4, 5);
             Assert.Equal(RunStatus.Success, result.Run(O, I));
             Assert.Equal(I[0] + I[1] + I[2] + I[3], O[3]);
+
+            code = @"function(I[N])-> (O) {
+                O = I * I;
+            }";
+            Assert.True(c.Compile(6, code, out result));
+            O = new Vector("O", 6).Var(new int[6]);
+            I = new Vector("I", 6).Var(2, 4, 6, 8, 10, 12);
+            Assert.Equal(RunStatus.Success, result.Run(O, I));
+            Assert.Equal(16, O[1]);
         }
 
         [Fact]

@@ -40,11 +40,18 @@ namespace Adrien.Trees
         [DebuggerStepThrough]
         public static List<T> GetConstants<T>(this Expression expr) where T : ITerm
         {
+            var c0 = expr.DescendantsAndSelf()
+                   .OfType<ConstantExpression>()
+                   .Where(e => e.Type == typeof(T))
+                   .Select(e => (T) e.Value);
+                   
             return expr.DescendantsAndSelf()
                    .OfType<ConstantExpression>()
+                   .Where(e => e.Type ==typeof(Array))
                    .Select(e => e.Value)
                    .Cast<Array>()
                    .Select(a => a.Flatten<T>().First())
+                   .Concat(c0)
                    .ToList();
         }
 

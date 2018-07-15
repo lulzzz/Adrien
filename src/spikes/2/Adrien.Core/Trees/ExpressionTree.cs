@@ -40,12 +40,12 @@ namespace Adrien.Trees
             AddNode(CreateValueNode(this, null));
         }
 
-        public ExpressionTree(Tensor outputTensor, IndexSet outputIndices) : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
+        public ExpressionTree(Tensor lhsTensor, IndexSet lhsIndices) : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
         {
             HashSet.Add(this);
             OperatorNode n = AddNode(CreateOperatorNode(this, TensorOp.Summation)) as OperatorNode;
-            AddNode(CreateValueNode(n, outputTensor));
-            AddNode(CreateValueNode(n, outputIndices));
+            AddNode(CreateValueNode(n, lhsTensor));
+            AddNode(CreateValueNode(n, lhsIndices));
         }
 
         public ExpressionTree(Term term) : this()

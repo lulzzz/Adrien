@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 
 using Sawmill;
@@ -45,14 +46,43 @@ namespace Adrien.Notation
 
         public TensorExpression Negate() => new TensorExpression(Expression.Negate(this));
         
-        public TensorExpression Add(TensorExpression right) => new TensorExpression(Expression.Add(this, right));
+        public TensorExpression Add(TensorExpression right) => new TensorExpression(Expression.Add(this, right,
+            GetDummyBinaryMethodInfo(this, right)));
 
-        public TensorExpression Subtract(TensorExpression right) => new TensorExpression(Expression.Subtract(this, right));
+        public TensorExpression Subtract(TensorExpression right) => new TensorExpression(Expression.Subtract(this, 
+            right, GetDummyBinaryMethodInfo(this, right)));
 
-        public TensorExpression Multiply(TensorExpression right) => new TensorExpression(Expression.Multiply(this, right));
+        public TensorExpression Multiply(TensorExpression right) => new TensorExpression(Expression.Multiply(this, 
+            right, GetDummyBinaryMethodInfo(this, right)));
 
-        public TensorExpression Divide(TensorExpression right) => new TensorExpression(Expression.Divide(this, right));
+        public TensorExpression Divide(TensorExpression right) => new TensorExpression(Expression.Divide(this, right, 
+            GetDummyBinaryMethodInfo(this, right)));
 
-        
+        private static TensorExpression DummyBinary(Tensor l, Tensor r) => null;
+
+        private static TensorExpression DummyBinary(TensorExpression l, Tensor r) => null;
+        private static TensorExpression DummyBinary(Tensor l, TensorExpression r) => null;
+
+        private static MethodInfo GetDummyBinaryMethodInfo(TensorExpression l, TensorExpression r)
+        {
+            Type lt = l.GetTensorExpressionType();
+            Type rt = r.GetTensorExpressionType();
+
+
+            MethodInfo method = typeof(TensorExpression).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
+                .Where(m => m.Name == "DummyBinary" && m.GetParameters()[0].ParameterType == lt
+                && m.GetParameters()[1].ParameterType == rt).First();
+            return method;
+        }
+
+        private Type GetTensorExpressionType()
+        {
+            if (this.LinqExpression.NodeType == ExpressionType.Constant)
+            {
+                return (this.LinqExpression as ConstantExpression).Type;
+            }
+            else return typeof(TensorExpression);
+
+        }
     }
 }

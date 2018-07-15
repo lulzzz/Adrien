@@ -6,6 +6,7 @@ namespace Adrien.Notation
 {
     public class vn : Name
     {
+        public static Name V0 = "V0";
         public static Name V1 = "V1";
         public static Name V2 = "V2";
         public static Name V3 = "V3";

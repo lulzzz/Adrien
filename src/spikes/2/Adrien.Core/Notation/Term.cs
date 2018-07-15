@@ -86,7 +86,7 @@ namespace Adrien.Notation
             }
             else if (indexNameBase.Length == 2 && Char.IsLetter(indexNameBase[0]) && Char.IsNumber(indexNameBase[1]))
             {
-                ++index;
+                //++index;
                 return new string(indexNameBase[0], 1) + index.ToString();
             }
             else throw new ArgumentException($"Unknown name base {indexNameBase}");

@@ -10,10 +10,10 @@ namespace Adrien.Notation
     {
         internal override Name DefaultNameBase => "V0";
 
-
+        
         public Vector(string name, int length) : base(name, length) {}
 
-        public Vector(int length) : this(vn.V1, length) { }
+        public Vector(int length) : this(vn.V0, length) { }
 
         public Vector(string name, string indexName, out Index i, int length) : base(name, length)
         {

@@ -34,7 +34,15 @@ namespace Adrien.Notation
             
         public (IndexSet IndexSet, TensorExpression Expression) Assignment { get; protected set; }
 
-        public bool IsAssigned => Assignment.IndexSet != null;
+        public bool IsAssigned => Assignment.Expression != null;
+
+        public TensorExpression x
+        {
+            set
+            {
+                this.Assignment = (null, value);
+            }
+        }
 
         internal override Expression LinqExpression => this.IsAssigned ? 
             this.Assignment.Expression.LinqExpression : Expression.Constant(this, typeof(Tensor));
@@ -60,6 +68,7 @@ namespace Adrien.Notation
             I = new IndexSet(indexNameBase, dim);
         }
 
+
         public TensorExpression this[IndexSet I]
         {
             get
@@ -84,6 +93,13 @@ namespace Adrien.Notation
             }
         }
 
+        public TensorExpression this[Enum c]
+        {
+            set
+            {
+
+            }
+        }
         public static implicit operator TensorExpression(Tensor t)
         {
             return new TensorExpression(t.LinqExpression);
@@ -100,6 +116,7 @@ namespace Adrien.Notation
                 return new TensorExpression(t.LinqExpression).ToTree();
             }
         }
+
         public static TensorExpression operator - (Tensor left) => left.Negate();
         
 
@@ -114,7 +131,6 @@ namespace Adrien.Notation
 
         public static TensorExpression operator / (Tensor left, Tensor right) => left.Divide(right);
         
-
 
         public TensorExpression Negate() => - (TensorExpression) this;
 
@@ -165,6 +181,7 @@ namespace Adrien.Notation
             return string.Join("", names);
         }
 
+      
         [DebuggerStepThrough]
         internal void ThrowIfAlreadyAssiged()
         {

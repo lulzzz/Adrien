@@ -55,11 +55,11 @@ namespace Adrien.Compiler.PlaidML
         }
         
 
-        public TensorVariableView<T> CreateView<T>(MemoryMapType mapType) 
+        public DeviceTensorView<T> CreateView<T>(MemoryMapType mapType) 
             where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
         {
             ThrowIfNotAllocated();
-            return new TensorVariableView<T>(this, mapType);
+            return new DeviceTensorView<T>(this, mapType);
         }  
 
     }

@@ -24,10 +24,10 @@ namespace Adrien.Trees
         internal TreeBuilderContext Context { get; set; }
 
 
-        public TensorExpressionVisitor(Expression expr, (Tensor tensor, IndexSet indices)? output = null, bool visit = true) : base()
+        public TensorExpressionVisitor(Expression expr, (Tensor tensor, IndexSet indices)? lhs = null, bool visit = true) : base()
         {
             LinqExpression = expr;
-            Tree = output == null ? new ExpressionTree() : new ExpressionTree(output.Value.tensor, output.Value.indices);
+            Tree = lhs == null ? new ExpressionTree() : new ExpressionTree(lhs.Value.tensor, lhs.Value.indices);
             Context = new TreeBuilderContext(Tree);
             if (visit)
             {

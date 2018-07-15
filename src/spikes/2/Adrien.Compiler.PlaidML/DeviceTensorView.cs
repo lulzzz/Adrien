@@ -9,42 +9,42 @@ using System.Text;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class TensorVariableView<T> : MemoryMapping, IVariable<T> 
+    public class DeviceTensorView<T> : MemoryMapping, IVariable<T> 
         where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
-        public DeviceTensor TensorVariable
+        public DeviceTensor Tensor
         {
             get
             {
                 ThrowIfNotAllocated();
                 ThrowIfNotValid();
-                return _TensorVariable;
+                return _Tensor;
             }
         }
 
-        public DeviceBuffer DeviceBuffer => TensorVariable.DeviceBuffer;
+        public DeviceBuffer DeviceBuffer => Tensor.DeviceBuffer;
 
-        public string Name => TensorVariable.Name;
+        public string Name => Tensor.Name;
 
         public int ElementCount => (int) DeviceBuffer.Shape.ElementCount;
 
-        public int[] Dimensions => TensorVariable.Shape.Dimensions.Select(d => Convert.ToInt32(d.length)).ToArray();
+        public int[] Dimensions => Tensor.Shape.Dimensions.Select(d => Convert.ToInt32(d.length)).ToArray();
 
-        public int[] Stride => TensorVariable.Shape.Dimensions.Select(d => Convert.ToInt32(d.stride)).ToArray();
+        public int[] Stride => Tensor.Shape.Dimensions.Select(d => Convert.ToInt32(d.stride)).ToArray();
 
-        public int Rank => Convert.ToInt32(TensorVariable.Shape.DimensionCount);
+        public int Rank => Convert.ToInt32(Tensor.Shape.DimensionCount);
 
         public Span<T> Span => GetSpan<T>();
 
         public bool IsDirty { get; protected set; }
 
-        protected DeviceTensor _TensorVariable;
+        protected DeviceTensor _Tensor;
 
 
-        public TensorVariableView(DeviceTensor variable, MemoryMapType mapType) 
+        public DeviceTensorView(DeviceTensor variable, MemoryMapType mapType) 
             : base(variable.DeviceBuffer, mapType == MemoryMapType.Discard ? true : false)
         {
-            _TensorVariable = variable;
+            _Tensor = variable;
         }
 
         
