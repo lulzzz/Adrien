@@ -60,5 +60,23 @@ namespace Adrien.Tests
             Assert.Equal(ValueNodeType.TENSOR, vn.NodeType);
             Assert.Equal(C, vn.ValueAs<Tensor>());
         }
+
+        [Fact]
+        public void CanParseElementwiseExpression()
+        {
+            var (x, y) = new Vector("x", 2).Two();
+            Assert.Equal("x", x.Name);
+            Assert.Equal("y", y.Name);
+            var (a, b) = new Scalar("a").Two();
+            y.x = a * x + b;
+            Assert.True(y.IsAssigned);
+            ExpressionTree tree = y.ToTree();
+            Assert.Equal(TensorOp.Assign, tree.Op);
+            Assert.True(tree.Left.IsValue);
+            Assert.Equal("y", tree.ValueNodes[0].Label);
+            Assert.True(tree.Right.IsOperator);
+            Assert.Equal(TensorOp.Add, tree.OperatorNodes[1].Op);
+            Assert.Equal(TensorOp.Mul, tree.OperatorNodes[2].Op);
+        }
     }
 }

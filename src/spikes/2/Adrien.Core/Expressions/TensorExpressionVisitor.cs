@@ -35,7 +35,6 @@ namespace Adrien.Trees
             }
         }
 
-
         public void Visit()
         {
             this.Visit(this.LinqExpression);
@@ -53,8 +52,7 @@ namespace Adrien.Trees
             Tensor t = null;
             if (node.Value is Array)
             {
-                t = FlattenConstantExpressionValue<Tensor>(node);
-                    
+                t = FlattenConstantExpressionValue<Tensor>(node);                    
             }
             else if (node.Value is Tensor)
             {

@@ -86,7 +86,6 @@ namespace Adrien.Notation
             }
             else if (indexNameBase.Length == 2 && Char.IsLetter(indexNameBase[0]) && Char.IsNumber(indexNameBase[1]))
             {
-                //++index;
                 return new string(indexNameBase[0], 1) + index.ToString();
             }
             else throw new ArgumentException($"Unknown name base {indexNameBase}");
@@ -103,7 +102,7 @@ namespace Adrien.Notation
                         case int i: return i.ToString();
                         case Term t: return t.Name;
                         case Array a: return a.Flatten<Tensor>().First().Name;
-                        default: throw new Exception($"Unknown contrant expressionvalue type: {ce.Value.GetType()}.");
+                        default: throw new Exception($"Unknown constant expressionvalue type: {ce.Value.GetType()}.");
                     };
                 case BinaryExpression be:
                     return be.NodeType.ToString() + "_" + GetNameFromLinqExpression(be.Left)

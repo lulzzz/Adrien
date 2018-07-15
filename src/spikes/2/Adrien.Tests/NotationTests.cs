@@ -110,6 +110,14 @@ namespace Adrien.Tests
             V1.x = c0 * V0 + c1;
             Assert.True(V1.IsAssigned);
             Assert.Equal(3, V1.Assignment.Expression.Tensors.Count);
+
+            var (x, y) = new Vector("x", 2).Two();
+            Assert.Equal("x", x.Name);
+            Assert.Equal("y", y.Name);
+            var (a, b) = new Scalar("a").Two();
+            y.x = a * x + b;
+            Assert.True(y.IsAssigned);
+            Assert.Equal(3, y.Assignment.Expression.Tensors.Count);
         }
     }
 }

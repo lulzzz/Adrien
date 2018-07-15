@@ -164,6 +164,12 @@ namespace Adrien.Notation
             return this.GeneratorContext.Value.tensor;
         }
 
+        public ExpressionTree ToTree ()
+        {
+            return this.IsAssigned ? this.Assignment.Expression.ToTree((this, this.Assignment.IndexSet)) :
+                new TensorExpression(this.LinqExpression).ToTree();
+        }
+
         public Var<T> Var<T>(Array array) where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible 
             => new Var<T>(this, array);
 
