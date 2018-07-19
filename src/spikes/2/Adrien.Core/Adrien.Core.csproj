@@ -13,6 +13,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -28,6 +29,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="Compiler\KernelFuncs.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>KernelFuncs.tt</DependentUpon>
+    </None>
     <None Include="Notation\TensorIndexers.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -44,6 +50,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Compiler\KernelFuncs.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>KernelFuncs.tt</DependentUpon>
+    </Compile>
     <Compile Update="Notation\TensorConstructors.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -57,6 +68,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Compiler\KernelFuncs.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>KernelFuncs.cs</LastGenOutput>
+    </None>
     <None Update="Notation\TensorConstructors.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TensorConstructors.cs</LastGenOutput>

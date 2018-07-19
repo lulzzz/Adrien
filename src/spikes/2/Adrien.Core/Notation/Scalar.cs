@@ -6,12 +6,12 @@ namespace Adrien.Notation
 {
     public class Scalar : Tensor
     {
-        internal override Name DefaultNameBase => "c0";
+        internal override Name DefaultNameBase => "a";
 
 
-        public Scalar(string name) : base(name, 0) { }
+        public Scalar(string name) : base(name) { }
 
-        public Scalar() : base("c0", 0) { }
+        public Scalar() : base("a") { }
 
 
         public Scalar With(out Scalar with)

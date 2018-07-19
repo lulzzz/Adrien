@@ -9,7 +9,7 @@ using Adrien.Trees;
 
 namespace Adrien.Compiler
 {
-    public class Kernel<T> : IKernel<T> where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
+    public partial class Kernel<T> : IKernel<T> where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         public DeviceType DeviceType { get; protected set; }
 
@@ -43,14 +43,30 @@ namespace Adrien.Compiler
         {
             get
             {
+                if (!CompileSuccess)
+                {
+                    return null;
+                }
                 if (CompileBeforeRun || !CompileSuccess)
                 {
                     Compile();
                 }
-                ThrowIfNotCompileSuccess();
+                
 
                 return new Func<Var<T>[], Var<T>>((input) =>
                 {
+                    if (input.Length != this.InputShapes.Count)
+                    {
+                        throw new ArgumentException($"The kernel has {InputShapes.Count} input parameters but "
+                            + $"{input.Length} arguments were used.");
+                    }
+                    for (int i = 0; i < input.Length; i++)
+                    {
+                        if (input[i].Tensor == null)
+                        {
+                            input[i].Tensor = InputTensors[i];
+                        }
+                    }
                     var output = OutputTensor.Var(new T[OutputTensor.NumberofElements]);
                     if (CompilerResult.Run(output, input) == RunStatus.Success)
                     {
@@ -65,6 +81,7 @@ namespace Adrien.Compiler
             }
         }
 
+   
         public Kernel(Tensor output)
         {
             if (!output.IsAssigned)
@@ -77,13 +94,28 @@ namespace Adrien.Compiler
             OutputShape = output;
         }
 
-        public Kernel(ICompiler compiler, Tensor output, DeviceType deviceType = DeviceType.CPU) : this(output)
+        public Kernel(Tensor output, ICompiler compiler, DeviceType deviceType = DeviceType.CPU) : this(output)
         {
             Compiler = compiler;
             DeviceType = deviceType;
         }
 
-        
+        public Kernel(Tensor output, TensorExpression expr)
+        {
+            Tree = expr.ToTree((output, null));
+            InputShapes = InputTensors;
+            OutputShape = output;
+        }
+
+
+        public Kernel(Tensor output, TensorExpression expr, ICompiler compiler, DeviceType deviceType = DeviceType.CPU) 
+            : this(output, expr)
+        {
+            Compiler = compiler;
+            DeviceType = deviceType;
+        }
+
+
         public IVariableShape this[int index]
         {
             get

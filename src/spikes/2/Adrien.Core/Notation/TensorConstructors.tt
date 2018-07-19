@@ -20,10 +20,14 @@ namespace Adrien.Notation
 		public static Tensor <#=tn#>D(string name, (<# for (int j = 1; j < i; j++) {#>int dim<#=j#>, <#}#>int dim<#=i#>) dim) =>
 			new Tensor(name, <# for (int j = 1; j < i; j++) {#>dim.dim<#=j#>, <#}#>dim.dim<#=i#>);
 
+		public static Tensor <#=tn#>D((<# for (int j = 1; j < i; j++) {#>int dim<#=j#>, <#}#>int dim<#=i#>) dim) =>
+			new Tensor(<# for (int j = 1; j < i; j++) {#>dim.dim<#=j#>, <#}#>dim.dim<#=i#>);
+
 		public static Tensor <#=tn#>D(string name, (<# for (int j = 1; j < i; j++) {#>int dim<#=j#>, <#}#>int dim<#=i#>) dim, string indexNameBase, out IndexSet I)
 		{
-			I = new IndexSet(indexNameBase,  <# for (int j = 1; j < i; j++){#>dim.dim<#=j#>, <#}#>dim.dim<#=i#>);
-			return Tensor.<#=tn#>D(name, dim);
+			Tensor t = Tensor.<#=tn#>D(name, dim);
+			I = new IndexSet(t, indexNameBase,  <# for (int j = 1; j < i; j++){#>dim.dim<#=j#>, <#}#>dim.dim<#=i#>);
+			return t;
 		}
 
 		public static Tensor <#=tn#>D(string name, (<# for (int j = 1; j < i; j++) {#>int dim<#=j#>, <#}#>int dim<#=i#>) dim, string indexNameBase,
@@ -49,6 +53,7 @@ namespace Adrien.Notation
 		string n = Tensor.RankToTensorName(i);
 #>
 		public (<# for (int j = 1; j < i; j++) {#>Tensor, <#}#>Tensor) <#=n#>() => (this<# for (int j = 1; j < i; j++) {#>, new Tensor(this.GenerateName(<#=j#>, this.Name), this.Dimensions)<#}#>);
+		public (<# for (int j = 1; j < i; j++) {#>Tensor, <#}#>Tensor) <#=n#>(<# for (int j = 1; j < i; j++) {#>string name<#=j#>, <#}#>string name<#=i#>) => (<# for (int j = 1; j < i; j++) {#>new Tensor(name<#=j#>, this.Dimensions),<#}#>new Tensor(name<#=i#>, this.Dimensions));
 <#}#>
 	}
 }

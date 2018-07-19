@@ -14,7 +14,7 @@ namespace Adrien.Tests.Compilers
     public class TileCompilerTests
     {
         [Fact]
-        public void CanCompileVectorKernel()
+        public void CanCompileTileCode()
         {
             string code = @"function(I[N])-> (O) {
                 O[i: N] = +(I[k]), i - k < N;
@@ -26,7 +26,7 @@ namespace Adrien.Tests.Compilers
             Assert.Equal(RunStatus.Success, result.Run(O, I));
             Assert.Equal(I[0] + I[1] + I[2] + I[3], O[3]);
 
-            code = @"function(I[N])-> (O) {
+            code = @"function(I)-> (O) {
                 O = I * I;
             }";
             Assert.True(c.Compile(6, code, out result));
@@ -37,15 +37,14 @@ namespace Adrien.Tests.Compilers
         }
 
         [Fact]
-        public void CanCompileSimpleKernel()
+        public void CanCompileVectorKernel()
         {
-            var (A, B, C) = Tensor.ThreeD("A", (2, 2, 2), "a", out Index a, out Index b, out Index c)
-                .Three();
-
-            C[a, b] = A[a, b] * B[b, a];
-            TileCompiler compiler = new TileCompiler();
-            Assert.True(compiler.Initialized);
-            Kernel<int> k = new Kernel<int>(compiler, C);
+            var (x, y) = new Vector(10).Two("x", "y");
+            var (a, b) = new Scalar().Two("a","b");
+            Kernel<int> k = new Kernel<int>(y, a * x + b);
+            Assert.Equal(3, k.InputTensors.Count);
+            Assert.Equal(y, k.OutputTensor);
+            k = new Kernel<int>(y, a * x + b, new TileCompiler());
             Assert.True(k.Compile());
         }
     }

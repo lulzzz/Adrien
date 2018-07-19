@@ -10,10 +10,10 @@ namespace Adrien.Trees
 
         IEnumerable<ITreeNode> Children { get; }
 
-        ITreeNode Output { get; }
+        ITreeNode OutputNode { get; }
 
-        bool OutputIsTensor { get; }
+        IEnumerable<ITreeValueNode> TensorNodes { get; }
 
-        ITreeNode AddNode(ITreeNode node);
+        IEnumerable<ITreeValueNode> IndexSetNodes { get; }
     }
 }

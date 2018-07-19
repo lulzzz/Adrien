@@ -140,11 +140,11 @@ namespace Adrien.Compiler.PlaidML
             where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
             => Compile(new IVariableShape[] { inputShape }, outputShape, code, out result);
 
-        public bool Compile<TVectorKernel>(int vectorRank, string code, out IRunnable<TVectorKernel> result)
+        public bool Compile<TVectorKernel>(int vectorLength, string code, out IRunnable<TVectorKernel> result)
             where TVectorKernel : unmanaged, IEquatable<TVectorKernel>, IComparable<TVectorKernel>, IConvertible
         {
-            IVariableShape input = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorRank), "I");
-            IVariableShape output = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorRank), "O");
+            IVariableShape input = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "I");
+            IVariableShape output = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "O");
             return Compile(input, output, code, out result);
         }
 
@@ -164,7 +164,7 @@ namespace Adrien.Compiler.PlaidML
         public Function CreateFunction(TileGenerator generator)
         {
             ThrowIfNotInitialized();
-            return new Function(Context, generator.Text);
+            return new Function(Context, generator.FunctionText);
            
         }
 

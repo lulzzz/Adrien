@@ -7,11 +7,13 @@ using System.Reflection;
 
 namespace Adrien.Notation
 {
-    public class IndexSet : Term, IEnumerable<ITerm>
+    public class IndexSet : Term, IChild, IEnumerable<ITerm>
     {
         public static PropertyInfo IndicesArrayInfo { get; } = typeof(Index).GetProperty("IndicesArray");
 
         public SortedSet<Index> Indices { get; protected set; }
+
+        public ITerm Parent { get; protected set; }
 
         public int DimensionCount => Indices.Count;
         
@@ -20,7 +22,7 @@ namespace Adrien.Notation
         internal override Expression LinqExpression => Expression.Constant(this);
         
 
-        public IndexSet(string indexNameBase="", params int[] dim) : base()
+        public IndexSet(Tensor parent, string indexNameBase="", params int[] dim) : base()
         {
             Indices = new SortedSet<Index>();
             for (int i = 0; i < dim.Length; i++)
@@ -30,7 +32,7 @@ namespace Adrien.Notation
             this.Name = dim.Length > 0 ? Indices.Select(i => i.Name).Aggregate((a, b) => a + b) : new Name(indexNameBase);
         }
 
-        public IndexSet(params Index[] indices) : base()
+        public IndexSet(Tensor parent, params Index[] indices) : base()
         {
             for (int i = 0; i < indices.Length; i++)
             {
@@ -42,9 +44,9 @@ namespace Adrien.Notation
             {
                 index.Set = this;
             }
+            this.Parent = parent;
         }
-        
-        
+         
         public Index this[int index]
         {
             get
@@ -53,38 +55,7 @@ namespace Adrien.Notation
                 return Indices.ElementAt(index); 
             }
         }
-
-        public static implicit operator IndexSet((Index index1, Index index2) t)
-        {
-            return new IndexSet(t.index1, t.index2);
-        }
-
-        public static implicit operator IndexSet((Index index1, Index index2, Index index3) t)
-        {
-            return new IndexSet(t.index1, t.index2, t.index3);
-        }
-
-        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4) t)
-        {
-            return new IndexSet(t.index1, t.index2, t.index3, t.index4);
-        }
-
-        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4, Index index5) t)
-        {
-            return new IndexSet(t.index1, t.index2, t.index3, t.index4, t.index5);
-        }
-
-        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4, Index index5, Index index6) t)
-        {
-            return new IndexSet(t.index1, t.index2, t.index3, t.index4, t.index5, t.index6);
-        }
-
-        public static implicit operator IndexSet((Index index1, Index index2, Index index3, Index index4, Index index5, Index index6, Index index7) t)
-        {
-            return new IndexSet(t.index1, t.index2, t.index3, t.index4, t.index5, t.index6, t.index7);
-        }
-
-
+       
         public IEnumerator<ITerm> GetEnumerator()
         {
             foreach (Index i in Indices)

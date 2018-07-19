@@ -56,11 +56,22 @@ namespace Adrien.Tests
             Assert.Equal(3, F.Dimensions[1]);
             Assert.Equal(2, F.Rank);
             Assert.Throws<ArgumentException>(() => F.With(out Tensor G, 3, 2, 1));
+
+        }
+
+        [Fact]
+        public void CanUseTupleTensorConstructors()
+        {
             var (H, I, J) = Tensor.ThreeD("H", (2, 2, 2)).Three();
             Assert.Equal("H", H.Label);
             Assert.Equal("I", I.Label);
             Assert.Equal("J", J.Label);
             Assert.Equal(3, J.Rank);
+            var (M1, M2, M3) = Tensor.ThreeD((2, 2, 2)).Three("M1", "M2", "M3");
+            Assert.Equal("M1", M1.Name);
+            Assert.Equal(3, M1.Rank);
+            Assert.Equal("M3", M3.Name);
+            Assert.Equal(8, M3.NumberofElements);
         }
 
         [Fact]
@@ -68,9 +79,9 @@ namespace Adrien.Tests
         {
             var B = Tensor.FiveD(tn.B, (4, 5, 6, 7, 8));
             Assert.Equal("B", B.Name);
-            var I = new IndexSet("m0", B.Dimensions);
+            var I = new IndexSet(B, "m0", B.Dimensions);
             Assert.Equal("m0", I[0].Name);
-            var J = new IndexSet("i0", B.Dimensions);
+            var J = new IndexSet(B, "i0", B.Dimensions);
             Assert.Equal("i0", J[0].Name);
             var (m0, m1, m2, m3, m4) = I;
             Assert.Equal("m4", m4.Name);

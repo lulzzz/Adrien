@@ -15,14 +15,10 @@ namespace Adrien.Trees
     {
         public Expression LinqExpression { get; protected set; }
 
-        public IEnumerable<ITreeNode> Children => HashSet.Cast<ITreeNode>();
-
-
-        public ITreeNode Output => this.Left;
-
-        public bool OutputIsTensor => (Output != null) && Output is OperatorNode;
-
-        public Tensor OutputTensor => OutputIsTensor ? ((Output as OperatorNode).Left as ValueNode).ValueAs<Tensor>() : null;
+        public Tensor OutputTensor => OutputIsTensor ? (OutputNode is OperatorNode ? 
+            ((OutputNode as OperatorNode).Left as ValueNode).ValueAs<Tensor>() : 
+            (OutputNode as ValueNode).ValueAs<Tensor>()) : 
+            throw new InvalidOperationException("The output node is not an assigned tensor.");
 
         public int Count => HashSet.Count;
 
@@ -31,6 +27,16 @@ namespace Adrien.Trees
         public List<ValueNode> ValueNodes => this.HashSet.OfType<ValueNode>().ToList();
 
         public ITreeNode Root => this;
+
+        public IEnumerable<ITreeNode> Children => HashSet.Cast<ITreeNode>();
+
+        public ITreeNode OutputNode => this.Left;
+
+        public bool OutputIsTensor => (OutputNode != null);
+
+        public IEnumerable<ITreeValueNode> TensorNodes => ValueNodes.Where(vn => vn.NodeType == ValueNodeType.TENSOR);
+
+        public IEnumerable<ITreeValueNode> IndexSetNodes => ValueNodes.Where(vn => vn.NodeType == ValueNodeType.INDEXSET);
 
         protected HashSet<ITreeNode> HashSet { get; } = new HashSet<ITreeNode>();
 
@@ -49,7 +55,7 @@ namespace Adrien.Trees
             }
             else
             {
-                OperatorNode n = AddNode(CreateOperatorNode(this, TensorOp.Summation)) as OperatorNode;
+                OperatorNode n = AddNode(CreateOperatorNode(this, TensorOp.Index)) as OperatorNode;
                 AddNode(CreateValueNode(n, lhsTensor));
                 AddNode(CreateValueNode(n, lhsIndices));
             }

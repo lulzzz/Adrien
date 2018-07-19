@@ -54,7 +54,7 @@ namespace Adrien.Notation
 
         public Tensor(string name, params int [] dim) : base(name)
         {
-            Dimensions = dim;
+            Dimensions = dim == null ? new int[0] : dim;
             Stride = GenericMath<int>.StrideInElements(Dimensions);
         }
 
@@ -65,7 +65,7 @@ namespace Adrien.Notation
 
         public Tensor(string name, string indexNameBase, out IndexSet I, params int[] dim) : this(name, dim)
         {
-            I = new IndexSet(indexNameBase, dim);
+            I = new IndexSet(this, indexNameBase, dim);
         }
 
 
@@ -150,6 +150,14 @@ namespace Adrien.Notation
             return this.GeneratorContext.Value.tensor;
         }
 
+        public Tensor With(out Tensor with, string name)
+        {
+            GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
+            with = new Tensor(name, this.Dimensions);
+            this.GeneratorContext = (this.GeneratorContext.Value.tensor, this.GeneratorContext.Value.index + 1);
+            return this.GeneratorContext.Value.tensor;
+        }
+
         public Tensor With(out Tensor with, params int[] dim)
         {
 
@@ -160,6 +168,20 @@ namespace Adrien.Notation
                 $"{dim.Length}.");                                                                            
             }
             with = new Tensor(this.GenerateName(GeneratorContext.Value.index, this.Name), dim);
+            this.GeneratorContext = (this.GeneratorContext.Value.tensor, this.GeneratorContext.Value.index + 1);
+            return this.GeneratorContext.Value.tensor;
+        }
+
+        public Tensor With(out Tensor with, string name, params int[] dim)
+        {
+
+            GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
+            if (dim.Length != GeneratorContext.Value.tensor.Dimensions.Length)
+            {
+                throw new ArgumentException($"The rank of the new tensor must be the same as the original: " +
+                $"{dim.Length}.");
+            }
+            with = new Tensor(name, dim);
             this.GeneratorContext = (this.GeneratorContext.Value.tensor, this.GeneratorContext.Value.index + 1);
             return this.GeneratorContext.Value.tensor;
         }

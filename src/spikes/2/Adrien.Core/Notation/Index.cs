@@ -10,11 +10,13 @@ namespace Adrien.Notation
 {
     #pragma warning disable CS0660
 
-    public class Index : Term, IAlgebra<Index, TensorIndexExpression>, IComparable<Index>, IEquatable<Index>
+    public class Index : Term, IChild, IAlgebra<Index, TensorIndexExpression>, IComparable<Index>, IEquatable<Index>
     {
         public static PropertyInfo OrderInfo { get; } = typeof(Index).GetProperty("Order");
 
         public IndexType Type { get; protected set; }
+
+        public ITerm Parent => Set;
 
         public IndexSet Set { get; internal set; }
 
@@ -122,9 +124,6 @@ namespace Adrien.Notation
             return this.Order.CompareTo(i.Order);
         }
 
-
-
-    
         private static Index DummyBinary(Index l, Index r) => null;
 
         private static Index DummyBinary(TensorIndexExpression l, Index r) => null;

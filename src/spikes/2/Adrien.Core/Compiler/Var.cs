@@ -15,7 +15,7 @@ namespace Adrien
 {
     public class Var<T> : IVariable<T>, IDisposable where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
-        public Tensor Tensor { get; protected set; }
+        public Tensor Tensor { get; internal set; }
 
         public string Name => Tensor.Name;
 
@@ -51,7 +51,22 @@ namespace Adrien
             Tensor = tensor;
         }
 
-        internal Var(Tensor tensor, params T[] data) : this(tensor, (Array)data) {}
+        internal Var(Tensor tensor, params T[] data) : this(tensor)
+        {
+            if (data.Length == 0)
+            {
+                throw new ArgumentException($"Zero data elements specified.");
+            }
+            else if (tensor.NumberofElements != data.Length)
+            {
+                throw new ArgumentException($"The number of data elements specified ({data.Length}) "
+                    + $"does not mach the number of elements in tensor {tensor.Label} : {tensor.NumberofElements}.");
+            }
+
+            Tensor = tensor;
+            MemoryHandle = new Memory<T>(data).Pin();
+            Initialized = true;
+        }
        
         internal unsafe Var(Tensor tensor, Array array) : this(tensor)
         {
@@ -105,6 +120,12 @@ namespace Adrien
                 return ref this.Read(index);
             }
         }
+
+        public static implicit operator Var<T>(T[] array) => new Var<T>(null, array);
+
+        public static implicit operator Var<T>(Array array) => new Var<T>(null, array);
+
+        
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe ref T Read(int index)

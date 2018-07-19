@@ -67,7 +67,7 @@ namespace Adrien.Trees
                             
         protected override Expression VisitIndex(IndexExpression node)
         {
-            OperatorNode on = Context.AddOperatorNode(TensorOp.Summation);
+            OperatorNode on = Context.AddOperatorNode(TensorOp.Index);
             using (Context.Internal(on))
             {
                 base.VisitIndex(node);
@@ -83,11 +83,15 @@ namespace Adrien.Trees
                 {
                     indices[i] = Context.TensorIndicesQueue.Dequeue();
                 }
+                IndexSet set = new IndexSet(t, indices);
+                foreach(Index i in set.Indices)
+                {
+                    i.Set = set;
+                }
 
-                Context.AddValueNode(new IndexSet(indices));
+                Context.AddValueNode(set);
             }
 
-            
             return node;
         }
 

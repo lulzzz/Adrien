@@ -118,7 +118,7 @@ namespace Adrien.Tests.Compilers
         {
             Device device = new Device(context);
             Shape s1 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT64, 2, 3);
-            Compiler.PlaidML.DeviceTensor t = new Compiler.PlaidML.DeviceTensor(device, s1, "t");
+            DeviceTensor t = new DeviceTensor(device, s1, "t");
             DeviceTensorView<Int64> v = t.CreateView<Int64>(MemoryMapType.Discard);
             Int64[,] array = { { 0, 1, 3 }, { 4, 5, 6 } };
             v.CopyFromAndFree(array.Flatten<Int64>().ToArray());
@@ -136,8 +136,8 @@ namespace Adrien.Tests.Compilers
                                 O[i: N] = +(I[k]), i - k < N;
                             }";
             Function f = new Function(context, code);
-            Compiler.PlaidML.DeviceTensor i = new Compiler.PlaidML.DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "I");
-            Compiler.PlaidML.DeviceTensor o = new Compiler.PlaidML.DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
+            DeviceTensor i = new DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "I");
+            DeviceTensor o = new DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
             
             Int32[] input_data = { 0, 1, 3,  4, 5, 6 };
             i.CreateView<Int32>(MemoryMapType.Discard).CopyFromAndFree(input_data);
@@ -158,12 +158,20 @@ namespace Adrien.Tests.Compilers
         [Fact]
         public void CanGenerateTileFunction()
         {
-            var A = Notation.Tensor.TwoD("A", (8, 17), "a", out Index a, out Index b);
-            var B = Notation.Tensor.TwoD("B", (8, 17));
+            var A = Tensor.TwoD("A", (8, 17), "a", out Index a, out Index b);
+            var B = Tensor.TwoD("B", (8, 17));
             TileGenerator g = new TileGenerator((A[a, b] * B[a, b]).ToTree());
-            Assert.Equal("A[a, b] * B[a, b]", g.Text);
+            Assert.Equal("[] = A[a, b] * B[a, b]", g.Text);
             g = new TileGenerator(A[b].ToTree());
-            Assert.Equal("A[b]", g.Text);
+            Assert.Equal("[] = A[b]", g.Text);
+
+            var (x, y) = new Vector("x", 2).Two();
+            Assert.Equal("x", x.Name);
+            Assert.Equal("y", y.Name);
+            var (m,n) = new Scalar("m").Two();
+            y.x = m * x + n;
+            g = new TileGenerator(y.ToTree());
+            Assert.Equal("Y = M * X + N", g.Text);
         }
     }
 }

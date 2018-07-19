@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Adrien.Generator;
@@ -9,6 +10,14 @@ namespace Adrien.Compiler.PlaidML.Generator
 {
     public class TileGenerator : LanguageGenerator<TensorOp, TileWriter>
     {
+        public List<IVariableShape> InputTensors => Tree.TensorNodes
+            .Where(t => t.Label != Tree.OutputNode.Label)
+            .Select(t => t.ValueAs<IVariableShape>()).ToList();
+
+        public Dictionary<ITreeValueNode, string> TensorDimensionVariables { get; protected set; }
+
+        public string FunctionText { get; protected set; }
+
         public TileGenerator(IExpressionTree tree) : base(tree)
         {
             Context = new TileGeneratorContext(tree);
@@ -16,10 +25,31 @@ namespace Adrien.Compiler.PlaidML.Generator
             this.VisitTree();
         }
 
+
         public override void AfterVisitTree()
         {
             base.AfterVisitTree();
+            GetDimenSionVariableNames();
+            WriteFunctionPrologue();
+        }
 
+        protected void GetDimenSionVariableNames()
+        {
+            TensorDimensionVariables = new Dictionary<ITreeValueNode, string>(Tree.TensorNodes.Count());
+            foreach(ITreeValueNode v in Tree.TensorNodes)
+            {
+                string name = v.Label + "N";
+                int n = 0;
+                while (TensorDimensionVariables.Values.Contains(name))
+                {
+                    name = name + (++n).ToString();
+                }
+                TensorDimensionVariables.Add(v, name);
+            }
+        }
+
+        protected void RenoveLHSEmptyVariableDeclaration()
+        {
             ITreeOperatorNode<TensorOp> root = (ITreeOperatorNode<TensorOp>)Tree.Root;
             if (root.Left is ITreeValueNode)
             {
@@ -30,6 +60,27 @@ namespace Adrien.Compiler.PlaidML.Generator
                     this.Context.Push(text);
                 }
             }
+        }
+
+        protected void WriteFunctionPrologue()
+        {
+            StringBuilder prologue = new StringBuilder("function(");
+            var inputTensors = Tree.TensorNodes.Where(t => t.Label != Tree.OutputNode.Label);
+            foreach(ITreeValueNode tensor in inputTensors)
+            {
+                if (!Tree.IndexSetNodes.Any(set => set.Parent.Label == tensor.Label))
+                {
+                    prologue.AppendFormat("{0}, ", tensor.Label.ToUpper());
+                }
+            }
+            prologue.Remove(prologue.Length - 2, 2);
+            prologue.Append(") -> ");
+            if (!Tree.IndexSetNodes.Any(set => set.Parent.Label == Tree.OutputNode.Label))
+            {
+                prologue.AppendFormat("({0})", Tree.OutputNode.Label.ToUpper());
+            }
+            prologue.Append(" { ");
+            FunctionText = prologue + this.Text + "}";
         }
     }
 }

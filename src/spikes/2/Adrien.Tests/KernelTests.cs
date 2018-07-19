@@ -6,6 +6,7 @@ using System.Text;
 using Xunit;
 
 using Adrien.Compiler;
+using Adrien.Compiler.PlaidML;
 using Adrien.Notation;
 
 namespace Adrien.Tests
@@ -30,6 +31,17 @@ namespace Adrien.Tests
             Assert.Throws<ArgumentException>(() => k[D]);
             Assert.Equal(3, k[A].Rank);
             Assert.Equal(4, k[B].Stride[0]);
+        }
+
+        [Fact]
+        public void CanConstructVectorKernel()
+        {
+            var (x, y) = new Vector("x", 5).Two();
+            var (m, n) = new Scalar("m").Two();
+            y.x = m * x + n;
+            Kernel<int> k = new Kernel<int>(y);
+            Assert.Equal(y, k.OutputTensor);
+            Assert.Equal(m, k.InputTensors[0]);
         }
     }
 }

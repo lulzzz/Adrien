@@ -22,7 +22,7 @@ namespace Adrien.Trees
             switch(et)
             {
                 case ExpressionType.Index:
-                    return TensorOp.Summation;
+                    return TensorOp.Index;
                 case ExpressionType.Multiply:
                     return TensorOp.Mul;
                 case ExpressionType.Add: return TensorOp.Add;
