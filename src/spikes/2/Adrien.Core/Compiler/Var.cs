@@ -57,7 +57,7 @@ namespace Adrien
             {
                 throw new ArgumentException($"Zero data elements specified.");
             }
-            else if (tensor.NumberofElements != data.Length)
+            else if (tensor != null && tensor.NumberofElements != data.Length)
             {
                 throw new ArgumentException($"The number of data elements specified ({data.Length}) "
                     + $"does not mach the number of elements in tensor {tensor.Label} : {tensor.NumberofElements}.");
@@ -125,7 +125,7 @@ namespace Adrien
 
         public static implicit operator Var<T>(Array array) => new Var<T>(null, array);
 
-        
+        public static implicit operator Var<T>(T c) => new Var<T>(null, c);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe ref T Read(int index)

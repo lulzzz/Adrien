@@ -50,9 +50,13 @@ namespace Adrien.Tests.Compilers
             var vx = x.Var(1, 2, 3, 4, 5);
             var va = a.Var(2);
             var vb = b.Var(1);
-            Assert.Equal(RunStatus.Success, k.CompilerResult.Run(vy, new IVariable<int>[] { va, vx, vb }));
+            Assert.Equal(RunStatus.Success, k.CompilerResult.Run(vy, va, vx, vb ));
             Assert.Equal(3, vy[0]);
             Assert.Equal(5, vy[1]);
+
+            var predict = k.Func3;
+            var r = predict(3, new int[5] { 2, 4, 6, 8, 10 }, 2);
+            Assert.Equal(8, r[0]);
         }
     }
 }
