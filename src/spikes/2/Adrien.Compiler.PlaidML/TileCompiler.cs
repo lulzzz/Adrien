@@ -85,10 +85,10 @@ namespace Adrien.Compiler.PlaidML
             }
             
             DeviceTensor[] inputTensors = kernel.InputShapes
-                .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Label))
+                .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Label.ToUpper()))
                 .ToArray();
             DeviceTensor outputTensor = CreateTensor(CreateShape<TKernel>(kernel.OutputShape.Dimensions),
-                kernel.OutputShape.Label);
+                kernel.OutputShape.Label.ToUpper());
             Invoker<TKernel> invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
             if (invoker.IsAllocated && invoker.AllVariablesSet)
             {
@@ -118,10 +118,10 @@ namespace Adrien.Compiler.PlaidML
             }
 
             DeviceTensor[] inputTensors = inputShapes
-                .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Label))
+                .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Label.ToUpper()))
                 .ToArray();
             DeviceTensor outputTensor = CreateTensor(CreateShape<TKernel>(outputShape.Dimensions),
-                outputShape.Label);
+                outputShape.Label.ToUpper());
             Invoker<TKernel> invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
             if (invoker.IsAllocated && invoker.AllVariablesSet)
             {

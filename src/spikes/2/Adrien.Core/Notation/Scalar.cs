@@ -9,9 +9,9 @@ namespace Adrien.Notation
         internal override Name DefaultNameBase => "a";
 
 
-        public Scalar(string name) : base(name) { }
+        public Scalar(string name) : base(name, 1) { }
 
-        public Scalar() : base("a") { }
+        public Scalar() : this("a") { }
 
 
         public Scalar With(out Scalar with)

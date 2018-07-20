@@ -39,13 +39,20 @@ namespace Adrien.Tests.Compilers
         [Fact]
         public void CanCompileVectorKernel()
         {
-            var (x, y) = new Vector(10).Two("x", "y");
+            var (x, y) = new Vector(5).Two("x", "y");
             var (a, b) = new Scalar().Two("a","b");
             Kernel<int> k = new Kernel<int>(y, a * x + b);
             Assert.Equal(3, k.InputTensors.Count);
             Assert.Equal(y, k.OutputTensor);
             k = new Kernel<int>(y, a * x + b, new TileCompiler());
             Assert.True(k.Compile());
+            var vy = y.Var(new int[5]);
+            var vx = x.Var(1, 2, 3, 4, 5);
+            var va = a.Var(2);
+            var vb = b.Var(1);
+            Assert.Equal(RunStatus.Success, k.CompilerResult.Run(vy, new IVariable<int>[] { va, vx, vb }));
+            Assert.Equal(3, vy[0]);
+            Assert.Equal(5, vy[1]);
         }
     }
 }

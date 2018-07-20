@@ -54,7 +54,11 @@ namespace Adrien.Notation
 
         public Tensor(string name, params int [] dim) : base(name)
         {
-            Dimensions = dim == null ? new int[0] : dim;
+            if (dim == null || dim.Length == 0)
+            {
+                throw new ArgumentException("The number of dimensions must be at least 1.");
+            }
+            Dimensions = dim;
             Stride = GenericMath<int>.StrideInElements(Dimensions);
         }
 
