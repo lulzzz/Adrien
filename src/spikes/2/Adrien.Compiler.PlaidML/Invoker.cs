@@ -18,6 +18,7 @@ namespace Adrien.Compiler.PlaidML
 
         public bool OutputTensorsSet { get; protected set; }
 
+
         public bool AllVariablesSet => InputTensorsSet && OutputTensorsSet;
 
        

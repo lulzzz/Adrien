@@ -68,7 +68,7 @@ namespace Adrien.Tests
             Assert.Equal("x", x.Name);
             Assert.Equal("y", y.Name);
             var (a, b) = new Scalar("a").Two();
-            y.x = a * x + b;
+            y[x] = a * x + b;
             Assert.True(y.IsAssigned);
             ExpressionTree tree = y.ToTree();
             Assert.Equal(TensorOp.Assign, tree.Op);

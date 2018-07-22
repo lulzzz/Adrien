@@ -17,6 +17,7 @@ namespace Adrien.Trees
         Sub,
         SubCons,
         Mul,
+        Pow,
         Div,
         Sin,
         Cos,

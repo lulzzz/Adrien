@@ -148,6 +148,18 @@ namespace Adrien.Compiler.PlaidML
             return Compile(input, output, code, out result);
         }
 
+        public bool Compile<TVectorKernel>(int vectorCount, int vectorLength, string code, out IRunnable<TVectorKernel> result)
+            where TVectorKernel : unmanaged, IEquatable<TVectorKernel>, IComparable<TVectorKernel>, IConvertible
+        {
+            IVariableShape[] inputs = new IVariableShape[vectorCount];
+            for(int i = 0; i < inputs.Length; i++)
+            {
+                inputs[i] = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "I" + i.ToString());
+            }
+            IVariableShape output = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "O");
+            return Compile(inputs, output, code, out result);
+        }
+
         public Device OpenFirstDevice()
         {
             ThrowIfNotAllocated();

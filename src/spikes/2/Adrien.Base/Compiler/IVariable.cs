@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Buffers;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using System.Text;
 
 namespace Adrien.Compiler
 {
-    public interface IVariable<T> : INDArray, IPinnable where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
+    public interface IVariable<T> : IEnumerable<T>, INDArray, IPinnable where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         bool Initialized { get; }
 

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Adrien.Compiler
 {
-    public interface IVariableShape : IShape, ITerm
+    public interface IVariableShape : IShape, ITerm, IEnumerable<int>
     {
         
     }

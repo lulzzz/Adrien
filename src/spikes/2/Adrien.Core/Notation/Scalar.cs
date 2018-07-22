@@ -8,11 +8,16 @@ namespace Adrien.Notation
     {
         internal override Name DefaultNameBase => "a";
 
+        public object Value { get; protected set; }
 
         public Scalar(string name) : base(name, 1) { }
 
         public Scalar() : this("a") { }
 
+        public Scalar(object value) : this("__value")
+        {
+            this.Value = value;
+        }
 
         public Scalar With(out Scalar with)
         {

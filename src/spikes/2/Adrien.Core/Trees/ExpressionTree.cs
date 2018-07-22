@@ -15,8 +15,8 @@ namespace Adrien.Trees
     {
         public Expression LinqExpression { get; protected set; }
 
-        public Tensor OutputTensor => OutputIsTensor ? (OutputNode is OperatorNode ? 
-            ((OutputNode as OperatorNode).Left as ValueNode).ValueAs<Tensor>() : 
+        public Tensor OutputTensor => OutputIsTensor ? 
+            (OutputNode is OperatorNode ? ((OutputNode as OperatorNode).Left as ValueNode).ValueAs<Tensor>() : 
             (OutputNode as ValueNode).ValueAs<Tensor>()) : 
             throw new InvalidOperationException("The output node is not an assigned tensor.");
 
@@ -40,10 +40,16 @@ namespace Adrien.Trees
 
         protected HashSet<ITreeNode> HashSet { get; } = new HashSet<ITreeNode>();
 
+
         public ExpressionTree() : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
         {
             HashSet.Add(this);
             AddNode(CreateValueNode(this, null));
+        }
+
+        public ExpressionTree(Term term) : this()
+        {
+            this.LinqExpression = term.LinqExpression;
         }
 
         public ExpressionTree(Tensor lhsTensor, IndexSet lhsIndices) : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
@@ -61,11 +67,7 @@ namespace Adrien.Trees
             }
         }
 
-        public ExpressionTree(Term term) : this()
-        {
-            this.LinqExpression = term.LinqExpression;
-        }
-        
+
         public OperatorNode CreateOperatorNode(OperatorNode parent, TensorOp op)
         {
             TreeNodePosition pos = parent.HasLeft ? TreeNodePosition.RIGHT : TreeNodePosition.LEFT;

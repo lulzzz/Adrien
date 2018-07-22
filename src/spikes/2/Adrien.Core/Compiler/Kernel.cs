@@ -15,13 +15,14 @@ namespace Adrien.Compiler
 
         public IExpressionTree ExpressionTree => Tree;
 
-        public IVariableShape OutputShape { get; protected set; }
+        public IVariableShape OutputShape { get; set; }
 
         public IReadOnlyList<IVariableShape> InputShapes { get; protected set; }
 
         public ExpressionTree Tree { get; protected set; }
 
-        public IReadOnlyList<Tensor> Tensors => Tree.Root.DescendantsAndSelf().OfType<ValueNode>()
+        public IReadOnlyList<Tensor> Tensors => Tree.Root.DescendantsAndSelf()
+            .OfType<ValueNode>()
             .Where(n => n.NodeType == ValueNodeType.TENSOR)
             .Distinct()
             .Select(n => n.ValueAs<Tensor>())
@@ -81,7 +82,8 @@ namespace Adrien.Compiler
             }
         }
 
-   
+        protected IVariableShape GeneratedOutputShape { get; set; }
+
         public Kernel(Tensor output)
         {
             if (!output.IsAssigned)
@@ -89,7 +91,15 @@ namespace Adrien.Compiler
                 throw new ArgumentException
                     ($"The output tensor {output.Label} must be assigned an input expression.");
             }
-            Tree = output.Assignment.Expression.ToTree((output, output.Assignment.IndexSet));
+            else if (output.IsElementwiseAssigned)
+            {
+                Tree = output.ElementwiseAssignment.Expression.ToTree((output, null));
+            }
+            else
+            {
+                Tree = output.IndexedAssignment.Expression.ToTree((output, output.IndexedAssignment.IndexSet));
+            }
+            
             InputShapes = InputTensors;
             OutputShape = output;
         }
@@ -98,6 +108,13 @@ namespace Adrien.Compiler
         {
             Compiler = compiler;
             DeviceType = deviceType;
+        }
+
+        public Kernel(TensorExpression expr)
+        {
+            Tree = expr.ToTree();
+            InputShapes = InputTensors;
+
         }
 
         public Kernel(Tensor output, TensorExpression expr)
@@ -115,6 +132,12 @@ namespace Adrien.Compiler
             DeviceType = deviceType;
         }
 
+        public Kernel(TensorExpression expr, ICompiler compiler, DeviceType deviceType = DeviceType.CPU)
+            : this(expr)
+        {
+            Compiler = compiler;
+            DeviceType = deviceType;
+        }
 
         public IVariableShape this[int index]
         {

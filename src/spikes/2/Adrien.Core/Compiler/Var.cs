@@ -108,7 +108,6 @@ namespace Adrien
             Initialized = true;
         }
 
-
         public ref T this[int index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -214,6 +213,25 @@ namespace Adrien
             Pins--;
         }
 
+        #region IEnumerable<T> implementation
+        public IEnumerator<T> GetEnumerator()
+        {
+            if (this.Initialized)
+            {
+                for (int i = 0; i < this.ElementCount; i++)
+                {
+                    yield return this.Read(i);
+                }
+            }
+            else
+            {
+                yield return default;
+            }
+            
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+        #endregion
 
         #region INDArray implementation
         public int NDim => Rank;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -60,7 +61,19 @@ namespace Adrien.Compiler.PlaidML
         {
             ThrowIfNotAllocated();
             return new DeviceTensorView<T>(this, mapType);
-        }  
+        }
+
+        #region IEnumerable<int> implementation
+        public IEnumerator<int> GetEnumerator()
+        {
+            for (int i = 0; i < this.Dimensions.Length; i++)
+            {
+                yield return this.Dimensions[i];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+        #endregion
 
     }
 }

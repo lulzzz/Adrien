@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics;
@@ -31,21 +32,20 @@ namespace Adrien.Notation
                 return n;
             }
         }
-            
-        public (IndexSet IndexSet, TensorExpression Expression) Assignment { get; protected set; }
 
-        public bool IsAssigned => Assignment.Expression != null;
+        public (IndexSet IndexSet, TensorExpression Expression) IndexedAssignment { get; protected set; }
 
-        public TensorExpression x
-        {
-            set
-            {
-                this.Assignment = (null, value);
-            }
-        }
+        public (IEnumerable<Tensor> Dependents, TensorExpression Expression) ElementwiseAssignment { get; protected set; }
 
-        internal override Expression LinqExpression => this.IsAssigned ? 
-            this.Assignment.Expression.LinqExpression : Expression.Constant(this, typeof(Tensor));
+        public bool IsAssigned => IndexedAssignment.Expression != null || ElementwiseAssignment.Expression != null;
+
+        public bool IsElementwiseAssigned => this.ElementwiseAssignment.Expression != null;
+
+        public bool IsIndexAssigned => this.IndexedAssignment.Expression != null;
+
+        internal override Expression LinqExpression => this.IsAssigned ? this.IsIndexAssigned 
+            ? this.IndexedAssignment.Expression.LinqExpression : this.ElementwiseAssignment.Expression.LinqExpression 
+            : Expression.Constant(this, typeof(Tensor));
 
         internal override Name DefaultNameBase { get; } = "A";
 
@@ -72,6 +72,13 @@ namespace Adrien.Notation
             I = new IndexSet(this, indexNameBase, dim);
         }
 
+        public Tensor(IVariableShape shape) : this(shape.Label, shape.Dimensions) {}
+
+        internal Tensor((TensorExpression te, string name) expr) : base(expr.name)
+        {
+            IndexedAssignment = (null, expr.te);
+        }
+
 
         public TensorExpression this[IndexSet I]
         {
@@ -93,17 +100,10 @@ namespace Adrien.Notation
             set
             {
                 ThrowIfAlreadyAssiged();
-                Assignment = (I, value);
+                IndexedAssignment = (I, value);
             }
         }
 
-        public TensorExpression this[Enum c]
-        {
-            set
-            {
-
-            }
-        }
         public static implicit operator TensorExpression(Tensor t)
         {
             return new TensorExpression(t.LinqExpression);
@@ -113,13 +113,15 @@ namespace Adrien.Notation
         {
             if (t.IsAssigned)
             {
-                return t.Assignment.Expression.ToTree((t, t.Assignment.IndexSet));
+                return t.IndexedAssignment.Expression.ToTree((t, t.IndexedAssignment.IndexSet));
             }
             else
             {
                 return new TensorExpression(t.LinqExpression).ToTree();
             }
         }
+
+        public static implicit operator Tensor((TensorExpression te, string name) expr) => new Tensor(expr);
 
         public static TensorExpression operator - (Tensor left) => left.Negate();
         
@@ -192,7 +194,9 @@ namespace Adrien.Notation
 
         public ExpressionTree ToTree ()
         {
-            return this.IsAssigned ? this.Assignment.Expression.ToTree((this, this.Assignment.IndexSet)) :
+            return this.IsAssigned ? this.IsIndexAssigned ? 
+                this.IndexedAssignment.Expression.ToTree((this, this.IndexedAssignment.IndexSet)) :
+                this.ElementwiseAssignment.Expression.ToTree((this, null)) :
                 new TensorExpression(this.LinqExpression).ToTree();
         }
 
@@ -213,11 +217,22 @@ namespace Adrien.Notation
             return string.Join("", names);
         }
 
-      
+        #region IEnumerable<int> implementation
+        public IEnumerator<int> GetEnumerator()
+        {
+            for (int i = 0; i < this.Dimensions.Length; i++)
+            {
+                yield return this.Dimensions[i];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+        #endregion
+
         [DebuggerStepThrough]
         internal void ThrowIfAlreadyAssiged()
         {
-            if (Assignment.IndexSet != null)
+            if (IndexedAssignment.IndexSet != null)
             {
                 throw new InvalidOperationException("This tensor variable has an existing assigment. + " +
                     $"You can only assign to a tensor variable once.");

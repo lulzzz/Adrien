@@ -21,11 +21,11 @@ namespace Adrien.Trees
         {
             switch(et)
             {
-                case ExpressionType.Index:
-                    return TensorOp.Index;
-                case ExpressionType.Multiply:
-                    return TensorOp.Mul;
+                case ExpressionType.Index: return TensorOp.Index;
+                case ExpressionType.Multiply: return TensorOp.Mul;
                 case ExpressionType.Add: return TensorOp.Add;
+                case ExpressionType.Subtract: return TensorOp.Sub;
+                case ExpressionType.Power: return TensorOp.Pow;
                 default:
                     throw new Exception($"Cannot translate expression type: {et} to TensorOp.");
             }

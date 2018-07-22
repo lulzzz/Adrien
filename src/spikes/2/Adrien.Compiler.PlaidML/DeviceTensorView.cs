@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Buffers;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -101,6 +102,24 @@ namespace Adrien.Compiler.PlaidML
 
         public bool CopyToAndFree(T[] array) => CopyToAndFree(new Span<T>(array));
 
+        #region IEnumerable<T> implementation
+        public IEnumerator<T> GetEnumerator()
+        {
+            if (this.Initialized)
+            {
+                for (int i = 0; i < this.ElementCount; i++)
+                {
+                    yield return this.Read(i);
+                }
+            }
+            else
+            {
+                yield return default;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
+        #endregion
 
         #region INDArray implementation
         public bool Initialized => IsAllocated;

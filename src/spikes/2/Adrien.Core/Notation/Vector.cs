@@ -20,6 +20,8 @@ namespace Adrien.Notation
             i = new Index(null, 1, 1, indexName);
         }
 
+        public Vector(int length, out Index i) : this(vn.V0, "i", out i, length) {}
+
         public Vector(string name, out Index i, int length) : this(name, "i", out i, length) {}
 
         public Vector With(out Vector with)

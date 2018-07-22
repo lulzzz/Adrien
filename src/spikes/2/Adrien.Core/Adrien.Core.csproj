@@ -34,6 +34,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>KernelFuncs.tt</DependentUpon>
     </None>
+    <None Include="Notation\TensorExpressionIndexers.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TensorExpressionIndexers.tt</DependentUpon>
+    </None>
     <None Include="Notation\TensorIndexers.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -60,6 +65,16 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>TensorConstructors.tt</DependentUpon>
     </Compile>
+    <Compile Update="Notation\TensorExpressionIndexers.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TensorExpressionIndexers.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Notation\TensorIndexers2.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TensorIndexers2.tt</DependentUpon>
+    </Compile>
     <Compile Update="Notation\TensorIndexers.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -75,6 +90,14 @@
     <None Update="Notation\TensorConstructors.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TensorConstructors.cs</LastGenOutput>
+    </None>
+    <None Update="Notation\TensorExpressionIndexers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TensorExpressionIndexers.cs</LastGenOutput>
+    </None>
+    <None Update="Notation\TensorIndexers2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TensorIndexers2.cs</LastGenOutput>
     </None>
     <None Update="Notation\TensorIndexers.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

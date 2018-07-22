@@ -19,7 +19,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				Assignment = (new IndexSet(this, index1), value);
+				IndexedAssignment = (new IndexSet(this, index1), value);
 			}
 		}
 		  
@@ -38,7 +38,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				Assignment = (new IndexSet(this, index1, index2), value);
+				IndexedAssignment = (new IndexSet(this, index1, index2), value);
 			}
 		}
 		  
@@ -58,7 +58,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				Assignment = (new IndexSet(this, index1, index2, index3), value);
+				IndexedAssignment = (new IndexSet(this, index1, index2, index3), value);
 			}
 		}
 		  
@@ -79,7 +79,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				Assignment = (new IndexSet(this, index1, index2, index3, index4), value);
+				IndexedAssignment = (new IndexSet(this, index1, index2, index3, index4), value);
 			}
 		}
 		  
@@ -101,7 +101,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				Assignment = (new IndexSet(this, index1, index2, index3, index4, index5), value);
+				IndexedAssignment = (new IndexSet(this, index1, index2, index3, index4, index5), value);
 			}
 		}
 		  
@@ -124,7 +124,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				Assignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6), value);
+				IndexedAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6), value);
 			}
 		}
 		  
@@ -148,7 +148,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				Assignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), value);
+				IndexedAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), value);
 			}
 		}
 		  
@@ -173,7 +173,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				Assignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), value);
+				IndexedAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), value);
 			}
 		}
 			}

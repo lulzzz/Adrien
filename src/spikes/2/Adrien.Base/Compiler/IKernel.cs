@@ -14,7 +14,7 @@ namespace Adrien.Compiler
 
         IReadOnlyList<IVariableShape> InputShapes { get; }
 
-        IVariableShape OutputShape { get; }
+        IVariableShape OutputShape { get; set; }
 
         bool CompileBeforeRun { get; set; }
 

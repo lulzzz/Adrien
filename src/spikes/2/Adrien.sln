@@ -23,6 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adrien.Native.PlaidML.Win-x
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PythonLibs", "PythonLibs", "{4FE211E6-AD7D-4E5D-8B3B-30BC1D2E11C3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{036CDE5E-773E-4A6B-A5E4-EA772FDD21A3}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\docs\spike2-impl-notes.md = ..\..\..\docs\spike2-impl-notes.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BuildTemplates|Any CPU = BuildTemplates|Any CPU
