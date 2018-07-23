@@ -10,6 +10,8 @@ namespace Adrien.Generator
 {
     public abstract class LanguageWriter<TOp>
     {
+        public Queue<string> VariableDefinitions { get; } = new Queue<string>();
+
         protected Dictionary<string, object> Options { get; }
 
         protected abstract Dictionary<TOp, string> OperatorTemplate { get; }
@@ -39,9 +41,12 @@ namespace Adrien.Generator
             }
         }
 
-        public virtual string WriteOperator(TOp op, params string[] operands) => string.Format(OperatorTemplate[op], operands);
+        public virtual string WriteOperator(TOp op, params string[] operands)
+        {
+            return string.Format(OperatorTemplate[op], operands);
+        }
 
-        public virtual string GetOperatorText(ITreeOperatorNode<TOp> on) => OperatorTemplate[on.Op];
 
+        public virtual string GetOperatorTemplate(ITreeOperatorNode<TOp> on) => OperatorTemplate[on.Op];
     }
 }

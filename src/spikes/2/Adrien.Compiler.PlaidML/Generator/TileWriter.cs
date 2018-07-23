@@ -13,12 +13,32 @@ namespace Adrien.Compiler.PlaidML.Generator
         protected override Dictionary<TensorOp, string> OperatorTemplate { get; } = new Dictionary<TensorOp, string>
         {
             { TensorOp.Assign, "{0} = {1};" },
+            { TensorOp.ElementWiseAssign, "{0}" },
             { TensorOp.Index, "{0}[{1}]" },
             { TensorOp.Add, "{0} + {1}" },
             { TensorOp.Mul, "{0} * {1}" },
             { TensorOp.Sub, "{0} - {1}" },
             { TensorOp.Div, "{0} / {1}" }
         };
+
+
+        public override string WriteOperator(TensorOp op, params string[] operands)
+        {
+            switch(op)
+            {
+                case TensorOp.Assign:
+                    StringBuilder sb = new StringBuilder();
+                    while (VariableDefinitions.Count > 0)
+                    {
+                        sb.Append(VariableDefinitions.Dequeue());
+                    }
+                    sb.Append(base.WriteOperator(op, operands));
+                    return sb.ToString();
+
+                default: return base.WriteOperator(op, operands);
+
+            }
+        }
 
         public override string WriteValueText(ITreeValueNode vn)
         {

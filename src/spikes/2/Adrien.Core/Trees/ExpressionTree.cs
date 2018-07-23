@@ -34,9 +34,16 @@ namespace Adrien.Trees
 
         public bool OutputIsTensor => (OutputNode != null);
 
-        public IEnumerable<ITreeValueNode> TensorNodes => ValueNodes.Where(vn => vn.NodeType == ValueNodeType.TENSOR);
+        public IEnumerable<ITreeValueNode> TensorNodes => 
+            ValueNodes
+            .Where(vn => vn.NodeType == ValueNodeType.TENSOR)
+            .Distinct();
 
-        public IEnumerable<ITreeValueNode> IndexSetNodes => ValueNodes.Where(vn => vn.NodeType == ValueNodeType.INDEXSET);
+        public IEnumerable<ITreeValueNode> IndexSetNodes => 
+            ValueNodes
+            .Where(vn => vn.NodeType == ValueNodeType.INDEXSET)
+            .Distinct();
+
 
         protected HashSet<ITreeNode> HashSet { get; } = new HashSet<ITreeNode>();
 
@@ -52,10 +59,11 @@ namespace Adrien.Trees
             this.LinqExpression = term.LinqExpression;
         }
 
-        public ExpressionTree(Tensor lhsTensor, IndexSet lhsIndices) : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
+        public ExpressionTree(Tensor lhsTensor, IndexSet lhsTensorIndices) : base(0, null, TreeNodePosition.RIGHT, 
+            TensorOp.Assign)
         {
             HashSet.Add(this);
-            if (lhsIndices == null)
+            if (lhsTensorIndices == null)
             {
                 AddNode(CreateValueNode(this, lhsTensor));
             }
@@ -63,7 +71,7 @@ namespace Adrien.Trees
             {
                 OperatorNode n = AddNode(CreateOperatorNode(this, TensorOp.Index)) as OperatorNode;
                 AddNode(CreateValueNode(n, lhsTensor));
-                AddNode(CreateValueNode(n, lhsIndices));
+                AddNode(CreateValueNode(n, lhsTensorIndices));
             }
         }
 

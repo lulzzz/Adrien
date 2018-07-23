@@ -9,6 +9,7 @@ namespace Adrien.Trees
         NoOp,
         Sigma,
         Assign,
+        ElementWiseAssign,
         Index,
         Log,
         Log10,

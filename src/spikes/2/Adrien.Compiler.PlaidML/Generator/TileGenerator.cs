@@ -33,6 +33,35 @@ namespace Adrien.Compiler.PlaidML.Generator
             WriteFunctionPrologue();
         }
 
+        public override void VisitInternal(ITreeOperatorNode<TensorOp> on)
+        {
+            switch(on.Op)
+            {
+                case TensorOp.ElementWiseAssign:
+                    string lhs = "", rhs = "";
+                    using (Context.Internal(Writer.GetOperatorTemplate(on)))
+                    {
+                    
+                        if (on.Right != null)
+                        {
+                            base.Visit(on.Right);
+                            rhs = (string)Context.Pop();
+                        }
+                        if (on.Left != null)
+                        {
+                            base.Visit(on.Left);
+                            lhs = (string)Context.Pop();
+                        }
+                    }
+                    Writer.VariableDefinitions.Enqueue(string.Format("{0} = {1};", lhs, rhs) + Environment.NewLine);
+                    Context.Push(Writer.WriteOperator(on.Op, lhs));
+                    return;
+                default:
+                    base.VisitInternal(on);
+                    return;
+            }
+        }
+
         protected void GetDimenSionVariableNames()
         {
             TensorDimensionVariables = new Dictionary<ITreeValueNode, string>(Tree.TensorNodes.Count());

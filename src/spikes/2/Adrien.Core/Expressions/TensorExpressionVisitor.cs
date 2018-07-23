@@ -23,11 +23,10 @@ namespace Adrien.Trees
 
         internal TreeBuilderContext Context { get; set; }
 
-
-        public TensorExpressionVisitor(Expression expr, (Tensor tensor, IndexSet indices)? lhs = null, bool visit = true) : base()
+        public TensorExpressionVisitor(Expression expr, bool visit = true)
         {
             LinqExpression = expr;
-            Tree = lhs == null ? new ExpressionTree() : new ExpressionTree(lhs.Value.tensor, lhs.Value.indices);
+            Tree = new ExpressionTree();
             Context = new TreeBuilderContext(Tree);
             if (visit)
             {
@@ -35,6 +34,29 @@ namespace Adrien.Trees
             }
         }
 
+        public TensorExpressionVisitor(Expression expr, Tensor lhs, bool visit = true) : base()
+        {
+            LinqExpression = expr;
+            Tree = new ExpressionTree(lhs);
+            Context = new TreeBuilderContext(Tree);
+            if (visit)
+            {
+                Visit();
+            }
+        }
+
+        public TensorExpressionVisitor(Expression expr, (Tensor tensor, IndexSet indices) lhs, bool visit = true) : 
+            base()
+        {
+            LinqExpression = expr;
+            Tree = new ExpressionTree(lhs.tensor, lhs.indices);
+            Context = new TreeBuilderContext(Tree);
+            if (visit)
+            {
+                Visit();
+            }
+        }
+        
         public void Visit()
         {
             this.Visit(this.LinqExpression);
@@ -58,11 +80,24 @@ namespace Adrien.Trees
             {
                 t = node.Value as Tensor;
             }
-            else throw new InvalidOperationException($"Can't convert ConstantExpression {node.ToReadableString()} of type {node.Value.GetType().Name} to type Tensor.");
+            else throw new InvalidOperationException($"Can't convert ConstantExpression {node.ToReadableString()}" + 
+                @"of type {node.Value.GetType().Name} to type Tensor.");
 
-            Context.AddValueNode(t);
+            if (!t.IsElementwiseAssigned)
+            {
+                Context.AddValueNode(t);
+            }
+            else
+            {
+                OperatorNode on = Context.AddOperatorNode(TensorOp.ElementWiseAssign);
+                using (Context.Internal(on))
+                {
+                    Context.AddValueNode(t);
+                    base.Visit(t.ElementwiseAssignment.Expression.LinqExpression);
+                }
+            }
             return node;
-           
+
         }
                             
         protected override Expression VisitIndex(IndexExpression node)

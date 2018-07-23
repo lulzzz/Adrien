@@ -81,7 +81,7 @@ namespace Adrien.Tests.Compilers
         }
 
         [Fact]
-        public void CanCompileLinearRegressionKernelFrom()
+        public void CanCompileLinearRegressionKernel()
         {
             TileCompiler compiler = new TileCompiler();
             var (x, ypred, yactual, yerror, yloss) = new Vector(5, out Index i).Five("x", "ypred", "yactual", "yerror", "yloss");
@@ -90,9 +90,11 @@ namespace Adrien.Tests.Compilers
             ypred[x] = a * x + b;
             Kernel<int> predict = new Kernel<int>(ypred, compiler);
 
-            yerror[ypred, yactual] = (yactual - ypred) ^ 2 ;
+            yerror[ypred, yactual] = (yactual - ypred) * (yactual - ypred) ;
             yloss[i] = yerror[i];
             Kernel<int> loss = new Kernel<int>(yloss, compiler);
+            Assert.True(loss.Compile());
+
         }
     }
 }

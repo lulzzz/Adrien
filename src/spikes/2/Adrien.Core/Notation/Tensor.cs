@@ -46,7 +46,7 @@ namespace Adrien.Notation
         internal override Expression LinqExpression => this.IsAssigned ? this.IsIndexAssigned 
             ? this.IndexedAssignment.Expression.LinqExpression : this.ElementwiseAssignment.Expression.LinqExpression 
             : Expression.Constant(this, typeof(Tensor));
-
+        
         internal override Name DefaultNameBase { get; } = "A";
 
         protected (Tensor tensor, int index)? GeneratorContext { get; set; }
@@ -192,20 +192,17 @@ namespace Adrien.Notation
             return this.GeneratorContext.Value.tensor;
         }
 
-        public ExpressionTree ToTree ()
-        {
-            return this.IsAssigned ? this.IsIndexAssigned ? 
-                this.IndexedAssignment.Expression.ToTree((this, this.IndexedAssignment.IndexSet)) :
-                this.ElementwiseAssignment.Expression.ToTree((this, null)) :
-                new TensorExpression(this.LinqExpression).ToTree();
-        }
-
+        public ExpressionTree ToTree () => this.IsAssigned ? 
+            this.IsIndexAssigned ? 
+            this.IndexedAssignment.Expression.ToTree((this, this.IndexedAssignment.IndexSet)) :
+            this.ElementwiseAssignment.Expression.ToTree((this, null)) : 
+            new TensorExpression(this.LinqExpression).ToTree();
+        
         public Var<T> Var<T>(Array array) where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible 
             => new Var<T>(this, array);
 
         public Var<T> Var<T>(params T[] data) where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible 
             => new Var<T>(this, data);
-
 
         public static string RankToTensorName(int rank)
         {

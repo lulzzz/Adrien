@@ -21,7 +21,7 @@ namespace Adrien.Generator
         public override void VisitInternal(ITreeOperatorNode<TOp> on)
         {
             Stack<string> operands = new Stack<string>();
-            using (Context.Internal(Writer.GetOperatorText(on)))
+            using (Context.Internal(Writer.GetOperatorTemplate(on)))
             {
                 base.VisitInternal(on);
 

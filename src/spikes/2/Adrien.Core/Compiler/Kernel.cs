@@ -91,13 +91,9 @@ namespace Adrien.Compiler
                 throw new ArgumentException
                     ($"The output tensor {output.Label} must be assigned an input expression.");
             }
-            else if (output.IsElementwiseAssigned)
-            {
-                Tree = output.ElementwiseAssignment.Expression.ToTree((output, null));
-            }
             else
             {
-                Tree = output.IndexedAssignment.Expression.ToTree((output, output.IndexedAssignment.IndexSet));
+                Tree = output.ToTree();
             }
             
             InputShapes = InputTensors;

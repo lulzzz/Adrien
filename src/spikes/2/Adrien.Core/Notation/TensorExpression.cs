@@ -27,7 +27,7 @@ namespace Adrien.Notation
 
         public List<Tensor> Tensors => LinqExpression.GetConstants<Tensor>();
         
-        public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression, null, true).Tree;
+        public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression).Tree;
 
         public ExpressionTree ToTree((Tensor tensor, IndexSet indices) lhs) => new TensorExpressionVisitor(this.LinqExpression, lhs, true).Tree;
        
