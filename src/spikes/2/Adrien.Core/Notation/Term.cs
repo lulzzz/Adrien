@@ -7,7 +7,7 @@ namespace Adrien.Notation
     /// <summary>
     /// Abstracts a notation term
     /// </summary>
-    public abstract class Term : ITerm, IEquatable<Term>
+    public abstract class Term : ITerm
     {
         public string Id { get; protected set; }
 
@@ -48,21 +48,6 @@ namespace Adrien.Notation
         public static implicit operator Expression(Term e)
         {
             return e.LinqExpression;
-        }
-
-        public bool Equals(Term other)
-        {
-            return this.Id == other.Id;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is Term ? this.Equals(obj as Term) : false;
-        }
-
-        public override int GetHashCode()
-        {
-            return this.Id.GetHashCode();
         }
 
         protected string GenerateName(int index, string indexNameBase)

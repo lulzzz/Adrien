@@ -171,7 +171,7 @@ namespace Adrien.Tests.Compilers
             var (m,n) = new Scalar("m").Two();
             y[x] = m * x + n;
             g = new TileGenerator(y.ToTree());
-            Assert.Equal("Y = M * X + N;", g.Text);
+            Assert.Equal("Y = (M * X) + N;", g.Text);
         }
     }
 }

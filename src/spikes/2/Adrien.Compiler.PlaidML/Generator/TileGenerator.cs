@@ -10,10 +10,25 @@ namespace Adrien.Compiler.PlaidML.Generator
 {
     public class TileGenerator : LanguageGenerator<TensorOp, TileWriter>
     {
-        public List<IVariableShape> InputTensors => Tree.TensorNodes
-            .Where(t => t.Label != Tree.OutputNode.Label)
-            .Select(t => t.ValueAs<IVariableShape>()).ToList();
+        public override List<TensorOp> BinaryOperators { get; } = new List<TensorOp>()
+        {
+            TensorOp.Mul, TensorOp.Add, TensorOp.Sub, TensorOp.Div
+        };
 
+        public List<ITreeValueNode> InputTensors =>
+           Tree.TensorNodes
+           .Distinct(Tree)
+           .Where(t => t.Label != Tree.OutputNode.Label)
+           .Where(t => !Tree.VariableNodes.Contains(t))
+           .ToList();
+
+        public List<IVariableShape> InputShapes => 
+            Tree.TensorNodes
+            .Distinct(Tree)
+            .Where(t => t.Label != Tree.OutputNode.Label)
+            .Where(t => !Tree.VariableNodes.Contains(t))
+            .Select(t => t.ValueAs<IVariableShape>()).ToList();
+            
         public Dictionary<ITreeValueNode, string> TensorDimensionVariables { get; protected set; }
 
         public string FunctionText { get; protected set; }
@@ -25,7 +40,7 @@ namespace Adrien.Compiler.PlaidML.Generator
             this.VisitTree();
         }
 
-
+        
         public override void AfterVisitTree()
         {
             base.AfterVisitTree();
@@ -64,8 +79,8 @@ namespace Adrien.Compiler.PlaidML.Generator
 
         protected void GetDimenSionVariableNames()
         {
-            TensorDimensionVariables = new Dictionary<ITreeValueNode, string>(Tree.TensorNodes.Count());
-            foreach(ITreeValueNode v in Tree.TensorNodes)
+            TensorDimensionVariables = new Dictionary<ITreeValueNode, string>(InputTensors.Count);
+            foreach(ITreeValueNode v in InputTensors)
             {
                 string name = v.Label + "N";
                 int n = 0;
@@ -94,8 +109,7 @@ namespace Adrien.Compiler.PlaidML.Generator
         protected void WriteFunctionPrologue()
         {
             StringBuilder prologue = new StringBuilder("function(");
-            var inputTensors = Tree.TensorNodes.Where(t => t.Label != Tree.OutputNode.Label);
-            foreach(ITreeValueNode tensor in inputTensors)
+            foreach(ITreeValueNode tensor in InputTensors)
             {
                 if (!Tree.IndexSetNodes.Any(set => set.Parent.Label == tensor.Label))
                 {

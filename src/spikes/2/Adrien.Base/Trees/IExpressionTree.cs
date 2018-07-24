@@ -4,16 +4,18 @@ using System.Text;
 
 namespace Adrien.Trees
 {
-    public interface IExpressionTree : ITreeNode
+    public interface IExpressionTree : ITreeNode, IEqualityComparer<ITreeNode>, IEqualityComparer<ITreeValueNode>
     {
         ITreeNode Root { get; }
 
         IEnumerable<ITreeNode> Children { get; }
 
-        ITreeNode OutputNode { get; }
+        ITreeValueNode OutputNode { get; }
 
         IEnumerable<ITreeValueNode> TensorNodes { get; }
 
         IEnumerable<ITreeValueNode> IndexSetNodes { get; }
+
+        IEnumerable<ITreeValueNode> VariableNodes { get; }
     }
 }

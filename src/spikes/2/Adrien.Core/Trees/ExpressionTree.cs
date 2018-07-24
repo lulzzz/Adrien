@@ -11,14 +11,12 @@ using Adrien.Notation;
 
 namespace Adrien.Trees
 {
-    public class ExpressionTree : OperatorNode, IExpressionTree
+    public class ExpressionTree : OperatorNode, IExpressionTree, IEqualityComparer<ITreeNode>, 
+        IEqualityComparer<ITreeValueNode>
     {
         public Expression LinqExpression { get; protected set; }
 
-        public Tensor OutputTensor => OutputIsTensor ? 
-            (OutputNode is OperatorNode ? ((OutputNode as OperatorNode).Left as ValueNode).ValueAs<Tensor>() : 
-            (OutputNode as ValueNode).ValueAs<Tensor>()) : 
-            throw new InvalidOperationException("The output node is not an assigned tensor.");
+        public Tensor OutputTensor => OutputNode.ValueAs<Tensor>();
 
         public int Count => HashSet.Count;
 
@@ -30,20 +28,36 @@ namespace Adrien.Trees
 
         public IEnumerable<ITreeNode> Children => HashSet.Cast<ITreeNode>();
 
-        public ITreeNode OutputNode => this.Left;
+        public ITreeValueNode OutputNode
+        {
+            get
+            {
+                if (this.Left is ITreeValueNode)
+                {
+                    return this.Left as ITreeValueNode;
+                }
+                else if ((this.Left is OperatorNode) && (this.Left as OperatorNode).Op == TensorOp.Index)
+                {
+                    return this.Left.Left as ITreeValueNode;
+                }
+                else throw new Exception("The trees output node could not ve determined.");
+               
+            }
+        }
 
         public bool OutputIsTensor => (OutputNode != null);
 
-        public IEnumerable<ITreeValueNode> TensorNodes => 
-            ValueNodes
-            .Where(vn => vn.NodeType == ValueNodeType.TENSOR)
-            .Distinct();
+        public IEnumerable<ITreeValueNode> TensorNodes => ValueNodes.Where(vn => vn.NodeType == ValueNodeType.TENSOR);
 
-        public IEnumerable<ITreeValueNode> IndexSetNodes => 
-            ValueNodes
-            .Where(vn => vn.NodeType == ValueNodeType.INDEXSET)
-            .Distinct();
+        public IEnumerable<ITreeValueNode> IndexSetNodes => ValueNodes.Where(vn => vn.NodeType == ValueNodeType.INDEXSET);
 
+        public IEnumerable<ITreeValueNode> VariableNodes =>
+            OperatorNodes
+            .Where(on => on.Op == TensorOp.ElementWiseAssign)
+            .Select(on => on.Left)
+            .Cast<ITreeValueNode>()
+            .Distinct(this);
+            
 
         protected HashSet<ITreeNode> HashSet { get; } = new HashSet<ITreeNode>();
 
@@ -74,7 +88,6 @@ namespace Adrien.Trees
                 AddNode(CreateValueNode(n, lhsTensorIndices));
             }
         }
-
 
         public OperatorNode CreateOperatorNode(OperatorNode parent, TensorOp op)
         {
@@ -168,5 +181,24 @@ namespace Adrien.Trees
 
         public int CountChildren() => CountChildren(this);
 
+        public int GetHashCode(ITreeNode node)
+        {
+            return node.Label.GetHashCode();
+        }
+
+        public bool Equals(ITreeNode left, ITreeNode righ)
+        {
+            return left.Label == left.Label;
+        }
+
+        public int GetHashCode(ITreeValueNode node)
+        {
+            return node.NodeType.GetHashCode() + node.Label.GetHashCode();
+        }
+
+        public bool Equals(ITreeValueNode left, ITreeValueNode right)
+        {
+            return (left.NodeType == right.NodeType) && (left.Label == left.Label);
+        }
     }
 }

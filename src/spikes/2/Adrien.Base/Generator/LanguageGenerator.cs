@@ -8,6 +8,8 @@ namespace Adrien.Generator
 {
     public abstract class LanguageGenerator<TOp, TWriter> : TreeVisitor<TOp, string, string> where TWriter : LanguageWriter<TOp>
     {
+        public abstract List<TOp> BinaryOperators { get; }
+
         public string Text => this.Context.InternalNode;
 
         public bool Success { get; protected set; }
@@ -27,11 +29,29 @@ namespace Adrien.Generator
 
                 if (on.Right != null)
                 {
-                    operands.Push((string)Context.Pop());
+                    if (on.Right is ITreeOperatorNode<TOp> && BinaryOperators.Contains(on.Op)
+                        && BinaryOperators.Contains((on.Right as ITreeOperatorNode<TOp>).Op))
+                    {
+                        operands.Push("(" + (string)Context.Pop() + ")");
+                    }
+                    else
+                    {
+                        operands.Push((string)Context.Pop());
+
+                    }
                 }
                 if (on.Left != null)
                 {
-                    operands.Push((string)Context.Pop());
+                    if (on.Left is ITreeOperatorNode<TOp> && BinaryOperators.Contains(on.Op) 
+                        && BinaryOperators.Contains((on.Left as ITreeOperatorNode<TOp>).Op))
+                    {
+                        operands.Push("(" + (string)Context.Pop() + ")");
+                    }
+                    else
+                    {
+                        operands.Push((string)Context.Pop());
+
+                    }
                 }
             }
             Context.Push(Writer.WriteOperator(on.Op, operands.ToArray()));

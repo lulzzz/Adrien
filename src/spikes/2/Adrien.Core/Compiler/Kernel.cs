@@ -21,11 +21,7 @@ namespace Adrien.Compiler
 
         public ExpressionTree Tree { get; protected set; }
 
-        public IReadOnlyList<Tensor> Tensors => Tree.Root.DescendantsAndSelf()
-            .OfType<ValueNode>()
-            .Where(n => n.NodeType == ValueNodeType.TENSOR)
-            .Distinct()
-            .Select(n => n.ValueAs<Tensor>())
+        public IReadOnlyList<Tensor> Tensors => Tree.TensorNodes.Distinct(Tree).Select(n => n.ValueAs<Tensor>())
             .ToList();
 
         public IReadOnlyList<Tensor> InputTensors => Tensors.Where(t => t.Label != OutputTensor.Name.Label).ToList();
