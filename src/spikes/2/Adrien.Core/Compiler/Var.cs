@@ -126,6 +126,19 @@ namespace Adrien
 
         public static implicit operator Var<T>(T c) => new Var<T>(null, c);
 
+        public static implicit operator T (Var<T> v) 
+        {
+            if (!v.Initialized)
+            {
+                throw new InvalidOperationException($"The variable {v.Name} is not initialized");
+            }
+            else if (v.ElementCount != 1)
+            {
+                throw new InvalidCastException($"The variable {v.Name} has {v.ElementCount} elements.");
+            }
+            else return v[0];
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public unsafe ref T Read(int index)
         {

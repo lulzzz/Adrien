@@ -115,7 +115,7 @@ namespace Adrien.Tests.Compilers
 
             for (int index = 0; index < vyerror.ElementCount; index++)
             {
-                Assert.Equal(Math.Pow(vya[index] - ((5 * vx[index]) + 6), 2), vyerror[index]);
+                Assert.Equal(Math.Pow(vya[index] - ((va * vx[index]) + vb), 2), vyerror[index]);
             }
    
         }
