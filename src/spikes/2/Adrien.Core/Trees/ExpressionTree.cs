@@ -20,9 +20,9 @@ namespace Adrien.Trees
 
         public int Count => HashSet.Count;
 
-        public List<OperatorNode> OperatorNodes => this.Root.DescendantsAndSelf().OfType<OperatorNode>().ToList();
+        public List<OperatorNode> OperatorNodes => this.Root.SelfAndDescendants().OfType<OperatorNode>().ToList();
 
-        public List<ValueNode> ValueNodes => this.Root.DescendantsAndSelf().OfType<ValueNode>().ToList();
+        public List<ValueNode> ValueNodes => this.Root.SelfAndDescendants().OfType<ValueNode>().ToList();
 
         public ITreeNode Root => this;
 
