@@ -8,7 +8,7 @@ namespace Adrien.Generator
 {
     public abstract class LanguageGenerator<TOp, TWriter> : TreeVisitor<TOp, string, string> where TWriter : LanguageWriter<TOp>
     {
-        public abstract List<TOp> BinaryOperators { get; }
+        public abstract List<TOp> NestedBinaryOperators { get; }
 
         public string Text => this.Context.InternalNode;
 
@@ -29,8 +29,8 @@ namespace Adrien.Generator
 
                 if (on.Right != null)
                 {
-                    if (on.Right is ITreeOperatorNode<TOp> && BinaryOperators.Contains(on.Op)
-                        && BinaryOperators.Contains((on.Right as ITreeOperatorNode<TOp>).Op))
+                    if (on.Right is ITreeOperatorNode<TOp> && NestedBinaryOperators.Contains(on.Op)
+                        && NestedBinaryOperators.Contains((on.Right as ITreeOperatorNode<TOp>).Op))
                     {
                         operands.Push("(" + (string)Context.Pop() + ")");
                     }
@@ -42,8 +42,8 @@ namespace Adrien.Generator
                 }
                 if (on.Left != null)
                 {
-                    if (on.Left is ITreeOperatorNode<TOp> && BinaryOperators.Contains(on.Op) 
-                        && BinaryOperators.Contains((on.Left as ITreeOperatorNode<TOp>).Op))
+                    if (on.Left is ITreeOperatorNode<TOp> && NestedBinaryOperators.Contains(on.Op) 
+                        && NestedBinaryOperators.Contains((on.Left as ITreeOperatorNode<TOp>).Op))
                     {
                         operands.Push("(" + (string)Context.Pop() + ")");
                     }
@@ -72,6 +72,11 @@ namespace Adrien.Generator
             {
                 Success = true;
             }
+        }
+
+        public bool ContextIsOpStart(TOp op)
+        {
+            return (string) this.Context.Peek() == this.Writer.GetOperatorTemplate(op);
         }
     }
 }

@@ -209,7 +209,6 @@ namespace Adrien.Compiler.PlaidML
                     throw new ArgumentException($"The stride of kernel input tensor {iv.Name} does not match the " +
                         $"stride of the input data variable {id.Name}.");
                 }
-
             }
         }
     }

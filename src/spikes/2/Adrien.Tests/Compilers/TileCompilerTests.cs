@@ -84,7 +84,8 @@ namespace Adrien.Tests.Compilers
         public void CanCompileLinearRegressionKernel()
         {
             TileCompiler compiler = new TileCompiler();
-            var (x, ypred, yactual, yerror, yloss) = new Vector(5, out Index i).Five("x", "ypred", "yactual", "yerror", "yloss");
+            var (x, ypred, yactual, yerror, yloss) = new Vector(5, out Index i).Five("x", "ypred", "yactual", "yerror", 
+                "yloss");
             var (a, b) = new Scalar().Two("a", "b");
 
             ypred[x] = a * x + b;
@@ -92,9 +93,31 @@ namespace Adrien.Tests.Compilers
 
             yerror[ypred, yactual] = (yactual - ypred) * (yactual - ypred) ;
             yloss[i] = yerror[i];
-            Kernel<int> loss = new Kernel<int>(yloss, compiler);
+            Kernel<int> loss = new Kernel<int>(yerror, compiler);
             Assert.True(loss.Compile());
 
+            Assert.Contains(a, loss.InputShapes);
+            Assert.Contains(b, loss.InputShapes);
+            Assert.Contains(x, loss.InputShapes);
+            Assert.Contains(yactual, loss.InputShapes);
+
+            Assert.Equal(4, loss.InputShapes.Count);
+            //Assert.DoesNotContain(ypred, loss.InputShapes);
+
+            Assert.Equal(yerror, loss.OutputShape);
+            var va = a.Var(5);
+            var vb = b.Var(6);
+            var vx = x.Var(1, 2, 3, 4, 5);
+            var vya = yactual.Var(new [] { 10, 20, 30, 40, 50 });
+            var vyerror = yerror.Var<int>();
+            Assert.Equal(RunStatus.Success, loss.CompilerResult.Run(vyerror, vya, va, vx, vb));
+            Assert.Equal(Math.Pow(vya[0] - ((5 * 1) + 6), 2), vyerror[0]);
+
+            for (int index = 0; index < vyerror.ElementCount; index++)
+            {
+                Assert.Equal(Math.Pow(vya[index] - ((5 * vx[index]) + 6), 2), vyerror[index]);
+            }
+   
         }
     }
 }

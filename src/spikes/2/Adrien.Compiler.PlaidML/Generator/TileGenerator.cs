@@ -10,10 +10,15 @@ namespace Adrien.Compiler.PlaidML.Generator
 {
     public class TileGenerator : LanguageGenerator<TensorOp, TileWriter>
     {
-        public override List<TensorOp> BinaryOperators { get; } = new List<TensorOp>()
+        public override List<TensorOp> NestedBinaryOperators { get; } = new List<TensorOp>()
         {
             TensorOp.Mul, TensorOp.Add, TensorOp.Sub, TensorOp.Div
         };
+
+        public List<ITreeValueNode> Tensors =>
+            Tree.TensorNodes
+            .Distinct(Tree)
+            .ToList();
 
         public List<ITreeValueNode> InputTensors =>
            Tree.TensorNodes
@@ -22,12 +27,7 @@ namespace Adrien.Compiler.PlaidML.Generator
            .Where(t => !Tree.VariableNodes.Contains(t))
            .ToList();
 
-        public List<IVariableShape> InputShapes => 
-            Tree.TensorNodes
-            .Distinct(Tree)
-            .Where(t => t.Label != Tree.OutputNode.Label)
-            .Where(t => !Tree.VariableNodes.Contains(t))
-            .Select(t => t.ValueAs<IVariableShape>()).ToList();
+        public List<IVariableShape> InputShapes => InputTensors.Select(t => t.ValueAs<IVariableShape>()).ToList();
             
         public Dictionary<ITreeValueNode, string> TensorDimensionVariables { get; protected set; }
 
@@ -37,6 +37,7 @@ namespace Adrien.Compiler.PlaidML.Generator
         {
             Context = new TileGeneratorContext(tree);
             Writer = new TileWriter();
+            GetDimensionVariableNames();
             this.VisitTree();
         }
 
@@ -44,7 +45,6 @@ namespace Adrien.Compiler.PlaidML.Generator
         public override void AfterVisitTree()
         {
             base.AfterVisitTree();
-            GetDimenSionVariableNames();
             WriteFunctionPrologue();
         }
 
@@ -55,32 +55,69 @@ namespace Adrien.Compiler.PlaidML.Generator
                 case TensorOp.ElementWiseAssign:
                     string lhs = "", rhs = "";
                     using (Context.Internal(Writer.GetOperatorTemplate(on)))
-                    {
-                    
-                        if (on.Right != null)
-                        {
-                            base.Visit(on.Right);
-                            rhs = (string)Context.Pop();
-                        }
-                        if (on.Left != null)
-                        {
-                            base.Visit(on.Left);
-                            lhs = (string)Context.Pop();
-                        }
+                    {                        
+                        base.Visit(on.Right);
+                        rhs = (string)Context.Pop();
+                           
+                        base.Visit(on.Left);
+                        lhs = (string)Context.Pop();
+                        
                     }
-                    Writer.VariableDefinitions.Enqueue(string.Format("{0} = {1};", lhs, rhs) + Environment.NewLine);
+                    Writer.VariableDefinitions.Enqueue(string.Format("{0}[] = {1};", lhs, rhs) + Environment.NewLine);
                     Context.Push(Writer.WriteOperator(on.Op, lhs));
                     return;
+
+                case TensorOp.Index:
+                    if (Context.Count > 1)
+                    {
+                        base.VisitInternal(on);
+                        return;
+                    }
+
+                    using (Context.Internal(Writer.GetOperatorTemplate(on)))
+                    {
+                        base.Visit(on.Right);
+                        rhs = (string)Context.Pop();
+                        base.Visit(on.Left);
+                        lhs = (string)Context.Pop();
+                    }
+
+                    ITreeValueNode tensor;
+                    if (on.Left is ITreeValueNode)
+                    {
+                        tensor = on.Left as ITreeValueNode;
+                        if (tensor.NodeType != ValueNodeType.TENSOR)
+                        {
+                            throw new Exception("The LHS of the Index operation is not a tensor.");
+                        }
+                    }
+                    else if (on.Left is ITreeOperatorNode<TensorOp> && 
+                        (on.Left as ITreeOperatorNode<TensorOp>).Op == TensorOp.ElementWiseAssign)
+                    {
+                        tensor = (on.Left as ITreeOperatorNode<TensorOp>).Left as ITreeValueNode;
+                        if (tensor.NodeType != ValueNodeType.TENSOR)
+                        {
+                            throw new Exception("The LHS of the Index operation is not a tensoe.");
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Could not determine the LHS side of the Index operation");
+                    }
+                    var dim = TensorDimensionVariables[tensor];
+                    Context.Push(Writer.WriteOperator(on.Op, lhs, rhs + ":" + dim));
+                    return;
+
                 default:
                     base.VisitInternal(on);
                     return;
             }
         }
 
-        protected void GetDimenSionVariableNames()
+        protected void GetDimensionVariableNames()
         {
             TensorDimensionVariables = new Dictionary<ITreeValueNode, string>(InputTensors.Count);
-            foreach(ITreeValueNode v in InputTensors)
+            foreach(ITreeValueNode v in Tensors)
             {
                 string name = v.Label + "N";
                 int n = 0;
@@ -88,21 +125,7 @@ namespace Adrien.Compiler.PlaidML.Generator
                 {
                     name = name + (++n).ToString();
                 }
-                TensorDimensionVariables.Add(v, name);
-            }
-        }
-
-        protected void RenoveLHSEmptyVariableDeclaration()
-        {
-            ITreeOperatorNode<TensorOp> root = (ITreeOperatorNode<TensorOp>)Tree.Root;
-            if (root.Left is ITreeValueNode)
-            {
-                ITreeValueNode l = (ITreeValueNode)root.Left;
-                if (l.Value == null)
-                {
-                    string text = Text.Remove(0, "[] = ".Length);
-                    this.Context.Push(text);
-                }
+                TensorDimensionVariables.Add(v, name.ToUpper());
             }
         }
 
