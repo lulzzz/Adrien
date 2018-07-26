@@ -40,8 +40,6 @@ namespace Adrien.Notation
 
         public static TensorExpression operator - (TensorExpression left) => left.Negate();
 
-        public static TensorExpression operator ^ (TensorExpression left, object right) => left.Power(right);
-
         public static TensorExpression operator + (TensorExpression left, TensorExpression right) => left.Add(right);
 
         public static TensorExpression operator - (TensorExpression left, TensorExpression right) => left.Subtract(right);
@@ -50,6 +48,8 @@ namespace Adrien.Notation
 
         public static TensorExpression operator / (TensorExpression left, TensorExpression right) => left.Divide(right);
         
+        public static implicit operator Int32(TensorExpression expr) => 0;
+
 
         public TensorExpression Negate() => new TensorExpression(Expression.Negate(this));
         
@@ -65,38 +65,24 @@ namespace Adrien.Notation
         public TensorExpression Divide(TensorExpression right) => new TensorExpression(Expression.Divide(this, right, 
             GetDummyBinaryMethodInfo(this, right)));
 
-        public TensorExpression Power(object right)
+        internal static MethodInfo GetOpMethodInfo<T>(string name, int parameters) where T : Term
         {
-            switch (right)
-            {
-                case TensorExpression r: return new TensorExpression(Expression.Power(this,
-                    r, GetDummyBinaryMethodInfo(this, r)));
-                case Tensor t:
-                    return new TensorExpression(Expression.Power(this, t, GetDummyBinaryMethodInfo(this, t)));
-                default:
-                    Scalar s = new Scalar(right);
-                    return new TensorExpression(Expression.Power(this, s, GetDummyBinaryMethodInfo(this, s)));
-            }
+            MethodInfo method = typeof(TensorExpression)
+                .GetMethods(BindingFlags.Static | BindingFlags.NonPublic)
+                .Where(m => m.Name == name && m.GetParameters().Count() == parameters &&
+                 m.GetParameters().First().ParameterType == typeof(T))
+                .First();
+            return method;
         }
 
-
-        public TensorExpression Power(int right) => new TensorExpression(Expression.Power(this,
-            Expression.Constant(right), GetDummyBinaryMethodInfo(this, new Scalar(right))));
-
-        public TensorExpression Sqrt() => new TensorExpression(Expression.Power(this, Expression.Constant(.5)));
-
-        public TensorExpression sigma(params Index[] indices)
+        private static MethodInfo GetDummyUnaryMethodInfo(TensorExpression l)
         {
-            Array a = Array.CreateInstance(typeof(Tensor), indices.Select(i => i.Dimension).ToArray());
-            return new TensorExpression(Expression.ArrayAccess(Expression.Constant(a), indices
-                .Select(i => Expression.Parameter(typeof(Int32), i.Name)).ToArray()));
+            Type lt = l.GetTensorExpressionType();
+
+            MethodInfo method = typeof(TensorExpression).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
+                .Where(m => m.Name == "DummyUnary" && m.GetParameters()[0].ParameterType == lt).First();
+            return method;
         }
-
-
-        private static TensorExpression DummyBinary(Tensor l, Tensor r) => null;
-        private static TensorExpression DummyBinary(TensorExpression l, Tensor r) => null;
-        private static TensorExpression DummyBinary(Tensor l, TensorExpression r) => null;
-        private static TensorExpression DummyBinary(TensorExpression l, TensorExpression r) => null;
 
         private static MethodInfo GetDummyBinaryMethodInfo(TensorExpression l, TensorExpression r)
         {
@@ -110,6 +96,15 @@ namespace Adrien.Notation
             return method;
         }
 
+        private static TensorExpression DummyUnary(Tensor l) => null;
+        private static TensorExpression DummyUnary(TensorExpression l) => null;
+
+        private static TensorExpression DummyBinary(Tensor l, Tensor r) => null;
+        private static TensorExpression DummyBinary(TensorExpression l, Tensor r) => null;
+        private static TensorExpression DummyBinary(Tensor l, TensorExpression r) => null;
+        private static TensorExpression DummyBinary(TensorExpression l, TensorExpression r) => null;
+
+        
         private Type GetTensorExpressionType()
         {
             if (this.LinqExpression.NodeType == ExpressionType.Constant)

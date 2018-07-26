@@ -88,7 +88,7 @@ namespace Adrien.Diagrams
         {
             LayoutSettings = new SugiyamaLayoutSettings
             {
-                Transformation = PlaneTransformation.Rotation(Math.PI),
+                Transformation = PlaneTransformation.Rotation(System.Math.PI),
                 EdgeRoutingSettings = { EdgeRoutingMode = EdgeRoutingMode.Spline },
                 MinNodeHeight = 10,
                 MinNodeWidth = 20,

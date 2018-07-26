@@ -5,6 +5,9 @@ using System.Text;
 using Xunit;
 
 using Adrien.Notation;
+using static Adrien.Notation.Math;
+using static Adrien.Notation.TensorOperators;
+
 using Adrien.Compiler;
 using Adrien.Compiler.PlaidML;
 
@@ -77,7 +80,21 @@ namespace Adrien.Tests.Compilers
             Assert.Equal(8, r[0]);
 
             var (y1, y2) = new Vector(5).Two("y1", "y2");
-            var kloss = new Kernel<int>(y, (y2 - y1) ^ 2);
+            var kloss = new Kernel<int>(y, Pow2[y2 - y1]);
+        }
+
+        [Fact]
+        public void CanComputeGradient()
+        {
+            string code = @"function(I)-> (O) {
+                O = I * I;
+            }";
+            TileCompiler c = new TileCompiler();
+            Assert.True(c.Compile(5, code, out IRunnable<int> result));
+            var O = new Vector("O", 5).Var(new int[5]);
+            var I = new Vector("I", 5).Var(1, 2, 3, 4, 5);
+            Assert.Equal(RunStatus.Success, result.Run(O, I));
+            
         }
 
         [Fact]
@@ -91,33 +108,35 @@ namespace Adrien.Tests.Compilers
             ypred[x] = a * x + b;
             Kernel<int> predict = new Kernel<int>(ypred, compiler);
 
-            yerror[ypred, yactual] = (yactual - ypred) * (yactual - ypred) ;
-            yloss[i] = yerror[i];
-            Kernel<int> loss = new Kernel<int>(yerror, compiler);
-            Assert.True(loss.Compile());
+            yerror[ypred, yactual] = Pow2[yactual - ypred];
+            Kernel<int> error = new Kernel<int>(yerror, compiler);
+            Assert.True(error.Compile());
 
-            Assert.Contains(a, loss.InputShapes);
-            Assert.Contains(b, loss.InputShapes);
-            Assert.Contains(x, loss.InputShapes);
-            Assert.Contains(yactual, loss.InputShapes);
+            Assert.Contains(a, error.InputShapes);
+            Assert.Contains(b, error.InputShapes);
+            Assert.Contains(x, error.InputShapes);
+            Assert.Contains(yactual, error.InputShapes);
+            Assert.Equal(4, error.InputShapes.Count);
+            Assert.Equal(yerror, error.OutputShape);
 
-            Assert.Equal(4, loss.InputShapes.Count);
-            //Assert.DoesNotContain(ypred, loss.InputShapes);
-
-            Assert.Equal(yerror, loss.OutputShape);
             var va = a.Var(5);
             var vb = b.Var(6);
             var vx = x.Var(1, 2, 3, 4, 5);
             var vya = yactual.Var(new [] { 10, 20, 30, 40, 50 });
             var vyerror = yerror.Var<int>();
-            Assert.Equal(RunStatus.Success, loss.CompilerResult.Run(vyerror, vya, va, vx, vb));
-            Assert.Equal(Math.Pow(vya[0] - ((5 * 1) + 6), 2), vyerror[0]);
+            Assert.Equal(RunStatus.Success, error.CompilerResult.Run(vyerror, vya, va, vx, vb));
+            Assert.Equal(System.Math.Pow(vya[0] - ((5 * 1) + 6), 2), vyerror[0]);
 
             for (int index = 0; index < vyerror.ElementCount; index++)
             {
-                Assert.Equal(Math.Pow(vya[index] - ((va * vx[index]) + vb), 2), vyerror[index]);
+                Assert.Equal(System.Math.Pow(vya[index] - ((va * vx[index]) + vb), 2), vyerror[index]);
             }
-   
+
+            yloss[i] = Sum[yerror[i]];
+            Kernel<int> loss = new Kernel<int>(yloss, compiler);
+            Assert.True(loss.Compile());
+            //Assert.Equal(RunStatus.Success, error.CompilerResult.Run(v, vya, va, vx, vb));
+
         }
     }
 }

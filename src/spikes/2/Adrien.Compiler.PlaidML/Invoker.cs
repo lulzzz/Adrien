@@ -14,10 +14,13 @@ namespace Adrien.Compiler.PlaidML
 
         public IReadOnlyList<DeviceTensor> InputTensors { get; protected set; }
 
+        public IDictionary<DeviceTensor, DeviceTensor> Gradients { get; protected set; }
+
         public bool InputTensorsSet { get; protected set; }
 
         public bool OutputTensorsSet { get; protected set; }
 
+        
 
         public bool AllVariablesSet => InputTensorsSet && OutputTensorsSet;
 
@@ -106,19 +109,30 @@ namespace Adrien.Compiler.PlaidML
             {
                 if (OutputTensor.CreateView<T>(MemoryMapType.Retain).CopyToAndFree(output.Span))
                 {
+                    Gradients = new Dictionary<DeviceTensor, DeviceTensor>();
+                    for (int i = 0; i < InputTensors.Count; i++)
+                    {
+                        Gradient gc = new Gradient(Context, OutputTensor);
+                        if (!gc.IsAllocated) continue;
+                        IntPtr g = gc.ComputeWrt(InputTensors[i]);
+                        if (g.IsZero()) continue;
+                        DeviceTensor grad = new DeviceTensor(g, "O" + i, InputTensors[i]);
+                        Gradients.Add(InputTensors[i], grad);
+                    }
                     return RunStatus.Success;
                 }
                 else
                 {
                     RunStatusMessage = c.LastStatusString;
-                    return RunStatus.ErrorAllocatingOutput;
+                    return RunStatus.ErrorExecuting;
                 }
             }
             else
             {
                 RunStatusMessage = c.LastStatusString;
-                return RunStatus.ErrorExecuting; 
+                return RunStatus.ErrorExecuting;
             }
+            
         }
  
         public Invocation<T> Invoke()

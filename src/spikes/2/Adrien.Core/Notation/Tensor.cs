@@ -121,8 +121,6 @@ namespace Adrien.Notation
             }
         }
 
-        public static implicit operator Tensor((TensorExpression te, string name) expr) => new Tensor(expr);
-
         public static TensorExpression operator - (Tensor left) => left.Negate();
         
 

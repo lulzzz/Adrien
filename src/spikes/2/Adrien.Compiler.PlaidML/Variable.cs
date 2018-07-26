@@ -20,6 +20,12 @@ namespace Adrien.Compiler.PlaidML
             Name = name;
         }
 
+        protected Variable(IntPtr varPtr, string name, Context ctx) : base(ctx)
+        {
+            ptr = varPtr;
+            Name = name;
+        }
+
         public Variable(Context ctx, string name, Int64 v) : this(ctx, name)
         {
             ptr = plaidml.__Internal.PlaidmlAllocInt64(v);

@@ -54,7 +54,14 @@ namespace Adrien.Compiler.PlaidML
                 IsAllocated = true;
             }
         }
-        
+
+        public DeviceTensor(IntPtr varPtr, string name, DeviceTensor t) : base(varPtr, name, t.Context)
+        {
+            Device = t.Device;
+            Shape = t.Shape;
+            DataType = Shape.DataType;
+            IsAllocated = true;
+        }
 
         public DeviceTensorView<T> CreateView<T>(MemoryMapType mapType) 
             where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible

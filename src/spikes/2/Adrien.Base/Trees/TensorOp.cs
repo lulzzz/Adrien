@@ -7,7 +7,8 @@ namespace Adrien.Trees
     public enum TensorOp
     {
         NoOp,
-        Sigma,
+        Sum,
+        Square,
         Assign,
         ElementWiseAssign,
         Index,

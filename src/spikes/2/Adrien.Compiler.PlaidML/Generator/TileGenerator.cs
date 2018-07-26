@@ -12,7 +12,7 @@ namespace Adrien.Compiler.PlaidML.Generator
     {
         public override List<TensorOp> NestedBinaryOperators { get; } = new List<TensorOp>()
         {
-            TensorOp.Mul, TensorOp.Add, TensorOp.Sub, TensorOp.Div
+            TensorOp.Mul, TensorOp.Add, TensorOp.Sub, TensorOp.Div, TensorOp.Square
         };
 
         public List<ITreeValueNode> Tensors =>
@@ -68,7 +68,7 @@ namespace Adrien.Compiler.PlaidML.Generator
                     return;
 
                 case TensorOp.Index:
-                    if (Context.Count > 1)
+                    if (Context.Count > 1 || !ContextIsOpStart(TensorOp.Assign))
                     {
                         base.VisitInternal(on);
                         return;

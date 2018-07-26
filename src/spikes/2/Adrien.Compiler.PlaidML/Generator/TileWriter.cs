@@ -18,7 +18,9 @@ namespace Adrien.Compiler.PlaidML.Generator
             { TensorOp.Add, "{0} + {1}" },
             { TensorOp.Mul, "{0} * {1}" },
             { TensorOp.Sub, "{0} - {1}" },
-            { TensorOp.Div, "{0} / {1}" }
+            { TensorOp.Div, "{0} / {1}" },
+            { TensorOp.Sum, "+({0})" },
+            { TensorOp.Square, "({0} * {0})" }
         };
 
 

@@ -97,6 +97,8 @@ namespace Adrien.Notation
                 case IndexExpression ie:
                     return ie.NodeType.ToString() + "_" + GetNameFromLinqExpression(ie.Object) + "_" + ie.Arguments.Select(e => GetNameFromLinqExpression(e))
                         .Aggregate((s1, s2) => s1 + "_" + s2);
+                case MethodCallExpression me:
+                    return me.Method.Name;
                 default: throw new Exception($"Unknown expression type: {expr.NodeType.ToString()} {expr.GetType().Name}.");
             }
         }

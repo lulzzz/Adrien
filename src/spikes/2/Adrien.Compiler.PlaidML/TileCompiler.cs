@@ -199,6 +199,10 @@ namespace Adrien.Compiler.PlaidML
             return new DeviceTensor(KernelDevice, shape, name);
         }
 
+        public Gradient CreateGradient(DeviceTensor variable)
+        {
+            return new Gradient(_Context, variable);
+        }
 
         [DebuggerStepThrough]
         internal void ThrowIfNotInitialized()

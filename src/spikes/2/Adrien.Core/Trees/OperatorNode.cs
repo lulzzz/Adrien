@@ -16,7 +16,8 @@ namespace Adrien.Trees
             Op = op;
         }
 
-        public override Children<ITreeNode> GetChildren() => Children.Two(Left, Right);
+        public override Children<ITreeNode> GetChildren() => this.HasRight ? Children.Two(Left, Right) : 
+            Children.One(Left);
 
         public override ITreeNode SetChildren(Children<ITreeNode> newChildren)
         {

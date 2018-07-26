@@ -67,5 +67,16 @@ namespace Adrien.Trees
                    .Select(a => a.Flatten<T>().First())
                    .ToList();
         }
+
+        [DebuggerStepThrough]
+        public static TensorOp MethodCallToTensorOp(this MethodCallExpression expr)
+        {
+            switch (expr.Method.Name)
+            {
+                case "Op_Sum": return TensorOp.Sum;
+                case "Op_Square": return TensorOp.Square;
+                default : throw new NotImplementedException(); 
+            }
+        }
     }
 }

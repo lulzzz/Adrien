@@ -141,6 +141,11 @@ namespace Adrien.Trees
 
         protected override Expression VisitUnary(UnaryExpression node)
         {
+            if (node.NodeType == ExpressionType.Convert)
+            {
+                base.Visit(node.Operand);
+                return node;
+            }
             using (Context.Internal(Context.AddOperatorNode(node.NodeType.ToOp())))
             {
                 base.VisitUnary(node);
@@ -156,5 +161,16 @@ namespace Adrien.Trees
             }
             return node;
         }
+
+        
+        protected override Expression VisitMethodCall(MethodCallExpression node)
+        {
+            using (Context.Internal(Context.AddOperatorNode(node.MethodCallToTensorOp())))
+            {
+                base.VisitMethodCall(node);
+            }
+            return node;
+        }
+        
     }
 }
