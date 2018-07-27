@@ -19,7 +19,15 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ContractionAssignment = (new IndexSet(this, index1), value);
+				TensorContraction c;
+				if (value.LinqExpression.NodeType == ExpressionType.Call)
+                {
+                    ContractionAssignment = (new IndexSet(this, index1), value);
+                }
+                else
+                {
+                    ContractionAssignment = (new IndexSet(this, index1), Math.SigmaSum(value));
+                }
 			}
 		}
 		  
@@ -38,7 +46,15 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ContractionAssignment = (new IndexSet(this, index1, index2), value);
+				TensorContraction c;
+				if (value.LinqExpression.NodeType == ExpressionType.Call)
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2), value);
+                }
+                else
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2), Math.SigmaSum(value));
+                }
 			}
 		}
 		  
@@ -58,7 +74,15 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ContractionAssignment = (new IndexSet(this, index1, index2, index3), value);
+				TensorContraction c;
+				if (value.LinqExpression.NodeType == ExpressionType.Call)
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3), value);
+                }
+                else
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3), Math.SigmaSum(value));
+                }
 			}
 		}
 		  
@@ -79,7 +103,15 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4), value);
+				TensorContraction c;
+				if (value.LinqExpression.NodeType == ExpressionType.Call)
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4), value);
+                }
+                else
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4), Math.SigmaSum(value));
+                }
 			}
 		}
 		  
@@ -101,7 +133,15 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5), value);
+				TensorContraction c;
+				if (value.LinqExpression.NodeType == ExpressionType.Call)
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5), value);
+                }
+                else
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5), Math.SigmaSum(value));
+                }
 			}
 		}
 		  
@@ -124,7 +164,15 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6), value);
+				TensorContraction c;
+				if (value.LinqExpression.NodeType == ExpressionType.Call)
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6), value);
+                }
+                else
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6), Math.SigmaSum(value));
+                }
 			}
 		}
 		  
@@ -148,7 +196,15 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), value);
+				TensorContraction c;
+				if (value.LinqExpression.NodeType == ExpressionType.Call)
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), value);
+                }
+                else
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), Math.SigmaSum(value));
+                }
 			}
 		}
 		  
@@ -173,7 +229,15 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), value);
+				TensorContraction c;
+				if (value.LinqExpression.NodeType == ExpressionType.Call)
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), value);
+                }
+                else
+                {
+                    ContractionAssignment = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), Math.SigmaSum(value));
+                }
 			}
 		}
 			}

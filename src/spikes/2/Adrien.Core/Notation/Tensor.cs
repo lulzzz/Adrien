@@ -41,9 +41,9 @@ namespace Adrien.Notation
 
         public bool IsElementwiseAssigned => this.ElementwiseAssignment.Expression != null;
 
-        public bool IsIndexAssigned => this.ContractionAssignment.Expression != null;
+        public bool IsContractionAssigned => this.ContractionAssignment.Expression != null;
 
-        internal override Expression LinqExpression => this.IsAssigned ? this.IsIndexAssigned 
+        internal override Expression LinqExpression => this.IsAssigned ? this.IsContractionAssigned 
             ? this.ContractionAssignment.Expression.LinqExpression : this.ElementwiseAssignment.Expression.LinqExpression 
             : Expression.Constant(this, typeof(Tensor));
         
@@ -100,7 +100,14 @@ namespace Adrien.Notation
             set
             {
                 ThrowIfAlreadyAssiged();
-                ContractionAssignment = (I, value);
+                if (value.LinqExpression.NodeType == ExpressionType.Call)
+                {
+                    ContractionAssignment = (I, value);
+                }
+                else
+                {
+                    ContractionAssignment = (I, Math.SigmaSum(value));
+                }
             }
         }
 
@@ -191,7 +198,7 @@ namespace Adrien.Notation
         }
 
         public ExpressionTree ToTree () => this.IsAssigned ? 
-            this.IsIndexAssigned ? 
+            this.IsContractionAssigned ? 
             this.ContractionAssignment.Expression.ToTree((this, this.ContractionAssignment.IndexSet)) :
             this.ElementwiseAssignment.Expression.ToTree((this, null)) : 
             new TensorExpression(this.LinqExpression).ToTree();

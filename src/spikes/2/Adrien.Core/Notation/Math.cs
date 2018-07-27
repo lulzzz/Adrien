@@ -9,7 +9,7 @@ namespace Adrien.Notation
     public static class Math
     {
         public static TensorContraction SigmaSum(TensorContraction l) =>
-            new TensorContraction(Expression.Call(TensorExpression.GetOpMethodInfo<TensorExpression>("Op_SigmaSum", 1),
+            new TensorContraction(Expression.Call(TensorExpression.GetOpMethodInfo<TensorExpression>("Op_Sum", 1),
                 Expression.Convert(l.LinqExpression, typeof(TensorExpression))));
 
         public static TensorExpression Square(TensorExpression l) =>
@@ -23,7 +23,7 @@ namespace Adrien.Notation
 
     public partial class TensorExpression
     {
-        private static TensorExpression Op_SigmaSum(TensorExpression l) => null;
+        private static TensorExpression Op_Sum(TensorExpression l) => null;
         private static TensorExpression Op_Square(TensorExpression l) => null;
         private static TensorExpression Op_Sqrt(TensorExpression l) => null;
     }

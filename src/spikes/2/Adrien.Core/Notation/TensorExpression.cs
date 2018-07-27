@@ -21,10 +21,6 @@ namespace Adrien.Notation
         
         internal override Name DefaultNameBase => "tensor_expr0";
 
-        public (IndexSet IndexSet, TensorExpression Expression) Assignment { get; protected set; }
-
-        public bool IsAssigned => Assignment.Expression != null;
-
         public List<Tensor> Tensors => LinqExpression.GetConstants<Tensor>();
         
         public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression).Tree;
@@ -48,8 +44,6 @@ namespace Adrien.Notation
 
         public static TensorExpression operator / (TensorExpression left, TensorExpression right) => left.Divide(right);
         
-        public static implicit operator Int32(TensorExpression expr) => 0;
-
 
         public TensorExpression Negate() => new TensorExpression(Expression.Negate(this));
         
@@ -117,17 +111,6 @@ namespace Adrien.Notation
             }
             else return typeof(TensorExpression);
         }
-
-
-        [DebuggerStepThrough]
-        internal void ThrowIfAlreadyAssiged()
-        {
-            if (Assignment.IndexSet != null)
-            {
-                throw new InvalidOperationException("This tensor expression variable has an existing assigment. + " +
-                    $"You can only assign to a tensor expression variable once.");
-            }
-        }
-
+        
     }
 }

@@ -30,7 +30,15 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				IndexedAssignment = (new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>), value);
+				TensorContraction c;
+				if (value.LinqExpression.NodeType == ExpressionType.Call)
+                {
+                    ContractionAssignment = (new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>), value);
+                }
+                else
+                {
+                    ContractionAssignment = (new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>), Math.SigmaSum(value));
+                }
 			}
 		}
 		<#}#>
