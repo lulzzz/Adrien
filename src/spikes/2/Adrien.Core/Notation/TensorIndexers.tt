@@ -15,12 +15,12 @@ namespace Adrien.Notation
 	public partial class Tensor
 	{
 		<#for (int i = 1; i <= 8; i++) {#>  
-		public TensorExpression this[<#for (int j = 1; j < i; j++) {#>Index index<#=j#>, <#}#>Index index<#=i#>]
+		public TensorContraction this[<#for (int j = 1; j < i; j++) {#>Index index<#=j#>, <#}#>Index index<#=i#>]
 		{
 			get
 			{
 				ThrowIfIndicesExceedRank(<#=i#>);
-				return new TensorExpression(Expression.ArrayAccess
+				return new TensorContraction(Expression.ArrayAccess
 					(Expression.Constant(new Tensor[<#for (int j = 1; j < i; j++) {#>,<#}#>] 
 				<#for (int j = 1; j <= i; j++) {#>{<#}#>this<#for (int j = 1; j <= i; j++) {#>}<#}#>), 
 				new Expression[] {
@@ -30,7 +30,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				Assignment = (new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>), value);
+				IndexedAssignment = (new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>), value);
 			}
 		}
 		<#}#>

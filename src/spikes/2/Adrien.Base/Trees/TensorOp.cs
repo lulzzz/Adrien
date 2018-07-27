@@ -9,6 +9,7 @@ namespace Adrien.Trees
         NoOp,
         Sum,
         Square,
+        Sqrt,
         Assign,
         ElementWiseAssign,
         Index,

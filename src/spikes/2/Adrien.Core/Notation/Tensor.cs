@@ -33,18 +33,18 @@ namespace Adrien.Notation
             }
         }
 
-        public (IndexSet IndexSet, TensorExpression Expression) IndexedAssignment { get; protected set; }
+        public (IndexSet IndexSet, TensorContraction Expression) ContractionAssignment { get; protected set; }
 
         public (IEnumerable<Tensor> Dependents, TensorExpression Expression) ElementwiseAssignment { get; protected set; }
 
-        public bool IsAssigned => IndexedAssignment.Expression != null || ElementwiseAssignment.Expression != null;
+        public bool IsAssigned => ContractionAssignment.Expression != null || ElementwiseAssignment.Expression != null;
 
         public bool IsElementwiseAssigned => this.ElementwiseAssignment.Expression != null;
 
-        public bool IsIndexAssigned => this.IndexedAssignment.Expression != null;
+        public bool IsIndexAssigned => this.ContractionAssignment.Expression != null;
 
         internal override Expression LinqExpression => this.IsAssigned ? this.IsIndexAssigned 
-            ? this.IndexedAssignment.Expression.LinqExpression : this.ElementwiseAssignment.Expression.LinqExpression 
+            ? this.ContractionAssignment.Expression.LinqExpression : this.ElementwiseAssignment.Expression.LinqExpression 
             : Expression.Constant(this, typeof(Tensor));
         
         internal override Name DefaultNameBase { get; } = "A";
@@ -74,13 +74,13 @@ namespace Adrien.Notation
 
         public Tensor(IVariableShape shape) : this(shape.Label, shape.Dimensions) {}
 
-        internal Tensor((TensorExpression te, string name) expr) : base(expr.name)
+        internal Tensor((TensorContraction te, string name) expr) : base(expr.name)
         {
-            IndexedAssignment = (null, expr.te);
+            ContractionAssignment = (null, expr.te);
         }
 
 
-        public TensorExpression this[IndexSet I]
+        public TensorContraction this[IndexSet I]
         {
             get
             {
@@ -95,12 +95,12 @@ namespace Adrien.Notation
                 Array t = Array.CreateInstance(typeof(Tensor), tdim);
                 t.SetValue(this, tidx);
                 Expression[] e = I.Indices.Select(i => Expression.Parameter(typeof(int), i.Name)).ToArray();
-                return new TensorExpression(Expression.ArrayAccess(Expression.Constant(t), e));
+                return new TensorContraction(Expression.ArrayAccess(Expression.Constant(t), e));
             }
             set
             {
                 ThrowIfAlreadyAssiged();
-                IndexedAssignment = (I, value);
+                ContractionAssignment = (I, value);
             }
         }
 
@@ -113,7 +113,7 @@ namespace Adrien.Notation
         {
             if (t.IsAssigned)
             {
-                return t.IndexedAssignment.Expression.ToTree((t, t.IndexedAssignment.IndexSet));
+                return t.ContractionAssignment.Expression.ToTree((t, t.ContractionAssignment.IndexSet));
             }
             else
             {
@@ -192,7 +192,7 @@ namespace Adrien.Notation
 
         public ExpressionTree ToTree () => this.IsAssigned ? 
             this.IsIndexAssigned ? 
-            this.IndexedAssignment.Expression.ToTree((this, this.IndexedAssignment.IndexSet)) :
+            this.ContractionAssignment.Expression.ToTree((this, this.ContractionAssignment.IndexSet)) :
             this.ElementwiseAssignment.Expression.ToTree((this, null)) : 
             new TensorExpression(this.LinqExpression).ToTree();
         
@@ -230,7 +230,7 @@ namespace Adrien.Notation
         [DebuggerStepThrough]
         internal void ThrowIfAlreadyAssiged()
         {
-            if (IndexedAssignment.IndexSet != null)
+            if (ContractionAssignment.IndexSet != null)
             {
                 throw new InvalidOperationException("This tensor variable has an existing assigment. + " +
                     $"You can only assign to a tensor variable once.");

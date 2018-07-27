@@ -75,6 +75,7 @@ namespace Adrien.Trees
             {
                 case "Op_Sum": return TensorOp.Sum;
                 case "Op_Square": return TensorOp.Square;
+                case "Op_Sqrt": return TensorOp.Sqrt;
                 default : throw new NotImplementedException(); 
             }
         }

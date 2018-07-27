@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Adrien.Notation
 {
-    public class UnaryOperator
+    public class UnaryOperator : IElementwiseOp
     {
         Func<TensorExpression, TensorExpression> Operation;
 

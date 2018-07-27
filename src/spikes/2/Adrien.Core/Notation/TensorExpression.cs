@@ -75,7 +75,7 @@ namespace Adrien.Notation
             return method;
         }
 
-        private static MethodInfo GetDummyUnaryMethodInfo(TensorExpression l)
+        protected static MethodInfo GetDummyUnaryMethodInfo(TensorExpression l)
         {
             Type lt = l.GetTensorExpressionType();
 
@@ -84,7 +84,7 @@ namespace Adrien.Notation
             return method;
         }
 
-        private static MethodInfo GetDummyBinaryMethodInfo(TensorExpression l, TensorExpression r)
+        protected static MethodInfo GetDummyBinaryMethodInfo(TensorExpression l, TensorExpression r)
         {
             Type lt = l.GetTensorExpressionType();
             Type rt = r.GetTensorExpressionType();
@@ -96,13 +96,13 @@ namespace Adrien.Notation
             return method;
         }
 
-        private static TensorExpression DummyUnary(Tensor l) => null;
-        private static TensorExpression DummyUnary(TensorExpression l) => null;
+        protected static TensorExpression DummyUnary(Tensor l) => null;
+        protected static TensorExpression DummyUnary(TensorExpression l) => null;
 
-        private static TensorExpression DummyBinary(Tensor l, Tensor r) => null;
-        private static TensorExpression DummyBinary(TensorExpression l, Tensor r) => null;
-        private static TensorExpression DummyBinary(Tensor l, TensorExpression r) => null;
-        private static TensorExpression DummyBinary(TensorExpression l, TensorExpression r) => null;
+        protected static TensorExpression DummyBinary(Tensor l, Tensor r) => null;
+        protected static TensorExpression DummyBinary(TensorExpression l, Tensor r) => null;
+        protected static TensorExpression DummyBinary(Tensor l, TensorExpression r) => null;
+        protected static TensorExpression DummyBinary(TensorExpression l, TensorExpression r) => null;
 
         
         private Type GetTensorExpressionType()

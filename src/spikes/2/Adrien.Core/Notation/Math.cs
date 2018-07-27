@@ -8,8 +8,8 @@ namespace Adrien.Notation
 {
     public static class Math
     {
-        public static TensorExpression SigmaSum(TensorExpression l) =>
-            new TensorExpression(Expression.Call(TensorExpression.GetOpMethodInfo<TensorExpression>("Op_SigmaSum", 1),
+        public static TensorContraction SigmaSum(TensorContraction l) =>
+            new TensorContraction(Expression.Call(TensorExpression.GetOpMethodInfo<TensorExpression>("Op_SigmaSum", 1),
                 Expression.Convert(l.LinqExpression, typeof(TensorExpression))));
 
         public static TensorExpression Square(TensorExpression l) =>
