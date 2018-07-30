@@ -9,9 +9,10 @@ namespace Adrien.Compiler.PlaidML
     public class Placeholder : Value
     {
         public ulong DimensionCount { get; protected set; }
+
         
    
-        public Placeholder(Context ctx, ulong dimensionCount) : base(ctx)
+        public Placeholder(Context ctx, string name, ulong dimensionCount) : base(ctx, name)
         {
             ptr = plaidml.__Internal.PlaidmlAllocPlaceholder(dimensionCount); 
             if (ptr.IsZero())

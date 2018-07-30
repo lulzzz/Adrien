@@ -35,6 +35,8 @@ namespace Adrien.Compiler.PlaidML
             IsAllocated = true;
         }
 
+        public static implicit operator Value(Variable v) => new Value(v);
+
         public override void Free()
         {
             base.Free();

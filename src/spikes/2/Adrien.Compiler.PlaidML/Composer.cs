@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Adrien.Compiler.PlaidML.Bindings;
@@ -36,33 +37,21 @@ namespace Adrien.Compiler.PlaidML
         public bool AddInputPlaceholder(string name, ulong dimensionCount)
         {
             ThrowIfNotAllocated();
-            Placeholder p = new Placeholder(this._Context, dimensionCount);
+            Placeholder p = new Placeholder(this._Context, name, dimensionCount);
             if (p.IsAllocated)
             {
-                return AddInputPlaceholder(name, p);
+                bool r =  plaidml.__Internal.PlaidmlAddComposerInput(this, p.Name, p);
+                if (r)
+                {
+                    Inputs.Add(p);
+                }
+                return r;
             }
             else
             {
                 return false;
             }
         }
-
-        public bool AddInputPlaceholder(string name, Placeholder i)
-        {
-            ThrowIfNotAllocated();
-            if (!i.IsAllocated)
-            {
-                throw new ArgumentException("The input Placeholder is not allocated.");
-            }
-            bool r = plaidml.__Internal.PlaidmlAddComposerInput(this, name, i);
-            if (r)
-            {
-                Inputs.Add(i);
-            }
-            return r;
-        }
-
-        
 
         public bool AddOutputValue(Value o)
         {
@@ -105,6 +94,10 @@ namespace Adrien.Compiler.PlaidML
             {
                 Dependencies.Add(applier);
             }
+            else
+            {
+                ReportApiCallError("plaidml_add_composer_dependency");
+            }
             return r;
         }
 
@@ -115,18 +108,25 @@ namespace Adrien.Compiler.PlaidML
             {
                 throw new ArgumentException("The src Value is not allocated.");
             }
-            if (!Outputs.Contains(src))
-            {
-                throw new ArgumentException("The source Value is not an output of this composer.");
-            }
+
             if (!destination.IsAllocated)
             {
                 throw new ArgumentException("The destination Value is not allocated.");
             }
+
+            if (!Outputs.Select(v => v.Name).Contains(destination.Name))
+            {
+                throw new ArgumentException("The destination Value is not an output of this composer.");
+            }
+
             bool r = plaidml.__Internal.PlaidmlAddComposerUpdate(this, destination, src);
             if (r)
             {
                 Updates.Add(src, destination);
+            }
+            else
+            {
+                ReportApiCallError("plaidml_add_composer_update");
             }
             return r;
         }
@@ -134,11 +134,10 @@ namespace Adrien.Compiler.PlaidML
         public Function BuildFunction()
         {
             ThrowIfNotAllocated();
-            /*
             if (Inputs.Count == 0)
             {
                 throw new InvalidOperationException("There are no inputs defined for the composer.");
-            }*/
+            }
             if (Outputs.Count == 0)
             {
                 throw new InvalidOperationException("There are no outputs defined for the composer.");

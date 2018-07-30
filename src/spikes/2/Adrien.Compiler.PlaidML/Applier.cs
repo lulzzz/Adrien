@@ -51,7 +51,7 @@ namespace Adrien.Compiler.PlaidML
             ThrowIfNotAllocated();
             if (!i.IsAllocated)
             {
-                throw new ArgumentException("The input Placeholder is not allocated.");
+                throw new ArgumentException("The input Value is not allocated.");
             }
             bool r = plaidml.__Internal.PlaidmlApplyAddInput(this, i.Name, i);
             if (r)
@@ -72,19 +72,20 @@ namespace Adrien.Compiler.PlaidML
 
         }
 
-        public bool AddOutputValue(string name)
+        public Value AddOutputValue(string name)
         {
             ThrowIfNotAllocated();
             IntPtr p = plaidml.__Internal.PlaidmlApplyAllocOutput(this, name);
             if (p.IsZero())
             {
                 ReportApiCallError("plaidml_apply_alloc_output");
-                return false;
+                return null;
             }
             else
             {
-                Outputs.Add(new Value(this._Context, name, p));
-                return true;
+                Value o = new Value(this._Context, name, p);
+                Outputs.Add(o);
+                return o;
             }
         }
 

@@ -177,59 +177,56 @@ namespace Adrien.Tests.Compilers
 
 
         [Fact]
-        public void CanComputeGradient()
+        public void CanComposeFunction()
         {
             Device device = new Device(testContext);
             string code = @"function (I) -> (O) {
                                 O = I * I;
                             }";
             Function f = new Function(testContext, code);
+            Assert.True(f.IsAllocated);
             DeviceTensor i = new DeviceTensor(device, new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), 
                 "I");
             DeviceTensor o = new DeviceTensor(device, new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), 
                 "O");
 
-   
-
-
-
             Int32[] input_data = { 0, 1, 3, 4, 5, 6 };
             i.CreateView<Int32>(MemoryMapType.Discard).CopyFromAndFree(input_data);
-            DeviceTensorView<Int32> v = i.CreateView<Int32>(MemoryMapType.Retain);
+            var v = i.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(3, v[2]);
-            Invoker<int> invoker = new Invoker<int>(testContext, f, new DeviceTensor[] { i }, 
-                new DeviceTensor[] { o });
-            Shape x = invoker.GetOutputShape("O");
-            Assert.True(x.ElementCount == 6);
-            Assert.True(invoker.AllVariablesSet);
-            Invocation<Int32> inv = invoker.Invoke();
+            Invoker<int> inv1 = new Invoker<int>(testContext, f, o, i);
+            Assert.True(inv1.IsAllocated);
+            Invocation<int> k = inv1.Invoke();
+            Assert.True(k.IsAllocated);
             DeviceTensorView<Int32> R = o.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(6, R.ElementCount);
             Assert.Equal(9, R[2]);
 
 
-            //Assert.True(c.AddDependency(new Applier(testContext, f)));
+            DeviceTensor co = new DeviceTensor(device, new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT32, 6),
+                "O");
+            Composer c = new Composer(testContext);
             Applier a = new Applier(testContext, f);
             a.AddInputValue(i);
-            a.AddOutputValue("O");
-            Composer c = new Composer(testContext);
-            Assert.True(c.AddInputPlaceholder("O", o.DimensionCount));
-            Gradient g = new Gradient(testContext, o);
-            Assert.True(g.IsAllocated);
-            Value grad = g.ComputeWrt(i);
-            Assert.True(grad.IsAllocated);
-            Assert.True(c.AddOutputValue(grad));
-            c.AddDependency(a);
+            var fo = a.AddOutputValue("O");
+            Assert.True(fo.IsAllocated);
+            Assert.True(c.AddInputPlaceholder("I", i.DimensionCount));
+            Assert.True(c.AddOutputValue(co));
+            Assert.True(c.AddDependency(a));
+            Assert.True(c.AddUpdate(co, fo));
             Function gf = c.BuildFunction();
             Assert.True(gf.IsAllocated);
-            DeviceTensor go = new DeviceTensor(device, new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT32, 6),
-                grad.Name);
-            Invoker<int> gi = new Invoker<int>(testContext, gf, new[] { o }, new[] { go });
+            Invoker<int> gi = new Invoker<int>(testContext, gf, co , i);
             Assert.True(gi.IsAllocated);
-            Invocation<Int32> ginv = invoker.Invoke();
-            DeviceTensorView<Int32> G = go.CreateView<Int32>(MemoryMapType.Retain);
+           
+            
+           
+            Invocation<int> inv = gi.Invoke();
+            Assert.True(inv.IsAllocated);
+            R = co.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(6, R.ElementCount);
-
+            Assert.Equal(9, R[2]);
+           
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Adrien.Compiler.PlaidML
             }
             else
             {
-                return new Value(this.Context, "GRAD" + Variable.Name, g);
+                return new Value(this.Context, "O1", g);
             }
         }
 
