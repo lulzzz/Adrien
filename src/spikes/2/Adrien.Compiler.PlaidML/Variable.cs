@@ -10,6 +10,8 @@ namespace Adrien.Compiler.PlaidML
     {
         public string Name { get; protected set; }
 
+        public IntPtr VarPtr => this.ptr;
+
         public PlaidmlDatatype DataType { get; protected set; }
         
 
@@ -17,12 +19,6 @@ namespace Adrien.Compiler.PlaidML
   
         protected Variable(Context ctx, string name) : base(ctx)
         {
-            Name = name;
-        }
-
-        protected Variable(IntPtr varPtr, string name, Context ctx) : base(ctx)
-        {
-            ptr = varPtr;
             Name = name;
         }
 

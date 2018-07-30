@@ -11,7 +11,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ElementwiseAssignment = (new Tensor[] { tensor1}, value);
+				ElementwiseDefinition = (new Tensor[] { tensor1}, value);
 			}
 		}
 		  
@@ -21,7 +21,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ElementwiseAssignment = (new Tensor[] { tensor1, tensor2}, value);
+				ElementwiseDefinition = (new Tensor[] { tensor1, tensor2}, value);
 			}
 		}
 		  
@@ -31,7 +31,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ElementwiseAssignment = (new Tensor[] { tensor1, tensor2, tensor3}, value);
+				ElementwiseDefinition = (new Tensor[] { tensor1, tensor2, tensor3}, value);
 			}
 		}
 		  
@@ -41,7 +41,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ElementwiseAssignment = (new Tensor[] { tensor1, tensor2, tensor3, tensor4}, value);
+				ElementwiseDefinition = (new Tensor[] { tensor1, tensor2, tensor3, tensor4}, value);
 			}
 		}
 		  
@@ -51,7 +51,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ElementwiseAssignment = (new Tensor[] { tensor1, tensor2, tensor3, tensor4, tensor5}, value);
+				ElementwiseDefinition = (new Tensor[] { tensor1, tensor2, tensor3, tensor4, tensor5}, value);
 			}
 		}
 		  
@@ -61,7 +61,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ElementwiseAssignment = (new Tensor[] { tensor1, tensor2, tensor3, tensor4, tensor5, tensor6}, value);
+				ElementwiseDefinition = (new Tensor[] { tensor1, tensor2, tensor3, tensor4, tensor5, tensor6}, value);
 			}
 		}
 		  
@@ -71,7 +71,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ElementwiseAssignment = (new Tensor[] { tensor1, tensor2, tensor3, tensor4, tensor5, tensor6, tensor7}, value);
+				ElementwiseDefinition = (new Tensor[] { tensor1, tensor2, tensor3, tensor4, tensor5, tensor6, tensor7}, value);
 			}
 		}
 		  
@@ -81,7 +81,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ElementwiseAssignment = (new Tensor[] { tensor1, tensor2, tensor3, tensor4, tensor5, tensor6, tensor7, tensor8}, value);
+				ElementwiseDefinition = (new Tensor[] { tensor1, tensor2, tensor3, tensor4, tensor5, tensor6, tensor7, tensor8}, value);
 			}
 		}
 			}

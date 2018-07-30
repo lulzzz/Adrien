@@ -6,7 +6,7 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class Placeholder : Variable
+    public class Placeholder : Value
     {
         public ulong DimensionCount { get; protected set; }
         

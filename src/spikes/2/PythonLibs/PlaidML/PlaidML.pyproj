@@ -29,6 +29,9 @@
     <Compile Include="op.py" />
     <Compile Include="plaidml_setup.py" />
     <Compile Include="settings.py" />
+    <Compile Include="test.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tile.py" />
     <Compile Include="__init__.py" />
   </ItemGroup>

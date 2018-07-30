@@ -14,9 +14,12 @@ namespace Adrien.Notation
             this.Operation = op;
         }
 
+
         public TensorExpression this[TensorExpression e] => Operation(e);
 
         public UnaryOperator this[UnaryOperator right] => new UnaryOperator((e) => this[right[e]]);
+
+        public BinaryOperator this[BinaryOperator right] => new BinaryOperator((l, r) => this[right[l, r]]);
 
         public static UnaryOperator operator | (UnaryOperator left, UnaryOperator right) 
             => new UnaryOperator((e) => right[left[e]]);

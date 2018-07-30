@@ -6,7 +6,7 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class Gradient : PlaidMLApi<Gradient>
+    public class Gradient : Value
     {
         public Variable Variable { get; protected set; }
 
@@ -26,20 +26,21 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
-        public IntPtr ComputeWrt(Variable v)
+        public Value ComputeWrt(Variable v)
         {
             ThrowIfNotAllocated();
             IntPtr g = plaidml.__Internal.PlaidmlComputeGradWrt(this, v);
             if (g.IsZero())
             {
                 ReportApiCallError("plaidml_compute_grad_wrt");
-                return IntPtr.Zero;
+                return null;
             }
             else
             {
-                return g;
+                return new Value(this.Context, "GRAD" + Variable.Name, g);
             }
         }
+
         public override void Free()
         {
             base.Free();

@@ -83,7 +83,7 @@ namespace Adrien.Trees
             else throw new InvalidOperationException($"Can't convert ConstantExpression {node.ToReadableString()}" + 
                 @"of type {node.Value.GetType().Name} to type Tensor.");
 
-            if (!t.IsElementwiseAssigned)
+            if (!t.IsElementwiseDefined)
             {
                 Context.AddValueNode(t);
             }
@@ -93,14 +93,14 @@ namespace Adrien.Trees
                 using (Context.Internal(on))
                 {
                     Context.AddValueNode(t);
-                    base.Visit(t.ElementwiseAssignment.Expression.LinqExpression);
+                    base.Visit(t.ElementwiseDefinition.Expression.LinqExpression);
                 }
             }
             return node;
 
         }
                             
-        protected override Expression VisitIndex(IndexExpression node)
+        protected override Expression VisitIndex(System.Linq.Expressions.IndexExpression node)
         {
             OperatorNode on = Context.AddOperatorNode(TensorOp.Index);
             using (Context.Internal(on))

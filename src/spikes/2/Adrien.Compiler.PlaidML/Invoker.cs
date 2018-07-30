@@ -14,7 +14,7 @@ namespace Adrien.Compiler.PlaidML
 
         public IReadOnlyList<DeviceTensor> InputTensors { get; protected set; }
 
-        public IDictionary<DeviceTensor, DeviceTensor> Gradients { get; protected set; }
+        public IDictionary<DeviceTensor, Value> Gradients { get; protected set; }
 
         public bool InputTensorsSet { get; protected set; }
 
@@ -85,6 +85,41 @@ namespace Adrien.Compiler.PlaidML
         public Invoker(Context ctx, Function f, DeviceTensor output, params DeviceTensor[] input)
             : this(ctx, f, input, new DeviceTensor[] { output }) { }
 
+        public Invoker(Context ctx, Function f, DeviceTensor[] output) : base(ctx)
+        {
+            ptr = plaidml.__Internal.PlaidmlAllocInvoker(_Context, f);
+            if (ptr.IsZero())
+            {
+                ReportApiCallError("plaidml_alloc_invoker");
+                return;
+            }
+            else
+            {
+                IsAllocated = true;
+            }
+            InputTensors = new List<DeviceTensor>(0);
+            InputTensorsSet = true;
+            bool r = false;
+            for (int i = 0; i < output.Length; i++)
+            {
+                r = plaidml.__Internal.PlaidmlSetInvokerOutput(this, output[i].Name, output[i]);
+                if (!r)
+                {
+                    ReportApiCallError("plaidml_set_invoker_output");
+                    break;
+                }
+            }
+            if (r)
+            {
+                OutputTensorsSet = true;
+                OutputTensor = output[0];
+            }
+            else
+            {
+                OutputTensorsSet = false;
+                return;
+            }
+        }
 
         public RunStatus Run(IVariable<T> output, params IVariable<T>[] input)
         {
@@ -109,14 +144,13 @@ namespace Adrien.Compiler.PlaidML
             {
                 if (OutputTensor.CreateView<T>(MemoryMapType.Retain).CopyToAndFree(output.Span))
                 {
-                    Gradients = new Dictionary<DeviceTensor, DeviceTensor>();
+                    Gradients = new Dictionary<DeviceTensor, Value>();
                     for (int i = 0; i < InputTensors.Count; i++)
                     {
                         Gradient gc = new Gradient(Context, OutputTensor);
                         if (!gc.IsAllocated) continue;
-                        IntPtr g = gc.ComputeWrt(InputTensors[i]);
-                        if (g.IsZero()) continue;
-                        DeviceTensor grad = new DeviceTensor(g, "O" + i, InputTensors[i]);
+                        Value grad = gc.ComputeWrt(InputTensors[i]);
+                        if (!grad.IsAllocated) continue;
                         Gradients.Add(InputTensors[i], grad);
                     }
                     return RunStatus.Success;

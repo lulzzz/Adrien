@@ -18,6 +18,8 @@ namespace Adrien.Compiler.PlaidML
 
         public int Rank => Convert.ToInt32(Shape.DimensionCount);
 
+        public ulong DimensionCount => Shape.DimensionCount;
+
         public int[] Dimensions => Shape.Dimensions.Select(d => Convert.ToInt32(d.length)).ToArray();
 
         public int[] Stride => Shape.Dimensions.Select(d => Convert.ToInt32(d.stride)).ToArray();
@@ -53,14 +55,6 @@ namespace Adrien.Compiler.PlaidML
                 DataType = Shape.DataType;
                 IsAllocated = true;
             }
-        }
-
-        public DeviceTensor(IntPtr varPtr, string name, DeviceTensor t) : base(varPtr, name, t.Context)
-        {
-            Device = t.Device;
-            Shape = t.Shape;
-            DataType = Shape.DataType;
-            IsAllocated = true;
         }
 
         public DeviceTensorView<T> CreateView<T>(MemoryMapType mapType) 

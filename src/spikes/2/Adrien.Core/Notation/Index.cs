@@ -10,7 +10,7 @@ namespace Adrien.Notation
 {
     #pragma warning disable CS0660
 
-    public class Index : Term, IChild, IAlgebra<Index, TensorIndexExpression>, IComparable<Index>, IEquatable<Index>
+    public class Index : Term, IChild, IAlgebra<Index, TensorIndexExpression>, IComparable<Index>
     {
         public static PropertyInfo OrderInfo { get; } = typeof(Index).GetProperty("Order");
 
@@ -23,6 +23,8 @@ namespace Adrien.Notation
         public int Order { get; internal set; }
 
         public int Dimension { get; internal set; }
+
+        public int Axis => Dimension;
 
         public TensorIndexExpression IndexExpression { get; protected set; }
 
@@ -49,11 +51,12 @@ namespace Adrien.Notation
 
         public Index(int i)
         {
-            Name = "int_" + i.ToString();
+            Name = "index_expr_int_" + i.ToString();
             Type = IndexType.Expression;
             IndexExpression = new TensorIndexExpression(Expression.Constant(i));
         }
         
+
         public static implicit operator Index(Int32 i) => new Index(i);
 
         public static TensorIndexExpression operator - (Index left) => left.Negate();
@@ -70,12 +73,6 @@ namespace Adrien.Notation
         public static TensorIndexExpression operator / (Index left, Index right)
             => left.Divide(right);
 
-        public static TensorIndexExpression operator  == (Index left, Index right)
-            => left.Equal(right);
-
-        public static TensorIndexExpression operator != (Index left, Index right)
-            => left.NotEqual(right);
-
         public TensorIndexExpression Negate() => new TensorIndexExpression(Expression.Negate(this));
 
         public TensorIndexExpression Add(Index right)
@@ -90,21 +87,7 @@ namespace Adrien.Notation
         public TensorIndexExpression Divide(Index right)
             => new TensorIndexExpression(Expression.Divide(this, right, GetDummyBinaryMethodInfo(this, right)));
 
-        public TensorIndexExpression Equal(Index right)
-            => new TensorIndexExpression(Expression.Equal(this, right,false, GetDummyBinaryMethodInfo(this, right)));
-
-        public TensorIndexExpression NotEqual(Index right)
-            => new TensorIndexExpression(Expression.NotEqual(this, right, false, GetDummyBinaryMethodInfo(this, 
-                right)));
-
-        public bool Equals(Index i) => ReferenceEquals(this, i);
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-
+     
         public Type GetIndexType()
         {
             if (Type == IndexType.Constant)

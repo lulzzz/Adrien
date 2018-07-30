@@ -19,7 +19,7 @@ namespace Adrien.Notation
 
         internal override Name DefaultNameBase => "index_expr0";
 
-        //public List<Index> Indices => LinqExpression.GetConstants<Index>();
+        public List<Index> Indices => LinqExpression.GetConstants<Index>();
         
         
         public TensorIndexExpression(Expression e)

@@ -286,6 +286,8 @@ class Operation(object):
                     output_name, self.name, e.message, self.code))
         return outputs
 
+    def print_code(self):
+        print(self.code)
 
 def unary_op(value, op_str, name=None):
     """Builds a Value for an elementwise unary operation.

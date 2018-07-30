@@ -33,18 +33,18 @@ namespace Adrien.Notation
             }
         }
 
-        public (IndexSet IndexSet, TensorContraction Expression) ContractionAssignment { get; protected set; }
+        public (IndexSet IndexSet, TensorContraction Expression) ContractionDefinition { get; protected set; }
 
-        public (IEnumerable<Tensor> Dependents, TensorExpression Expression) ElementwiseAssignment { get; protected set; }
+        public (IEnumerable<Tensor> Dependents, TensorExpression Expression) ElementwiseDefinition { get; protected set; }
 
-        public bool IsAssigned => ContractionAssignment.Expression != null || ElementwiseAssignment.Expression != null;
+        public bool IsAssigned => ContractionDefinition.Expression != null || ElementwiseDefinition.Expression != null;
 
-        public bool IsElementwiseAssigned => this.ElementwiseAssignment.Expression != null;
+        public bool IsElementwiseDefined => this.ElementwiseDefinition.Expression != null;
 
-        public bool IsContractionAssigned => this.ContractionAssignment.Expression != null;
+        public bool IsContractionDefined => this.ContractionDefinition.Expression != null;
 
-        internal override Expression LinqExpression => this.IsAssigned ? this.IsContractionAssigned 
-            ? this.ContractionAssignment.Expression.LinqExpression : this.ElementwiseAssignment.Expression.LinqExpression 
+        internal override Expression LinqExpression => this.IsAssigned ? this.IsContractionDefined 
+            ? this.ContractionDefinition.Expression.LinqExpression : this.ElementwiseDefinition.Expression.LinqExpression 
             : Expression.Constant(this, typeof(Tensor));
         
         internal override Name DefaultNameBase { get; } = "A";
@@ -76,7 +76,7 @@ namespace Adrien.Notation
 
         internal Tensor((TensorContraction te, string name) expr) : base(expr.name)
         {
-            ContractionAssignment = (null, expr.te);
+            ContractionDefinition = (null, expr.te);
         }
 
 
@@ -102,11 +102,11 @@ namespace Adrien.Notation
                 ThrowIfAlreadyAssiged();
                 if (value.LinqExpression.NodeType == ExpressionType.Call)
                 {
-                    ContractionAssignment = (I, value);
+                    ContractionDefinition = (I, value);
                 }
                 else
                 {
-                    ContractionAssignment = (I, Math.SigmaSum(value));
+                    ContractionDefinition = (I, Math.SigmaSum(value));
                 }
             }
         }
@@ -120,7 +120,7 @@ namespace Adrien.Notation
         {
             if (t.IsAssigned)
             {
-                return t.ContractionAssignment.Expression.ToTree((t, t.ContractionAssignment.IndexSet));
+                return t.ContractionDefinition.Expression.ToTree((t, t.ContractionDefinition.IndexSet));
             }
             else
             {
@@ -198,9 +198,9 @@ namespace Adrien.Notation
         }
 
         public ExpressionTree ToTree () => this.IsAssigned ? 
-            this.IsContractionAssigned ? 
-            this.ContractionAssignment.Expression.ToTree((this, this.ContractionAssignment.IndexSet)) :
-            this.ElementwiseAssignment.Expression.ToTree((this, null)) : 
+            this.IsContractionDefined ? 
+            this.ContractionDefinition.Expression.ToTree((this, this.ContractionDefinition.IndexSet)) :
+            this.ElementwiseDefinition.Expression.ToTree((this, null)) : 
             new TensorExpression(this.LinqExpression).ToTree();
         
         public Var<T> Var<T>(Array array) where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible 
@@ -222,6 +222,32 @@ namespace Adrien.Notation
             return string.Join("", names);
         }
 
+        public void GetIndicesForAxes(params int[] axes)
+        {
+            if (axes.Length == 0)
+            {
+                axes = new[] { Rank - 1 };
+            }
+            else if (axes.Length == 1 && axes[0] < 0)
+            {
+                axes[0] = Rank + axes[0];
+            }
+            else
+            {
+                for (int i = 0; i < axes.Length; i++)
+                {
+                    if (axes[i] < 0)
+                    {
+                        axes[i] = axes.Length + axes[i];
+                    }
+                }
+            }
+            axes = axes.OrderBy(a => a).ToArray();
+            
+            Index[] indices = this.Dimensions.Select((o, d) => new Index(null, o, d, "x" + o.ToString())).ToArray();
+            IndexSet S = new IndexSet(this, indices);
+
+        }
         #region IEnumerable<int> implementation
         public IEnumerator<int> GetEnumerator()
         {
@@ -237,7 +263,7 @@ namespace Adrien.Notation
         [DebuggerStepThrough]
         internal void ThrowIfAlreadyAssiged()
         {
-            if (ContractionAssignment.IndexSet != null)
+            if (ContractionDefinition.IndexSet != null)
             {
                 throw new InvalidOperationException("This tensor variable has an existing assigment. + " +
                     $"You can only assign to a tensor variable once.");

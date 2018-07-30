@@ -21,7 +21,7 @@ namespace Adrien.Tests
             Assert.Equal("a", a.Name);
             Assert.Equal("b", b.Name);
             var A1 = A[a, b];
-            Assert.IsType<IndexExpression>((Expression) A1);
+            Assert.IsType<System.Linq.Expressions.IndexExpression>((Expression) A1);
 
             var B = Tensor.ThreeD("B", (5, 6, 7), "i", out var ijk);
             var (i, j, k) = ijk;
@@ -30,11 +30,11 @@ namespace Adrien.Tests
             Assert.Equal("k", k.Name);
             Assert.Equal(1, j.Order);
 
-            Assert.IsType<IndexExpression>((Expression) B[i]);
-            Assert.IsType<IndexExpression>((Expression) B[ijk]);
+            Assert.IsType<System.Linq.Expressions.IndexExpression>((Expression) B[i]);
+            Assert.IsType<System.Linq.Expressions.IndexExpression>((Expression) B[ijk]);
             B[ijk] = A[i];
             Assert.True(B.IsAssigned);
-            Assert.True(B.ContractionAssignment.IndexSet[1].Equals(j));
+            Assert.True(B.ContractionDefinition.IndexSet[1].Equals(j));
         }
 
         [Fact]
@@ -55,7 +55,6 @@ namespace Adrien.Tests
             Assert.Equal(3, F.Dimensions[1]);
             Assert.Equal(2, F.Rank);
             Assert.Throws<ArgumentException>(() => F.With(out Tensor G, 3, 2, 1));
-
         }
 
         [Fact]
@@ -84,6 +83,13 @@ namespace Adrien.Tests
             Assert.Equal("i0", J[0].Name);
             var (m0, m1, m2, m3, m4) = I;
             Assert.Equal("m4", m4.Name);
+
+            var (N1, N2, N3, N4) = Tensor.FourD("N1", (2, 7, 9, 6), "n1", out Index n1, out Index n2, out Index n3, 
+                out Index n4).Four();
+            Assert.Equal("N2", N2.Name);
+            Assert.Equal("N4", N4.Name);
+            Assert.Equal("n3", n3.Name);
+            Assert.Equal("n4", n4.Name);
         }
 
         [Fact]
@@ -99,12 +105,11 @@ namespace Adrien.Tests
         [Fact]
         public void CanUseIndexExpressions()
         {
-            
             var (A, B, C) = Tensor.TwoD((4, 3), out Index i, out Index j).Three();
             var (M, N, O) = Tensor.ThreeD("M", (7, 9, 6), "m", out Index m, out Index n, out Index o).Three();
             A[i + 5, j + 7] = B[i, j] * C[i, j];
             Assert.True(A.IsAssigned);
-            Assert.True(A.ContractionAssignment.IndexSet[0].Type == IndexType.Expression);
+            Assert.True(A.ContractionDefinition.IndexSet[0].Type == IndexType.Expression);
             M[6, n - 4] = M[7] * N[n];
             Assert.True(M.IsAssigned);
         }
@@ -119,7 +124,7 @@ namespace Adrien.Tests
 
             V1[V0] = c0 * V0 + c1;
             Assert.True(V1.IsAssigned);
-            Assert.Equal(3, V1.ElementwiseAssignment.Expression.Tensors.Count);
+            Assert.Equal(3, V1.ElementwiseDefinition.Expression.Tensors.Count);
 
             var (x, y) = new Vector("x", 2).Two();
             Assert.Equal("x", x.Name);
@@ -127,7 +132,7 @@ namespace Adrien.Tests
             var (a, b) = new Scalar("a").Two();
             y[x] = a * x + b;
             Assert.True(y.IsAssigned);
-            Assert.Equal(3, y.ElementwiseAssignment.Expression.Tensors.Count);
+            Assert.Equal(3, y.ElementwiseDefinition.Expression.Tensors.Count);
         }
     }
 }

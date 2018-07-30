@@ -14,12 +14,12 @@ namespace Adrien.Tests.Compilers
 {
     public class PlaidMLCompilerApiTests
     {
-        protected Context context;
+        protected Context testContext;
 
         public PlaidMLCompilerApiTests()
         {
             CompilerDriver.CreateDefaultLogger("Adrien.Tests.log");
-            context = new Context();
+            testContext = new Context();
         }
 
         [Fact]
@@ -63,7 +63,7 @@ namespace Adrien.Tests.Compilers
         [Fact]
         public void CanOpenDevice()
         {
-            Device device = new Device(context);
+            Device device = new Device(testContext);
             Assert.True(device.IsAllocated);
             Assert.True(device.IsOpen);
             device.Close();
@@ -75,7 +75,7 @@ namespace Adrien.Tests.Compilers
         [Fact]
         public void CanConstructShape()
         {
-            Shape s = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT32, 4);
+            Shape s = new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_FLOAT32, 4);
             Assert.True(s.IsAllocated);
             Assert.Equal(PlaidmlDatatype.PLAIDML_DATA_FLOAT32, s.DataType);
             Assert.Equal(1ul, s.DimensionCount);
@@ -87,13 +87,13 @@ namespace Adrien.Tests.Compilers
         [Fact]
         public void CanConstructBuffer()
         {
-            Device device = new Device(context);
-            Shape s1 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT32, 4, 8, 8);
+            Device device = new Device(testContext);
+            Shape s1 = new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_FLOAT32, 4, 8, 8);
             device.CreateBuffer(s1);
             Assert.Single(device.Buffers);
             DeviceBuffer buffer = device.Buffers[0];
             Assert.Equal(8UL * 8 * 4 * 4, buffer.SizeInBytes);
-            Shape s2 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT64, 13, 5);
+            Shape s2 = new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT64, 13, 5);
             device.CreateBuffer(s2);
             buffer = device.Buffers[1];
             Assert.Equal((13UL * 5 * 8), buffer.SizeInBytes);
@@ -102,22 +102,22 @@ namespace Adrien.Tests.Compilers
         [Fact]
         public void CanConstructMapping()
         {
-            Device device = new Device(context);
-            Shape s1 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT64, 4, 8, 8);
+            Device device = new Device(testContext);
+            Shape s1 = new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_FLOAT64, 4, 8, 8);
             device.CreateBuffer(s1);
             Assert.Single(device.Buffers);
             DeviceBuffer buffer = device.Buffers[0];
             Assert.Equal(8UL * 8 * 4 * 8, buffer.SizeInBytes);
             MemoryMapping m = new MemoryMapping(buffer);
             Span<long> span = m.GetSpan<long>();
-            Assert.Equal((int) s1.ElementCount, span.Length);
+            Assert.Equal((int)s1.ElementCount, span.Length);
         }
 
         [Fact]
         public void CanConstructTensorVariableView()
         {
-            Device device = new Device(context);
-            Shape s1 = new Shape(context, PlaidmlDatatype.PLAIDML_DATA_FLOAT64, 2, 3);
+            Device device = new Device(testContext);
+            Shape s1 = new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_FLOAT64, 2, 3);
             DeviceTensor t = new DeviceTensor(device, s1, "t");
             DeviceTensorView<Int64> v = t.CreateView<Int64>(MemoryMapType.Discard);
             Int64[,] array = { { 0, 1, 3 }, { 4, 5, 6 } };
@@ -131,21 +131,22 @@ namespace Adrien.Tests.Compilers
         [Fact]
         public void CanInvokeFunction()
         {
-            Device device = new Device(context);
+            Device device = new Device(testContext);
             string code = @"function (I[N]) -> (O) {
                                 O[i: N] = +(I[k]), i - k < N;
                             }";
-            Function f = new Function(context, code);
-            DeviceTensor i = new DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "I");
-            DeviceTensor o = new DeviceTensor(device, new Shape(context, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
-            
-            Int32[] input_data = { 0, 1, 3,  4, 5, 6 };
+            Function f = new Function(testContext, code);
+            DeviceTensor i = new DeviceTensor(device, new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "I");
+            DeviceTensor o = new DeviceTensor(device, new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), "O");
+
+            Int32[] input_data = { 0, 1, 3, 4, 5, 6 };
             i.CreateView<Int32>(MemoryMapType.Discard).CopyFromAndFree(input_data);
-      
+
             DeviceTensorView<Int32> v = i.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(3, v[2]);
-            Invoker<int> invoker = new Invoker<int>(context, f, new Compiler.PlaidML.DeviceTensor[] { i }, new Compiler.PlaidML.DeviceTensor[] { o });
-          
+            Invoker<int> invoker = new Invoker<int>(testContext, f, new Compiler.PlaidML.DeviceTensor[] { i },
+                new Compiler.PlaidML.DeviceTensor[] { o });
+
             Shape x = invoker.GetOutputShape("O");
             Assert.True(x.ElementCount == 6);
             Assert.True(invoker.AllVariablesSet);
@@ -168,10 +169,67 @@ namespace Adrien.Tests.Compilers
             var (x, y) = new Vector("x", 2).Two();
             Assert.Equal("x", x.Name);
             Assert.Equal("y", y.Name);
-            var (m,n) = new Scalar("m").Two();
+            var (m, n) = new Scalar("m").Two();
             y[x] = m * x + n;
             g = new TileGenerator(y.ToTree());
             Assert.Equal("Y = (M * X) + N;", g.Text);
+        }
+
+
+        [Fact]
+        public void CanComputeGradient()
+        {
+            Device device = new Device(testContext);
+            string code = @"function (I) -> (O) {
+                                O = I * I;
+                            }";
+            Function f = new Function(testContext, code);
+            DeviceTensor i = new DeviceTensor(device, new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), 
+                "I");
+            DeviceTensor o = new DeviceTensor(device, new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT32, 6), 
+                "O");
+
+   
+
+
+
+            Int32[] input_data = { 0, 1, 3, 4, 5, 6 };
+            i.CreateView<Int32>(MemoryMapType.Discard).CopyFromAndFree(input_data);
+            DeviceTensorView<Int32> v = i.CreateView<Int32>(MemoryMapType.Retain);
+            Assert.Equal(3, v[2]);
+            Invoker<int> invoker = new Invoker<int>(testContext, f, new DeviceTensor[] { i }, 
+                new DeviceTensor[] { o });
+            Shape x = invoker.GetOutputShape("O");
+            Assert.True(x.ElementCount == 6);
+            Assert.True(invoker.AllVariablesSet);
+            Invocation<Int32> inv = invoker.Invoke();
+            DeviceTensorView<Int32> R = o.CreateView<Int32>(MemoryMapType.Retain);
+            Assert.Equal(6, R.ElementCount);
+            Assert.Equal(9, R[2]);
+
+
+            //Assert.True(c.AddDependency(new Applier(testContext, f)));
+            Applier a = new Applier(testContext, f);
+            a.AddInputValue(i);
+            a.AddOutputValue("O");
+            Composer c = new Composer(testContext);
+            Assert.True(c.AddInputPlaceholder("O", o.DimensionCount));
+            Gradient g = new Gradient(testContext, o);
+            Assert.True(g.IsAllocated);
+            Value grad = g.ComputeWrt(i);
+            Assert.True(grad.IsAllocated);
+            Assert.True(c.AddOutputValue(grad));
+            c.AddDependency(a);
+            Function gf = c.BuildFunction();
+            Assert.True(gf.IsAllocated);
+            DeviceTensor go = new DeviceTensor(device, new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT32, 6),
+                grad.Name);
+            Invoker<int> gi = new Invoker<int>(testContext, gf, new[] { o }, new[] { go });
+            Assert.True(gi.IsAllocated);
+            Invocation<Int32> ginv = invoker.Invoke();
+            DeviceTensorView<Int32> G = go.CreateView<Int32>(MemoryMapType.Retain);
+            Assert.Equal(6, R.ElementCount);
+
         }
     }
 }

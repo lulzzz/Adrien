@@ -71,7 +71,8 @@ namespace Adrien.Notation
             }
             else if (indexNameBase.Length == 2 && Char.IsLetter(indexNameBase[0]) && Char.IsNumber(indexNameBase[1]))
             {
-                return new string(indexNameBase[0], 1) + index.ToString();
+                int i = Int32.Parse(indexNameBase.Substring(1,1)) + index;
+                return new string(indexNameBase[0], 1) + i.ToString();
             }
             else throw new ArgumentException($"Unknown name base {indexNameBase}");
         }
@@ -94,7 +95,7 @@ namespace Adrien.Notation
                         + "_" + GetNameFromLinqExpression(be.Right);
                 case ParameterExpression pe:
                     return pe.Name;
-                case IndexExpression ie:
+                case System.Linq.Expressions.IndexExpression ie:
                     return ie.NodeType.ToString() + "_" + GetNameFromLinqExpression(ie.Object) + "_" + ie.Arguments.Select(e => GetNameFromLinqExpression(e))
                         .Aggregate((s1, s2) => s1 + "_" + s2);
                 case MethodCallExpression me:

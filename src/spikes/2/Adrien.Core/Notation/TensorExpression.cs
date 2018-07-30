@@ -107,7 +107,7 @@ namespace Adrien.Notation
             }
             else if (this.LinqExpression.NodeType == ExpressionType.Index)
             {
-                return (this.LinqExpression as IndexExpression).Object.Type.GetElementType();
+                return (this.LinqExpression as System.Linq.Expressions.IndexExpression).Object.Type.GetElementType();
             }
             else return typeof(TensorExpression);
         }

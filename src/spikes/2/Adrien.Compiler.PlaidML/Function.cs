@@ -9,9 +9,10 @@ namespace Adrien.Compiler.PlaidML
     public class Function : PlaidMLApi<Function>
     {
         public string Id { get; protected set; }
+
         public string Code { get; protected set; }
 
-      
+
         public Function(Context ctx, string code) : base(ctx)
         {
             string id = "id_" + Guid.NewGuid().ToString("N");
@@ -27,7 +28,14 @@ namespace Adrien.Compiler.PlaidML
                 IsAllocated = true;
                 Info("Added function Id:{0} Code={1}", Id, Code);
             }
+        }
 
+        public Function(Context ctx, IntPtr functionPtr) :base(ctx)
+        {
+            string id = "id_" + Guid.NewGuid().ToString("N");
+            ptr = functionPtr;
+            IsAllocated = true;
+            Info("Added function Id:{0} from pointer {1}", Id, functionPtr);
         }
        
   
