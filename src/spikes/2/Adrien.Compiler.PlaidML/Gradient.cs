@@ -8,10 +8,10 @@ namespace Adrien.Compiler.PlaidML
 {
     public class Gradient : Value
     {
-        public Variable Variable { get; protected set; }
+        public Value OutputValue { get; protected set; }
 
 
-        public Gradient(Context ctx, Variable v) : base(ctx)
+        public Gradient(Context ctx, Value v) : base(ctx)
         {
             ptr = plaidml.__Internal.PlaidmlAllocGradient(v);
             if (ptr.IsZero())
@@ -21,7 +21,7 @@ namespace Adrien.Compiler.PlaidML
             }
             else
             {
-                Variable = v;
+                OutputValue = v;
                 IsAllocated = true;
             }
         }
@@ -37,7 +37,7 @@ namespace Adrien.Compiler.PlaidML
             }
             else
             {
-                return new Value(this.Context, "O1", g);
+                return new Value(this.Context, "GRAD" + v.Name, g);
             }
         }
 

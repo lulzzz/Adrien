@@ -9,6 +9,7 @@ namespace Adrien
         ErrorAllocatingInput,
         ErrorAllocatingOutput,
         ErrorExecuting,
+        ErrorComputingGradient,
         Success
     }
 }

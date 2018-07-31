@@ -20,6 +20,8 @@ namespace Adrien.Notation
 
         public int Rank => Dimensions.Length;
 
+        public ulong LongRank => Convert.ToUInt64(Rank);
+
         public int NumberofElements
         {
             get

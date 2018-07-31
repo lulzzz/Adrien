@@ -92,9 +92,10 @@ namespace Adrien.Tests.Compilers
             TileCompiler c = new TileCompiler();
             Assert.True(c.Compile(5, code, out IRunnable<int> result));
             var O = new Vector("O", 5).Var(new int[5]);
+            var G = new Vector("G", 5).Var(new int[5]);
             var I = new Vector("I", 5).Var(1, 2, 3, 4, 5);
-            Assert.Equal(RunStatus.Success, result.Run(O, I));
-            
+            Assert.Equal(RunStatus.Success, result.Run(O, G, I));
+            Assert.Equal(8, G[3]);
         }
 
         [Fact]

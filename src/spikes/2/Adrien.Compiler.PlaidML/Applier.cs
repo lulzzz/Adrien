@@ -61,17 +61,6 @@ namespace Adrien.Compiler.PlaidML
             return r;
         }
 
-        public bool AddInputValue(Variable iv)
-        {
-            ThrowIfNotAllocated();
-            if (!iv.IsAllocated)
-            {
-                throw new ArgumentException("The input Variable is not allocated.");
-            }
-            return AddInputValue(new Value(iv));
-
-        }
-
         public Value AddOutputValue(string name)
         {
             ThrowIfNotAllocated();

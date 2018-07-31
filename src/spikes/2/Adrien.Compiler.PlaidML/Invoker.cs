@@ -12,20 +12,22 @@ namespace Adrien.Compiler.PlaidML
     {
         public DeviceTensor OutputTensor { get; protected set; }
 
+        public Applier Applier { get; protected set; }
+
+        public Value OutputValue { get; protected set; }
+
         public IReadOnlyList<DeviceTensor> InputTensors { get; protected set; }
 
-        public IDictionary<DeviceTensor, Value> Gradients { get; protected set; }
+        public IDictionary<DeviceTensor, DeviceTensor> GradientTensors { get; protected set; }
 
         public bool InputTensorsSet { get; protected set; }
 
         public bool OutputTensorsSet { get; protected set; }
 
-        
-
         public bool AllVariablesSet => InputTensorsSet && OutputTensorsSet;
 
-       
         public string RunStatusMessage { get; protected set; }
+
 
         public Invoker(Context ctx, Function f, DeviceTensor[] input, DeviceTensor[] output) : base(ctx)
         {
@@ -80,47 +82,19 @@ namespace Adrien.Compiler.PlaidML
                 OutputTensorsSet = false;
                 return;
             }
+
+            Applier = new Applier(_Context, f);
+            foreach(DeviceTensor t in InputTensors)
+            {
+                Applier.AddInputValue(t);
+            }
+            OutputValue = Applier.AddOutputValue(OutputTensor.Name);
         }
 
         public Invoker(Context ctx, Function f, DeviceTensor output, params DeviceTensor[] input)
             : this(ctx, f, input, new DeviceTensor[] { output }) { }
 
-        public Invoker(Context ctx, Function f, DeviceTensor[] output) : base(ctx)
-        {
-            ptr = plaidml.__Internal.PlaidmlAllocInvoker(_Context, f);
-            if (ptr.IsZero())
-            {
-                ReportApiCallError("plaidml_alloc_invoker");
-                return;
-            }
-            else
-            {
-                IsAllocated = true;
-            }
-            InputTensors = new List<DeviceTensor>(0);
-            InputTensorsSet = true;
-            bool r = false;
-            for (int i = 0; i < output.Length; i++)
-            {
-                r = plaidml.__Internal.PlaidmlSetInvokerOutput(this, output[i].Name, output[i]);
-                if (!r)
-                {
-                    ReportApiCallError("plaidml_set_invoker_output");
-                    break;
-                }
-            }
-            if (r)
-            {
-                OutputTensorsSet = true;
-                OutputTensor = output[0];
-            }
-            else
-            {
-                OutputTensorsSet = false;
-                return;
-            }
-        }
-
+       
         public RunStatus Run(IVariable<T> output, params IVariable<T>[] input)
         {
             ThrowIfNotAllocated();
@@ -139,36 +113,68 @@ namespace Adrien.Compiler.PlaidML
                 }
             }
 
-            var c = Invoke();
-            if (c.IsAllocated)
+            var invocation = Invoke();
+            if (invocation.IsAllocated)
             {
                 if (OutputTensor.CreateView<T>(MemoryMapType.Retain).CopyToAndFree(output.Span))
                 {
-                    Gradients = new Dictionary<DeviceTensor, Value>();
-                    for (int i = 0; i < InputTensors.Count; i++)
-                    {
-                        Gradient gc = new Gradient(Context, OutputTensor);
-                        if (!gc.IsAllocated) continue;
-                        Value grad = gc.ComputeWrt(InputTensors[i]);
-                        if (!grad.IsAllocated) continue;
-                        Gradients.Add(InputTensors[i], grad);
-                    }
                     return RunStatus.Success;
                 }
                 else
                 {
-                    RunStatusMessage = c.LastStatusString;
+                    RunStatusMessage = invocation.LastStatusString;
                     return RunStatus.ErrorExecuting;
                 }
             }
             else
             {
-                RunStatusMessage = c.LastStatusString;
+                RunStatusMessage = invocation.LastStatusString;
                 return RunStatus.ErrorExecuting;
             }
             
         }
- 
+
+        public RunStatus Run(IVariable<T> output, IVariable<T> gradient, params IVariable<T>[] input)
+        {
+            RunStatus s = Run(output, input);
+            if (s != RunStatus.Success)
+            {
+                return s;
+            }
+            Gradient gc = new Gradient(Context, OutputValue);
+            Composer c = new Composer(_Context);
+            GradientTensors = new Dictionary<DeviceTensor, DeviceTensor>();
+            for (int i = 0; i < InputTensors.Count; i++)
+            {
+                DeviceTensor t = InputTensors[i];
+                Value grad = gc.ComputeWrt(t);
+                if (!grad.IsAllocated) continue;
+                c.AddInputPlaceholder(InputTensors[i].Name, InputTensors[i].DimensionCount);
+                DeviceTensor gt = new DeviceTensor(t.Device, t.Shape, grad.Name);
+                c.AddOutputValue(gt);
+                c.AddUpdate(gt, grad);
+                GradientTensors.Add(t, gt);
+            }
+
+            Function gf = c.BuildFunction();
+            Invoker<int> ginv = new Invoker<int>(_Context, gf, InputTensors.ToArray(), GradientTensors.Values.ToArray());
+            Invocation<int> ginvc = ginv.Invoke();
+            if (!ginvc.IsAllocated)
+            {
+                return RunStatus.ErrorComputingGradient;
+            }
+            var gv = GradientTensors.First().Value.CreateView<T>(MemoryMapType.Retain);
+            if (!gv.CopyToAndFree(gradient.Span))
+            {
+                gv.Free();
+                return RunStatus.ErrorComputingGradient;
+            }
+            else
+            {
+                return RunStatus.Success;
+            }
+        }
+
         public Invocation<T> Invoke()
         {
             ThrowIfNotAllocated();

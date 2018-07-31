@@ -219,14 +219,72 @@ namespace Adrien.Tests.Compilers
             Invoker<int> gi = new Invoker<int>(testContext, gf, co , i);
             Assert.True(gi.IsAllocated);
            
-            
-           
             Invocation<int> inv = gi.Invoke();
             Assert.True(inv.IsAllocated);
             R = co.CreateView<Int32>(MemoryMapType.Retain);
             Assert.Equal(6, R.ElementCount);
             Assert.Equal(9, R[2]);
-           
+        }
+
+        [Fact]
+        public void CanComputeGradient()
+        {
+            Device device = new Device(testContext);
+            string code = @"function (I) -> (O) {
+                                O = I * I;
+                            }";
+            Function f = new Function(testContext, code);
+            Assert.True(f.IsAllocated);
+            DeviceTensor i = new DeviceTensor(device, new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT32, 6),
+                "I");
+            DeviceTensor o = new DeviceTensor(device, new Shape(testContext, PlaidmlDatatype.PLAIDML_DATA_INT32, 6),
+                "O");
+
+            Int32[] input_data = { 0, 1, 3, 4, 5, 6 };
+            i.CreateView<Int32>(MemoryMapType.Discard).CopyFromAndFree(input_data);
+            var v = i.CreateView<Int32>(MemoryMapType.Retain);
+            Assert.Equal(3, v[2]);
+            Invoker<int> inv1 = new Invoker<int>(testContext, f, o, i);
+            Assert.True(inv1.IsAllocated);
+            Invocation<int> k = inv1.Invoke();
+            Assert.True(k.IsAllocated);
+            DeviceTensorView<Int32> R = o.CreateView<Int32>(MemoryMapType.Retain);
+            Assert.Equal(6, R.ElementCount);
+            Assert.Equal(9, R[2]);
+
+            var gradients = new Dictionary<DeviceTensor, Value>();
+            for (int n = 0; n < inv1.InputTensors.Count; n++)
+            {
+                Gradient gc = new Gradient(testContext, inv1.OutputValue);
+                if (!gc.IsAllocated) continue;
+                Value grad = gc.ComputeWrt(inv1.InputTensors[n]);
+                if (!grad.IsAllocated) continue;
+                gradients.Add(inv1.InputTensors[n], grad);
+            }
+
+            Composer c = new Composer(testContext);
+         
+
+            foreach (DeviceTensor t in inv1.InputTensors)
+            {
+                Assert.True(c.AddInputPlaceholder(t.Name, t.DimensionCount));
+            }
+            List<DeviceTensor> gradTensors = new List<DeviceTensor>();
+            foreach(var g in gradients)
+            {
+                var gt = new DeviceTensor(g.Key.Device, g.Key.Shape, g.Value.Name);
+                c.AddOutputValue(gt);
+                c.AddUpdate(gt, g.Value);
+                gradTensors.Add(gt);
+            }
+            Function gf = c.BuildFunction();
+            Assert.True(gf.IsAllocated);
+            Invoker<int> ginv = new Invoker<int>(testContext, gf, inv1.InputTensors.ToArray(), gradTensors.ToArray());
+            Assert.True(ginv.IsAllocated);
+            var k2 = ginv.Invoke();
+            Assert.True(k2.IsAllocated);
+
+            DeviceTensorView<Int32> RG = gradTensors.First().CreateView<Int32>(MemoryMapType.Retain);
         }
     }
 }
