@@ -12,7 +12,7 @@ STATUS: **EARLY DRAFT**
 
 The deep learning literature suggests to initialize the model parameters randomly within the network following a Gaussian $\mathcal{N}(0, 1)$. However, when this heuristic is used alone, it proves insufficient as ubiquitous operations such as matrix multiplications inflate the variance of the inputs if the matrix parameters are drawn from $\mathcal{N}(0, 1)$. When those operations are chained through a _deep_ network, numerical instabilities ensue, and the SGD stops working.
 
-Deep learning toolkits are typically [^1] [^2] [^5] introducing a set of handcrafted parameter initializers to deal the problem. The initializers are manually adjusted to fit specific "layers". Every layer needs its own initializer to avoid undesirable numerical behaviors. This approach is tedious and goes somewhat against the design principle of differential programming of having the SGD fully automated.
+Following a insight detailed in [^5], deep learning toolkits are typically [^1] [^2] [^6] introducing a set of handcrafted parameter initializers to deal the problem. The initializers are manually adjusted to fit specific "layers". Every layer needs its own initializer to avoid undesirable numerical behaviors. This approach is tedious and goes somewhat against the design principle of differential programming of having the SGD fully automated.
 
 ## Preserving unit Gaussians
 
@@ -83,8 +83,10 @@ The automatic shaping works as follow:
 
 [^2]: PyTorch source code, initialization logic https://pytorch.org/docs/master/_modules/torch/nn/init.html
 
-[^3]: https://ccrma.stanford.edu/~jos/sasp/Product_Two_Gaussian_PDFs.html
+[^3]: Product of Two Gaussian PDFs https://ccrma.stanford.edu/~jos/sasp/Product_Two_Gaussian_PDFs.html
 
-[^4]: https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables
+[^4]: Sum of normally distributed random variables, Wikipedia, https://en.wikipedia.org/wiki/Sum_of_normally_distributed_random_variables
 
 [^5]: _Understanding the difficulty of training deep feedforward neural networks_, 2010, Xavier Glorot, Yoshua Bengio http://proceedings.mlr.press/v9/glorot10a/glorot10a.pdf
+
+[^6]: Linear layer in the Torch package with manual weight initialization https://github.com/torch/nn/blob/master/Linear.lua
