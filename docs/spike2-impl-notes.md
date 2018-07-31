@@ -11,8 +11,6 @@ use from any C# code .
 * Use native tensor kernel compilers like PlaidML via plugins for high performance tensor computations.
 
 
-
-
 ## Solution structure
 * [Adrien.Base](https://github.com/Lokad/Adrien/tree/master/src/spikes/2/Adrien.Base): Contains base interfaces and 
 abstract classes for the Adrien core classes and backend plugins.

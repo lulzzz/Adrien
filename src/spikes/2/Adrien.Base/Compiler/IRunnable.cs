@@ -8,7 +8,7 @@ namespace Adrien.Compiler
     {
         RunStatus Run(IVariable<T> output, params IVariable<T>[] input);
 
-        RunStatus Run(IVariable<T> output, IVariable<T> gradient, params IVariable<T>[] input);
+        RunStatus Run(IVariable<T> output, out IVariable<T> gradient, params IVariable<T>[] input);
 
         string RunStatusMessage { get; }
     }

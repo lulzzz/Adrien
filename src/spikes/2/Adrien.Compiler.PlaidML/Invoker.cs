@@ -134,8 +134,9 @@ namespace Adrien.Compiler.PlaidML
             
         }
 
-        public RunStatus Run(IVariable<T> output, IVariable<T> gradient, params IVariable<T>[] input)
+        public RunStatus Run(IVariable<T> output, out IVariable<T> gradient, params IVariable<T>[] input)
         {
+            gradient = null;
             RunStatus s = Run(output, input);
             if (s != RunStatus.Success)
             {
