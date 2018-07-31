@@ -95,9 +95,7 @@ namespace Adrien.Tests
         [Fact]
         public void CanAssignTensorExpression()
         {
-            var A = Tensor.TwoD("A", (4,3), "a", out Index a, out Index b);
-            var B = Tensor.TwoD("B", (6,7));
-            var C = Tensor.TwoD("C", (8,9));
+            var (A, B, C) = Tensor.TwoD("A", (4,3), "a", out Index a, out Index b).Three();
             C[a,b] = B[a,b] * C[b,a];
             Assert.True(C.IsAssigned);
         }

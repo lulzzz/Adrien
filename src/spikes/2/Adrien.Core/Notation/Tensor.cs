@@ -224,7 +224,7 @@ namespace Adrien.Notation
             return string.Join("", names);
         }
 
-        public void GetIndicesForAxes(params int[] axes)
+        public IndexSet Axes(params int[] axes)
         {
             if (axes.Length == 0)
             {
@@ -245,10 +245,10 @@ namespace Adrien.Notation
                 }
             }
             axes = axes.OrderBy(a => a).ToArray();
-            
-            Index[] indices = this.Dimensions.Select((o, d) => new Index(null, o, d, "x" + o.ToString())).ToArray();
+            string nb = this.Label.ToLower();
+            Index[] indices = this.Dimensions.Select((o, d) => new Index(null, o, d, nb + o.ToString())).ToArray();
             IndexSet S = new IndexSet(this, indices);
-
+            return S;
         }
         #region IEnumerable<int> implementation
         public IEnumerator<int> GetEnumerator()

@@ -25,6 +25,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PythonLibs", "PythonLibs", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{036CDE5E-773E-4A6B-A5E4-EA772FDD21A3}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\..\docs\ad-for-tc.md = ..\..\..\docs\ad-for-tc.md
+		build.cmd = build.cmd
+		BUILD.md = BUILD.md
+		..\..\..\docs\front-end-cshap-api-proposal-1.md = ..\..\..\docs\front-end-cshap-api-proposal-1.md
+		..\..\..\docs\init-for-tc.md = ..\..\..\docs\init-for-tc.md
 		..\..\..\docs\spike2-impl-notes.md = ..\..\..\docs\spike2-impl-notes.md
 	EndProjectSection
 EndProject
