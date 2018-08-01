@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
@@ -10,23 +7,19 @@ namespace Adrien.Compiler.PlaidML
         where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         public Invoker<T> Invoker { get; protected set; }
-       
+
         public Invocation(Context ctx, Invoker<T> invoker) : base(ctx)
         {
             ptr = plaidml.__Internal.PlaidmlScheduleInvocation(_Context, invoker);
-            if(ptr.IsZero())
+            if (ptr.IsZero())
             {
                 ReportApiCallError("plaidml_schedule_invocation");
                 return;
             }
-            else
-            {
-                Invoker = invoker;
-                IsAllocated = true;
 
-            }
+            Invoker = invoker;
+            IsAllocated = true;
         }
-        
 
         public override void Free()
         {

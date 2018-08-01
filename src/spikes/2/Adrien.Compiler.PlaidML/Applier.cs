@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
@@ -21,6 +19,7 @@ namespace Adrien.Compiler.PlaidML
             ptr = plaidml.__Internal.PlaidmlAllocApplier(f);
             if (ptr.IsZero())
             {
+                // TODO: [vermorel] Probably throws an exception but unclear. I suggest to rename 'ThrowApiCallError`.
                 ReportApiCallError("plaidml_alloc_applier");
             }
             else
@@ -35,15 +34,13 @@ namespace Adrien.Compiler.PlaidML
         public bool AddInputValue(string name, IntPtr varPtr)
         {
             ThrowIfNotAllocated();
-            Value i = new Value(this._Context, name, varPtr);
+            var i = new Value(_Context, name, varPtr);
             if (i.IsAllocated)
             {
                 return AddInputValue(name, i);
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         public bool AddInputValue(Value i)
@@ -53,29 +50,29 @@ namespace Adrien.Compiler.PlaidML
             {
                 throw new ArgumentException("The input Value is not allocated.");
             }
-            bool r = plaidml.__Internal.PlaidmlApplyAddInput(this, i.Name, i);
+
+            var r = plaidml.__Internal.PlaidmlApplyAddInput(this, i.Name, i);
             if (r)
             {
                 Inputs.Add(i);
             }
+
             return r;
         }
 
         public Value AddOutputValue(string name)
         {
             ThrowIfNotAllocated();
-            IntPtr p = plaidml.__Internal.PlaidmlApplyAllocOutput(this, name);
+            var p = plaidml.__Internal.PlaidmlApplyAllocOutput(this, name);
             if (p.IsZero())
             {
                 ReportApiCallError("plaidml_apply_alloc_output");
-                return null;
+                return null; // TODO: [vermorel] Throw an exception instead, don't use 'null' to report faults.
             }
-            else
-            {
-                Value o = new Value(this._Context, name, p);
-                Outputs.Add(o);
-                return o;
-            }
+
+            var o = new Value(_Context, name, p);
+            Outputs.Add(o);
+            return o;
         }
 
         public bool AddDependency(Applier dep)
@@ -85,11 +82,13 @@ namespace Adrien.Compiler.PlaidML
             {
                 throw new ArgumentException("The dependency applier is not allocated.");
             }
-            bool r = plaidml.__Internal.PlaidmlApplyAddDependency(this, dep);
+
+            var r = plaidml.__Internal.PlaidmlApplyAddDependency(this, dep);
             if (r)
             {
                 Dependencies.Add(dep);
             }
+
             return r;
         }
 
