@@ -16,7 +16,7 @@ namespace Adrien.Notation
     {
         public int[] Dimensions { get; protected set; }
 
-        public int[] Stride { get; protected set; }
+        public int[] Strides { get; protected set; }
 
         public int Rank => Dimensions.Length;
 
@@ -61,7 +61,7 @@ namespace Adrien.Notation
                 throw new ArgumentException("The number of dimensions must be at least 1.");
             }
             Dimensions = dim;
-            Stride = GenericMath<int>.StrideInElements(Dimensions);
+            Strides = GenericMath<int>.StridesInElements(Dimensions);
         }
 
         public Tensor(params int[] dim) : this("A", dim)

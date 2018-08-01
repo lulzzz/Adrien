@@ -21,7 +21,7 @@ namespace Adrien
 
         public int[] Dimensions => Tensor.Dimensions;
 
-        public int[] Stride => Tensor.Stride;
+        public int[] Stride => Tensor.Strides;
 
         public int Rank => Tensor.Rank;
 

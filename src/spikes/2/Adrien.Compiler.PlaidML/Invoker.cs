@@ -259,7 +259,7 @@ namespace Adrien.Compiler.PlaidML
                     throw new ArgumentException($"The rank of kernel input tensor {iv.Name} does not match the " +
                         $"rank of the input data variable {id.Name}.");
                 }
-                else if (!iv.Stride.SequenceEqual(id.Stride))
+                else if (!iv.Strides.SequenceEqual(id.Stride))
                 {
                     throw new ArgumentException($"The stride of kernel input tensor {iv.Name} does not match the " +
                         $"stride of the input data variable {id.Name}.");

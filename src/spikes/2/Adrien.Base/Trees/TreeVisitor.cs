@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Adrien.Trees
+﻿namespace Adrien.Trees
 {
-    public abstract class TreeVisitor<TOp, TInternalContext, TLeafContext> : ITreeVisitor<TOp> where TInternalContext : class where TLeafContext : class
+    public abstract class TreeVisitor<TOp, TInternalContext, TLeafContext> : ITreeVisitor<TOp>
+        where TInternalContext : class where TLeafContext : class
     {
         public IExpressionTree Tree { get; set; }
 
         public TreeVisitorContext<TOp, TInternalContext, TLeafContext> Context { get; protected set; }
 
-        public TreeVisitor(IExpressionTree tree, bool visit = true) : base()
+        public TreeVisitor(IExpressionTree tree, bool visit = true)
         {
             Tree = tree;
             if (visit)
@@ -19,7 +16,6 @@ namespace Adrien.Trees
             }
         }
 
-        
         public void Visit(ITreeNode tn)
         {
             if (tn is ITreeOperatorNode<TOp>)
@@ -30,7 +26,6 @@ namespace Adrien.Trees
             {
                 VisitLeaf(tn as ITreeValueNode);
             }
-           
         }
 
         public void VisitTree()
@@ -40,20 +35,20 @@ namespace Adrien.Trees
         }
 
         public abstract void VisitLeaf(ITreeValueNode node);
-        
+
         public virtual void VisitInternal(ITreeOperatorNode<TOp> on)
         {
             if (on.Left != null)
             {
                 Visit(on.Left);
             }
+
             if (on.Right != null)
             {
                 Visit(on.Right);
-            }            
+            }
         }
 
         public abstract void AfterVisitTree();
-        
     }
 }

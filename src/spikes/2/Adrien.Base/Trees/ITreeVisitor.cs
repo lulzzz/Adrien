@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Adrien.Trees
+﻿namespace Adrien.Trees
 {
     public interface ITreeVisitor<TOp>
     {

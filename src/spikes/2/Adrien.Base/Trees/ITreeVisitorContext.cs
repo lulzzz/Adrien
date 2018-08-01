@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Adrien.Trees
 {
     public interface ITreeVisitorContext<TOp, TInternal, TLeaf> : IDisposable
-    { 
+    {
         IExpressionTree Tree { get; }
 
         TInternal InternalNode { get; }
@@ -21,6 +19,5 @@ namespace Adrien.Trees
         ITreeVisitorContext<TOp, TInternal, TLeaf> Internal(TInternal node);
 
         ITreeVisitorContext<TOp, TInternal, TLeaf> Leaf(TLeaf node);
-
     }
 }

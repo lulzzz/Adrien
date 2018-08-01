@@ -10,13 +10,15 @@ namespace Adrien
         public static Random Rng { get; } = new Random();
 
 
-        static GenericMath() {}
+        static GenericMath()
+        {
+        }
 
 
         public static TData Const<TValue>(TValue v) where TValue : unmanaged, IEquatable<TValue>, IComparable<TValue>,
             IConvertible
         {
-            return (TData)Convert.ChangeType(v, typeof(TData));
+            return (TData) Convert.ChangeType(v, typeof(TData));
         }
 
         public static TData Multiply(TData l, TData r)
@@ -25,34 +27,34 @@ namespace Adrien
             switch (value)
             {
                 case Tuple<Byte, Byte> v:
-                    return (TData)Convert.ChangeType(checked((byte)(v.Item1 * v.Item2)), typeof(TData));
+                    return (TData) Convert.ChangeType(checked((byte) (v.Item1 * v.Item2)), typeof(TData));
 
                 case Tuple<SByte, SByte> v:
-                    return (TData)Convert.ChangeType(checked((SByte)(v.Item1 * v.Item2)), typeof(TData));
+                    return (TData) Convert.ChangeType(checked((SByte) (v.Item1 * v.Item2)), typeof(TData));
 
                 case Tuple<UInt16, UInt16> v:
-                    return (TData)Convert.ChangeType((checked((UInt16)(v.Item1 * v.Item2))), typeof(TData));
+                    return (TData) Convert.ChangeType((checked((UInt16) (v.Item1 * v.Item2))), typeof(TData));
 
                 case Tuple<Int16, Int16> v:
-                    return (TData)Convert.ChangeType(checked((Int16)(v.Item1 * v.Item2)), typeof(TData));
+                    return (TData) Convert.ChangeType(checked((Int16) (v.Item1 * v.Item2)), typeof(TData));
 
                 case Tuple<UInt32, UInt32> v:
-                    return (TData)Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
+                    return (TData) Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
 
                 case Tuple<Int32, Int32> v:
-                    return (TData)Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
+                    return (TData) Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
 
                 case Tuple<UInt64, UInt64> v:
-                    return (TData)Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
+                    return (TData) Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
 
                 case Tuple<Int64, Int64> v:
-                    return (TData)Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
+                    return (TData) Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
 
                 case Tuple<Single, Single> v:
-                    return (TData)Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
+                    return (TData) Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
 
                 case Tuple<Double, Double> v:
-                    return (TData)Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
+                    return (TData) Convert.ChangeType(checked(v.Item1 * v.Item2), typeof(TData));
 
                 case Tuple<bool, bool> v:
                     throw new ArgumentException($"Cannot multiply 2 bools.");
@@ -131,25 +133,25 @@ namespace Adrien
             switch (e)
             {
                 case SByte v:
-                    return Const(checked((sbyte)Rng.Next(0, SByte.MaxValue)));
+                    return Const(checked((sbyte) Rng.Next(0, SByte.MaxValue)));
                 case Byte v:
-                    return Const(checked((byte)Rng.Next(0, Byte.MaxValue)));
+                    return Const(checked((byte) Rng.Next(0, Byte.MaxValue)));
                 case Int32 v:
-                    return Const(checked((int)Rng.Next(0, Int32.MaxValue)));
+                    return Const(checked((int) Rng.Next(0, Int32.MaxValue)));
                 case UInt32 v:
-                    return Const(checked((uint)Rng.Next(0, Int32.MaxValue)));
+                    return Const(checked((uint) Rng.Next(0, Int32.MaxValue)));
                 case Int16 v:
-                    return Const(checked((short)Rng.Next(0, Int16.MaxValue)));
+                    return Const(checked((short) Rng.Next(0, Int16.MaxValue)));
                 case UInt16 v:
-                    return Const(checked((ushort)Rng.Next(0, UInt16.MaxValue)));
-                case Int64 v:
-                    return Const(checked((long)(Rng.NextDouble() * Int64.MaxValue)));
-                case UInt64 v:
-                    return Const(checked((ulong)(Rng.NextDouble() * UInt64.MaxValue)));
-                case Single v:
-                    return Const(checked(((Single)(Rng.NextDouble() * Int64.MaxValue))));
-                case Double v:
-                    return Const(checked((((double)Rng.NextDouble() * Int64.MaxValue))));
+                    return Const(checked((ushort) Rng.Next(0, UInt16.MaxValue)));
+                case Int64 v: // TODO: [vermorel] Not the proper way of generating a 64bits random int.
+                    return Const(checked((long) (Rng.NextDouble() * Int64.MaxValue)));
+                case UInt64 v: // TODO: [vermorel] Not the proper way of generating a 64bits random int.
+                    return Const(checked((ulong) (Rng.NextDouble() * UInt64.MaxValue)));
+                case Single v: // TODO: [vermorel] Semantic would have to be clarified.
+                    return Const(checked(((Single) (Rng.NextDouble() * Int64.MaxValue))));
+                case Double v: // TODO: [vermorel] Semantic would have to be clarified.
+                    return Const(checked((((double) Rng.NextDouble() * Int64.MaxValue))));
                 case Boolean v:
                     return Const(Convert.ToBoolean(Rng.Next(0, 1)));
 
@@ -160,7 +162,7 @@ namespace Adrien
 
         public static TData Random(double max)
         {
-            return Const(checked((double)Rng.NextDouble() * max));
+            return Const(checked((double) Rng.NextDouble() * max));
         }
 
         public static (TData, TData) RandomMultiplyFactorAndValue()
@@ -171,44 +173,45 @@ namespace Adrien
             switch (e)
             {
                 case SByte v:
-                    max = Random((sbyte)(sbyte.MaxValue / 4));
+                    max = Random((sbyte) (sbyte.MaxValue / 4));
                     break;
                 case Byte v:
-                    max = Random((byte)(byte.MaxValue / (byte)4));
+                    max = Random((byte) (byte.MaxValue / (byte) 4));
                     break;
                 case Int16 v:
-                    max = Random((short)(short.MaxValue / (short)4));
+                    max = Random((short) (short.MaxValue / (short) 4));
                     break;
                 case UInt16 v:
-                    max = Random((ushort)(ushort.MaxValue / (ushort)4));
+                    max = Random((ushort) (ushort.MaxValue / (ushort) 4));
                     break;
                 case Int32 v:
-                    max = Random((int)(int.MaxValue / 4));
+                    max = Random((int) (int.MaxValue / 4));
                     break;
                 case UInt32 v:
                     max = Random(uint.MaxValue / 4u);
                     break;
                 case Int64 v:
-                    max = Random((long)(long.MaxValue / 4));
+                    max = Random((long) (long.MaxValue / 4));
                     break;
                 case UInt64 v:
                     max = Random(ulong.MaxValue / 4u);
                     break;
                 case Double v:
-                    max = Random((double)(long.MaxValue / 4));
+                    max = Random((double) (long.MaxValue / 4));
                     break;
                 case Single v:
-                    max = Random((Single)(long.MaxValue / 4));
+                    max = Random((Single) (long.MaxValue / 4));
                     break;
                 default:
                     throw new ArgumentException($"Cannot multiply type {nameof(TData)}.");
             }
+
             return (Const(factor), Const(max));
         }
 
-        public static int[] StrideInElements(int[] dim)
+        public static int[] StridesInElements(int[] dim)
         {
-            int[] stride = new int[dim.Length];
+            var strides = new int[dim.Length];
             float s = 1;
             for (int i = 0; i < dim.Length; i++)
             {
@@ -217,25 +220,28 @@ namespace Adrien
                     s *= Convert.ToSingle(dim[i]);
                 }
             }
+
             for (int i = 0; i < dim.Length; i++)
             {
                 if (dim[i] > 0)
                 {
                     s /= Convert.ToSingle(dim[i]);
-                    stride[i] = Convert.ToInt32(s);
+                    strides[i] = Convert.ToInt32(s);
                 }
             }
-            return stride;
+
+            return strides;
         }
 
-        public static int[] StrideInBytes<T>(int[] dim)
+        public static int[] StridesInBytes<T>(int[] dim)
         {
-            int[] stride = StrideInElements(dim);
-            for (int i = 0; i < stride.Length; i++)
+            var strides = StridesInElements(dim);
+            for (int i = 0; i < strides.Length; i++)
             {
-                stride[i] *= Unsafe.SizeOf<T>();
+                strides[i] *= Unsafe.SizeOf<T>();
             }
-            return stride;
+
+            return strides;
         }
     }
 }

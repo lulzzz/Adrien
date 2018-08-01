@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Buffers;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Adrien.Compiler
 {

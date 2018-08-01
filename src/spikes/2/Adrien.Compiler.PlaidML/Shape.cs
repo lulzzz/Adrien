@@ -80,7 +80,7 @@ namespace Adrien.Compiler.PlaidML
             else
             {
                 IsAllocated = true;
-                int[] stride = GenericMath<int>.StrideInElements(dimensions);
+                int[] stride = GenericMath<int>.StridesInElements(dimensions);
                 for (int i = 0; i < dimensions.Length; i++)
                 {
                     this.AddDimension((ulong)dimensions[i], stride[i]);

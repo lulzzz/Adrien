@@ -30,7 +30,7 @@ namespace Adrien.Tests
             Assert.Equal("A", k[A].Label);
             Assert.Throws<ArgumentException>(() => k[D]);
             Assert.Equal(3, k[A].Rank);
-            Assert.Equal(4, k[B].Stride[0]);
+            Assert.Equal(4, k[B].Strides[0]);
         }
 
         [Fact]

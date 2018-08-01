@@ -22,7 +22,7 @@ namespace Adrien.Compiler.PlaidML
 
         public int[] Dimensions => Shape.Dimensions.Select(d => Convert.ToInt32(d.length)).ToArray();
 
-        public int[] Stride => Shape.Dimensions.Select(d => Convert.ToInt32(d.stride)).ToArray();
+        public int[] Strides => Shape.Dimensions.Select(d => Convert.ToInt32(d.stride)).ToArray();
 
         public string Label => Name;
 

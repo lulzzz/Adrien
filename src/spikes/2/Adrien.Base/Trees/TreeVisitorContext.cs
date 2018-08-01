@@ -1,28 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-
-using System.Linq;
 
 namespace Adrien.Trees
 {
-    public abstract class TreeVisitorContext<TOp, TInternal, TLeaf> : Stack<object>, ITreeVisitorContext<TOp, TInternal, TLeaf>
+    public abstract class TreeVisitorContext<TOp, TInternal, TLeaf> : Stack<object>,
+        ITreeVisitorContext<TOp, TInternal, TLeaf>
     {
         public IExpressionTree Tree { get; protected set; }
 
-        public bool IsInternal => this.Count > 0 && this.Peek() is TInternal;
+        public bool IsInternal => Count > 0 && Peek() is TInternal;
 
-        public bool IsLeaf => this.Count > 0 && this.Peek() is TLeaf;
+        public bool IsLeaf => Count > 0 && Peek() is TLeaf;
 
-        public TInternal InternalNode => this.Peek() is TInternal ? (TInternal) this.Peek() : throw new Exception("The last context node is not a internal node.");
+        public TInternal InternalNode => Peek() is TInternal
+            ? (TInternal) Peek()
+            : throw new Exception("The last context node is not a internal node.");
 
-        public TLeaf LeafNode => this.Peek() is TInternal ? (TLeaf) this.Peek() : throw new Exception("The last context node is not a leaf node.");
+        public TLeaf LeafNode => Peek() is TInternal
+            ? (TLeaf) Peek()
+            : throw new Exception("The last context node is not a leaf node.");
 
-        public TreeVisitorContext(IExpressionTree tree) : base()
+        public TreeVisitorContext(IExpressionTree tree)
         {
-            this.Tree = tree;
+            Tree = tree;
         }
-
 
         public new void Push(object node)
         {
@@ -37,40 +38,38 @@ namespace Adrien.Trees
 
         public TInternal PopInternal()
         {
-            if (this.IsInternal)
+            if (IsInternal)
             {
-                return (TInternal) base.Pop();
+                return (TInternal) Pop();
             }
             else return InternalNode;
         }
 
         public TLeaf PopLeaf()
         {
-            if (this.IsLeaf)
+            if (IsLeaf)
             {
-                return (TLeaf) base.Pop();
+                return (TLeaf) Pop();
             }
-            else return LeafNode;
+
+            return LeafNode;
         }
 
-     
         public ITreeVisitorContext<TOp, TInternal, TLeaf> Internal(TInternal ctx)
         {
-            this.Push(ctx);
-            return this;
-        }
-        
-        public ITreeVisitorContext<TOp, TInternal, TLeaf> Leaf (TLeaf ctx)
-        {
-            this.Push(ctx);
+            Push(ctx);
             return this;
         }
 
-        
+        public ITreeVisitorContext<TOp, TInternal, TLeaf> Leaf(TLeaf ctx)
+        {
+            Push(ctx);
+            return this;
+        }
+
         public void Dispose()
         {
-            this.Pop();
+            Pop();
         }
-
     }
 }
