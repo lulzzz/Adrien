@@ -11,7 +11,7 @@ namespace Adrien.Compiler
 
         int[] Dimensions { get; }
 
-        int[] Stride { get; }
+        int[] Strides { get; }
 
         int Rank { get; }
 

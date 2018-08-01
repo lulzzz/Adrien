@@ -1,4 +1,5 @@
 ﻿#region License and Attribution
+
 /**
  * Contains code from Microsoft Automatic Graph Layout : https://github.com/Microsoft/automatic-graph-layout/
  * Microsoft Automatic Graph Layout,MSAGL 
@@ -28,6 +29,7 @@
 * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 **/
+
 #endregion
 
 using System;
@@ -36,13 +38,13 @@ using System.Drawing.Drawing2D;
 using Microsoft.Msagl.Core.Geometry.Curves;
 using Microsoft.Msagl.Core.Layout;
 using Point = Microsoft.Msagl.Core.Geometry.Point;
-using Rectangle = Microsoft.Msagl.Core.Geometry.Rectangle;
 
 namespace Adrien.Diagrams
 {
     public class GraphDiagramUtil
     {
-        public static void DrawFromGraph(System.Drawing.Rectangle clientRectangle, GeometryGraph geometryGraph, Graphics graphics)
+        public static void DrawFromGraph(System.Drawing.Rectangle clientRectangle, GeometryGraph geometryGraph,
+            Graphics graphics)
         {
             SetGraphTransform(geometryGraph, clientRectangle, graphics);
             var pen = new Pen(Brushes.Black);
@@ -50,7 +52,8 @@ namespace Adrien.Diagrams
             DrawEdges(geometryGraph, pen, graphics);
         }
 
-        public static void SetGraphTransform(GeometryGraph geometryGraph, System.Drawing.Rectangle rectangle, Graphics graphics)
+        public static void SetGraphTransform(GeometryGraph geometryGraph, System.Drawing.Rectangle rectangle,
+            Graphics graphics)
         {
             RectangleF clientRectangle = rectangle;
             var gr = geometryGraph.BoundingBox;
@@ -70,7 +73,7 @@ namespace Adrien.Diagrams
                 var planeTransformation=new PlaneTransformation(scale,0,dx, 0, scale, dy); 
                 geometryGraph.Transform(planeTransformation);
                 */
-                graphics.Transform = new Matrix((float)scale, 0, 0, (float)scale, (float)dx, (float)dy);
+                graphics.Transform = new Matrix((float) scale, 0, 0, (float) scale, (float) dx, (float) dy);
             }
         }
 
@@ -102,7 +105,8 @@ namespace Adrien.Diagrams
                 {
                     CubicBezierSegment cubic = seg as CubicBezierSegment;
                     if (cubic != null)
-                        graphicsPath.AddBezier(PointF(cubic.B(0)), PointF(cubic.B(1)), PointF(cubic.B(2)), PointF(cubic.B(3)));
+                        graphicsPath.AddBezier(PointF(cubic.B(0)), PointF(cubic.B(1)), PointF(cubic.B(2)),
+                            PointF(cubic.B(3)));
                     else
                     {
                         LineSegment ls = seg as LineSegment;
@@ -114,8 +118,9 @@ namespace Adrien.Diagrams
                             Ellipse el = seg as Ellipse;
                             if (el != null)
                             {
-                                graphicsPath.AddArc((float)(el.Center.X - el.AxisA.X), (float)(el.Center.Y - el.AxisB.Y), (float)(el.AxisA.X * 2), Math.Abs((float)el.AxisB.Y * 2), EllipseStartAngle(el), EllipseSweepAngle(el));
-
+                                graphicsPath.AddArc((float) (el.Center.X - el.AxisA.X),
+                                    (float) (el.Center.Y - el.AxisB.Y), (float) (el.AxisA.X * 2),
+                                    Math.Abs((float) el.AxisB.Y * 2), EllipseStartAngle(el), EllipseSweepAngle(el));
                             }
                         }
                     }
@@ -133,7 +138,7 @@ namespace Adrien.Diagrams
 
         static PointF PointF(Point point)
         {
-            return new PointF((float)point.X, (float)point.Y);
+            return new PointF((float) point.X, (float) point.Y);
         }
 
         static void DrawArrow(Pen pen, Graphics graphics, Point start, Point end)
@@ -146,9 +151,12 @@ namespace Adrien.Diagrams
 
             Point s = new Point(-dir.Y, dir.X);
 
-            s *= h.Length * ((float)Math.Tan(arrowAngle * 0.5f * (Math.PI / 180.0)));
+            s *= h.Length * ((float) Math.Tan(arrowAngle * 0.5f * (Math.PI / 180.0)));
 
-            var points = new PointF[] { MsaglPointToDrawingPoint(start + s), MsaglPointToDrawingPoint(end), MsaglPointToDrawingPoint(start - s) };
+            var points = new PointF[]
+            {
+                MsaglPointToDrawingPoint(start + s), MsaglPointToDrawingPoint(end), MsaglPointToDrawingPoint(start - s)
+            };
 
             graphics.FillPolygon(pen.Brush, points);
         }
@@ -161,12 +169,12 @@ namespace Adrien.Diagrams
 
         public static float EllipseSweepAngle(Ellipse el)
         {
-            return (float)((el.ParEnd - el.ParStart) / Math.PI * 180);
+            return (float) ((el.ParEnd - el.ParStart) / Math.PI * 180);
         }
 
         public static float EllipseStartAngle(Ellipse el)
         {
-            return (float)(el.ParStart / Math.PI * 180);
+            return (float) (el.ParStart / Math.PI * 180);
         }
 
         public static void DrawNode(Node n, Pen pen, Graphics graphics)
@@ -175,8 +183,8 @@ namespace Adrien.Diagrams
             Ellipse el = curve as Ellipse;
             if (el != null)
             {
-                graphics.DrawEllipse(pen, new RectangleF((float)el.BoundingBox.Left, (float)el.BoundingBox.Bottom,
-                    (float)el.BoundingBox.Width, (float)el.BoundingBox.Height));
+                graphics.DrawEllipse(pen, new RectangleF((float) el.BoundingBox.Left, (float) el.BoundingBox.Bottom,
+                    (float) el.BoundingBox.Width, (float) el.BoundingBox.Height));
             }
             else
                 graphics.DrawPath(pen, CreateGraphicsPath(curve));
@@ -184,7 +192,7 @@ namespace Adrien.Diagrams
 
         public static System.Drawing.Point MsaglPointToDrawingPoint(Point point)
         {
-            return new System.Drawing.Point((int)point.X, (int)point.Y);
+            return new System.Drawing.Point((int) point.X, (int) point.Y);
         }
 
         public static Node AddNode(string id, GeometryGraph graph, double w, double h)

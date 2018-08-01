@@ -8,7 +8,6 @@
 <#@ import namespace="Adrien.Notation" #>
 <#@ output extension=".cs" #>
 using System;
-using System.Linq.Expressions;
 
 namespace Adrien.Compiler
 {

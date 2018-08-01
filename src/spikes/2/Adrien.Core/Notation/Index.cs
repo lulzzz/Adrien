@@ -1,14 +1,11 @@
 ﻿using System;
-
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 
 namespace Adrien.Notation
 {
-    #pragma warning disable CS0660
+#pragma warning disable CS0660
 
     public class Index : Term, IChild, IAlgebra<Index, TensorIndexExpression>, IComparable<Index>
     {
@@ -28,12 +25,11 @@ namespace Adrien.Notation
 
         public TensorIndexExpression IndexExpression { get; protected set; }
 
-        internal override Expression LinqExpression => Type == IndexType.Constant ? Expression.Constant(this) :
-            IndexExpression.LinqExpression;
-       
+        internal override Expression LinqExpression =>
+            Type == IndexType.Constant ? Expression.Constant(this) : IndexExpression.LinqExpression;
+
         internal override Name DefaultNameBase { get; } = "i";
 
-        
         public Index(IndexSet set, int order, int dim, string name) : base(name)
         {
             Set = set;
@@ -43,7 +39,7 @@ namespace Adrien.Notation
         }
 
         public Index(TensorIndexExpression expr)
-        { 
+        {
             Type = IndexType.Expression;
             Name = GetNameFromLinqExpression(expr.LinqExpression);
             IndexExpression = expr;
@@ -51,26 +47,26 @@ namespace Adrien.Notation
 
         public Index(int i)
         {
-            Name = "index_expr_int_" + i.ToString();
+            Name = "index_expr_int_" + i;
             Type = IndexType.Expression;
             IndexExpression = new TensorIndexExpression(Expression.Constant(i));
         }
-        
 
-        public static implicit operator Index(Int32 i) => new Index(i);
 
-        public static TensorIndexExpression operator - (Index left) => left.Negate();
-        
-        public static TensorIndexExpression operator + (Index left, Index right)
+        public static implicit operator Index(int i) => new Index(i);
+
+        public static TensorIndexExpression operator -(Index left) => left.Negate();
+
+        public static TensorIndexExpression operator +(Index left, Index right)
             => left.Add(right);
 
-        public static TensorIndexExpression operator - (Index left, Index right)
+        public static TensorIndexExpression operator -(Index left, Index right)
             => left.Subtract(right);
 
-        public static TensorIndexExpression operator * (Index left, Index right)
+        public static TensorIndexExpression operator *(Index left, Index right)
             => left.Multiply(right);
 
-        public static TensorIndexExpression operator / (Index left, Index right)
+        public static TensorIndexExpression operator /(Index left, Index right)
             => left.Divide(right);
 
         public TensorIndexExpression Negate() => new TensorIndexExpression(Expression.Negate(this));
@@ -87,7 +83,7 @@ namespace Adrien.Notation
         public TensorIndexExpression Divide(Index right)
             => new TensorIndexExpression(Expression.Divide(this, right, GetDummyBinaryMethodInfo(this, right)));
 
-     
+
         public Type GetIndexType()
         {
             if (Type == IndexType.Constant)
@@ -99,12 +95,11 @@ namespace Adrien.Notation
                 return (IndexExpression.LinqExpression as ConstantExpression).Type;
             }
             else return typeof(TensorIndexExpression);
-            
         }
 
         public int CompareTo(Index i)
         {
-            return this.Order.CompareTo(i.Order);
+            return Order.CompareTo(i.Order);
         }
 
         private static Index DummyBinary(Index l, Index r) => null;
@@ -120,18 +115,15 @@ namespace Adrien.Notation
 
         private static MethodInfo GetDummyBinaryMethodInfo(Index l, Index r)
         {
-            Type lt = l.GetIndexType();
-            Type rt = r.GetIndexType();
-            
+            var lt = l.GetIndexType();
+            var rt = r.GetIndexType();
 
-            MethodInfo method = typeof(Index).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
+            var method = typeof(Index).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
                 .Where(m => m.Name == "DummyBinary" && m.GetParameters()[0].ParameterType == lt
-                && m.GetParameters()[1].ParameterType == rt).First();
+                                                    && m.GetParameters()[1].ParameterType == rt).First();
             return method;
         }
-
     }
 
-    #pragma warning restore CS0660
-
+#pragma warning restore CS0660
 }

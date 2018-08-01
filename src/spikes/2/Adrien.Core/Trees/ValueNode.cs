@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Adrien.Notation;
 using Sawmill;
 
 namespace Adrien.Trees
 {
-    public class ValueNode: TreeNode, ITreeValueNode
+    public class ValueNode : TreeNode, ITreeValueNode
     {
         public ValueNodeType NodeType { get; internal set; }
 
@@ -17,16 +14,15 @@ namespace Adrien.Trees
         {
             get
             {
-                switch (this.Value)
+                switch (Value)
                 {
                     case Term t: return t.Name;
                     case null: return "[]";
-                    default: throw new Exception($"Unknown value: {Value}.");
+                    default: throw new NotSupportedException($"Unknown value: {Value}.");
                 }
             }
         }
 
-        
         internal ValueNode(int id, int? parentId, TreeNodePosition pos, object value) : base(id, parentId, pos)
         {
             switch (value)
@@ -43,8 +39,9 @@ namespace Adrien.Trees
                     break;
 
                 default:
-                    throw new Exception($"Unknown value type: {value.GetType().Name}.");
+                    throw new NotSupportedException($"Unknown value type: {value.GetType().Name}.");
             }
+
             Value = value;
         }
 
@@ -55,9 +52,8 @@ namespace Adrien.Trees
 
         public T ValueAs<T>() where T : class
         {
+            // TODO: [vermorel] Do not throw 'Exception', use a subtype.
             return (Value as T) ?? throw new Exception();
         }
-
- 
     }
 }

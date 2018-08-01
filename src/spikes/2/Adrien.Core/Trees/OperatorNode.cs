@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Sawmill;
 
-using Sawmill;
 namespace Adrien.Trees
 {
     public class OperatorNode : TreeNode, ITreeOperatorNode<TensorOp>
@@ -16,13 +13,12 @@ namespace Adrien.Trees
             Op = op;
         }
 
-        public override Children<ITreeNode> GetChildren() => this.HasRight ? Children.Two(Left, Right) : 
-            Children.One(Left);
+        public override Children<ITreeNode> GetChildren() => HasRight ? Children.Two(Left, Right) : Children.One(Left);
 
         public override ITreeNode SetChildren(Children<ITreeNode> newChildren)
         {
-            this.Left = newChildren.First;
-            this.Right = newChildren.Second;
+            Left = newChildren.First;
+            Right = newChildren.Second;
             return this;
         }
     }

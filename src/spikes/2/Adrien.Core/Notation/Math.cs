@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
+﻿using System.Linq.Expressions;
 
 namespace Adrien.Notation
 {
@@ -30,13 +26,11 @@ namespace Adrien.Notation
 
         public static TensorExpression Sqrt(TensorExpression l) =>
             new TensorExpression(Expression.Call(TensorExpression.GetOpMethodInfo<TensorExpression>("Op_Sqrt", 1),
-         Expression.Convert(l.LinqExpression, typeof(TensorExpression))));
+                Expression.Convert(l.LinqExpression, typeof(TensorExpression))));
     }
 
     public partial class TensorExpression
     {
-       
-
         private static TensorExpression Op_Sum(TensorExpression l) => null;
         private static TensorExpression Op_Square(TensorExpression l) => null;
         private static TensorExpression Op_Sqrt(TensorExpression l) => null;

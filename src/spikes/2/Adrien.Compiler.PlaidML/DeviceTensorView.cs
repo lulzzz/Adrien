@@ -31,7 +31,7 @@ namespace Adrien.Compiler.PlaidML
 
         public int[] Dimensions => Tensor.Shape.Dimensions.Select(d => Convert.ToInt32(d.length)).ToArray();
 
-        public int[] Stride => Tensor.Shape.Dimensions.Select(d => Convert.ToInt32(d.stride)).ToArray();
+        public int[] Strides => Tensor.Shape.Dimensions.Select(d => Convert.ToInt32(d.stride)).ToArray();
 
         public int Rank => Convert.ToInt32(Tensor.Shape.DimensionCount);
 

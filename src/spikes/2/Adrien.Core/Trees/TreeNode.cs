@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Sawmill;
 
 namespace Adrien.Trees
@@ -29,7 +26,7 @@ namespace Adrien.Trees
         public bool HasLeft => this is OperatorNode && (this as OperatorNode).Left != null;
 
         public bool HasRight => this is OperatorNode && (this as OperatorNode).Right != null;
- 
+
         protected TreeNode(int id, int? parentId, TreeNodePosition pos)
         {
             Id = id;
@@ -44,6 +41,6 @@ namespace Adrien.Trees
         public ITreeNode RewriteChildren(Func<ITreeNode, ITreeNode> transformer)
             => this.DefaultRewriteChildren(transformer);
 
-        public bool Equals(ITreeNode other) => this.Id == other.Id;
+        public bool Equals(ITreeNode other) => Id == other.Id;
     }
 }

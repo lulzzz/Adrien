@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-
 using Sawmill;
-using Sawmill.Expressions;
-
 using Adrien.Notation;
 
 namespace Adrien.Trees
 {
-    public class ExpressionTree : OperatorNode, IExpressionTree, IEqualityComparer<ITreeNode>, 
+    public class ExpressionTree : OperatorNode, IExpressionTree, IEqualityComparer<ITreeNode>,
         IEqualityComparer<ITreeValueNode>
     {
         public Expression LinqExpression { get; protected set; }
@@ -20,9 +16,9 @@ namespace Adrien.Trees
 
         public int Count => HashSet.Count;
 
-        public List<OperatorNode> OperatorNodes => this.Root.SelfAndDescendants().OfType<OperatorNode>().ToList();
+        public List<OperatorNode> OperatorNodes => Root.SelfAndDescendants().OfType<OperatorNode>().ToList();
 
-        public List<ValueNode> ValueNodes => this.Root.SelfAndDescendants().OfType<ValueNode>().ToList();
+        public List<ValueNode> ValueNodes => Root.SelfAndDescendants().OfType<ValueNode>().ToList();
 
         public ITreeNode Root => this;
 
@@ -32,16 +28,16 @@ namespace Adrien.Trees
         {
             get
             {
-                if (this.Left is ITreeValueNode)
+                if (Left is ITreeValueNode)
                 {
-                    return this.Left as ITreeValueNode;
+                    return Left as ITreeValueNode;
                 }
-                else if ((this.Left is OperatorNode) && (this.Left as OperatorNode).Op == TensorOp.Index)
+                else if ((Left is OperatorNode) && (Left as OperatorNode).Op == TensorOp.Index)
                 {
-                    return this.Left.Left as ITreeValueNode;
+                    return Left.Left as ITreeValueNode;
                 }
-                else throw new Exception("The trees output node could not ve determined.");
-               
+                // TODO: [vermorel] Do not throw exceptions of type 'Exception', use subtype.
+                else throw new Exception("The trees output node could not be determined.");
             }
         }
 
@@ -49,18 +45,18 @@ namespace Adrien.Trees
 
         public IEnumerable<ITreeValueNode> TensorNodes => ValueNodes.Where(vn => vn.NodeType == ValueNodeType.TENSOR);
 
-        public IEnumerable<ITreeValueNode> IndexSetNodes => ValueNodes.Where(vn => vn.NodeType == ValueNodeType.INDEXSET);
+        public IEnumerable<ITreeValueNode> IndexSetNodes =>
+            ValueNodes.Where(vn => vn.NodeType == ValueNodeType.INDEXSET);
 
         public IEnumerable<ITreeValueNode> VariableNodes =>
             OperatorNodes
-            .Where(on => on.Op == TensorOp.ElementWiseAssign)
-            .Select(on => on.Left)
-            .Cast<ITreeValueNode>()
-            .Distinct(this);
-            
+                .Where(on => on.Op == TensorOp.ElementWiseAssign)
+                .Select(on => on.Left)
+                .Cast<ITreeValueNode>()
+                .Distinct(this);
+
 
         protected HashSet<ITreeNode> HashSet { get; } = new HashSet<ITreeNode>();
-
 
         public ExpressionTree() : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
         {
@@ -70,10 +66,10 @@ namespace Adrien.Trees
 
         public ExpressionTree(Term term) : this()
         {
-            this.LinqExpression = term.LinqExpression;
+            LinqExpression = term.LinqExpression;
         }
 
-        public ExpressionTree(Tensor lhsTensor, IndexSet lhsTensorIndices) : base(0, null, TreeNodePosition.RIGHT, 
+        public ExpressionTree(Tensor lhsTensor, IndexSet lhsTensorIndices) : base(0, null, TreeNodePosition.RIGHT,
             TensorOp.Assign)
         {
             HashSet.Add(this);
@@ -83,7 +79,7 @@ namespace Adrien.Trees
             }
             else
             {
-                OperatorNode n = AddNode(CreateOperatorNode(this, TensorOp.Index)) as OperatorNode;
+                var n = AddNode(CreateOperatorNode(this, TensorOp.Index)) as OperatorNode;
                 AddNode(CreateValueNode(n, lhsTensor));
                 AddNode(CreateValueNode(n, lhsTensorIndices));
             }
@@ -91,18 +87,18 @@ namespace Adrien.Trees
 
         public OperatorNode CreateOperatorNode(OperatorNode parent, TensorOp op)
         {
-            TreeNodePosition pos = parent.HasLeft ? TreeNodePosition.RIGHT : TreeNodePosition.LEFT;
-            int nid = pos == TreeNodePosition.LEFT ? CountChildren(parent) + 1 : CountChildren(parent) + 2;
-            OperatorNode node = new OperatorNode(nid, parent.Id, pos, op);
+            var pos = parent.HasLeft ? TreeNodePosition.RIGHT : TreeNodePosition.LEFT;
+            var nid = pos == TreeNodePosition.LEFT ? CountChildren(parent) + 1 : CountChildren(parent) + 2;
+            var node = new OperatorNode(nid, parent.Id, pos, op);
             node.Parent = parent;
             return node;
         }
 
         public ValueNode CreateValueNode(OperatorNode parent, object value)
         {
-            TreeNodePosition pos = parent.HasLeft ? TreeNodePosition.RIGHT : TreeNodePosition.LEFT;
-            int nid = pos == TreeNodePosition.LEFT ? CountChildren(parent) + 1 : CountChildren(parent) + 2;
-            ValueNode node = new ValueNode(nid, parent.Id, pos, value);
+            var pos = parent.HasLeft ? TreeNodePosition.RIGHT : TreeNodePosition.LEFT;
+            var nid = pos == TreeNodePosition.LEFT ? CountChildren(parent) + 1 : CountChildren(parent) + 2;
+            var node = new ValueNode(nid, parent.Id, pos, value);
             node.Parent = parent;
             return node;
         }
@@ -110,18 +106,18 @@ namespace Adrien.Trees
         public ITreeNode AddNode(ITreeNode n)
         {
             TreeNode parent, node;
-            if (n is TreeNode)
+            if (n is TreeNode treeNode)
             {
-                node = n as TreeNode;
+                node = treeNode;
             }
             else
             {
                 throw new ArgumentException($"Argument node is not type TreeNode.");
             }
 
-            if (n.Parent is TreeNode)
+            if (n.Parent is TreeNode parentNode)
             {
-                parent = n.Parent as TreeNode;
+                parent = parentNode;
             }
             else
             {
@@ -134,10 +130,8 @@ namespace Adrien.Trees
                 {
                     throw new Exception($"Parent tree node with id {parent.Id} already has a left child.");
                 }
-                else
-                {
-                    parent.Left = node;
-                }
+
+                parent.Left = node;
             }
             else
             {
@@ -145,18 +139,23 @@ namespace Adrien.Trees
                 {
                     throw new Exception($"Parent tree node with id {parent.Id} already has a right child.");
                 }
-                else
-                {
-                    parent.Right = node;
-                }
+
+                parent.Right = node;
             }
+
             HashSet.Add(node);
             return node;
         }
 
-        public ValueNode ValueNodeAtIndex(int index) => (HashSet.ElementAt(index) as ValueNode) ?? throw new Exception($"The element at index {index} is not a value node.");
+        public ValueNode ValueNodeAtIndex(int index) => (HashSet.ElementAt(index) as ValueNode) ??
+                                                        // TODO: [vermorel] Do not throw exceptions of type ' Exception', use subtype.
+                                                        throw new Exception(
+                                                            $"The element at index {index} is not a value node.");
 
-        public OperatorNode OperatorNodeAtIndex(int index) => (HashSet.ElementAt(index) as OperatorNode) ?? throw new Exception($"The element at {index} is not an operator node.");
+        public OperatorNode OperatorNodeAtIndex(int index) => (HashSet.ElementAt(index) as OperatorNode) ??
+                                                              // TODO: [vermorel] Do not throw exceptions of type ' Exception', use subtype.
+                                                              throw new Exception(
+                                                                  $"The element at {index} is not an operator node.");
 
         public int CountChildren(TreeNode node)
         {
@@ -168,12 +167,12 @@ namespace Adrien.Trees
                 }
                 else if (tn is OperatorNode)
                 {
-                    OperatorNode on = (OperatorNode)tn;
-                    int lcount = on.Left != null ? Count(start + 1, on.Left) : start + 1;
-                    int rcount = on.Right != null ? Count(lcount + 1, on.Right) : lcount;
+                    var on = (OperatorNode) tn;
+                    var lcount = on.Left != null ? Count(start + 1, on.Left) : start + 1;
+                    var rcount = on.Right != null ? Count(lcount + 1, on.Right) : lcount;
                     return rcount;
                 }
-                else throw new Exception($"Unknown tree node type: {node.GetType().Name}");
+                else throw new NotSupportedException($"Unknown tree node type: {node.GetType().Name}.");
             }
 
             return Count(0, node);
@@ -186,19 +185,19 @@ namespace Adrien.Trees
             return node.Label.GetHashCode();
         }
 
-        public bool Equals(ITreeNode left, ITreeNode righ)
+        public bool Equals(ITreeNode left, ITreeNode right)
         {
-            return left.Label == left.Label;
+            return left.Label == right.Label;
         }
 
         public int GetHashCode(ITreeValueNode node)
         {
-            return node.NodeType.GetHashCode() + node.Label.GetHashCode();
+            return node.NodeType.GetHashCode() ^ node.Label.GetHashCode();
         }
 
         public bool Equals(ITreeValueNode left, ITreeValueNode right)
         {
-            return (left.NodeType == right.NodeType) && (left.Label == left.Label);
+            return (left.NodeType == right.NodeType) && (left.Label == right.Label);
         }
     }
 }

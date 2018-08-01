@@ -2,12 +2,8 @@
 using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-
 using Adrien.Compiler;
 using Adrien.Notation;
 
@@ -21,7 +17,7 @@ namespace Adrien
 
         public int[] Dimensions => Tensor.Dimensions;
 
-        public int[] Stride => Tensor.Strides;
+        public int[] Strides => Tensor.Strides;
 
         public int Rank => Tensor.Rank;
 
@@ -45,7 +41,6 @@ namespace Adrien
             }
         }
 
-        
         internal Var(Tensor tensor)
         {
             Tensor = tensor;

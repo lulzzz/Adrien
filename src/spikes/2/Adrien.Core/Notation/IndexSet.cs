@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -16,57 +15,62 @@ namespace Adrien.Notation
         public ITerm Parent { get; protected set; }
 
         public int DimensionCount => Indices.Count;
-        
+
         internal override Name DefaultNameBase { get; } = "I";
 
         internal override Expression LinqExpression => Expression.Constant(this);
-        
 
-        public IndexSet(Tensor parent, string indexNameBase="", params int[] dim) : base()
+        public IndexSet(Tensor parent, string indexNameBase = "", params int[] dim)
         {
             Indices = new SortedSet<Index>();
-            for (int i = 0; i < dim.Length; i++)
+            for (var i = 0; i < dim.Length; i++)
             {
                 Indices.Add(new Index(this, i, dim[i], GenerateName(i, indexNameBase)));
             }
-            this.Name = dim.Length > 0 ? Indices.Select(i => i.Name).Aggregate((a, b) => a + b) : new Name(indexNameBase);
+
+            Name = dim.Length > 0
+                ? Indices.Select(i => i.Name).Aggregate((a, b) => a + b)
+                : new Name(indexNameBase);
         }
 
-        public IndexSet(Tensor parent, params Index[] indices) : base()
+        public IndexSet(Tensor parent, params Index[] indices)
         {
             for (int i = 0; i < indices.Length; i++)
             {
                 indices[i].Order = i;
             }
+
             Indices = new SortedSet<Index>(indices);
-            this.Name = Indices.Select(i => i.Name).Aggregate((a, b) => a + b);
-            foreach(Index index in indices)
+            Name = Indices.Select(i => i.Name).Aggregate((a, b) => a + b);
+            foreach (Index index in indices)
             {
                 index.Set = this;
             }
-            this.Parent = parent;
+
+            Parent = parent;
         }
-         
+
         public Index this[int index]
         {
             get
             {
                 ThrowIfIndicesExceedDimensions(index);
-                return Indices.ElementAt(index); 
+                return Indices.ElementAt(index);
             }
         }
-       
+
         public IEnumerator<ITerm> GetEnumerator()
         {
-            foreach (Index i in Indices)
+            foreach (var i in Indices)
             {
                 yield return (i as ITerm);
             }
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => this.GetEnumerator();
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
 
         #region Deconstructors
+
         public void Deconstruct(out Index index1, out Index index2)
         {
             ThrowIfIndicesExceedDimensions(2);
@@ -91,7 +95,8 @@ namespace Adrien.Notation
             index4 = this[3];
         }
 
-        public void Deconstruct(out Index index1, out Index index2, out Index index3, out Index index4, out Index index5)
+        public void Deconstruct(out Index index1, out Index index2, out Index index3, out Index index4,
+            out Index index5)
         {
             ThrowIfIndicesExceedDimensions(5);
             index1 = this[0];
@@ -101,7 +106,8 @@ namespace Adrien.Notation
             index5 = this[4];
         }
 
-        public void Deconstruct(out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6)
+        public void Deconstruct(out Index index1, out Index index2, out Index index3, out Index index4,
+            out Index index5, out Index index6)
         {
             ThrowIfIndicesExceedDimensions(6);
             index1 = this[0];
@@ -112,7 +118,8 @@ namespace Adrien.Notation
             index6 = this[5];
         }
 
-        public void Deconstruct(out Index index1, out Index index2, out Index index3, out Index index4, out Index index5, out Index index6, out Index index7)
+        public void Deconstruct(out Index index1, out Index index2, out Index index3, out Index index4,
+            out Index index5, out Index index6, out Index index7)
         {
             ThrowIfIndicesExceedDimensions(7);
             index1 = this[0];
@@ -121,18 +128,22 @@ namespace Adrien.Notation
             index4 = this[3];
             index5 = this[4];
             index6 = this[5];
-            index7 = this[6];        }
+            index7 = this[6];
+        }
+
         #endregion
 
         protected void ThrowIfIndicesExceedDimensions(int c)
         {
-            if (c > DimensionCount) throw new ArgumentOutOfRangeException("The number of indices exceeds the dimensions of this index set.");
+            if (c > DimensionCount)
+                throw new ArgumentOutOfRangeException(
+                    "The number of indices exceeds the dimensions of this index set.");
         }
 
         protected static void ThrowIfIndicesFromDifferentIndexSet(params Index[] indices)
         {
-            IndexSet set = indices[0].Set;
-            if (!indices.All(i => i.Set == set))
+            var set = indices[0].Set;
+            if (indices.Any(i => i.Set != set))
             {
                 throw new InvalidOperationException("These indices are not from the same index set.");
             }

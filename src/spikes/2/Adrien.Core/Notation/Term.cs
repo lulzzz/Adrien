@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace Adrien.Notation
 {
     /// <summary>
-    /// Abstracts a notation term
+    /// Abstracts a notation term.
     /// </summary>
     public abstract class Term : ITerm
     {
@@ -13,7 +13,7 @@ namespace Adrien.Notation
 
         public Name Name { get; protected set; }
 
-        public string Label => this.Name.Label;
+        public string Label => Name.Label;
 
         internal abstract Name DefaultNameBase { get; }
 
@@ -40,9 +40,9 @@ namespace Adrien.Notation
         }
 
         internal Term(Term t)
-        
+
         {
-            this.Id = t.Id;
+            Id = t.Id;
         }
 
         public static implicit operator Expression(Term e)
@@ -56,23 +56,23 @@ namespace Adrien.Notation
 
             if (indexNameBase.Length == 1)
             {
-                char c = indexNameBase.First();
-                int n = c + index;
-                int lower = Char.IsLower(c) ? a : A;
-                int upper = Char.IsLower(c) ? z : Z;
+                var c = indexNameBase.First();
+                var n = c + index;
+                var lower = Char.IsLower(c) ? a : A;
+                var upper = Char.IsLower(c) ? z : Z;
+
                 if (n < lower || n > upper)
                 {
-                    throw new Exception("Auto-generated name past last letter of alphabet. Consider using a numeric name base like a0.");
+                    throw new Exception(
+                        "Auto-generated name past last letter of alphabet. Consider using a numeric name base like a0.");
                 }
-                else
-                {
-                    return new string(Convert.ToChar(n), 1);
-                }
+
+                return new string(Convert.ToChar(n), 1);
             }
             else if (indexNameBase.Length == 2 && Char.IsLetter(indexNameBase[0]) && Char.IsNumber(indexNameBase[1]))
             {
-                int i = Int32.Parse(indexNameBase.Substring(1,1)) + index;
-                return new string(indexNameBase[0], 1) + i.ToString();
+                var i = Int32.Parse(indexNameBase.Substring(1, 1)) + index;
+                return new string(indexNameBase[0], 1) + i;
             }
             else throw new ArgumentException($"Unknown name base {indexNameBase}");
         }
@@ -88,19 +88,23 @@ namespace Adrien.Notation
                         case int i: return i.ToString();
                         case Term t: return t.Name;
                         case Array a: return a.Flatten<Tensor>().First().Name;
-                        default: throw new Exception($"Unknown constant expressionvalue type: {ce.Value.GetType()}.");
-                    };
+                        default: throw new Exception($"Unknown constant expression value type: {ce.Value.GetType()}.");
+                    }
+
+                    ;
                 case BinaryExpression be:
-                    return be.NodeType.ToString() + "_" + GetNameFromLinqExpression(be.Left)
-                        + "_" + GetNameFromLinqExpression(be.Right);
+                    return be.NodeType + "_" + GetNameFromLinqExpression(be.Left)
+                           + "_" + GetNameFromLinqExpression(be.Right);
                 case ParameterExpression pe:
                     return pe.Name;
-                case System.Linq.Expressions.IndexExpression ie:
-                    return ie.NodeType.ToString() + "_" + GetNameFromLinqExpression(ie.Object) + "_" + ie.Arguments.Select(e => GetNameFromLinqExpression(e))
-                        .Aggregate((s1, s2) => s1 + "_" + s2);
+                case IndexExpression ie:
+                    return ie.NodeType + "_" + GetNameFromLinqExpression(ie.Object) + "_" + ie.Arguments
+                               .Select(GetNameFromLinqExpression)
+                               .Aggregate((s1, s2) => s1 + "_" + s2);
                 case MethodCallExpression me:
                     return me.Method.Name;
-                default: throw new Exception($"Unknown expression type: {expr.NodeType.ToString()} {expr.GetType().Name}.");
+                default:
+                    throw new Exception($"Unknown expression type: {expr.NodeType.ToString()} {expr.GetType().Name}.");
             }
         }
     }

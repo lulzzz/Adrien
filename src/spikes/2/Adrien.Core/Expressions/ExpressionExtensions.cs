@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-
 using System.Linq;
 using System.Linq.Expressions;
-
 using AgileObjects.ReadableExpressions;
-using Sawmill;
 using Sawmill.Expressions;
-
 using Adrien.Notation;
 
 namespace Adrien.Trees
@@ -19,7 +14,7 @@ namespace Adrien.Trees
         [DebuggerStepThrough]
         public static TensorOp ToOp(this ExpressionType et)
         {
-            switch(et)
+            switch (et)
             {
                 case ExpressionType.Index: return TensorOp.Index;
                 case ExpressionType.Multiply: return TensorOp.Mul;
@@ -27,45 +22,47 @@ namespace Adrien.Trees
                 case ExpressionType.Subtract: return TensorOp.Sub;
                 case ExpressionType.Power: return TensorOp.Pow;
                 default:
-                    throw new Exception($"Cannot translate expression type: {et} to TensorOp.");
+                    throw new NotSupportedException($"Cannot translate expression type: {et} to TensorOp.");
             }
         }
 
         [DebuggerStepThrough]
         public static TExpr As<TExpr>(this Expression expr) where TExpr : Expression
         {
-            return (expr as TExpr) ?? throw new Exception($"This expression {expr.ToReadableString()} is not type {typeof(TExpr).ToString()}.");
+            return (expr as TExpr) ??
+                   throw new NotSupportedException(
+                       $"This expression {expr.ToReadableString()} is not type {typeof(TExpr)}.");
         }
 
         [DebuggerStepThrough]
         public static List<T> GetConstants<T>(this Expression expr) where T : ITerm
         {
             var c0 = expr.DescendantsAndSelf()
-                   .OfType<ConstantExpression>()
-                   .Where(e => e.Type == typeof(T))
-                   .Select(e => (T) e.Value);
-                   
+                .OfType<ConstantExpression>()
+                .Where(e => e.Type == typeof(T))
+                .Select(e => (T) e.Value);
+
             return expr.DescendantsAndSelf()
-                   .OfType<ConstantExpression>()
-                   .Where(e => e.Type.BaseType == typeof(Array)
-                        && e.Type.HasElementType 
-                        && e.Type.GetElementType() == typeof(Tensor))
-                   .Select(e => e.Value)
-                   .Cast<Array>()
-                   .Select(a => a.Flatten<T>().First())
-                   .Concat(c0)
-                   .ToList();
+                .OfType<ConstantExpression>()
+                .Where(e => e.Type.BaseType == typeof(Array)
+                            && e.Type.HasElementType
+                            && e.Type.GetElementType() == typeof(Tensor))
+                .Select(e => e.Value)
+                .Cast<Array>()
+                .Select(a => a.Flatten<T>().First())
+                .Concat(c0)
+                .ToList();
         }
 
         [DebuggerStepThrough]
         public static List<T> GetIndexObjects<T>(this Expression expr) where T : ITerm
         {
             return expr.DescendantsAndSelf()
-                   .OfType<IndexExpression>()
-                   .Select(e => e.Object)
-                   .Cast<Array>()
-                   .Select(a => a.Flatten<T>().First())
-                   .ToList();
+                .OfType<IndexExpression>()
+                .Select(e => e.Object)
+                .Cast<Array>()
+                .Select(a => a.Flatten<T>().First())
+                .ToList();
         }
 
         [DebuggerStepThrough]
@@ -76,7 +73,7 @@ namespace Adrien.Trees
                 case "Op_Sum": return TensorOp.Sum;
                 case "Op_Square": return TensorOp.Square;
                 case "Op_Sqrt": return TensorOp.Sqrt;
-                default : throw new NotImplementedException(); 
+                default: throw new NotImplementedException();
             }
         }
     }

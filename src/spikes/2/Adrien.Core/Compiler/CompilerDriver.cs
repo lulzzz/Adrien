@@ -1,6 +1,4 @@
-﻿using System;
-
-using Serilog;
+﻿using Serilog;
 
 namespace Adrien
 {
@@ -8,12 +6,10 @@ namespace Adrien
     {
         public static LoggerConfiguration LoggerConfiguration { get; protected set; }
         public static bool LoggerConfigured { get; protected set; }
-        
-
         public static void CreateDefaultLogger(string logFilename = "Adrien.log")
         {
             LoggerConfiguration = new LoggerConfiguration()
-                .WriteTo.RollingFile(logFilename, 
+                .WriteTo.RollingFile(logFilename,
                     outputTemplate: "{Timestamp:HH:mm:ss} [{Level:u3}] {Message}{NewLine}{Exception}");
             Log.Logger = LoggerConfiguration.CreateLogger();
             LoggerConfigured = true;

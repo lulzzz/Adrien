@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Adrien.Notation
 {
@@ -10,20 +8,20 @@ namespace Adrien.Notation
 
         public int BaseIndex { get; protected set; }
 
-        public Name(int baseIndex) : this(new string(Convert.ToChar(baseIndex), 1)) { }
+        public Name(int baseIndex) : this(new string(Convert.ToChar(baseIndex), 1))
+        {
+        }
 
         public Name(string label, int index = 0)
         {
             Label = label;
             BaseIndex = index;
         }
-        
-        
-        public static Name Base(int b) => new Name(b);
-        
-        public static implicit operator string (Name n) => n.Label;
 
-        public static implicit operator Name (string s) => new Name(s);
-        
+        public static Name Base(int b) => new Name(b);
+
+        public static implicit operator string(Name n) => n.Label;
+
+        public static implicit operator Name(string s) => new Name(s);
     }
 }

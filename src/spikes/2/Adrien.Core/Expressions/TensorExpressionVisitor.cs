@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using System.Text.RegularExpressions;
-
 using AgileObjects.ReadableExpressions;
-
 using Adrien.Notation;
-using Adrien.Trees;
 
 namespace Adrien.Trees
 {
@@ -34,7 +25,7 @@ namespace Adrien.Trees
             }
         }
 
-        public TensorExpressionVisitor(Expression expr, Tensor lhs, bool visit = true) : base()
+        public TensorExpressionVisitor(Expression expr, Tensor lhs, bool visit = true)
         {
             LinqExpression = expr;
             Tree = new ExpressionTree(lhs);
@@ -45,8 +36,7 @@ namespace Adrien.Trees
             }
         }
 
-        public TensorExpressionVisitor(Expression expr, (Tensor tensor, IndexSet indices) lhs, bool visit = true) : 
-            base()
+        public TensorExpressionVisitor(Expression expr, (Tensor tensor, IndexSet indices) lhs, bool visit = true)
         {
             LinqExpression = expr;
             Tree = new ExpressionTree(lhs.tensor, lhs.indices);
@@ -56,70 +46,74 @@ namespace Adrien.Trees
                 Visit();
             }
         }
-        
+
         public void Visit()
         {
-            this.Visit(this.LinqExpression);
+            Visit(LinqExpression);
         }
 
         internal static TReturn FlattenConstantExpressionValue<TReturn>(ConstantExpression node)
         {
-            Array a = (Array)node.Value;
+            Array a = (Array) node.Value;
             return a.Flatten<TReturn>().First();
         }
 
         protected override Expression VisitConstant(ConstantExpression node)
         {
             base.VisitConstant(node);
-            Tensor t = null;
+            Tensor t;
             if (node.Value is Array)
             {
-                t = FlattenConstantExpressionValue<Tensor>(node);                    
+                t = FlattenConstantExpressionValue<Tensor>(node);
             }
             else if (node.Value is Tensor)
             {
                 t = node.Value as Tensor;
             }
-            else throw new InvalidOperationException($"Can't convert ConstantExpression {node.ToReadableString()}" + 
-                @"of type {node.Value.GetType().Name} to type Tensor.");
+            else
+                throw new InvalidOperationException($"Can't convert ConstantExpression {node.ToReadableString()}" +
+                                                    @"of type {node.Value.GetType().Name} to type Tensor.");
 
+            var on = Context.AddOperatorNode(TensorOp.ElementWiseAssign);
             if (!t.IsElementwiseDefined)
             {
                 Context.AddValueNode(t);
             }
             else
             {
-                OperatorNode on = Context.AddOperatorNode(TensorOp.ElementWiseAssign);
                 using (Context.Internal(on))
                 {
                     Context.AddValueNode(t);
                     base.Visit(t.ElementwiseDefinition.Expression.LinqExpression);
                 }
             }
-            return node;
 
+            return node;
         }
-                            
-        protected override Expression VisitIndex(System.Linq.Expressions.IndexExpression node)
+
+        protected override Expression VisitIndex(IndexExpression node)
         {
-            OperatorNode on = Context.AddOperatorNode(TensorOp.Index);
+            var on = Context.AddOperatorNode(TensorOp.Index);
+            var t = Context.Tensors.First();
             using (Context.Internal(on))
             {
                 base.VisitIndex(node);
 
-                Tensor t = Context.Tensors.First();
                 if (t.Dimensions.Length < Context.TensorIndicesQueue.Count)
                 {
-                    throw new Exception($"Tensor {t.Name.Label} has {t.Dimensions.Length} dimensions but the tensor indices queue has length {Context.TensorIndicesQueue.Count}.");
+                    // TODO: [vermorel] Don't throw 'Exception', use subtype.
+                    throw new Exception(
+                        $"Tensor {t.Name.Label} has {t.Dimensions.Length} dimensions but the tensor indices queue has length {Context.TensorIndicesQueue.Count}.");
                 }
 
-                Index[] indices = new Index[Context.TensorIndicesQueue.Count];
-                for (int i = 0; i < indices.Length; i++)
+                var indices = new Index[Context.TensorIndicesQueue.Count];
+                for (var i = 0; i < indices.Length; i++)
                 {
                     indices[i] = Context.TensorIndicesQueue.Dequeue();
                 }
-                IndexSet set = new IndexSet(t, indices);
-                foreach(Index i in set.Indices)
+
+                var set = new IndexSet(t, indices);
+                foreach (var i in set.Indices)
                 {
                     i.Set = set;
                 }
@@ -133,8 +127,8 @@ namespace Adrien.Trees
         protected override Expression VisitParameter(ParameterExpression node)
         {
             base.VisitParameter(node);
-            Tensor t = Context.Tensors.First();
-            int i = Context.TensorIndicesQueue.Count;
+            var t = Context.Tensors.First();
+            var i = Context.TensorIndicesQueue.Count;
             Context.TensorIndicesQueue.Enqueue(new Index(null, i, t.Dimensions[i], node.Name));
             return node;
         }
@@ -146,10 +140,12 @@ namespace Adrien.Trees
                 base.Visit(node.Operand);
                 return node;
             }
+
             using (Context.Internal(Context.AddOperatorNode(node.NodeType.ToOp())))
             {
                 base.VisitUnary(node);
             }
+
             return node;
         }
 
@@ -159,18 +155,19 @@ namespace Adrien.Trees
             {
                 base.VisitBinary(node);
             }
+
             return node;
         }
 
-        
+
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
             using (Context.Internal(Context.AddOperatorNode(node.MethodCallToTensorOp())))
             {
                 base.VisitMethodCall(node);
             }
+
             return node;
         }
-        
     }
 }

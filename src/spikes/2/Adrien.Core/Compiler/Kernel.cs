@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using Sawmill;
-
 using Adrien.Notation;
 using Adrien.Trees;
 
@@ -44,19 +41,21 @@ namespace Adrien.Compiler
                 {
                     return null;
                 }
+
                 if (CompileBeforeRun || !CompileSuccess)
                 {
                     Compile();
                 }
-                
+
 
                 return new Func<Var<T>[], Var<T>>((input) =>
                 {
                     if (input.Length != this.InputShapes.Count)
                     {
                         throw new ArgumentException($"The kernel has {InputShapes.Count} input parameters but "
-                            + $"{input.Length} arguments were used.");
+                                                    + $"{input.Length} arguments were used.");
                     }
+
                     for (int i = 0; i < input.Length; i++)
                     {
                         if (input[i].Tensor == null)
@@ -64,6 +63,7 @@ namespace Adrien.Compiler
                             input[i].Tensor = InputTensors[i];
                         }
                     }
+
                     var output = OutputTensor.Var(new T[OutputTensor.NumberofElements]);
                     if (CompilerResult.Run(output, input) == RunStatus.Success)
                     {
@@ -71,9 +71,9 @@ namespace Adrien.Compiler
                     }
                     else
                     {
+                        // TODO: [vermorel] Don't use 'null' to signal a failure mode.
                         return null;
                     }
-                    
                 });
             }
         }
@@ -87,11 +87,9 @@ namespace Adrien.Compiler
                 throw new ArgumentException
                     ($"The output tensor {output.Label} must be assigned an input expression.");
             }
-            else
-            {
-                Tree = output.ToTree();
-            }
-            
+
+            Tree = output.ToTree();
+
             InputShapes = InputTensors;
             OutputShape = output;
         }
@@ -106,7 +104,6 @@ namespace Adrien.Compiler
         {
             Tree = expr.ToTree();
             InputShapes = InputTensors;
-
         }
 
         public Kernel(Tensor output, TensorExpression expr)
@@ -115,9 +112,7 @@ namespace Adrien.Compiler
             InputShapes = InputTensors;
             OutputShape = output;
         }
-
-
-        public Kernel(Tensor output, TensorExpression expr, ICompiler compiler, DeviceType deviceType = DeviceType.CPU) 
+        public Kernel(Tensor output, TensorExpression expr, ICompiler compiler, DeviceType deviceType = DeviceType.CPU)
             : this(output, expr)
         {
             Compiler = compiler;
@@ -135,22 +130,20 @@ namespace Adrien.Compiler
         {
             get
             {
-                if (index < 0 || index > InputShapes.Count() - 1)
+                if (index < 0 || index > InputShapes.Count - 1)
                 {
                     throw new IndexOutOfRangeException();
                 }
-                else
-                {
-                    return InputShapes[index];
-                }
-            }    
+
+                return InputShapes[index];
+            }
         }
 
         public IVariableShape this[Tensor index]
         {
-            get => InputShapes.SingleOrDefault(t => t.Label == index.Name) ?? 
-                throw new ArgumentException($"The kernel does not contain an input variable bound to tensor " 
-                    + $"{index.Label}");   
+            get => InputShapes.SingleOrDefault(t => t.Label == index.Name) ??
+                   throw new ArgumentException($"The kernel does not contain an input variable bound to tensor "
+                                               + $"{index.Label}");
         }
 
 
@@ -161,6 +154,7 @@ namespace Adrien.Compiler
             {
                 CompilerResult = result;
             }
+
             return CompileSuccess;
         }
 
@@ -168,7 +162,7 @@ namespace Adrien.Compiler
         {
             if (!CompileSuccess)
             {
-                throw new InvalidOperationException("The kernel was not compiled successfully..");
+                throw new InvalidOperationException("The kernel was not compiled successfully.");
             }
         }
     }
