@@ -9,5 +9,6 @@
         public static UnaryOperator Root2 { get; } = new UnaryOperator((expr) => Math.Sqrt(expr));
 
         public static ContractionOperator Sum { get; } = new ContractionOperator((expr) => Math.SigmaSum(expr));
+        public static ContractionOperator Mean { get; } = new ContractionOperator((expr) => Math.Mean(expr));
     }
 }

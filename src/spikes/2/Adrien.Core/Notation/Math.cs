@@ -20,6 +20,10 @@ namespace Adrien.Notation
             new TensorContraction(Expression.Call(TensorExpression.GetOpMethodInfo<TensorExpression>("Op_Sum", 1),
                 Expression.Convert(l.LinqExpression, typeof(TensorExpression))));
 
+        public static TensorContraction Mean(TensorIndexExpression l) =>
+            new TensorContraction(Expression.Call(TensorExpression.GetOpMethodInfo<TensorExpression>("Op_Mean", 1),
+                Expression.Convert(l.LinqExpression, typeof(TensorExpression))));
+
         public static TensorExpression Square(TensorExpression l) =>
             new TensorExpression(Expression.Call(TensorExpression.GetOpMethodInfo<TensorExpression>("Op_Square", 1),
                 Expression.Convert(l.LinqExpression, typeof(TensorExpression))));
@@ -32,6 +36,7 @@ namespace Adrien.Notation
     public partial class TensorExpression
     {
         private static TensorExpression Op_Sum(TensorExpression l) => null;
+        private static TensorExpression Op_Mean(TensorExpression l) => null;
         private static TensorExpression Op_Square(TensorExpression l) => null;
         private static TensorExpression Op_Sqrt(TensorExpression l) => null;
     }
