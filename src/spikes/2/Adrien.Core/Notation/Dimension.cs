@@ -12,13 +12,13 @@ namespace Adrien.Notation
 
         public new int Dim { get; protected set; }
 
-        public new int Stride { get; protected set; }
+        public int Stride { get; protected set; }
 
         internal Dimension(Tensor t, int axis, int dim) : base(t.Name + "_" + axis.ToString())
         {
             this.Tensor = t;
             this.Dim = dim;
-            this.Stride = t.Stride[axis];
+            this.Stride = t.Strides[axis];
         }
     }
 }

@@ -18,6 +18,8 @@ namespace Adrien.Notation
 
         public List<Tensor> Tensors => LinqExpression.GetConstants<Tensor>();
 
+        public List<IndexSet> IndexSets => LinqExpression.GetConstants<IndexSet>();
+
         public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression).Tree;
 
         public ExpressionTree ToTree((Tensor tensor, IndexSet indices) lhs) =>
@@ -29,17 +31,18 @@ namespace Adrien.Notation
             Name = GetNameFromLinqExpression(LinqExpression);
         }
 
-        public static TensorExpression operator -(TensorExpression left) => left.Negate();
+        public static TensorExpression operator - (TensorExpression left) => left.Negate();
 
-        public static TensorExpression operator +(TensorExpression left, TensorExpression right) => left.Add(right);
+        public static TensorExpression operator + (TensorExpression left, TensorExpression right) => left.Add(right);
 
-        public static TensorExpression operator -(TensorExpression left, TensorExpression right) =>
+        public static TensorExpression operator - (TensorExpression left, TensorExpression right) =>
             left.Subtract(right);
 
-        public static TensorExpression operator *(TensorExpression left, TensorExpression right) =>
+        public static TensorExpression operator * (TensorExpression left, TensorExpression right) =>
             left.Multiply(right);
 
-        public static TensorExpression operator /(TensorExpression left, TensorExpression right) => left.Divide(right);
+        public static TensorExpression operator / (TensorExpression left, TensorExpression right) => left.Divide(right);
+
 
         public TensorExpression Negate() => new TensorExpression(Expression.Negate(this));
 

@@ -91,7 +91,7 @@ namespace Adrien.Trees
 
             return node;
         }
-                    
+                 
         protected override Expression VisitIndex(IndexExpression node)
         {
             var on = Context.AddOperatorNode(TensorOp.Index);

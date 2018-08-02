@@ -35,24 +35,53 @@ namespace Adrien.Expressions
                        $"This expression {expr.ToReadableString()} is not type {typeof(TExpr)}.");
         }
 
-        [DebuggerStepThrough]
+        
         public static List<T> GetConstants<T>(this Expression expr) where T : ITerm
         {
-            var c0 = expr.DescendantsAndSelf()
+            IEnumerable<T> GetConstantsFromExpression(Expression expr0)
+            {
+                return expr0.SelfAndDescendants()
                 .OfType<ConstantExpression>()
                 .Where(e => e.Type == typeof(T))
-                .Select(e => (T) e.Value);
+                .Select(e => (T)e.Value)
+                .Distinct()
+                .ToList();
+            }
 
-            return expr.DescendantsAndSelf()
+            IEnumerable<T> GetConstantsFromArrayExpressions(Expression expr1)
+            {
+                return expr1.SelfAndDescendants()
                 .OfType<ConstantExpression>()
                 .Where(e => e.Type.BaseType == typeof(Array)
                             && e.Type.HasElementType
-                            && e.Type.GetElementType() == typeof(Tensor))
+                            && e.Type.GetElementType() == typeof(T))
                 .Select(e => e.Value)
                 .Cast<Array>()
                 .Select(a => a.Flatten<T>().First())
-                .Concat(c0)
+                .Distinct()
                 .ToList();
+            }
+
+            List<T> GetConstantsFromMethodCall(MethodCallExpression mcexpr)
+            {
+                if (!mcexpr.Method.Name.StartsWith("Op_"))
+                {
+                    throw new ArgumentException("Unknown method name: " + mcexpr.Method.Name);
+                }
+                return mcexpr.Arguments.Select(e => GetConstants<T>(e)).SelectMany(x => x).ToList();
+            }
+
+            if (expr is MethodCallExpression)
+            {
+                return GetConstantsFromMethodCall(expr as MethodCallExpression);
+            }
+            else
+            {
+                var c0 = GetConstantsFromExpression(expr);
+                var c1 = GetConstantsFromArrayExpressions(expr);
+                return c0.Concat(c1).ToList();
+            }
+            
         }
 
         [DebuggerStepThrough]

@@ -128,7 +128,7 @@ namespace Adrien.Tests.Compilers
                 Assert.Equal(System.Math.Pow(vya[index] - ((va * vx[index]) + vb), 2), vyerror[index]);
             }
 
-            yloss[i] = yerror[i];
+            yloss[i] = Avg[yerror[i]];
             Kernel<int> loss = new Kernel<int>(yloss, compiler);
             Assert.True(loss.Compile());
             //Assert.Equal(RunStatus.Success, error.CompilerResult.Run(v, vya, va, vx, vb));

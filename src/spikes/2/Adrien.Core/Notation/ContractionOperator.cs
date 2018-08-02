@@ -4,13 +4,13 @@ namespace Adrien.Notation
 {
     public class ContractionOperator : IContractionOp
     {
-        Func<TensorContraction, TensorContraction> Operation;
+        Func<TensorIndexExpression, TensorContraction> Operation;
 
-        public ContractionOperator(Func<TensorContraction, TensorContraction> op)
+        public ContractionOperator(Func<TensorIndexExpression, TensorContraction> op)
         {
             Operation = op;
         }
 
-        public TensorContraction this[TensorContraction e] => Operation(e);
+        public TensorContraction this[TensorIndexExpression e] => Operation(e);
     }
 }
