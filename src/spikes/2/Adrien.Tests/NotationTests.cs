@@ -105,11 +105,10 @@ namespace Adrien.Tests
         {
             var (A, B, C) = Tensor.TwoD((4, 3), out Index i, out Index j).Three();
             var (M, N, O) = Tensor.ThreeD("M", (7, 9, 6), "m", out Index m, out Index n, out Index o).Three();
-<<<<<<< HEAD
-            A[i, j] = B[i, j][i -7] * C[i, j][i + 4];
-=======
-            A[i,j] = B[i, j] * C[i, j][i +7];
->>>>>>> Fix GetConstants extension to work with MethodCallExpressions. Start TensorOperation tests.
+
+            A[i, j] = B[i, j][i - 7] * C[i, j][i + 4];
+            
+
             Assert.True(A.IsAssigned);
             Assert.True(A.ContractionDefinition.IndexSet[0].Type == IndexType.Expression);
             M[n] = A[m][m + 7]; 
