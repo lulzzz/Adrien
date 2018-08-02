@@ -6,8 +6,9 @@ using System.Linq.Expressions;
 using AgileObjects.ReadableExpressions;
 using Sawmill.Expressions;
 using Adrien.Notation;
+using Adrien.Trees;
 
-namespace Adrien.Trees
+namespace Adrien.Expressions
 {
     public static class ExpressionExtensions
     {

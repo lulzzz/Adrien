@@ -7,7 +7,7 @@ namespace Adrien.Notation
 {
 #pragma warning disable CS0660
 
-    public class Index : Term, IChild, IAlgebra<Index, TensorIndexExpression>, IComparable<Index>
+    public class Index : Term, IChild, IAlgebra<Index, DimensionExpression>, IComparable<Index>
     {
         public static PropertyInfo OrderInfo { get; } = typeof(Index).GetProperty("Order");
 
@@ -23,11 +23,11 @@ namespace Adrien.Notation
 
         public int Axis => Dimension;
 
-        public TensorIndexExpression IndexExpression { get; protected set; }
+        public DimensionExpression DimensionExpression { get; protected set; }
 
-        internal override Expression LinqExpression =>
-            Type == IndexType.Constant ? Expression.Constant(this) : IndexExpression.LinqExpression;
-
+        internal override Expression LinqExpression => Type == IndexType.Constant ? Expression.Constant(this) :
+            DimensionExpression.LinqExpression;
+       
         internal override Name DefaultNameBase { get; } = "i";
 
         public Index(IndexSet set, int order, int dim, string name) : base(name)
@@ -38,50 +38,50 @@ namespace Adrien.Notation
             Type = IndexType.Constant;
         }
 
-        public Index(TensorIndexExpression expr)
+        public Index(DimensionExpression expr)
         {
             Type = IndexType.Expression;
             Name = GetNameFromLinqExpression(expr.LinqExpression);
-            IndexExpression = expr;
+            DimensionExpression = expr;
         }
 
         public Index(int i)
         {
             Name = "index_expr_int_" + i;
             Type = IndexType.Expression;
-            IndexExpression = new TensorIndexExpression(Expression.Constant(i));
+            DimensionExpression = new DimensionExpression(Expression.Constant(i));
         }
 
 
-        public static implicit operator Index(int i) => new Index(i);
+        public static implicit operator Int32(Index i) => i.Order;
 
-        public static TensorIndexExpression operator -(Index left) => left.Negate();
-
-        public static TensorIndexExpression operator +(Index left, Index right)
+        public static DimensionExpression operator - (Index left) => left.Negate();
+        
+        public static DimensionExpression operator + (Index left, Index right)
             => left.Add(right);
 
-        public static TensorIndexExpression operator -(Index left, Index right)
+        public static DimensionExpression operator - (Index left, Index right)
             => left.Subtract(right);
 
-        public static TensorIndexExpression operator *(Index left, Index right)
+        public static DimensionExpression operator * (Index left, Index right)
             => left.Multiply(right);
 
-        public static TensorIndexExpression operator /(Index left, Index right)
+        public static DimensionExpression operator / (Index left, Index right)
             => left.Divide(right);
 
-        public TensorIndexExpression Negate() => new TensorIndexExpression(Expression.Negate(this));
+        public DimensionExpression Negate() => new DimensionExpression(Expression.Negate(this));
 
-        public TensorIndexExpression Add(Index right)
-            => new TensorIndexExpression(Expression.Add(this, right, GetDummyBinaryMethodInfo(this, right)));
+        public DimensionExpression Add(Index right)
+            => new DimensionExpression(Expression.Add(this, right, GetDummyBinaryMethodInfo(this, right)));
 
-        public TensorIndexExpression Subtract(Index right)
-            => new TensorIndexExpression(Expression.Subtract(this, right, GetDummyBinaryMethodInfo(this, right)));
+        public DimensionExpression Subtract(Index right)
+            => new DimensionExpression(Expression.Subtract(this, right, GetDummyBinaryMethodInfo(this, right)));
 
-        public TensorIndexExpression Multiply(Index right)
-            => new TensorIndexExpression(Expression.Multiply(this, right, GetDummyBinaryMethodInfo(this, right)));
+        public DimensionExpression Multiply(Index right)
+            => new DimensionExpression(Expression.Multiply(this, right, GetDummyBinaryMethodInfo(this, right)));
 
-        public TensorIndexExpression Divide(Index right)
-            => new TensorIndexExpression(Expression.Divide(this, right, GetDummyBinaryMethodInfo(this, right)));
+        public DimensionExpression Divide(Index right)
+            => new DimensionExpression(Expression.Divide(this, right, GetDummyBinaryMethodInfo(this, right)));
 
 
         public Type GetIndexType()
@@ -90,11 +90,11 @@ namespace Adrien.Notation
             {
                 return typeof(Index);
             }
-            else if (IndexExpression.LinqExpression.NodeType == ExpressionType.Constant)
+            else if (DimensionExpression.LinqExpression.NodeType == ExpressionType.Constant)
             {
-                return (IndexExpression.LinqExpression as ConstantExpression).Type;
+                return (DimensionExpression.LinqExpression as ConstantExpression).Type;
             }
-            else return typeof(TensorIndexExpression);
+            else return typeof(DimensionExpression);
         }
 
         public int CompareTo(Index i)
@@ -104,11 +104,11 @@ namespace Adrien.Notation
 
         private static Index DummyBinary(Index l, Index r) => null;
 
-        private static Index DummyBinary(TensorIndexExpression l, Index r) => null;
-        private static Index DummyBinary(Index l, TensorIndexExpression r) => null;
+        private static Index DummyBinary(DimensionExpression l, Index r) => null;
+        private static Index DummyBinary(Index l, DimensionExpression r) => null;
 
-        private static Index DummyBinary(TensorIndexExpression l, int r) => null;
-        private static Index DummyBinary(int l, TensorIndexExpression r) => null;
+        private static Index DummyBinary(DimensionExpression l, int r) => null;
+        private static Index DummyBinary(int l, DimensionExpression r) => null;
 
         private static Index DummyBinary(Index l, int r) => null;
         private static Index DummyBinary(int l, Index r) => null;

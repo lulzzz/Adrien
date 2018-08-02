@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Linq.Expressions;
 using AgileObjects.ReadableExpressions;
+using Adrien.Expressions;
 using Adrien.Notation;
 
 namespace Adrien.Trees
@@ -90,7 +91,7 @@ namespace Adrien.Trees
 
             return node;
         }
-
+                    
         protected override Expression VisitIndex(IndexExpression node)
         {
             var on = Context.AddOperatorNode(TensorOp.Index);
@@ -158,7 +159,6 @@ namespace Adrien.Trees
 
             return node;
         }
-
 
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {

@@ -16,7 +16,7 @@ namespace Adrien.Notation
         public static TensorExpression Div(TensorExpression l, TensorExpression right) =>
             new TensorExpression(Expression.Divide(l.LinqExpression, right.LinqExpression));
 
-        public static TensorContraction SigmaSum(TensorContraction l) =>
+        public static TensorContraction SigmaSum(TensorIndexExpression l) =>
             new TensorContraction(Expression.Call(TensorExpression.GetOpMethodInfo<TensorExpression>("Op_Sum", 1),
                 Expression.Convert(l.LinqExpression, typeof(TensorExpression))));
 

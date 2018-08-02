@@ -105,11 +105,12 @@ namespace Adrien.Tests
         {
             var (A, B, C) = Tensor.TwoD((4, 3), out Index i, out Index j).Three();
             var (M, N, O) = Tensor.ThreeD("M", (7, 9, 6), "m", out Index m, out Index n, out Index o).Three();
-            A[i + 5, j + 7] = B[i, j] * C[i, j];
+            A[i, j] = B[i, j][i -7] * C[i, j][i + 4];
             Assert.True(A.IsAssigned);
             Assert.True(A.ContractionDefinition.IndexSet[0].Type == IndexType.Expression);
-            M[6, n - 4] = M[7] * N[n];
+            M[n] = A[m][m + 7]; 
             Assert.True(M.IsAssigned);
+            //Assert.True(M.ContractionDefinition.b)
         }
 
         [Fact]

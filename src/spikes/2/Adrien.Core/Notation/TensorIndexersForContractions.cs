@@ -5,12 +5,12 @@ namespace Adrien.Notation
 	public partial class Tensor
 	{
 		  
-		public TensorContraction this[Index index1]
+		public TensorIndexExpression this[Index index1]
 		{
 			get
 			{
 				ThrowIfIndicesExceedRank(1);
-				return new TensorContraction(Expression.ArrayAccess
+				return new TensorIndexExpression(Expression.ArrayAccess
 					(Expression.Constant(new Tensor[] 
 				{this}), 
 				new Expression[] {
@@ -19,10 +19,9 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				TensorContraction c;
 				if (value.LinqExpression.NodeType == ExpressionType.Call)
                 {
-                    ContractionDefinition = (new IndexSet(this, index1), value);
+                    ContractionDefinition = (new IndexSet(this, index1), value as TensorContraction);
                 }
                 else
                 {
@@ -31,12 +30,12 @@ namespace Adrien.Notation
 			}
 		}
 		  
-		public TensorContraction this[Index index1, Index index2]
+		public TensorIndexExpression this[Index index1, Index index2]
 		{
 			get
 			{
 				ThrowIfIndicesExceedRank(2);
-				return new TensorContraction(Expression.ArrayAccess
+				return new TensorIndexExpression(Expression.ArrayAccess
 					(Expression.Constant(new Tensor[,] 
 				{{this}}), 
 				new Expression[] {
@@ -46,10 +45,9 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				TensorContraction c;
 				if (value.LinqExpression.NodeType == ExpressionType.Call)
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2), value);
+                    ContractionDefinition = (new IndexSet(this, index1, index2), value as TensorContraction);
                 }
                 else
                 {
@@ -58,12 +56,12 @@ namespace Adrien.Notation
 			}
 		}
 		  
-		public TensorContraction this[Index index1, Index index2, Index index3]
+		public TensorIndexExpression this[Index index1, Index index2, Index index3]
 		{
 			get
 			{
 				ThrowIfIndicesExceedRank(3);
-				return new TensorContraction(Expression.ArrayAccess
+				return new TensorIndexExpression(Expression.ArrayAccess
 					(Expression.Constant(new Tensor[,,] 
 				{{{this}}}), 
 				new Expression[] {
@@ -74,10 +72,9 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				TensorContraction c;
 				if (value.LinqExpression.NodeType == ExpressionType.Call)
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3), value);
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3), value as TensorContraction);
                 }
                 else
                 {
@@ -86,12 +83,12 @@ namespace Adrien.Notation
 			}
 		}
 		  
-		public TensorContraction this[Index index1, Index index2, Index index3, Index index4]
+		public TensorIndexExpression this[Index index1, Index index2, Index index3, Index index4]
 		{
 			get
 			{
 				ThrowIfIndicesExceedRank(4);
-				return new TensorContraction(Expression.ArrayAccess
+				return new TensorIndexExpression(Expression.ArrayAccess
 					(Expression.Constant(new Tensor[,,,] 
 				{{{{this}}}}), 
 				new Expression[] {
@@ -103,10 +100,9 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				TensorContraction c;
 				if (value.LinqExpression.NodeType == ExpressionType.Call)
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4), value);
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4), value as TensorContraction);
                 }
                 else
                 {
@@ -115,12 +111,12 @@ namespace Adrien.Notation
 			}
 		}
 		  
-		public TensorContraction this[Index index1, Index index2, Index index3, Index index4, Index index5]
+		public TensorIndexExpression this[Index index1, Index index2, Index index3, Index index4, Index index5]
 		{
 			get
 			{
 				ThrowIfIndicesExceedRank(5);
-				return new TensorContraction(Expression.ArrayAccess
+				return new TensorIndexExpression(Expression.ArrayAccess
 					(Expression.Constant(new Tensor[,,,,] 
 				{{{{{this}}}}}), 
 				new Expression[] {
@@ -133,10 +129,9 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				TensorContraction c;
 				if (value.LinqExpression.NodeType == ExpressionType.Call)
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5), value);
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5), value as TensorContraction);
                 }
                 else
                 {
@@ -145,12 +140,12 @@ namespace Adrien.Notation
 			}
 		}
 		  
-		public TensorContraction this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6]
+		public TensorIndexExpression this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6]
 		{
 			get
 			{
 				ThrowIfIndicesExceedRank(6);
-				return new TensorContraction(Expression.ArrayAccess
+				return new TensorIndexExpression(Expression.ArrayAccess
 					(Expression.Constant(new Tensor[,,,,,] 
 				{{{{{{this}}}}}}), 
 				new Expression[] {
@@ -164,10 +159,9 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				TensorContraction c;
 				if (value.LinqExpression.NodeType == ExpressionType.Call)
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6), value);
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6), value as TensorContraction);
                 }
                 else
                 {
@@ -176,12 +170,12 @@ namespace Adrien.Notation
 			}
 		}
 		  
-		public TensorContraction this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6, Index index7]
+		public TensorIndexExpression this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6, Index index7]
 		{
 			get
 			{
 				ThrowIfIndicesExceedRank(7);
-				return new TensorContraction(Expression.ArrayAccess
+				return new TensorIndexExpression(Expression.ArrayAccess
 					(Expression.Constant(new Tensor[,,,,,,] 
 				{{{{{{{this}}}}}}}), 
 				new Expression[] {
@@ -196,10 +190,9 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				TensorContraction c;
 				if (value.LinqExpression.NodeType == ExpressionType.Call)
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), value);
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), value as TensorContraction);
                 }
                 else
                 {
@@ -208,12 +201,12 @@ namespace Adrien.Notation
 			}
 		}
 		  
-		public TensorContraction this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6, Index index7, Index index8]
+		public TensorIndexExpression this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6, Index index7, Index index8]
 		{
 			get
 			{
 				ThrowIfIndicesExceedRank(8);
-				return new TensorContraction(Expression.ArrayAccess
+				return new TensorIndexExpression(Expression.ArrayAccess
 					(Expression.Constant(new Tensor[,,,,,,,] 
 				{{{{{{{{this}}}}}}}}), 
 				new Expression[] {
@@ -229,10 +222,9 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				TensorContraction c;
 				if (value.LinqExpression.NodeType == ExpressionType.Call)
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), value);
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), value as TensorContraction);
                 }
                 else
                 {

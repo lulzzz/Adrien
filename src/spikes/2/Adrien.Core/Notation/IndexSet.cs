@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,7 +13,9 @@ namespace Adrien.Notation
 
         public SortedSet<Index> Indices { get; protected set; }
 
-        public ITerm Parent { get; protected set; }
+        public Tensor Tensor { get; protected set; }
+
+        public ITerm Parent => Tensor;
 
         public int DimensionCount => Indices.Count;
 
@@ -31,6 +34,7 @@ namespace Adrien.Notation
             Name = dim.Length > 0
                 ? Indices.Select(i => i.Name).Aggregate((a, b) => a + b)
                 : new Name(indexNameBase);
+            this.Tensor = parent;
         }
 
         public IndexSet(Tensor parent, params Index[] indices)
@@ -46,8 +50,7 @@ namespace Adrien.Notation
             {
                 index.Set = this;
             }
-
-            Parent = parent;
+            this.Tensor = parent;
         }
 
         public Index this[int index]
@@ -67,7 +70,7 @@ namespace Adrien.Notation
             }
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
         #region Deconstructors
 
@@ -130,7 +133,6 @@ namespace Adrien.Notation
             index6 = this[5];
             index7 = this[6];
         }
-
         #endregion
 
         protected void ThrowIfIndicesExceedDimensions(int c)

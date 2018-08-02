@@ -21,7 +21,7 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				ElementwiseAssignment = (new Tensor[] { <#for(int j = 1; j < i; j++){#>tensor<#=j#>, <#}#>tensor<#=i#>}, value);
+				ElementwiseDefinition = (new Tensor[] { <#for(int j = 1; j < i; j++){#>tensor<#=j#>, <#}#>tensor<#=i#>}, value);
 			}
 		}
 		<#}#>

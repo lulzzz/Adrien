@@ -17,6 +17,10 @@ namespace Adrien.Notation
 
         public int[] Strides { get; protected set; }
 
+        public Dimensions Dim { get; protected set; }
+
+        public Dimensions Axis => Dim;
+
         public int Rank => Dimensions.Length;
 
         // TODO: [vermorel] Do we have any use case for 'LongRank'? Would suggest to remove.
@@ -58,8 +62,10 @@ namespace Adrien.Notation
 
         internal override Name DefaultNameBase { get; } = "A";
 
+
         protected (Tensor tensor, int index)? GeneratorContext { get; set; }
 
+        protected Tensor(string name) : base(name) { }
 
         public Tensor(string name, params int[] dim) : base(name)
         {
@@ -70,6 +76,7 @@ namespace Adrien.Notation
 
             Dimensions = dim;
             Strides = GenericMath<int>.StridesInElements(Dimensions);
+            Dim = new Dimensions(this);
         }
 
         public Tensor(params int[] dim) : this("A", dim)
@@ -85,12 +92,13 @@ namespace Adrien.Notation
         {
         }
 
-        internal Tensor((TensorContraction te, string name) expr) : base(expr.name)
+        /*
+        internal Tensor((TensorIndexExpression te, string name) expr) : base(expr.name)
         {
             ContractionDefinition = (null, expr.te);
-        }
+        }*/
 
-        public TensorContraction this[IndexSet I]
+        public TensorIndexExpression this[IndexSet I]
         {
             get
             {
@@ -106,16 +114,16 @@ namespace Adrien.Notation
                 Array t = Array.CreateInstance(typeof(Tensor), tdim);
                 t.SetValue(this, tidx);
                 Expression[] e = I.Indices.Select(i => Expression.Parameter(typeof(int), i.Name)).ToArray();
-                return new TensorContraction(Expression.ArrayAccess(Expression.Constant(t), e));
+                return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(t), e));
             }
             set
             {
                 ThrowIfAlreadyAssiged();
-                if (value.LinqExpression.NodeType == ExpressionType.Call)
+                if (value is TensorContraction && value.LinqExpression.NodeType == ExpressionType.Call)
                 {
-                    ContractionDefinition = (I, value);
+                    ContractionDefinition = (I, value as TensorContraction);
                 }
-                else
+                else if (value is TensorIndexExpression)
                 {
                     ContractionDefinition = (I, Math.SigmaSum(value));
                 }
@@ -229,11 +237,15 @@ namespace Adrien.Notation
             return string.Join("", names);
         }
 
-        public IndexSet Axes(params int[] axes)
+        public IndexSet AxesToIndices(params int[] axes)
         {
             if (axes.Length == 0)
             {
                 axes = new[] {Rank - 1};
+            }
+            else if (axes.Length > Dimensions.Length)
+            {
+                throw new ArgumentException("The number of axes specified exceeds the rank of this tensor.");
             }
             else if (axes.Length == 1 && axes[0] < 0)
             {

@@ -137,12 +137,12 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
-        public RunStatus Run(IVariable<T> output, out IVariable<T> gradient, params IVariable<T>[] input)
+        public RunStatus Run(IVariable<T> output, ref IVariable<T> gradient, params IVariable<T>[] input)
         {
-            gradient = null;
-            var s = Run(output, input);
+            RunStatus s = Run(output, input);
             if (s != RunStatus.Success)
             {
+                gradient = null;
                 return s;
             }
 
@@ -166,6 +166,7 @@ namespace Adrien.Compiler.PlaidML
             var ginvc = ginv.Invoke();
             if (!ginvc.IsAllocated)
             {
+                gradient = null;
                 return RunStatus.ErrorComputingGradient;
             }
 
@@ -173,6 +174,7 @@ namespace Adrien.Compiler.PlaidML
             if (!gv.CopyToAndFree(gradient.Span))
             {
                 gv.Free();
+                gradient = null;
                 return RunStatus.ErrorComputingGradient;
             }
 

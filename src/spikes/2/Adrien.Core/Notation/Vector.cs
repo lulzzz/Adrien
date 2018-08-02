@@ -4,9 +4,9 @@
     {
         internal override Name DefaultNameBase => "V0";
 
-        public Vector(string name, int length) : base(name, length)
-        {
-        }
+        protected Vector(string name) : base(name) { }
+
+        public Vector(string name, int length) : base(name, length) {}
 
         public Vector(int length) : this(vn.V0, length)
         {
@@ -20,7 +20,7 @@
         public Vector(int length, out Index i) : this(vn.V0, "i", out i, length)
         {
         }
-
+        
         public Vector(string name, out Index i, int length) : this(name, "i", out i, length)
         {
         }

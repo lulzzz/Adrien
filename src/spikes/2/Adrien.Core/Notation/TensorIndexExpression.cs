@@ -1,60 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Adrien.Trees;
+using System.Text;
+
+using Adrien.Expressions;
 
 namespace Adrien.Notation
 {
-    public class TensorIndexExpression : Term, IAlgebra<TensorIndexExpression, TensorIndexExpression>
+    public class TensorIndexExpression : TensorExpression
     {
-        internal override Expression LinqExpression { get; }
+        public NewArrayExpression Bounds { get; protected set; }
 
-        internal override Name DefaultNameBase => "index_expr0";
 
-        public List<Index> Indices => LinqExpression.GetConstants<Index>();
+        public TensorIndexExpression(IndexExpression expr) : base(expr) {}
 
-        public TensorIndexExpression(Expression e)
+        public TensorIndexExpression(MethodCallExpression expr) : base(expr) { }
+
+        public TensorIndexExpression(UnaryExpression expr) : base(expr) { }
+
+        public TensorIndexExpression(BinaryExpression expr) : base(expr) { }
+        
+        public TensorIndexExpression(TensorIndexExpression c, NewArrayExpression bounds) : base(c.LinqExpression)
         {
-            LinqExpression = e;
-            Name = GetNameFromLinqExpression(LinqExpression);
+            this.Bounds = bounds;
         }
-
-        public static implicit operator TensorIndexExpression(Index i) =>
-            new TensorIndexExpression(i.LinqExpression);
-
-        public static implicit operator Index(TensorIndexExpression expr) => new Index(expr);
-
-        public static implicit operator TensorIndexExpression(Int32 i)
-            => new TensorIndexExpression(Expression.Constant(i));
-
-        public static implicit operator Int32(TensorIndexExpression t) => Int32.MinValue;
-
-        public static TensorIndexExpression operator -(TensorIndexExpression left) => left.Negate();
-
-        public static TensorIndexExpression operator +(TensorIndexExpression left, TensorIndexExpression right)
-            => left.Add(right);
-
-        public static TensorIndexExpression operator -(TensorIndexExpression left, TensorIndexExpression right)
-            => left.Subtract(right);
-
-        public static TensorIndexExpression operator *(TensorIndexExpression left, TensorIndexExpression right)
-            => left.Multiply(right);
-
-        public static TensorIndexExpression operator /(TensorIndexExpression left, TensorIndexExpression right)
-            => left.Divide(right);
-
-        public TensorIndexExpression Negate() => new TensorIndexExpression(Expression.Negate(this));
-
-        public TensorIndexExpression Add(TensorIndexExpression right)
-            => new TensorIndexExpression(Expression.Add(this, right));
-
-        public TensorIndexExpression Subtract(TensorIndexExpression right)
-            => new TensorIndexExpression(Expression.Subtract(this, right));
-
-        public TensorIndexExpression Multiply(TensorIndexExpression right)
-            => new TensorIndexExpression(Expression.Multiply(this, right));
-
-        public TensorIndexExpression Divide(TensorIndexExpression right)
-            => new TensorIndexExpression(Expression.Divide(this, right));
+        
+        public TensorIndexExpression this[DimensionExpression d]
+        {
+            get => new TensorIndexExpression(this, Expression.NewArrayBounds(typeof(TensorContraction), 
+                Expression.Convert(d.LinqExpression, typeof(Int32))));
+        }
+        
+        public static TensorIndexExpression operator * (TensorIndexExpression left, TensorIndexExpression right) =>
+            new TensorIndexExpression(Expression.Multiply(left, right, GetDummyBinaryMethodInfo(right, right)));
     }
 }
