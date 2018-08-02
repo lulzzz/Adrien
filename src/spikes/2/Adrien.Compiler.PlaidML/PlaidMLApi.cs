@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
     public abstract class PlaidMLApi<T> : CompilerApi<T>, IDisposable
     {
-        protected Context _Context;
-        protected IntPtr ptr;
+        protected Context _context;
+        protected IntPtr _ptr;
 
         public Context Context
         {
             get
             {
                 ThrowIfNotAllocated();
-                return _Context;
+                return _context;
             }
         }
 
@@ -24,31 +23,29 @@ namespace Adrien.Compiler.PlaidML
         public VaiStatus LastStatus { get; protected set; }
         public string LastStatusString { get; protected set; }
         public string ManualConfigText { get; protected set; }
-        
+
 
         public PlaidMLApi(Context ctx) : base()
         {
             ctx.ThrowIfNotAllocated();
-            this._Context = ctx;
+            _context = ctx;
         }
 
         public PlaidMLApi() : base()
         {
-            _Context = new Context();
+            _context = new Context();
         }
 
-        public static implicit operator IntPtr(PlaidMLApi<T> c)  
+        public static implicit operator IntPtr(PlaidMLApi<T> c)
         {
             if (!c.IsAllocated)
             {
                 throw new InvalidOperationException("This object is not allocated.");
             }
-            else
-            {
-                return c.ptr;
-            }
+
+            return c._ptr;
         }
-        
+
 
         public virtual void Free()
         {
@@ -67,7 +64,8 @@ namespace Adrien.Compiler.PlaidML
         }
 
         [DebuggerStepThrough]
-        protected void ReportApiCallError(string call) => Error("Call to {0} returned null or false. Status : {1} {2}", call,
+        protected void ReportApiCallError(string call) => Error("Call to {0} returned null or false. Status : {1} {2}",
+            call,
             LastStatus = @base.VaiLastStatus(), LastStatusString = @base.VaiLastStatusStr());
 
         void IDisposable.Dispose()
@@ -75,11 +73,10 @@ namespace Adrien.Compiler.PlaidML
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-        
+
         private void Dispose(bool disposing)
         {
             Free();
         }
-        
     }
 }

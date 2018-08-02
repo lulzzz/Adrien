@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
@@ -28,7 +26,8 @@ namespace Adrien.Compiler.PlaidML
 
         public string Id { get; set; }
 
-        public DeviceTensor(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context, name)
+        public DeviceTensor(Device device, Shape shape, string name, DeviceBuffer buffer = null) : base(device.Context,
+            name)
         {
             if (buffer == null)
             {
@@ -40,41 +39,37 @@ namespace Adrien.Compiler.PlaidML
                 }
             }
 
-            ptr = plaidml.__Internal.PlaidmlAllocTensor(_Context, buffer, shape);
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlAllocTensor(_context, buffer, shape);
+            if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_tensor");
                 return;
             }
-            else
-            {
-                Name = name;
-                Device = device;
-                DeviceBuffer = buffer;
-                Shape = shape;
-                DataType = Shape.DataType;
-                IsAllocated = true;
-            }
+
+            Name = name;
+            Device = device;
+            DeviceBuffer = buffer;
+            Shape = shape;
+            DataType = Shape.DataType;
+            IsAllocated = true;
         }
 
-        public DeviceTensorView<T> CreateView<T>(MemoryMapType mapType) 
+        public DeviceTensorView<T> CreateView<T>(MemoryMapType mapType)
             where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
         {
             ThrowIfNotAllocated();
             return new DeviceTensorView<T>(this, mapType);
         }
 
-        #region IEnumerable<int> implementation
+        /// <summary>Enumerates the dimensions.</summary>
         public IEnumerator<int> GetEnumerator()
         {
-            for (int i = 0; i < this.Dimensions.Length; i++)
+            for (int i = 0; i < Dimensions.Length; i++)
             {
-                yield return this.Dimensions[i];
+                yield return Dimensions[i];
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-        #endregion
-
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

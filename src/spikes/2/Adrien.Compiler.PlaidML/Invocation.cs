@@ -10,8 +10,8 @@ namespace Adrien.Compiler.PlaidML
 
         public Invocation(Context ctx, Invoker<T> invoker) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlScheduleInvocation(_Context, invoker);
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlScheduleInvocation(_context, invoker);
+            if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_schedule_invocation");
                 return;
@@ -25,7 +25,7 @@ namespace Adrien.Compiler.PlaidML
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeInvocation(this);
-            ptr = IntPtr.Zero;
+            _ptr = IntPtr.Zero;
         }
     }
 }

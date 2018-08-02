@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Buffers;
-using System.Runtime.InteropServices;
-using System.Text;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
@@ -18,9 +14,10 @@ namespace Adrien.Compiler.PlaidML
             {
                 ThrowIfNotAllocated();
                 ThrowIfNotValid();
+
                 unsafe
                 {
-                    void* _r = plaidml.__Internal.PlaidmlGetMappingBase(_Context, this);
+                    void* _r = plaidml.__Internal.PlaidmlGetMappingBase(_context, this);
                     return new IntPtr(_r);
                 }
             }
@@ -32,7 +29,7 @@ namespace Adrien.Compiler.PlaidML
             {
                 ThrowIfNotAllocated();
                 ThrowIfNotValid();
-                return plaidml.__Internal.PlaidmlGetMappingSize(_Context, this);
+                return plaidml.__Internal.PlaidmlGetMappingSize(_context, this);
             }
         }
 
@@ -40,6 +37,7 @@ namespace Adrien.Compiler.PlaidML
 
         public bool IsValid { get; protected set; }
 
+        /// <summary> Reference counting. </summary>
         public int Pins { get; protected set; }
 
         public bool IsPinned => Pins > 0;
@@ -50,35 +48,35 @@ namespace Adrien.Compiler.PlaidML
         {
             if (discard)
             {
-                ptr = plaidml.__Internal.PlaidmlMapBufferDiscard(buffer.Context, buffer);
+                _ptr = plaidml.__Internal.PlaidmlMapBufferDiscard(buffer.Context, buffer);
                 Type = MemoryMapType.Discard;
             }
             else
             {
-                ptr = plaidml.__Internal.PlaidmlMapBufferCurrent(buffer, IntPtr.Zero, IntPtr.Zero);
+                _ptr = plaidml.__Internal.PlaidmlMapBufferCurrent(buffer, IntPtr.Zero, IntPtr.Zero);
                 Type = MemoryMapType.Retain;
             }
-            if (ptr.IsZero())
+
+            if (_ptr.IsZero())
             {
                 ReportApiCallError(discard ? "plaidml_map_buffer_discard" : "plaidml_map_buffer_current");
                 return;
             }
-            else
-            {
-                Buffer = buffer;
-                IsAllocated = true;
-                IsValid = true;
-                Pin(0);
-            }
+
+            Buffer = buffer;
+            IsAllocated = true;
+            IsValid = true;
+            Pin(0);
         }
 
 
         public override void Free()
         {
             ThrowIfPinned();
+
             base.Free();
-            plaidml.__Internal.PlaidmlFreeMapping(this.ptr);
-            ptr = IntPtr.Zero;
+            plaidml.__Internal.PlaidmlFreeMapping(_ptr);
+            _ptr = IntPtr.Zero;
         }
 
         public virtual bool Writeback()
@@ -87,7 +85,8 @@ namespace Adrien.Compiler.PlaidML
             ThrowIfNotValid();
             Unpin();
             ThrowIfPinned();
-            bool r = plaidml.__Internal.PlaidmlWritebackMapping(_Context, this);
+
+            var r = plaidml.__Internal.PlaidmlWritebackMapping(_context, this);
             if (!r)
             {
                 ReportApiCallError("plaidml_writeback_mapping");
@@ -96,6 +95,7 @@ namespace Adrien.Compiler.PlaidML
             {
                 Invalidate();
             }
+
             return r;
         }
 
@@ -103,13 +103,15 @@ namespace Adrien.Compiler.PlaidML
         {
             ThrowIfNotAllocated();
             ThrowIfNotValid();
-            return new Span<T>(BaseAddress.ToPointer(), (int)(SizeInBytes / (ulong)sizeof(T)));
+
+            return new Span<T>(BaseAddress.ToPointer(), (int) (SizeInBytes / (ulong) sizeof(T)));
         }
 
         public unsafe MemoryHandle Pin(int elementIndex)
         {
             ThrowIfNotAllocated();
             ThrowIfNotValid();
+
             Pins++;
             return MemoryHandle;
         }
@@ -118,6 +120,7 @@ namespace Adrien.Compiler.PlaidML
         {
             ThrowIfNotAllocated();
             ThrowIfNotValid();
+
             Pins--;
         }
 
@@ -133,7 +136,8 @@ namespace Adrien.Compiler.PlaidML
         {
             if (IsPinned)
             {
-                throw new InvalidOperationException("The memory for this mapping is still pinned and cannot be invalidated or freed.");
+                throw new InvalidOperationException(
+                    "The memory for this mapping is still pinned and cannot be invalidated or freed.");
             }
         }
 

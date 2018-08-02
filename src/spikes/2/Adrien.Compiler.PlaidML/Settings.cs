@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-
 using Newtonsoft.Json;
 
 namespace Adrien.Compiler.PlaidML
@@ -13,10 +11,10 @@ namespace Adrien.Compiler.PlaidML
         {
             Default,
             Experimental,
-            Envirronment,
+            Environment,
             User
         }
-          
+
         public static string CONFIG_VAR = "PLAIDML_CONFIG";
         public static string CONFIG_FILE_VAR = "PLAIDML_CONFIG_FILE";
         public static string DEVICE_IDS_VAR = "PLAIDML_DEVICE_IDS";
@@ -28,27 +26,30 @@ namespace Adrien.Compiler.PlaidML
         public static string PLAIDML_EXPERIMENTAL_CONFIG_VAR = "PLAIDML_EXPERIMENTAL_CONFIG";
         public static string PLAIDML_DEFAULT_CONFIG_VAR = "PLAIDML_DEFAULT_CONFIG";
 
-        public static string[] ENV_SETTINGS_VARS = { CONFIG_VAR, CONFIG_FILE_VAR, DEVICE_IDS_VAR,
-            EXPERIMENTAL_VAR, SESSION_VAR, SETTINGS_VAR, TELEMETRY_VAR };
+        public static string[] ENV_SETTINGS_VARS =
+        {
+            CONFIG_VAR, CONFIG_FILE_VAR, DEVICE_IDS_VAR,
+            EXPERIMENTAL_VAR, SESSION_VAR, SETTINGS_VAR, TELEMETRY_VAR
+        };
 
-        public static FileInfo EnvironmentConfigFile = 
+        public static FileInfo EnvironmentConfigFile =
             Environment.GetEnvironmentVariable(SETTINGS_VAR).IsNotNullOrEmpty()
-            ? new FileInfo(Environment.GetEnvironmentVariable(SETTINGS_VAR))
-            : null;
+                ? new FileInfo(Environment.GetEnvironmentVariable(SETTINGS_VAR))
+                : null;
 
-        public static FileInfo UserConfigFile = 
-            new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
+        public static FileInfo UserConfigFile =
+            new FileInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 ".plaidml"));
 
-        public static FileInfo DefaultConfigFile = 
+        public static FileInfo DefaultConfigFile =
             Environment.GetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR).IsNotNullOrEmpty()
-            ? new FileInfo(Environment.GetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR))
-            : new FileInfo(GetAssemblyDirectoryFullPath("config.json"));
+                ? new FileInfo(Environment.GetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR))
+                : new FileInfo(GetAssemblyDirectoryFullPath("config.json"));
 
         public static FileInfo ExperimentalConfigFile =
             Environment.GetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR).IsNotNullOrEmpty()
-            ? new FileInfo(Environment.GetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR))
-            : new FileInfo(GetAssemblyDirectoryFullPath("experimental.json"));
+                ? new FileInfo(Environment.GetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR))
+                : new FileInfo(GetAssemblyDirectoryFullPath("experimental.json"));
 
         public FileInfo ConfigFile { get; protected set; }
 
@@ -76,25 +77,23 @@ namespace Adrien.Compiler.PlaidML
                 {
                     return ConfigFileText;
                 }
-                else throw new Exception("No configuration loaded.");
+                else throw new InvalidOperationException("No configuration loaded.");
             }
-
         }
 
         public bool IsManualConfig => ManualConfigText.IsNotNullOrEmpty();
-        
 
         static Settings()
         {
             if (Environment.GetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR).IsNullOrEmpty())
             {
-                Environment.SetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR, 
+                Environment.SetEnvironmentVariable(PLAIDML_DEFAULT_CONFIG_VAR,
                     GetAssemblyDirectoryFullPath("config.json"));
             }
 
             if (Environment.GetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR).IsNullOrEmpty())
             {
-                Environment.SetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR, 
+                Environment.SetEnvironmentVariable(PLAIDML_EXPERIMENTAL_CONFIG_VAR,
                     GetAssemblyDirectoryFullPath("experimental.json"));
             }
         }
@@ -109,17 +108,18 @@ namespace Adrien.Compiler.PlaidML
             else if (UserConfigFile.Exists)
             {
                 ConfigFile = UserConfigFile;
-                Info("Using PlaidML user settings file {0}.", UserConfigFile.FullName); 
+                Info("Using PlaidML user settings file {0}.", UserConfigFile.FullName);
             }
             else
             {
                 ConfigFile = DefaultConfigFile;
                 Info("Using PlaidML default settings file {0}.", DefaultConfigFile.FullName);
             }
+
             ManualConfigText = manualConfigText;
             Load();
         }
- 
+
         public Settings(UseConfigFile config)
         {
             if (config == UseConfigFile.Default)
@@ -132,19 +132,19 @@ namespace Adrien.Compiler.PlaidML
                 ConfigFile = ExperimentalConfigFile;
                 Info("Using PlaidML experimental settings file {0}.", ConfigFile.FullName);
             }
+
             Load();
         }
-
 
         public object this[string key]
         {
             get
             {
                 ThrowIfNotLoaded();
-                return this.Dict[key];
+                return Dict[key];
             }
         }
-        
+
 
         public string StartNewSession()
         {
@@ -153,13 +153,13 @@ namespace Adrien.Compiler.PlaidML
             SessionId = Guid.NewGuid().ToString("D");
             Environment.SetEnvironmentVariable(SESSION_VAR, SessionId);
             return SessionId;
-
         }
+
         protected bool Load()
         {
             try
             {
-                string c = ConfigFile.OpenText().ReadToEnd();
+                var c = ConfigFile.OpenText().ReadToEnd();
                 Dict = JsonConvert.DeserializeObject<Dictionary<string, object>>(c);
                 if (Dict != null && Dict.Count > 0)
                 {
@@ -167,13 +167,15 @@ namespace Adrien.Compiler.PlaidML
                     ConfigFileText = c;
                     Info("Loaded configuration from file {0}.", ConfigFile.FullName);
                 }
+
                 IsLoaded = true;
             }
-            catch (Exception e)
+            catch (Exception e) // TODO: [vermorel] Do not catch all 'Exception', narrow it to the one that matters.
             {
                 Error(e, "Exception thrown loading configuration from file {0}.", ConfigFile.FullName);
                 IsLoaded = false;
             }
+
             return IsLoaded;
         }
 
@@ -191,7 +193,6 @@ namespace Adrien.Compiler.PlaidML
             {
                 throw new InvalidOperationException("A session has already been started.");
             }
-        }        
-        
+        }
     }
 }

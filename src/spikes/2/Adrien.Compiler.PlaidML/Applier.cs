@@ -16,8 +16,8 @@ namespace Adrien.Compiler.PlaidML
 
         public Applier(Context ctx, Function f) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocApplier(f);
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlAllocApplier(f);
+            if (_ptr.IsZero())
             {
                 // TODO: [vermorel] Probably throws an exception but unclear. I suggest to rename 'ThrowApiCallError`.
                 ReportApiCallError("plaidml_alloc_applier");
@@ -34,7 +34,7 @@ namespace Adrien.Compiler.PlaidML
         public bool AddInputValue(string name, IntPtr varPtr)
         {
             ThrowIfNotAllocated();
-            var i = new Value(_Context, name, varPtr);
+            var i = new Value(_context, name, varPtr);
             if (i.IsAllocated)
             {
                 return AddInputValue(name, i);
@@ -70,7 +70,7 @@ namespace Adrien.Compiler.PlaidML
                 return null; // TODO: [vermorel] Throw an exception instead, don't use 'null' to report faults.
             }
 
-            var o = new Value(_Context, name, p);
+            var o = new Value(_context, name, p);
             Outputs.Add(o);
             return o;
         }
@@ -96,7 +96,7 @@ namespace Adrien.Compiler.PlaidML
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeApplier(this);
-            ptr = IntPtr.Zero;
+            _ptr = IntPtr.Zero;
         }
     }
 }

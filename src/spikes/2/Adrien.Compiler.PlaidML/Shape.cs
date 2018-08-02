@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
@@ -27,7 +26,7 @@ namespace Adrien.Compiler.PlaidML
             set
             {
                 ThrowIfNotAllocated();
-                bool r = plaidml.__Internal.PlaidmlSetShapeOffset(this._Context, this, value);
+                bool r = plaidml.__Internal.PlaidmlSetShapeOffset(_context, this, value);
                 if (!r)
                 {
                     ReportApiCallError("plaidml_shape_offset");
@@ -59,42 +58,41 @@ namespace Adrien.Compiler.PlaidML
             get
             {
                 ThrowIfNotAllocated();
-                if (this.DimensionCount == 0)
+                if (DimensionCount == 0)
                 {
                     return null;
                 }
-                return Enumerable.Range(0, (int)this.DimensionCount)
-                    .Select(i => (GetDimensionLength((ulong)i), GetDimensionStride((ulong)i))).ToList();
+
+                return Enumerable.Range(0, (int) DimensionCount)
+                    .Select(i => (GetDimensionLength((ulong) i), GetDimensionStride((ulong) i))).ToList();
             }
         }
-        
-      
+
+
         public Shape(Context ctx, PlaidmlDatatype datatype, params int[] dimensions) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocShape(_Context, datatype);
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlAllocShape(_context, datatype);
+            if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_shape");
                 return;
             }
-            else
+
+            IsAllocated = true;
+            var strides = GenericMath<int>.StridesInElements(dimensions);
+            for (int i = 0; i < dimensions.Length; i++)
             {
-                IsAllocated = true;
-                int[] stride = GenericMath<int>.StridesInElements(dimensions);
-                for (int i = 0; i < dimensions.Length; i++)
-                {
-                    this.AddDimension((ulong)dimensions[i], stride[i]);
-                }
+                AddDimension((ulong) dimensions[i], strides[i]);
             }
         }
 
         public Shape(Context ctx, IntPtr p) : base(ctx)
         {
-            this.ptr = p;
+            _ptr = p;
             IsAllocated = true;
         }
 
-        
+
         public (ulong length, long stride) this[int i]
         {
             get
@@ -106,7 +104,7 @@ namespace Adrien.Compiler.PlaidML
 
         public static PlaidmlDatatype ToDataType<T>() where T : unmanaged
         {
-            PlaidmlDatatype datatype = PlaidmlDatatype.PLAIDML_DATA_INVALID;
+            var datatype = PlaidmlDatatype.PLAIDML_DATA_INVALID;
             T t = default;
             switch (t)
             {
@@ -156,6 +154,7 @@ namespace Adrien.Compiler.PlaidML
                 default:
                     throw new Exception($"This .NET type is not supported as a PlaidML datatype:{typeof(T).Name}");
             }
+
             return datatype;
         }
 
@@ -164,7 +163,7 @@ namespace Adrien.Compiler.PlaidML
             base.Free();
             plaidml.__Internal.PlaidmlFreeShape(this);
         }
-        
+
         public long GetDimensionStride(ulong dimension)
         {
             return plaidml.__Internal.PlaidmlGetShapeDimensionStride(this, dimension);
@@ -178,11 +177,13 @@ namespace Adrien.Compiler.PlaidML
         public bool AddDimension(ulong length, long stride)
         {
             ThrowIfNotAllocated();
-            bool r = plaidml.__Internal.PlaidmlAddDimension(_Context, this, length, stride);
+
+            var r = plaidml.__Internal.PlaidmlAddDimension(_context, this, length, stride);
             if (!r)
             {
                 ReportApiCallError("plaidml_add_dimension");
             }
+
             return r;
         }
     }

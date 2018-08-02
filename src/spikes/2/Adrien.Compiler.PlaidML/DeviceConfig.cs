@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
     public class DeviceConfig : PlaidMLApi<DeviceConfig>
     {
-        protected string _Id;
-        protected string _Config;
-        protected string _Description;
-        protected string _Details;
-        
+        protected string _id;
+        protected string _config;
+        protected string _description;
+        protected string _details;
+
 
         public DeviceEnumerator Enumerator { get; protected set; }
 
@@ -23,11 +20,12 @@ namespace Adrien.Compiler.PlaidML
         {
             get
             {
-                if (_Id.IsNullOrEmpty())
+                if (_id.IsNullOrEmpty())
                 {
-                    _Id = QueryStringProperty(PlaidmlDeviceProperty.PLAIDML_DEVICE_ID);
+                    _id = QueryStringProperty(PlaidmlDeviceProperty.PLAIDML_DEVICE_ID);
                 }
-                return _Id;
+
+                return _id;
             }
         }
 
@@ -35,11 +33,12 @@ namespace Adrien.Compiler.PlaidML
         {
             get
             {
-                if (_Config.IsNullOrEmpty())
+                if (_config.IsNullOrEmpty())
                 {
-                    _Config = QueryStringProperty(PlaidmlDeviceProperty.PLAIDML_DEVICE_CONFIG);
+                    _config = QueryStringProperty(PlaidmlDeviceProperty.PLAIDML_DEVICE_CONFIG);
                 }
-                return _Config;
+
+                return _config;
             }
         }
 
@@ -47,11 +46,12 @@ namespace Adrien.Compiler.PlaidML
         {
             get
             {
-                if (_Description.IsNullOrEmpty())
+                if (_description.IsNullOrEmpty())
                 {
-                    _Description = QueryStringProperty(PlaidmlDeviceProperty.PLAIDML_DEVICE_DESCRIPTION);
+                    _description = QueryStringProperty(PlaidmlDeviceProperty.PLAIDML_DEVICE_DESCRIPTION);
                 }
-                return _Description;
+
+                return _description;
             }
         }
 
@@ -59,21 +59,21 @@ namespace Adrien.Compiler.PlaidML
         {
             get
             {
-                if (_Details.IsNullOrEmpty())
+                if (_details.IsNullOrEmpty())
                 {
-                    _Details = QueryStringProperty(PlaidmlDeviceProperty.PLAIDML_DEVICE_DETAILS);
+                    _details = QueryStringProperty(PlaidmlDeviceProperty.PLAIDML_DEVICE_DETAILS);
                 }
-                return _Details;
+
+                return _details;
             }
         }
-        
 
-       
         public DeviceConfig(Context ctx, DeviceEnumerator enumerator, ulong index) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlGetDevconf(_Context, enumerator, index);
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlGetDevconf(_context, enumerator, index);
+            if (_ptr.IsZero())
             {
+                // TODO: [vermorel] Make it clear than an error is thrown here.
                 ReportApiCallError("plaidml_get_devconf");
             }
             else
@@ -82,16 +82,14 @@ namespace Adrien.Compiler.PlaidML
                 Index = index;
                 IsAllocated = true;
             }
-            
         }
-        
 
         public string QueryStringProperty(PlaidmlDeviceProperty property)
         {
             unsafe
             {
                 ulong* sizeRequired = stackalloc ulong[1];
-                bool r = plaidml.__Internal.PlaidmlQueryDevconf(_Context, this, property, IntPtr.Zero, 0, sizeRequired);
+                bool r = plaidml.__Internal.PlaidmlQueryDevconf(_context, this, property, IntPtr.Zero, 0, sizeRequired);
                 if (!r)
                 {
                     ReportApiCallError("plaidml_query_dev_conf");
@@ -103,10 +101,12 @@ namespace Adrien.Compiler.PlaidML
                 }
                 else
                 {
-                    string result = ""; ;
-                    int bufferSize = (int)*sizeRequired;
+                    string result = "";
+                    ;
+                    int bufferSize = (int) *sizeRequired;
                     IntPtr buffer = Marshal.AllocHGlobal(bufferSize);
-                    r = plaidml.__Internal.PlaidmlQueryDevconf(_Context, this, property, buffer, *sizeRequired, sizeRequired);
+                    r = plaidml.__Internal.PlaidmlQueryDevconf(_context, this, property, buffer, *sizeRequired,
+                        sizeRequired);
                     if (!r)
                     {
                         ReportApiCallError("plaidml_query_dev_conf");
@@ -116,6 +116,7 @@ namespace Adrien.Compiler.PlaidML
                     {
                         result = Marshal.PtrToStringAnsi(buffer);
                     }
+
                     Marshal.FreeHGlobal(buffer);
                     return result;
                 }

@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-
 using Newtonsoft.Json;
-
 using Adrien.Compiler.PlaidML.Bindings;
 using Adrien.Compiler.PlaidML.Generator;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class TileCompiler : PlaidMLApi<TileCompiler>, ICompiler 
+    public class TileCompiler : PlaidMLApi<TileCompiler>, ICompiler
     {
         public Dictionary<string, object> Options { get; }
 
@@ -22,44 +19,48 @@ namespace Adrien.Compiler.PlaidML
         public CompilerStatus Status { get; protected set; }
 
         public string CompilerStatusMessage { get; protected set; }
-        
-        public Settings Settings => _Context.settings;
+
+        public Settings Settings => _context.settings;
 
         public string SessionId { get; protected set; }
 
         public DeviceEnumerator DeviceEnumerator { get; protected set; }
 
         public int DeviceCount => DeviceEnumerator.Count;
-       
+
         public Device KernelDevice { get; protected set; }
 
         public Dictionary<string, object> KernelDeviceProperties { get; protected set; }
 
-        
+
         public TileCompiler(Dictionary<string, object> options = null) : base(new Context())
         {
-            if (!_Context.IsAllocated)
+            if (!_context.IsAllocated)
             {
-                CompilerStatusMessage = _Context.LastStatusString;
+                CompilerStatusMessage = _context.LastStatusString;
+                // TODO: [vermorel] An exception should be thrown here.
                 return;
             }
+
             Options = options;
             SessionId = Settings.StartNewSession();
-            DeviceEnumerator = new DeviceEnumerator(_Context);
+            DeviceEnumerator = new DeviceEnumerator(_context);
             if (!DeviceEnumerator.IsAllocated)
             {
                 CompilerStatusMessage = DeviceEnumerator.LastStatusString;
                 return;
             }
+
             if (DeviceEnumerator.ValidDevices.Count < 1)
             {
                 Error("No valid devices available.");
                 return;
             }
+
             IsAllocated = true;
             KernelDevice = OpenFirstDevice();
             KernelDeviceProperties = JsonConvert.DeserializeObject<Dictionary<string, object>>
-               (KernelDevice.DeviceConfig.Details);
+                (KernelDevice.DeviceConfig.Details);
             Initialized = true;
         }
 
@@ -69,27 +70,28 @@ namespace Adrien.Compiler.PlaidML
             result = null;
             ThrowIfNotInitialized();
             Status = CompilerStatus.Compiling;
-            TileGenerator g = new TileGenerator(kernel.ExpressionTree);
+            var g = new TileGenerator(kernel.ExpressionTree);
             if (!g.Success)
             {
                 Status = CompilerStatus.ErrorGeneratingCode;
                 CompilerStatusMessage = g.Text;
                 return false;
             }
-            Function f = CreateFunction(g);
+
+            var f = CreateFunction(g);
             if (!f.IsAllocated)
             {
                 Status = CompilerStatus.ErrorGeneratingCode;
                 CompilerStatusMessage = f.LastStatusString;
                 return false;
             }
-            
-            DeviceTensor[] inputTensors = kernel.InputShapes
+
+            var inputTensors = kernel.InputShapes
                 .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Label.ToUpper()))
                 .ToArray();
-            DeviceTensor outputTensor = CreateTensor(CreateShape<TKernel>(kernel.OutputShape.Dimensions),
+            var outputTensor = CreateTensor(CreateShape<TKernel>(kernel.OutputShape.Dimensions),
                 kernel.OutputShape.Label.ToUpper());
-            Invoker<TKernel> invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
+            var invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
             if (invoker.IsAllocated && invoker.AllVariablesSet)
             {
                 result = invoker;
@@ -97,32 +99,33 @@ namespace Adrien.Compiler.PlaidML
             }
             else
             {
+                // TODO: [vermorel] This condition should come first, as sanity pre-condition.
                 Status = CompilerStatus.ErrorGeneratingCode;
                 CompilerStatusMessage = invoker.LastStatusString;
                 return false;
-            }   
+            }
         }
 
-        public bool Compile<TKernel>(IEnumerable<IVariableShape> inputShapes, IVariableShape outputShape, string code, 
+        public bool Compile<TKernel>(IEnumerable<IVariableShape> inputShapes, IVariableShape outputShape, string code,
             out IRunnable<TKernel> result)
-                where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
+            where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
         {
             result = null;
             ThrowIfNotInitialized();
             Status = CompilerStatus.Compiling;
-            Function f = CreateFunction(code);
+            var f = CreateFunction(code);
             if (!f.IsAllocated)
             {
                 CompilerStatusMessage = f.LastStatusString;
                 return false;
             }
 
-            DeviceTensor[] inputTensors = inputShapes
+            var inputTensors = inputShapes
                 .Select(i => CreateTensor(CreateShape<TKernel>(i.Dimensions), i.Label.ToUpper()))
                 .ToArray();
-            DeviceTensor outputTensor = CreateTensor(CreateShape<TKernel>(outputShape.Dimensions),
+            var outputTensor = CreateTensor(CreateShape<TKernel>(outputShape.Dimensions),
                 outputShape.Label.ToUpper());
-            Invoker<TKernel> invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
+            var invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
             if (invoker.IsAllocated && invoker.AllVariablesSet)
             {
                 result = invoker;
@@ -130,6 +133,7 @@ namespace Adrien.Compiler.PlaidML
             }
             else
             {
+                // TODO: [vermorel] This condition should come first, as sanity pre-condition.
                 CompilerStatusMessage = invoker.LastStatusString;
                 return false;
             }
@@ -138,7 +142,7 @@ namespace Adrien.Compiler.PlaidML
         public bool Compile<TKernel>(IVariableShape inputShape, IVariableShape outputShape, string code,
             out IRunnable<TKernel> result)
             where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
-            => Compile(new IVariableShape[] { inputShape }, outputShape, code, out result);
+            => Compile(new IVariableShape[] {inputShape}, outputShape, code, out result);
 
         public bool Compile<TVectorKernel>(int vectorLength, string code, out IRunnable<TVectorKernel> result)
             where TVectorKernel : unmanaged, IEquatable<TVectorKernel>, IComparable<TVectorKernel>, IConvertible
@@ -148,14 +152,17 @@ namespace Adrien.Compiler.PlaidML
             return Compile(input, output, code, out result);
         }
 
-        public bool Compile<TVectorKernel>(int vectorCount, int vectorLength, string code, out IRunnable<TVectorKernel> result)
+        public bool Compile<TVectorKernel>(int vectorCount, int vectorLength, string code,
+            out IRunnable<TVectorKernel> result)
             where TVectorKernel : unmanaged, IEquatable<TVectorKernel>, IComparable<TVectorKernel>, IConvertible
         {
             IVariableShape[] inputs = new IVariableShape[vectorCount];
-            for(int i = 0; i < inputs.Length; i++)
+            for (int i = 0; i < inputs.Length; i++)
             {
-                inputs[i] = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "I" + i.ToString());
+                inputs[i] = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength),
+                    "I" + i);
             }
+
             IVariableShape output = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "O");
             return Compile(inputs, output, code, out result);
         }
@@ -163,34 +170,32 @@ namespace Adrien.Compiler.PlaidML
         public Device OpenFirstDevice()
         {
             ThrowIfNotAllocated();
+
             if (DeviceEnumerator.Count == 0)
             {
-                throw new Exception("No devices were enumerated.");
+                throw new InvalidOperationException("No devices were enumerated.");
             }
-            else
-            {
-                return new Device(_Context, DeviceEnumerator.ValidDevices[0]);
-            }
+
+            return new Device(_context, DeviceEnumerator.ValidDevices[0]);
         }
 
         public Function CreateFunction(TileGenerator generator)
         {
             ThrowIfNotInitialized();
             return new Function(Context, generator.FunctionText);
-           
         }
 
         public Function CreateFunction(string code)
         {
             ThrowIfNotAllocated();
-            return new Function(_Context, code);
+            return new Function(_context, code);
         }
 
         public Shape CreateShape<T>(params int[] dimensions) where T : unmanaged
         {
             ThrowIfNotAllocated();
-            PlaidmlDatatype datatype = Shape.ToDataType<T>();
-            return new Shape(_Context, datatype, dimensions);
+            var datatype = Shape.ToDataType<T>();
+            return new Shape(_context, datatype, dimensions);
         }
 
         public DeviceTensor CreateTensor(Shape shape, string name)
@@ -201,7 +206,7 @@ namespace Adrien.Compiler.PlaidML
 
         public Gradient CreateGradient(DeviceTensor variable)
         {
-            return new Gradient(_Context, variable);
+            return new Gradient(_context, variable);
         }
 
         [DebuggerStepThrough]

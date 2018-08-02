@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
-using System.Text;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class DeviceTensorView<T> : MemoryMapping, IVariable<T> 
+    public class DeviceTensorView<T> : MemoryMapping, IVariable<T>
         where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         public DeviceTensor Tensor
@@ -42,13 +38,13 @@ namespace Adrien.Compiler.PlaidML
         protected DeviceTensor _Tensor;
 
 
-        public DeviceTensorView(DeviceTensor variable, MemoryMapType mapType) 
+        public DeviceTensorView(DeviceTensor variable, MemoryMapType mapType)
             : base(variable.DeviceBuffer, mapType == MemoryMapType.Discard ? true : false)
         {
             _Tensor = variable;
         }
 
-        
+
         public ref T this[int index]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -59,7 +55,7 @@ namespace Adrien.Compiler.PlaidML
                 return ref Read(index);
             }
         }
-        
+
         public override bool Writeback()
         {
             ThrowIfNotAllocated();
@@ -79,11 +75,12 @@ namespace Adrien.Compiler.PlaidML
 
         public bool CopyFromAndFree(Span<T> src)
         {
-            bool copy = CopyFrom(src);
+            var copy = CopyFrom(src);
             if (copy)
             {
                 Free();
             }
+
             return copy;
         }
 
@@ -97,19 +94,19 @@ namespace Adrien.Compiler.PlaidML
                 Unpin();
                 Free();
             }
+
             return copy;
         }
 
         public bool CopyToAndFree(T[] array) => CopyToAndFree(new Span<T>(array));
 
-        #region IEnumerable<T> implementation
         public IEnumerator<T> GetEnumerator()
         {
-            if (this.Initialized)
+            if (Initialized)
             {
-                for (int i = 0; i < this.ElementCount; i++)
+                for (var i = 0; i < ElementCount; i++)
                 {
-                    yield return this.Read(i);
+                    yield return Read(i);
                 }
             }
             else
@@ -118,10 +115,10 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-        #endregion
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        #region INDArray implementation
+        // Begin of INDArray implementation
+
         public bool Initialized => IsAllocated;
 
         public int NDim => Convert.ToInt32(DeviceBuffer.Shape.DimensionCount);
@@ -140,18 +137,19 @@ namespace Adrien.Compiler.PlaidML
 
         public INDArray Random()
         {
-            for (int i = 0; i <= ElementCount; i++)
+            for (var i = 0; i <= ElementCount; i++)
             {
                 Write(i, GenericMath<T>.Random());
             }
+
             return this;
         }
 
-        #endregion
+        // End of INDArray implementation
 
         public IVariable<T> Fill(T c)
         {
-            this.Span.Fill(c);
+            Span.Fill(c);
             return this;
         }
 
@@ -188,28 +186,31 @@ namespace Adrien.Compiler.PlaidML
         {
             ThrowIfNotAllocated();
             ThrowIfNotValid();
-            if (src.Length != this.ElementCount)
+            if (src.Length != ElementCount)
             {
-                throw new ArgumentOutOfRangeException($"The length of the source span: {src.Length} " + 
-                    $"does not match the length of the view {ElementCount}.");
+                throw new ArgumentOutOfRangeException($"The length of the source span: {src.Length} " +
+                                                      $"does not match the length of the view {ElementCount}.");
             }
-            bool r = src.TryCopyTo(Span);
+
+            var r = src.TryCopyTo(Span);
             if (r)
             {
                 return Writeback();
             }
-            else return false;
+
+            return false;
         }
 
         protected bool CopyTo(Span<T> dest)
         {
             ThrowIfNotAllocated();
             ThrowIfNotValid();
-            if (dest.Length != this.ElementCount)
+            if (dest.Length != ElementCount)
             {
                 throw new ArgumentOutOfRangeException($"The length of the source span: {dest.Length} " +
-                    $"does not match the length of the view {ElementCount}.");
+                                                      $"does not match the length of the view {ElementCount}.");
             }
+
             return Span.TryCopyTo(dest);
         }
 
@@ -221,7 +222,5 @@ namespace Adrien.Compiler.PlaidML
                 throw new IndexOutOfRangeException();
             }
         }
-
- 
     }
 }

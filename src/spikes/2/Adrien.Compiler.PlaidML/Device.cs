@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
@@ -12,68 +10,68 @@ namespace Adrien.Compiler.PlaidML
         public bool IsOpen { get; protected set; }
         public bool IsClosed { get; protected set; }
         public List<DeviceBuffer> Buffers { get; protected set; }
-        
+
 
         public Device(Context ctx, DeviceConfig devconf = null) : base(ctx)
         {
             if (devconf != null)
             {
-                ptr = plaidml.__Internal.PlaidmlOpenDevice(_Context, devconf);
+                _ptr = plaidml.__Internal.PlaidmlOpenDevice(_context, devconf);
             }
             else
             {
-                ptr = plaidml.__Internal.PlaidmlOpenDevice(_Context, IntPtr.Zero);
+                _ptr = plaidml.__Internal.PlaidmlOpenDevice(_context, IntPtr.Zero);
             }
-            if (ptr.IsZero())
+
+            if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_open_device");
+                // TODO: [vermorel] Don't return, throw an exception instead.
                 return;
             }
-            else
-            {
-                DeviceConfig = devconf;
-                Buffers = new List<DeviceBuffer>();
-                IsAllocated = true;
-                IsOpen = true;
-            }
-        }
 
+            DeviceConfig = devconf;
+            Buffers = new List<DeviceBuffer>();
+            IsAllocated = true;
+            IsOpen = true;
+        }
 
         public override void Free()
         {
-            if (this.IsOpen)
+            if (IsOpen)
             {
-                this.Close();
+                Close();
             }
+
             base.Free();
         }
-        
 
         public void Close()
         {
             ThrowIfNotAllocated();
             ThrowIfNotOpen();
+
             if (Buffers != null && Buffers.Count > 0)
             {
                 Buffers.ForEach(buffer => buffer.Free());
             }
+
             plaidml.__Internal.PlaidmlCloseDevice(this);
-            this.IsOpen = false;
-            this.IsClosed = true;
+            IsOpen = false;
+            IsClosed = true;
         }
 
         public DeviceBuffer CreateBuffer(Shape shape)
         {
-            return new DeviceBuffer(this._Context, this, shape);
+            return new DeviceBuffer(_context, this, shape);
         }
 
         internal void ThrowIfNotOpen()
         {
-            if (!this.IsOpen)
+            if (!IsOpen)
             {
                 throw new InvalidOperationException("This device is not open.");
             }
         }
-
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using Adrien.Compiler.PlaidML.Bindings;
+﻿using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
@@ -10,12 +6,10 @@ namespace Adrien.Compiler.PlaidML
     {
         public ulong DimensionCount { get; protected set; }
 
-        
-   
         public Placeholder(Context ctx, string name, ulong dimensionCount) : base(ctx, name)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocPlaceholder(dimensionCount); 
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlAllocPlaceholder(dimensionCount);
+            if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_placeholder");
             }
@@ -24,6 +18,6 @@ namespace Adrien.Compiler.PlaidML
                 IsAllocated = true;
                 DimensionCount = dimensionCount;
             }
-        }     
+        }
     }
 }

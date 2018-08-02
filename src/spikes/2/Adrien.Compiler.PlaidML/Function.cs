@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
@@ -16,8 +13,8 @@ namespace Adrien.Compiler.PlaidML
         public Function(Context ctx, string code) : base(ctx)
         {
             string id = "id_" + Guid.NewGuid().ToString("N");
-            ptr = plaidml.__Internal.PlaidmlBuildCodedFunction(code, id);
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlBuildCodedFunction(code, id);
+            if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_build_coded_function");
             }
@@ -30,20 +27,21 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
-        public Function(Context ctx, IntPtr functionPtr) :base(ctx)
+        public Function(Context ctx, IntPtr functionPtr) : base(ctx)
         {
-            string id = "id_" + Guid.NewGuid().ToString("N");
-            ptr = functionPtr;
+            // TODO: [vermorel] 'id' is never used, and 'Id' is never assigned. Probably not the intended behavior.
+            var id = "id_" + Guid.NewGuid().ToString("N");
+            _ptr = functionPtr;
             IsAllocated = true;
             Info("Added function Id:{0} from pointer {1}", Id, functionPtr);
         }
-       
-  
+
+
         public override void Free()
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeFunction(this);
-            ptr = IntPtr.Zero;
+            _ptr = IntPtr.Zero;
         }
     }
 }

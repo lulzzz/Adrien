@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
@@ -13,7 +10,7 @@ namespace Adrien.Compiler.PlaidML
         public Shape Shape { get; protected set; }
 
         public ulong SizeInBytes { get; protected set; }
-        
+
         public DeviceBuffer(Context ctx, Device device, Shape shape) : base(ctx)
         {
             SizeInBytes = plaidml.__Internal.PlaidmlGetShapeBufferSize(shape);
@@ -22,19 +19,19 @@ namespace Adrien.Compiler.PlaidML
                 Error("plaidml_get_shape_buffer_size returned 0.");
                 return;
             }
-            ptr = plaidml.__Internal.PlaidmlAllocBuffer(_Context, device, SizeInBytes);
-            if (ptr.IsZero())
+
+            _ptr = plaidml.__Internal.PlaidmlAllocBuffer(_context, device, SizeInBytes);
+            if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_buffer");
+                // TODO: [vermorel] Don't return, throw an exception instead.
                 return;
             }
-            else
-            {
-                Device = device;
-                device.Buffers.Add(this);
-                Shape = shape;
-                IsAllocated = true;
-            }
+
+            Device = device;
+            device.Buffers.Add(this);
+            Shape = shape;
+            IsAllocated = true;
         }
 
 
@@ -42,7 +39,7 @@ namespace Adrien.Compiler.PlaidML
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeBuffer(this);
-            ptr = IntPtr.Zero;
+            _ptr = IntPtr.Zero;
         }
     }
 }

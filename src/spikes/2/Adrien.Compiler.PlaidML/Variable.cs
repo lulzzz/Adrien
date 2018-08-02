@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
@@ -10,13 +7,15 @@ namespace Adrien.Compiler.PlaidML
     {
         public string Name { get; protected set; }
 
-        public IntPtr VarPtr => this.ptr;
+        public IntPtr VarPtr => this._ptr;
 
         public PlaidmlDatatype DataType { get; protected set; }
-        
 
-        protected Variable(Context ctx) : base(ctx) { }
-  
+
+        protected Variable(Context ctx) : base(ctx)
+        {
+        }
+
         protected Variable(Context ctx, string name) : base(ctx)
         {
             Name = name;
@@ -24,72 +23,64 @@ namespace Adrien.Compiler.PlaidML
 
         public Variable(Context ctx, string name, Int64 v) : this(ctx, name)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocInt64(v);
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlAllocInt64(v);
+            if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_int64");
                 return;
             }
-            else
-            {
-                DataType = PlaidmlDatatype.PLAIDML_DATA_INT64;
-                IsAllocated = true;
-            }
+
+            DataType = PlaidmlDatatype.PLAIDML_DATA_INT64;
+            IsAllocated = true;
         }
 
         public Variable(Context ctx, string name, Int32 v) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocInt64(v);
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlAllocInt64(v);
+            if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_int64");
                 return;
             }
-            else
-            {
-                DataType = PlaidmlDatatype.PLAIDML_DATA_INT64;
-                IsAllocated = true;
-            }
+
+            DataType = PlaidmlDatatype.PLAIDML_DATA_INT64;
+            IsAllocated = true;
         }
 
         public Variable(Context ctx, string name, double v) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocReal(v);
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlAllocReal(v);
+            if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_real");
                 return;
             }
-            else
-            {
-                Name = name;
-                DataType = PlaidmlDatatype.PLAIDML_DATA_FLOAT64;
-                IsAllocated = true;
-            }
+
+            Name = name;
+            DataType = PlaidmlDatatype.PLAIDML_DATA_FLOAT64;
+            IsAllocated = true;
         }
 
         public Variable(Context ctx, string name, float v) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocReal(v);
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlAllocReal(v);
+            if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_real");
                 return;
             }
-            else
-            {
-                Name = name;
-                DataType = PlaidmlDatatype.PLAIDML_DATA_FLOAT64;
-                IsAllocated = true;
-            }
+
+            Name = name;
+            DataType = PlaidmlDatatype.PLAIDML_DATA_FLOAT64;
+            IsAllocated = true;
         }
-      
+
 
         public override void Free()
         {
             base.Free();
-            plaidml.__Internal.PlaidmlFreeVar(ptr);
-            ptr = IntPtr.Zero;
+            plaidml.__Internal.PlaidmlFreeVar(_ptr);
+            _ptr = IntPtr.Zero;
         }
     }
 }

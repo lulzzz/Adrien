@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
@@ -10,11 +7,13 @@ namespace Adrien.Compiler.PlaidML
     {
         public string Name { get; protected set; }
 
-        protected Value(Context ctx) : base(ctx) {}
+        protected Value(Context ctx) : base(ctx)
+        {
+        }
 
         protected Value(Context ctx, string name) : this(ctx)
         {
-            this.Name = name;
+            Name = name;
         }
 
         public Value(Context ctx, string name, IntPtr varPtr) : base(ctx)
@@ -23,15 +22,16 @@ namespace Adrien.Compiler.PlaidML
             {
                 throw new ArgumentNullException("varPtr");
             }
-            this.ptr = varPtr;
-            this.Name = name;
+
+            _ptr = varPtr;
+            Name = name;
             IsAllocated = true;
         }
 
         public Value(Variable variable) : base(variable.Context)
         {
-            this.ptr = variable.VarPtr;
-            this.Name = variable.Name;
+            _ptr = variable.VarPtr;
+            Name = variable.Name;
             IsAllocated = true;
         }
 
@@ -40,8 +40,8 @@ namespace Adrien.Compiler.PlaidML
         public override void Free()
         {
             base.Free();
-            plaidml.__Internal.PlaidmlFreeVar(ptr);
-            ptr = IntPtr.Zero;
+            plaidml.__Internal.PlaidmlFreeVar(_ptr);
+            _ptr = IntPtr.Zero;
         }
     }
 }

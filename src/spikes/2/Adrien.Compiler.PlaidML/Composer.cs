@@ -17,9 +17,9 @@ namespace Adrien.Compiler.PlaidML
 
         public Composer(Context ctx) : base(ctx)
         {
-            ptr = plaidml.__Internal.PlaidmlAllocComposer();
-            
-            if (ptr.IsZero())
+            _ptr = plaidml.__Internal.PlaidmlAllocComposer();
+
+            if (_ptr.IsZero())
             {
                 // TODO: [vermorel] Make it obvious than an exception is thrown.
                 ReportApiCallError("plaidml_alloc_composer");
@@ -37,7 +37,7 @@ namespace Adrien.Compiler.PlaidML
         public bool AddInputPlaceholder(string name, ulong dimensionCount)
         {
             ThrowIfNotAllocated();
-            var p = new Placeholder(this._Context, name, dimensionCount);
+            var p = new Placeholder(this._context, name, dimensionCount);
             if (p.IsAllocated)
             {
                 var r = plaidml.__Internal.PlaidmlAddComposerInput(this, p.Name, p);
@@ -74,7 +74,7 @@ namespace Adrien.Compiler.PlaidML
         {
             ThrowIfNotAllocated();
 
-            var v = new Value(_Context, name, varPtr);
+            var v = new Value(_context, name, varPtr);
 
             // TODO: [vermorel] This condition does not appear consistent with 'ThrowIfNotAllocated()'
             if (v.IsAllocated)
@@ -164,7 +164,7 @@ namespace Adrien.Compiler.PlaidML
             }
             else
             {
-                return new Function(this._Context, p);
+                return new Function(_context, p);
             }
         }
 
@@ -172,7 +172,7 @@ namespace Adrien.Compiler.PlaidML
         {
             base.Free();
             plaidml.__Internal.PlaidmlFreeComposer(this);
-            ptr = IntPtr.Zero;
+            _ptr = IntPtr.Zero;
         }
     }
 }
