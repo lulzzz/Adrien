@@ -75,13 +75,14 @@ namespace Adrien.Trees
                 throw new InvalidOperationException($"Can't convert ConstantExpression {node.ToReadableString()}" +
                                                     @"of type {node.Value.GetType().Name} to type Tensor.");
 
-            var on = Context.AddOperatorNode(TensorOp.ElementWiseAssign);
+            
             if (!t.IsElementwiseDefined)
             {
                 Context.AddValueNode(t);
             }
             else
             {
+                var on = Context.AddOperatorNode(TensorOp.ElementWiseAssign);
                 using (Context.Internal(on))
                 {
                     Context.AddValueNode(t);
@@ -95,11 +96,10 @@ namespace Adrien.Trees
         protected override Expression VisitIndex(IndexExpression node)
         {
             var on = Context.AddOperatorNode(TensorOp.Index);
-            var t = Context.Tensors.First();
             using (Context.Internal(on))
             {
                 base.VisitIndex(node);
-
+                var t = Context.Tensors.First();
                 if (t.Dimensions.Length < Context.TensorIndicesQueue.Count)
                 {
                     // TODO: [vermorel] Don't throw 'Exception', use subtype.
