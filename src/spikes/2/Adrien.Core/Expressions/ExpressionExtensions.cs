@@ -84,6 +84,39 @@ namespace Adrien.Expressions
             
         }
 
+        public static List<T> GetParameters<T>(this Expression expr) where T : ITerm
+        {
+            IEnumerable<T> GetParametersFromExpression(Expression expr0)
+            {
+                return expr0.SelfAndDescendants()
+                .OfType<ParameterExpression>()
+                .Select(e => e.Name)
+                .Distinct()
+                .Where(s => Term.Table.ContainsKey(s) && Term.Table[s] is T)
+                .Select(s => Term.Table[s])
+                .Cast<T>();
+            }
+
+            IEnumerable<T> GetParametersFromMethodCall(MethodCallExpression mcexpr)
+            {
+                if (!mcexpr.Method.Name.StartsWith("Op_"))
+                {
+                    throw new ArgumentException("Unknown method name: " + mcexpr.Method.Name);
+                }
+                return mcexpr.Arguments.Select(e => GetParameters<T>(e)).SelectMany(x => x);
+            }
+
+            if (expr is MethodCallExpression)
+            {
+                return GetParametersFromMethodCall(expr as MethodCallExpression).ToList();
+            }
+            else
+            {
+                return GetParametersFromExpression(expr).ToList();
+            }
+
+        }
+
         [DebuggerStepThrough]
         public static List<T> GetIndexObjects<T>(this Expression expr) where T : ITerm
         {

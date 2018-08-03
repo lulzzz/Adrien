@@ -19,9 +19,7 @@ namespace Adrien.Notation
 
         public int Order { get; internal set; }
 
-        public int Dimension { get; internal set; }
-
-        public int Axis => Dimension;
+        public int? Dimension { get; internal set; }
 
         public DimensionExpression DimensionExpression { get; protected set; }
 
@@ -38,16 +36,15 @@ namespace Adrien.Notation
             Type = IndexType.Constant;
         }
 
-        public Index(DimensionExpression expr)
+        public Index(DimensionExpression expr) : base(expr)
         {
             Type = IndexType.Expression;
             Name = GetNameFromLinqExpression(expr.LinqExpression);
             DimensionExpression = expr;
         }
 
-        public Index(int i)
+        public Index(int i) : base("dim_expr" + i)
         {
-            Name = "index_expr_int_" + i;
             Type = IndexType.Expression;
             DimensionExpression = new DimensionExpression(Expression.Constant(i));
         }

@@ -18,14 +18,18 @@ namespace Adrien.Notation
         {
             get
             {
+                if(i.Type != IndexType.Constant)
+                {
+                    throw new ArgumentException("This index is a dimension expression, not a dimension.");
+                }
                 if (i.Set == null || i.Set.Tensor == null || i.Set.Tensor != this.Tensor)
                 {
-                    throw new Exception($"This index does not belong to an index set of tensor {Tensor.Name}.");
+                    throw new ArgumentException($"This index does not belong to an index set of tensor {Tensor.Name}.");
                 }
                 else
                 {
-                    Tensor.ThrowIfIndicesExceedRank(i.Dimension);
-                    return this[i.Dimension];
+                    Tensor.ThrowIfIndicesExceedRank(i.Dimension.Value);
+                    return this[i.Dimension.Value];
                 }
             }
         }

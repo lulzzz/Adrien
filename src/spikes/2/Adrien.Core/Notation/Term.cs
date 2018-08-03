@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -9,6 +10,8 @@ namespace Adrien.Notation
     /// </summary>
     public abstract class Term : ITerm
     {
+        public static Dictionary<string, Term> Table { get; } = new Dictionary<string, Term>();
+
         public string Id { get; protected set; }
 
         public Name Name { get; protected set; }
@@ -24,26 +27,21 @@ namespace Adrien.Notation
         private static readonly int Z = 'Z';
         private static readonly int z = 'z';
 
-        internal Term()
+        
+        internal Term(string name)
         {
             Id = Guid.NewGuid().ToString("N");
-        }
-
-        internal Term(string name) : this()
-        {
             Name = name;
+            Table.Add(Id, this);
         }
 
-        internal Term(char name) : this()
-        {
-            Name = new string(name, 1);
-        }
+        internal Term(char name) : this(new string(name, 1)) {}
 
         internal Term(Term t)
-
         {
             Id = t.Id;
         }
+
 
         public static implicit operator Expression(Term e)
         {
@@ -63,7 +61,7 @@ namespace Adrien.Notation
 
                 if (n < lower || n > upper)
                 {
-                    throw new Exception(
+                    throw new ArgumentException(
                         "Auto-generated name past last letter of alphabet. Consider using a numeric name base like a0.");
                 }
 
@@ -78,7 +76,7 @@ namespace Adrien.Notation
         }
 
 
-        protected string GetNameFromLinqExpression(Expression expr)
+        protected static string GetNameFromLinqExpression(Expression expr)
         {
             switch (expr)
             {
@@ -88,23 +86,22 @@ namespace Adrien.Notation
                         case int i: return i.ToString();
                         case Term t: return t.Name;
                         case Array a: return a.Flatten<Tensor>().First().Name;
-                        default: throw new Exception($"Unknown constant expression value type: {ce.Value.GetType()}.");
+                        default: throw new ArgumentException($"Unknown constant expression value type: {ce.Value.GetType()}.");
                     }
 
-                    ;
                 case BinaryExpression be:
                     return be.NodeType + "_" + GetNameFromLinqExpression(be.Left)
                            + "_" + GetNameFromLinqExpression(be.Right);
                 case ParameterExpression pe:
                     return pe.Name;
                 case IndexExpression ie:
-                    return ie.NodeType + "_" + GetNameFromLinqExpression(ie.Object) + "_" + ie.Arguments
+                    return "index" + "_" + GetNameFromLinqExpression(ie.Object) + "_" + ie.Arguments
                                .Select(GetNameFromLinqExpression)
                                .Aggregate((s1, s2) => s1 + "_" + s2);
                 case MethodCallExpression me:
                     return me.Method.Name;
                 default:
-                    throw new Exception($"Unknown expression type: {expr.NodeType.ToString()} {expr.GetType().Name}.");
+                    throw new ArgumentException($"Unknown expression type: {expr.NodeType.ToString()} {expr.GetType().Name}.");
             }
         }
     }

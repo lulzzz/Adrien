@@ -24,8 +24,8 @@ namespace Adrien.Notation
 					(Expression.Constant(new Tensor[<#for (int j = 1; j < i; j++) {#>,<#}#>] 
 				<#for (int j = 1; j <= i; j++) {#>{<#}#>this<#for (int j = 1; j <= i; j++) {#>}<#}#>), 
 				new Expression[] {
-					<#for (int j = 1; j < i; j++) {#>Expression.Parameter(typeof(int), index<#=j#>.Name), 
-					<#}#>Expression.Parameter(typeof(int), index<#=i#>.Name)}));
+					<#for (int j = 1; j < i; j++) {#>Expression.Parameter(typeof(int), index<#=j#>.Id), 
+					<#}#>Expression.Parameter(typeof(int), index<#=i#>.Id)}));
 			}
 			set
 			{
@@ -38,6 +38,20 @@ namespace Adrien.Notation
                 {
                     ContractionDefinition = (new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>), Math.SigmaSum(value));
                 }
+			}
+		}
+
+		public TensorIndexExpression this[<#for (int j = 1; j < i; j++) {#>DimensionExpression dim<#=j#>, <#}#>DimensionExpression dim<#=i#>]
+		{
+			get
+			{
+				ThrowIfIndicesExceedRank(<#=i#>);
+				return new TensorIndexExpression(Expression.ArrayAccess
+					(Expression.Constant(new Tensor[<#for (int j = 1; j < i; j++) {#>,<#}#>] 
+				<#for (int j = 1; j <= i; j++) {#>{<#}#>this<#for (int j = 1; j <= i; j++) {#>}<#}#>), 
+				new Expression[] {
+					<#for (int j = 1; j < i; j++) {#>Expression.Parameter(typeof(int), dim<#=j#>.Id), 
+					<#}#>Expression.Parameter(typeof(int), dim<#=i#>.Id)}));
 			}
 		}
 		<#}#>

@@ -88,15 +88,8 @@ namespace Adrien.Notation
             I = new IndexSet(this, indexNameBase, dim);
         }
 
-        public Tensor(IVariableShape shape) : this(shape.Label, shape.Dimensions)
-        {
-        }
+        public Tensor(IVariableShape shape) : this(shape.Label, shape.Dimensions) {}
 
-        /*
-        internal Tensor((TensorIndexExpression te, string name) expr) : base(expr.name)
-        {
-            ContractionDefinition = (null, expr.te);
-        }*/
 
         public TensorIndexExpression this[IndexSet I]
         {

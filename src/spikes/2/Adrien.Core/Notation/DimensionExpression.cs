@@ -22,33 +22,37 @@ namespace Adrien.Notation
 
         public List<Index> Indices => LinqExpression.GetConstants<Index>();
         
-        public DimensionExpression(Expression e)
+        public DimensionExpression(Expression e) : base(GetNameFromLinqExpression(e))
         {
+            if (e.Type != typeof(DimensionExpression) && e.Type != typeof(Index)  && e.Type != typeof(Int32))
+            {
+                throw new ArgumentException("The Linq expression does not have type DimensionExpression.");
+            }
             LinqExpression = e;
-            Name = GetNameFromLinqExpression(LinqExpression);
         }
 
 
         public static implicit operator DimensionExpression (Index i) => new DimensionExpression(i.LinqExpression);
 
-        public static implicit operator Index(DimensionExpression expr) => new Index(expr);
+        public static implicit operator Index(DimensionExpression i) => new Index(i);
 
-        public static implicit operator DimensionExpression(Int32 i) => new DimensionExpression(Expression.Constant(i));
+        public static implicit operator DimensionExpression(Int32 i) => 
+            new DimensionExpression(Expression.Constant(new Index(i)));
 
         public static implicit operator Int32(DimensionExpression t) => Int32.MinValue;
 
-        public static DimensionExpression operator - (DimensionExpression left) => left.Negate();
+        public static DimensionExpression operator -(DimensionExpression left) => left.Negate();
 
-        public static DimensionExpression operator + (DimensionExpression left, DimensionExpression right) 
+        public static DimensionExpression operator +(DimensionExpression left, DimensionExpression right) 
             => left.Add(right);
 
-        public static DimensionExpression operator - (DimensionExpression left, DimensionExpression right) 
+        public static DimensionExpression operator -(DimensionExpression left, DimensionExpression right) 
             => left.Subtract(right);
 
-        public static DimensionExpression operator * (DimensionExpression left, DimensionExpression right) 
+        public static DimensionExpression operator *(DimensionExpression left, DimensionExpression right) 
             => left.Multiply(right);
 
-        public static DimensionExpression operator / (DimensionExpression left, DimensionExpression right) 
+        public static DimensionExpression operator /(DimensionExpression left, DimensionExpression right) 
             => left.Divide(right);
 
 

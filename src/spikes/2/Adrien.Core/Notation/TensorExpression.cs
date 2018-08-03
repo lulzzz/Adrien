@@ -4,6 +4,9 @@ using System.Reflection;
 using System.Linq;
 using System.Linq.Expressions;
 
+using Sawmill;
+using Sawmill.Expressions;
+
 using Adrien.Expressions;
 using Adrien.Notation;
 using Adrien.Trees;
@@ -18,18 +21,22 @@ namespace Adrien.Notation
 
         public List<Tensor> Tensors => LinqExpression.GetConstants<Tensor>();
 
-        public List<IndexSet> IndexSets => LinqExpression.GetConstants<IndexSet>();
+        public List<Index> IndexParameters => 
+            LinqExpression.GetParameters<Index>()
+            .Concat(LinqExpression.GetParameters<DimensionExpression>().Select(d => (Index) d))
+            .ToList();
 
         public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression).Tree;
 
         public ExpressionTree ToTree((Tensor tensor, IndexSet indices) lhs) =>
             new TensorExpressionVisitor(this.LinqExpression, lhs, true).Tree;
 
-        public TensorExpression(Expression e)
+
+        public TensorExpression(Expression e) : base(GetNameFromLinqExpression(e))
         {
             LinqExpression = e;
-            Name = GetNameFromLinqExpression(LinqExpression);
         }
+
 
         public static TensorExpression operator - (TensorExpression left) => left.Negate();
 

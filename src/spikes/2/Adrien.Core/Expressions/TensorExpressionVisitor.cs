@@ -114,11 +114,6 @@ namespace Adrien.Trees
                 }
 
                 var set = new IndexSet(t, indices);
-                foreach (var i in set.Indices)
-                {
-                    i.Set = set;
-                }
-
                 Context.AddValueNode(set);
             }
 
@@ -130,7 +125,12 @@ namespace Adrien.Trees
             base.VisitParameter(node);
             var t = Context.Tensors.First();
             var i = Context.TensorIndicesQueue.Count;
-            Context.TensorIndicesQueue.Enqueue(new Index(null, i, t.Dimensions[i], node.Name));
+            if (!Term.Table.ContainsKey(node.Name))
+            {
+                throw new InvalidOperationException($"The term table does not contain a term with id {node.Name}.");
+            }
+            else
+                Context.TensorIndicesQueue.Enqueue((Index)Term.Table[node.Name]);
             return node;
         }
 

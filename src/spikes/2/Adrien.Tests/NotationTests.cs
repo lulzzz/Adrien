@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 using System.Text;
@@ -101,19 +102,18 @@ namespace Adrien.Tests
         }
 
         [Fact]
-        public void CanUseIndexExpressions()
+        public void CanUseDimensionExpressions()
         {
             var (A, B, C) = Tensor.TwoD((4, 3), out Index i, out Index j).Three();
             var (M, N, O) = Tensor.ThreeD("M", (7, 9, 6), "m", out Index m, out Index n, out Index o).Three();
 
-            A[i, j] = B[i, j][i - 7] * C[i, j][i + 4];
-            
-
+            A[i,j] = (B[i + 2, j] * C[i + 2, j]);
             Assert.True(A.IsAssigned);
-            Assert.True(A.ContractionDefinition.IndexSet[0].Type == IndexType.Expression);
+            Assert.True(A.ContractionDefinition.Expression.IndexParameters.Count == 4);
+            List<Index> indices = A.ContractionDefinition.Expression.IndexParameters;
             M[n] = A[m][m + 7]; 
             Assert.True(M.IsAssigned);
-            //Assert.True(M.ContractionDefinition.b)
+            Assert.NotNull(M.ContractionDefinition.Expression.Bounds);
         }
 
         [Fact]

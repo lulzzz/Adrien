@@ -23,7 +23,7 @@ namespace Adrien.Notation
 
         internal override Expression LinqExpression => Expression.Constant(this);
 
-        public IndexSet(Tensor parent, string indexNameBase = "", params int[] dim)
+        public IndexSet(Tensor parent, string indexNameBase = "", params int[] dim) : base(string.Empty)
         {
             Indices = new SortedSet<Index>();
             for (var i = 0; i < dim.Length; i++)
@@ -37,7 +37,7 @@ namespace Adrien.Notation
             this.Tensor = parent;
         }
 
-        public IndexSet(Tensor parent, params Index[] indices)
+        public IndexSet(Tensor parent, params Index[] indices) : base(string.Empty)
         {
             for (int i = 0; i < indices.Length; i++)
             {
