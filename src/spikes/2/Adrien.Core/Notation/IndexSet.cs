@@ -138,7 +138,7 @@ namespace Adrien.Notation
         protected void ThrowIfIndicesExceedDimensions(int c)
         {
             if (c > DimensionCount)
-                throw new ArgumentOutOfRangeException(
+                throw new ArgumentOutOfRangeException(nameof(c),
                     "The number of indices exceeds the dimensions of this index set.");
         }
 
