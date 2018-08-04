@@ -91,7 +91,6 @@ namespace Adrien.Expressions
                 return expr0.SelfAndDescendants()
                 .OfType<ParameterExpression>()
                 .Select(e => e.Name)
-                .Distinct()
                 .Where(s => Term.Table.ContainsKey(s) && Term.Table[s] is T)
                 .Select(s => Term.Table[s])
                 .Cast<T>();

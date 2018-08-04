@@ -18,7 +18,7 @@ namespace Adrien.Notation
         {
             get
             {
-                if(i.Type != IndexType.Constant)
+                if(i.Type != IndexType.Dimension)
                 {
                     throw new ArgumentException("This index is a dimension expression, not a dimension.");
                 }

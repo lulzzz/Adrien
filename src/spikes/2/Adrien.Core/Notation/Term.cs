@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -10,7 +11,7 @@ namespace Adrien.Notation
     /// </summary>
     public abstract class Term : ITerm
     {
-        public static Dictionary<string, Term> Table { get; } = new Dictionary<string, Term>();
+        public static ConcurrentDictionary<string, Term> Table { get; }
 
         public string Id { get; protected set; }
 
@@ -27,12 +28,19 @@ namespace Adrien.Notation
         private static readonly int Z = 'Z';
         private static readonly int z = 'z';
 
-        
+        static Term()
+        {
+            Table = new ConcurrentDictionary<string, Term>();
+        }
+
         internal Term(string name)
         {
             Id = Guid.NewGuid().ToString("N");
             Name = name;
-            Table.Add(Id, this);
+            if (!Table.TryAdd(Id, this))
+            {
+                throw new Exception($"Could not add term with Id {Id} to term table.");
+            }
         }
 
         internal Term(char name) : this(new string(name, 1)) {}

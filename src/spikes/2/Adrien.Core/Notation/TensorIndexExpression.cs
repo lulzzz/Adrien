@@ -12,20 +12,32 @@ namespace Adrien.Notation
         public NewArrayExpression Bounds { get; protected set; }
 
 
-        public TensorIndexExpression(IndexExpression expr) : base(expr) {}
+        public TensorIndexExpression(IndexExpression expr, NewArrayExpression bounds = null) : base(expr)
+        {
+            Bounds = bounds;
+        }
 
-        public TensorIndexExpression(MethodCallExpression expr) : base(expr) { }
+        public TensorIndexExpression(MethodCallExpression expr, NewArrayExpression bounds = null) : base(expr)
+        {
+            Bounds = bounds;
+        }
 
-        public TensorIndexExpression(UnaryExpression expr) : base(expr) { }
+        public TensorIndexExpression(UnaryExpression expr, NewArrayExpression bounds = null) : base(expr)
+        {
+            Bounds = bounds;
+        }
 
-        public TensorIndexExpression(BinaryExpression expr) : base(expr) { }
+        public TensorIndexExpression(BinaryExpression expr, NewArrayExpression bounds = null) : base(expr)
+        {
+            Bounds = bounds;
+        }
         
-        public TensorIndexExpression(TensorIndexExpression c, NewArrayExpression bounds) : base(c.LinqExpression)
+        public TensorIndexExpression(TensorIndexExpression c, NewArrayExpression bounds = null) : base(c.LinqExpression)
         {
             this.Bounds = bounds;
         }
         
-        public TensorIndexExpression this[DimensionExpression d]
+        public TensorIndexExpression this[Index d]
         {
             get => new TensorIndexExpression(this, Expression.NewArrayBounds(typeof(TensorContraction), 
                 Expression.Convert(d.LinqExpression, typeof(Int32))));

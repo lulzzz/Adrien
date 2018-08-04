@@ -89,7 +89,6 @@ namespace Adrien.Trees
                     base.Visit(t.ElementwiseDefinition.Expression.LinqExpression);
                 }
             }
-
             return node;
         }
                  
@@ -146,7 +145,6 @@ namespace Adrien.Trees
             {
                 base.VisitUnary(node);
             }
-
             return node;
         }
 
@@ -156,7 +154,6 @@ namespace Adrien.Trees
             {
                 base.VisitBinary(node);
             }
-
             return node;
         }
 
@@ -166,7 +163,6 @@ namespace Adrien.Trees
             {
                 base.VisitMethodCall(node);
             }
-
             return node;
         }
     }

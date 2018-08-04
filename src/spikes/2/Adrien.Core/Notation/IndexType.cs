@@ -2,7 +2,8 @@
 {
     public enum IndexType
     {
-        Constant = 1,
-        Expression // TODO: [vermorel] either define the values for all or none.
+        Dimension = 1,
+        Expression = 2,
+        Literal = 3 // TODO: [vermorel] either define the values for all or none.
     }
 }

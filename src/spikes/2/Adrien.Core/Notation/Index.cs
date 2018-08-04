@@ -7,7 +7,7 @@ namespace Adrien.Notation
 {
 #pragma warning disable CS0660
 
-    public class Index : Term, IChild, IAlgebra<Index, DimensionExpression>, IComparable<Index>
+    public class Index : Term, IChild, IAlgebra<Index, Index>, IComparable<Index>
     {
         public static PropertyInfo OrderInfo { get; } = typeof(Index).GetProperty("Order");
 
@@ -21,11 +21,11 @@ namespace Adrien.Notation
 
         public int? Dimension { get; internal set; }
 
-        public DimensionExpression DimensionExpression { get; protected set; }
+        protected Expression DimensionExpression { get; set; }
 
-        internal override Expression LinqExpression => Type == IndexType.Constant ? Expression.Constant(this) :
-            DimensionExpression.LinqExpression;
-       
+        internal override Expression LinqExpression =>
+            Type == IndexType.Dimension ? Expression.Constant(this) : DimensionExpression;
+        
         internal override Name DefaultNameBase { get; } = "i";
 
         public Index(IndexSet set, int order, int dim, string name) : base(name)
@@ -33,55 +33,61 @@ namespace Adrien.Notation
             Set = set;
             Order = order;
             Dimension = dim;
-            Type = IndexType.Constant;
+            Type = IndexType.Dimension;
         }
 
-        public Index(DimensionExpression expr) : base(expr)
+        public Index(int i) : base(GetNameFromLinqExpression(Expression.Constant(i)))
         {
-            Type = IndexType.Expression;
-            Name = GetNameFromLinqExpression(expr.LinqExpression);
-            DimensionExpression = expr;
+            DimensionExpression = Expression.Constant(i);
+            Type = IndexType.Literal;
         }
-
-        public Index(int i) : base("dim_expr" + i)
+        public Index(IndexSet set, int order, Expression dimExpression) : base(GetNameFromLinqExpression(dimExpression))
         {
+            Set = set;
+            Order = order;
+            DimensionExpression = dimExpression;
             Type = IndexType.Expression;
-            DimensionExpression = new DimensionExpression(Expression.Constant(i));
         }
-
 
         public static implicit operator Int32(Index i) => i.Order;
 
-        public static DimensionExpression operator - (Index left) => left.Negate();
+        public static implicit operator Index(Int32 i) => new Index(i);
+
+        public static Index operator - (Index left) => left.Negate();
         
-        public static DimensionExpression operator + (Index left, Index right)
+        public static Index operator + (Index left, Index right)
             => left.Add(right);
 
-        public static DimensionExpression operator - (Index left, Index right)
+        public static Index operator - (Index left, Index right)
             => left.Subtract(right);
 
-        public static DimensionExpression operator * (Index left, Index right)
+        public static Index operator * (Index left, Index right)
             => left.Multiply(right);
 
-        public static DimensionExpression operator / (Index left, Index right)
+        public static Index operator / (Index left, Index right)
             => left.Divide(right);
 
-        public DimensionExpression Negate() => new DimensionExpression(Expression.Negate(this));
+        public Index Negate() => new Index(this.Set, this.Order, Expression.Negate(this));
 
-        public DimensionExpression Add(Index right)
-            => new DimensionExpression(Expression.Add(this, right, GetDummyBinaryMethodInfo(this, right)));
+        public Index Add(Index right)
+            => new Index(this.Set, this.Order, Expression.Add(this, right, GetDummyBinaryMethodInfo(this, right)));
 
-        public DimensionExpression Subtract(Index right)
-            => new DimensionExpression(Expression.Subtract(this, right, GetDummyBinaryMethodInfo(this, right)));
+        public Index Subtract(Index right)
+            => new Index(this.Set, this.Order, Expression.Subtract(this, right, GetDummyBinaryMethodInfo(this, right)));
 
-        public DimensionExpression Multiply(Index right)
-            => new DimensionExpression(Expression.Multiply(this, right, GetDummyBinaryMethodInfo(this, right)));
+        public Index Multiply(Index right)
+            => new Index(this.Set, this.Order, Expression.Multiply(this, right, GetDummyBinaryMethodInfo(this, right)));
 
-        public DimensionExpression Divide(Index right)
-            => new DimensionExpression(Expression.Divide(this, right, GetDummyBinaryMethodInfo(this, right)));
+        public Index Divide(Index right)
+            => new Index(this.Set, this.Order, Expression.Divide(this, right, GetDummyBinaryMethodInfo(this, right)));
 
+        public int CompareTo(Index i)
+        {
+            return Order.CompareTo(i.Order);
+        }
 
-        public Type GetIndexType()
+        /*
+        internal Type GetIndexSystemType()
         {
             if (Type == IndexType.Constant)
             {
@@ -93,33 +99,19 @@ namespace Adrien.Notation
             }
             else return typeof(DimensionExpression);
         }
-
-        public int CompareTo(Index i)
+        */
+        private static MethodInfo GetDummyBinaryMethodInfo(Index l, Index r)
         {
-            return Order.CompareTo(i.Order);
+            var method = typeof(Index).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
+                .Where(m => m.Name == "DummyBinary" && m.GetParameters()[0].ParameterType == l.LinqExpression.Type
+                                                    && m.GetParameters()[1].ParameterType == r.LinqExpression.Type).First();
+            return method;
         }
 
         private static Index DummyBinary(Index l, Index r) => null;
-
-        private static Index DummyBinary(DimensionExpression l, Index r) => null;
-        private static Index DummyBinary(Index l, DimensionExpression r) => null;
-
-        private static Index DummyBinary(DimensionExpression l, int r) => null;
-        private static Index DummyBinary(int l, DimensionExpression r) => null;
-
-        private static Index DummyBinary(Index l, int r) => null;
-        private static Index DummyBinary(int l, Index r) => null;
-
-        private static MethodInfo GetDummyBinaryMethodInfo(Index l, Index r)
-        {
-            var lt = l.GetIndexType();
-            var rt = r.GetIndexType();
-
-            var method = typeof(Index).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
-                .Where(m => m.Name == "DummyBinary" && m.GetParameters()[0].ParameterType == lt
-                                                    && m.GetParameters()[1].ParameterType == rt).First();
-            return method;
-        }
+        private static Index DummyBinary(Int32 l, Index r) => null;
+        private static Index DummyBinary(Index l, Int32 r) => null;
+        private static Index DummyBinary(Int32 l, Int32 r) => null;
     }
 
 #pragma warning restore CS0660

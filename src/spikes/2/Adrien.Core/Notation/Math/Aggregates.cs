@@ -8,7 +8,7 @@ namespace Adrien.Notation
     {
         public static TensorContraction SigmaSum(TensorIndexExpression l) =>
          new TensorContraction(Expression.Call(TensorExpression.GetOpMethodInfo<TensorExpression>("Op_Sum", 1),
-             Expression.Convert(l.LinqExpression, typeof(TensorExpression))));
+             Expression.Convert(l.LinqExpression, typeof(TensorExpression))), l.Bounds);
 
         public static TensorContraction Mean(TensorIndexExpression l)
         {

@@ -21,11 +21,8 @@ namespace Adrien.Notation
 
         public List<Tensor> Tensors => LinqExpression.GetConstants<Tensor>();
 
-        public List<Index> IndexParameters => 
-            LinqExpression.GetParameters<Index>()
-            .Concat(LinqExpression.GetParameters<DimensionExpression>().Select(d => (Index) d))
-            .ToList();
-
+        public List<Index> IndexParameters => LinqExpression.GetParameters<Index>();
+            
         public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression).Tree;
 
         public ExpressionTree ToTree((Tensor tensor, IndexSet indices) lhs) =>

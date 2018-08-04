@@ -24,7 +24,6 @@ namespace Adrien.Generator
 
         public virtual string WriteValueText(ITreeValueNode vn)
         {
-            IEnumerable<ITerm> indices = vn.ValueAs<IEnumerable<ITerm>>();
             switch (vn.NodeType)
             {
                 case ValueNodeType.TENSOR:
@@ -32,6 +31,7 @@ namespace Adrien.Generator
                 case ValueNodeType.VARIABLE:
                     return "[]";
                 case ValueNodeType.INDEXSET:
+                    IEnumerable<ITerm> indices = vn.ValueAs<IEnumerable<ITerm>>();
                     return indices.Select(i => i.Label).Aggregate((a, b) => a + ", " + b);
                 default: throw new Exception($"Unknown value type: {vn.NodeType.ToString()}.");
             }
