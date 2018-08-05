@@ -9,6 +9,7 @@ using Adrien.Compiler.PlaidML.Bindings;
 using Adrien.Compiler.PlaidML.Generator;
 
 using Adrien.Notation;
+using Adrien.Log;
 
 namespace Adrien.Tests.Compilers
 {
@@ -16,9 +17,10 @@ namespace Adrien.Tests.Compilers
     {
         protected Context testContext;
 
+       
         public PlaidMLCompilerApiTests()
         {
-            CompilerDriver.CreateDefaultLogger("Adrien.Tests.log");
+            CompilerDriver.Log = SerilogLogger.CreateDefaultLogger("Adrien.Tests.log");
             testContext = new Context();
         }
 

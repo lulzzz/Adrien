@@ -4,6 +4,7 @@ using System.Text;
 
 using Xunit;
 
+using Adrien.Log;
 using Adrien.Notation;
 using static Adrien.Notation.Math;
 using static Adrien.Notation.TensorOperators;
@@ -16,6 +17,11 @@ namespace Adrien.Tests.Compilers
 {
     public class TileCompilerTests
     {
+        public TileCompilerTests()
+        {
+            CompilerDriver.Log = SerilogLogger.CreateDefaultLogger("Adrien.Tests.log");
+        }
+
         [Fact]
         public void CanCompileTileCode()
         {

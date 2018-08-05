@@ -20,6 +20,7 @@
     <ProjectReference Include="..\Adrien.Compiler.PlaidML\Adrien.Compiler.PlaidML.csproj" />
     <ProjectReference Include="..\Adrien.Core\Adrien.Core.csproj" />
     <ProjectReference Include="..\Adrien.Diagrams\Adrien.Diagrams.csproj" />
+    <ProjectReference Include="..\Adrien.Log.Serilog\Adrien.Log.Serilog.csproj" />
   </ItemGroup>
 
 </Project>
