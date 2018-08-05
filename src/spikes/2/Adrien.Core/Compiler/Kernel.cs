@@ -71,8 +71,6 @@ namespace Adrien.Compiler
                     }
                     else
                     {
-                        // TODO: [vermorel] Don't use 'null' to signal a failure mode.
-                        // REMARK: [allisterb] Throw RunException if run does not complete successfully.
                         throw new RunException<T>(this, CompilerResult, runStatus, "Run did not complete successfully.");
                     }
                 });
