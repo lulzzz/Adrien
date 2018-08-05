@@ -21,8 +21,6 @@ namespace Adrien.Compiler.PlaidML
 
             if (_ptr.IsZero())
             {
-                // TODO: [vermorel] Make it obvious than an exception is thrown.
-                // REMARK: [allisterb] Failure conditions now throw PlaidMLApiException.
                 ReportApiCallError("plaidml_alloc_composer");
                 throw new PlaidMLApiException<Composer>(this, "Could not allocate composer.");
             }
@@ -79,8 +77,6 @@ namespace Adrien.Compiler.PlaidML
             ThrowIfNotAllocated();
             var v = new Value(_context, name, varPtr);
 
-            // TODO: [vermorel] This condition does not appear consistent with 'ThrowIfNotAllocated()'
-            // REMARK: [allisterb] Return false instead of throwing exception.
             if (v.IsAllocated)
             {
                 return AddOutputValue(v);
@@ -163,14 +159,10 @@ namespace Adrien.Compiler.PlaidML
             if (p.IsZero())
             {
                 ReportApiCallError("plaidml_build_composed_function");
-                // TODO: [vermorel] Do not use 'null' to report faults. Throw exceptions.
-                // REMARK: [allisterb] Throw PlaidMLApi exception on failure.
                 throw new PlaidMLApiException<Composer>(this, "Could not build composed function.");
             }
-            else
-            {
-                return new Function(_context, p);
-            }
+
+            return new Function(_context, p);
         }
 
         public override void Free()

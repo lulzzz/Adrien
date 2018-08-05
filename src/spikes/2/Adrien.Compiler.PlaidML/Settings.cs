@@ -170,8 +170,6 @@ namespace Adrien.Compiler.PlaidML
 
                 IsLoaded = true;
             }
-            // TODO: [vermorel] Do not catch all 'Exception', narrow it to the one that matters.
-            // REMARK: [allisterb] Catch specific exceptions
             catch (IOException ioe)
             {
                 Error(ioe, "Error reading from file {0}.", ConfigFile.FullName);

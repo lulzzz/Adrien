@@ -119,24 +119,18 @@ namespace Adrien.Compiler.PlaidML
             var invocation = Invoke();
             if (!invocation.IsAllocated)
             {
-                // TODO: [vermorel] This condition should be first (pre-condition style).
-                // REMARK: [allisterb] Move condition to top.
                 RunStatusMessage = invocation.LastStatusString;
                 return RunStatus.ErrorExecuting;
             }
-            else
+
+            if (!OutputTensor.CreateView<T>(MemoryMapType.Retain).CopyToAndFree(output.Span))
             {
-               
-                if (OutputTensor.CreateView<T>(MemoryMapType.Retain).CopyToAndFree(output.Span))
-                {
-                    return RunStatus.Success;
-                }
-                else
-                {
-                    RunStatusMessage = invocation.LastStatusString;
-                    return RunStatus.ErrorExecuting;
-                }
+                RunStatusMessage = invocation.LastStatusString;
+                return RunStatus.ErrorExecuting;
+                
             }
+
+            return RunStatus.Success;
         }
 
         public RunStatus Run(IVariable<T> output, ref IVariable<T> gradient, params IVariable<T>[] input)

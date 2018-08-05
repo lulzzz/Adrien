@@ -24,8 +24,6 @@ namespace Adrien.Compiler.PlaidML
             if (_ptr.IsZero())
             {
                 ReportApiCallError("plaidml_alloc_buffer");
-                // TODO: [vermorel] Don't return, throw an exception instead.
-                // REMARK: [allisterb] Throw PlaidMLApi exception on failure.
                 throw new PlaidMLApiException<DeviceBuffer>(this, "Could not allocate DeviceBuffer");
             }
 

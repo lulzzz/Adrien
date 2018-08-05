@@ -73,17 +73,13 @@ namespace Adrien.Compiler.PlaidML
             _ptr = plaidml.__Internal.PlaidmlGetDevconf(_context, enumerator, index);
             if (_ptr.IsZero())
             {
-                // TODO: [vermorel] Make it clear than an error is thrown here.
-                // REMARK: [allisterb] Throw PlaidMLApi exception on failure.
                 ReportApiCallError("plaidml_get_devconf");
                 throw new PlaidMLApiException<DeviceConfig>(this, "Could not get device config.");
             }
-            else
-            {
-                Enumerator = enumerator;
-                Index = index;
-                IsAllocated = true;
-            }
+
+            Enumerator = enumerator;
+            Index = index;
+            IsAllocated = true;
         }
 
         public string QueryStringProperty(PlaidmlDeviceProperty property)

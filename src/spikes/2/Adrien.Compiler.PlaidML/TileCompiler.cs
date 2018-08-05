@@ -91,20 +91,17 @@ namespace Adrien.Compiler.PlaidML
                 .ToArray();
             var outputTensor = CreateTensor(CreateShape<TKernel>(kernel.OutputShape.Dimensions),
                 kernel.OutputShape.Label.ToUpper());
+
             var invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
             if (!(invoker.IsAllocated && invoker.AllVariablesSet))
             {
-                // TODO: [vermorel] This condition should come first, as sanity pre-condition.
-                // REMARK: [allisterb] Move condition to top.
                 Status = CompilerStatus.ErrorGeneratingCode;
                 CompilerStatusMessage = invoker.LastStatusString;
                 return false;
             }
-            else
-            {
-                result = invoker;
-                return true;
-            }
+
+            result = invoker;
+            return true;
         }
 
         public bool Compile<TKernel>(IEnumerable<IVariableShape> inputShapes, IVariableShape outputShape, string code,
@@ -126,19 +123,16 @@ namespace Adrien.Compiler.PlaidML
                 .ToArray();
             var outputTensor = CreateTensor(CreateShape<TKernel>(outputShape.Dimensions),
                 outputShape.Label.ToUpper());
+
             var invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
             if (!(invoker.IsAllocated && invoker.AllVariablesSet))
             {
-                // TODO: [vermorel] This condition should come first, as sanity pre-condition.
-                // REMARK: [allisterb] Move condition to top
                 CompilerStatusMessage = invoker.LastStatusString;
                 return false;
             }
-            else
-            {
-                result = invoker;
-                return true;
-            }
+
+            result = invoker;
+            return true;
         }
 
         public bool Compile<TKernel>(IVariableShape inputShape, IVariableShape outputShape, string code,

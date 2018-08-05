@@ -50,15 +50,11 @@ namespace Adrien.Compiler.PlaidML
 
             if (_ptr.IsZero())
             {
-                // TODO: [vermorel] Make it explicit that an error is thrown here.
-                // REMARK: [allisterb] Throw PlaidMLApi exception on failure.
                 ReportApiCallError("plaidml_alloc_device_enumerator_with_config");
                 throw new PlaidMLApiException<DeviceEnumerator>(this, "Could not allocate device enumerator.");
             }
-            else
-            {
-                IsAllocated = true;
-            }
+
+            IsAllocated = true;
         }
 
         public override void Free()
