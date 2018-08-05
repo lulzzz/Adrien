@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Adrien
@@ -19,7 +17,7 @@ namespace Adrien
 
         public static TData Multiply(TData l, TData r)
         {
-            Tuple<TData, TData> value = new Tuple<TData, TData>(l, r);
+            var value = new Tuple<TData, TData>(l, r);
             switch (value)
             {
                 case Tuple<Byte, Byte> v:
@@ -108,16 +106,14 @@ namespace Adrien
                     return Const(checked((short) rng.Next(0, Int16.MaxValue)));
                 case UInt16 v:
                     return Const(checked((ushort) rng.Next(0, UInt16.MaxValue)));
-                case Int64 v: // TODO: [vermorel] Not the proper way of generating a 64bits random int.
-                              // REMARK: [allisterb] Repl procedure from https://social.msdn.microsoft.com/Forums/vstudio/en-US/cb9c7f4d-5f1e-4900-87d8-013205f27587/64-bit-strong-random-function?forum=csharpgeneral
+                case Int64 v: // See https://social.msdn.microsoft.com/Forums/vstudio/en-US/cb9c7f4d-5f1e-4900-87d8-013205f27587/64-bit-strong-random-function?forum=csharpgeneral
                     byte[] buffer = new byte[8];
                     rng.NextBytes(buffer);
                     short hi = (short)rng.Next(4, 0x10000);
                     buffer[7] = (byte)(hi >> 8);
                     buffer[6] = (byte)hi;
                     return Const(BitConverter.ToInt64(buffer, 0));
-                case UInt64 v: // TODO: [vermorel] Not the proper way of generating a 64bits random int.
-                               // REMARK: [allisterb] This is a procedure from https://social.msdn.microsoft.com/Forums/vstudio/en-US/cb9c7f4d-5f1e-4900-87d8-013205f27587/64-bit-strong-random-function?forum=csharpgeneral
+                case UInt64 v: // See https://social.msdn.microsoft.com/Forums/vstudio/en-US/cb9c7f4d-5f1e-4900-87d8-013205f27587/64-bit-strong-random-function?forum=csharpgeneral
                     buffer = new byte[8];
                     rng.NextBytes(buffer);
                     hi = (short)rng.Next(4, 0x10000);
