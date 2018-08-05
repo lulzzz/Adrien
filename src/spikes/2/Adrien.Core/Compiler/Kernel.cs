@@ -12,9 +12,9 @@ namespace Adrien.Compiler
 
         public IExpressionTree ExpressionTree => Tree;
 
-        public IVariableShape OutputShape { get; set; }
+        public ITermShape OutputShape { get; set; }
 
-        public IReadOnlyList<IVariableShape> InputShapes { get; protected set; }
+        public IReadOnlyList<ITermShape> InputShapes { get; protected set; }
 
         public ExpressionTree Tree { get; protected set; }
 
@@ -77,7 +77,7 @@ namespace Adrien.Compiler
             }
         }
 
-        protected IVariableShape GeneratedOutputShape { get; set; }
+        protected ITermShape GeneratedOutputShape { get; set; }
 
         public Kernel(Tensor output)
         {
@@ -125,7 +125,7 @@ namespace Adrien.Compiler
             DeviceType = deviceType;
         }
 
-        public IVariableShape this[int index]
+        public ITermShape this[int index]
         {
             get
             {
@@ -138,7 +138,7 @@ namespace Adrien.Compiler
             }
         }
 
-        public IVariableShape this[Tensor index]
+        public ITermShape this[Tensor index]
         {
             get => InputShapes.SingleOrDefault(t => t.Label == index.Name) ??
                    throw new ArgumentException($"The kernel does not contain an input variable bound to tensor "

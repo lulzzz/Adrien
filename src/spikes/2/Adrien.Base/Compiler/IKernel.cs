@@ -10,9 +10,9 @@ namespace Adrien.Compiler
 
         IExpressionTree ExpressionTree { get; }
 
-        IReadOnlyList<IVariableShape> InputShapes { get; }
+        IReadOnlyList<ITermShape> InputShapes { get; }
 
-        IVariableShape OutputShape { get; set; }
+        ITermShape OutputShape { get; set; }
 
         bool CompileBeforeRun { get; set; }
 

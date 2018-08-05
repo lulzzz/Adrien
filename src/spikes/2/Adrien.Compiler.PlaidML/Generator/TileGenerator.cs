@@ -27,7 +27,7 @@ namespace Adrien.Compiler.PlaidML.Generator
            .Where(t => !Tree.VariableNodes.Contains(t))
            .ToList();
 
-        public List<IVariableShape> InputShapes => InputTensors.Select(t => t.ValueAs<IVariableShape>()).ToList();
+        public List<ITermShape> InputShapes => InputTensors.Select(t => t.ValueAs<ITermShape>()).ToList();
             
         public Dictionary<ITreeValueNode, string> TensorDimensionVariables { get; protected set; }
 

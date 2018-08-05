@@ -6,7 +6,7 @@ using Adrien.Compiler.PlaidML.Bindings;
 
 namespace Adrien.Compiler.PlaidML
 {
-    public class DeviceTensor : Variable, IVariableShape
+    public class DeviceTensor : Variable, ITermShape
     {
         public Device Device { get; protected set; }
 

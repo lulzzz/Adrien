@@ -2,7 +2,7 @@
 
 namespace Adrien.Compiler
 {
-    public interface IVariableShape : IShape, ITerm, IEnumerable<int>
+    public interface ITermShape : IShape, ITerm, IEnumerable<int>
     {
     }
 }

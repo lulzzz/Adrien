@@ -11,7 +11,7 @@ using Adrien.Trees;
 
 namespace Adrien.Notation
 {
-    public partial class Tensor : Term, IAlgebra<Tensor, TensorExpression>, IVariableShape
+    public partial class Tensor : Term, IAlgebra<Tensor, TensorExpression>, ITermShape
     {
         public int[] Dimensions { get; protected set; }
 
@@ -85,7 +85,7 @@ namespace Adrien.Notation
             I = new IndexSet(this, indexNameBase, dim);
         }
 
-        public Tensor(IVariableShape shape) : this(shape.Label, shape.Dimensions) {}
+        public Tensor(ITermShape shape) : this(shape.Label, shape.Dimensions) {}
 
 
         public TensorIndexExpression this[IndexSet I]

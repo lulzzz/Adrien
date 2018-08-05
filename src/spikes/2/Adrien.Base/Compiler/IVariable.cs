@@ -4,16 +4,10 @@ using System.Collections.Generic;
 
 namespace Adrien.Compiler
 {
-    public interface IVariable<T> : IEnumerable<T>, INDArray, IPinnable
+    public interface IVariable<T> : IEnumerable<T>, IShape, INDArray, IPinnable
         where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         bool Initialized { get; }
-
-        int[] Dimensions { get; }
-
-        int[] Strides { get; }
-
-        int Rank { get; }
 
         MemoryHandle MemoryHandle { get; }
 

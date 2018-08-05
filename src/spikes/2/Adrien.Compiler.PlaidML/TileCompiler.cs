@@ -103,7 +103,7 @@ namespace Adrien.Compiler.PlaidML
             return true;
         }
 
-        public bool Compile<TKernel>(IEnumerable<IVariableShape> inputShapes, IVariableShape outputShape, string code,
+        public bool Compile<TKernel>(IEnumerable<ITermShape> inputShapes, ITermShape outputShape, string code,
             out IRunnable<TKernel> result)
             where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
         {
@@ -134,16 +134,16 @@ namespace Adrien.Compiler.PlaidML
             return true;
         }
 
-        public bool Compile<TKernel>(IVariableShape inputShape, IVariableShape outputShape, string code,
+        public bool Compile<TKernel>(ITermShape inputShape, ITermShape outputShape, string code,
             out IRunnable<TKernel> result)
             where TKernel : unmanaged, IEquatable<TKernel>, IComparable<TKernel>, IConvertible
-            => Compile(new IVariableShape[] {inputShape}, outputShape, code, out result);
+            => Compile(new ITermShape[] {inputShape}, outputShape, code, out result);
 
         public bool Compile<TVectorKernel>(int vectorLength, string code, out IRunnable<TVectorKernel> result)
             where TVectorKernel : unmanaged, IEquatable<TVectorKernel>, IComparable<TVectorKernel>, IConvertible
         {
-            IVariableShape input = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "I");
-            IVariableShape output = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "O");
+            ITermShape input = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "I");
+            ITermShape output = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "O");
             return Compile(input, output, code, out result);
         }
 
@@ -151,14 +151,14 @@ namespace Adrien.Compiler.PlaidML
             out IRunnable<TVectorKernel> result)
             where TVectorKernel : unmanaged, IEquatable<TVectorKernel>, IComparable<TVectorKernel>, IConvertible
         {
-            var inputs = new IVariableShape[vectorCount];
+            var inputs = new ITermShape[vectorCount];
             for (int i = 0; i < inputs.Length; i++)
             {
                 inputs[i] = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength),
                     "I" + i);
             }
 
-            IVariableShape output = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "O");
+            ITermShape output = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength), "O");
             return Compile(inputs, output, code, out result);
         }
 
