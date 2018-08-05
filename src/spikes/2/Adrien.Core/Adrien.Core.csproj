@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <PackageReference Include="AgileObjects.ReadableExpressions" Version="1.12.1" />
-    <PackageReference Include="AGL.Drawing.Gdi" Version="3.0.0" />
     <PackageReference Include="Humanizer.Core" Version="2.4.2" />
     <PackageReference Include="Sawmill" Version="2.1.0" />
     <PackageReference Include="Serilog" Version="2.7.1" />
