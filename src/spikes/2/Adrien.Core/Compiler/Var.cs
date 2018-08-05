@@ -66,7 +66,12 @@ namespace Adrien
             MemoryHandle = new Memory<T>(data).Pin();
             Initialized = true;
         }
-       
+
+        /// <summary>
+        /// Using Array allows to pass in multi-dimensional arrays like int[,,] in the constructor.
+        /// All specialized .NET array types are convertible to Array. The type and dimensions
+        /// of the array are checked to match the dimensions of the Tensor that the Var is bound to.
+        /// </summary>
         internal unsafe Var(Tensor tensor, Array array) : this(tensor)
         {
             var zeroIndex = new int[array.Rank];

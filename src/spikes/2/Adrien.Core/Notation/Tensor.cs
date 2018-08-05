@@ -216,6 +216,7 @@ namespace Adrien.Notation
         public Var<T> Var<T>() where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
             => new Var<T>(this, Array.CreateInstance(typeof(T), Dimensions));
 
+        /// <summary> Only intended for the C# templating process. </summary>
         public static string RankToTensorName(int rank)
         {
             var names = rank.ToWords().Split('-');
