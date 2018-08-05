@@ -37,7 +37,8 @@ namespace Adrien.Trees
                     return Left.Left as ITreeValueNode;
                 }
                 // TODO: [vermorel] Do not throw exceptions of type 'Exception', use subtype.
-                else throw new Exception("The trees output node could not be determined.");
+                // REMARK: [allisterb] Use InvalidOperationException.
+                else throw new  InvalidOperationException("The tree's output node could not be determined.");
             }
         }
 
@@ -147,15 +148,14 @@ namespace Adrien.Trees
             return node;
         }
 
-        public ValueNode ValueNodeAtIndex(int index) => (HashSet.ElementAt(index) as ValueNode) ??
-                                                        // TODO: [vermorel] Do not throw exceptions of type ' Exception', use subtype.
-                                                        throw new Exception(
-                                                            $"The element at index {index} is not a value node.");
+        public ValueNode ValueNodeAtIndex(int index) => (ValueNode)HashSet.ElementAt(index);
+        // TODO: [vermorel] Do not throw exceptions of type ' Exception', use subtype.
+        // REMARK: [allisterb] Cast will throw InvalidCastException
 
-        public OperatorNode OperatorNodeAtIndex(int index) => (HashSet.ElementAt(index) as OperatorNode) ??
-                                                              // TODO: [vermorel] Do not throw exceptions of type ' Exception', use subtype.
-                                                              throw new Exception(
-                                                                  $"The element at {index} is not an operator node.");
+        public OperatorNode OperatorNodeAtIndex(int index) => (OperatorNode)HashSet.ElementAt(index);
+        // TODO: [vermorel] Do not throw exceptions of type ' Exception', use subtype.
+        // REMARK: [allisterb] Cast will throw InvalidCastException
+                                                              
 
         public int CountChildren(TreeNode node)
         {

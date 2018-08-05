@@ -92,17 +92,18 @@ namespace Adrien.Compiler.PlaidML
             var outputTensor = CreateTensor(CreateShape<TKernel>(kernel.OutputShape.Dimensions),
                 kernel.OutputShape.Label.ToUpper());
             var invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
-            if (invoker.IsAllocated && invoker.AllVariablesSet)
-            {
-                result = invoker;
-                return true;
-            }
-            else
+            if (!(invoker.IsAllocated && invoker.AllVariablesSet))
             {
                 // TODO: [vermorel] This condition should come first, as sanity pre-condition.
+                // REMARK: [allisterb] Move condition to top.
                 Status = CompilerStatus.ErrorGeneratingCode;
                 CompilerStatusMessage = invoker.LastStatusString;
                 return false;
+            }
+            else
+            {
+                result = invoker;
+                return true;
             }
         }
 
@@ -126,16 +127,17 @@ namespace Adrien.Compiler.PlaidML
             var outputTensor = CreateTensor(CreateShape<TKernel>(outputShape.Dimensions),
                 outputShape.Label.ToUpper());
             var invoker = new Invoker<TKernel>(Context, f, outputTensor, inputTensors);
-            if (invoker.IsAllocated && invoker.AllVariablesSet)
+            if (!(invoker.IsAllocated && invoker.AllVariablesSet))
             {
-                result = invoker;
-                return true;
+                // TODO: [vermorel] This condition should come first, as sanity pre-condition.
+                // REMARK: [allisterb] Move condition to top
+                CompilerStatusMessage = invoker.LastStatusString;
+                return false;
             }
             else
             {
-                // TODO: [vermorel] This condition should come first, as sanity pre-condition.
-                CompilerStatusMessage = invoker.LastStatusString;
-                return false;
+                result = invoker;
+                return true;
             }
         }
 

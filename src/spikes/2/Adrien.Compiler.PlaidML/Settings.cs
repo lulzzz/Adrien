@@ -170,9 +170,15 @@ namespace Adrien.Compiler.PlaidML
 
                 IsLoaded = true;
             }
-            catch (Exception e) // TODO: [vermorel] Do not catch all 'Exception', narrow it to the one that matters.
+            // TODO: [vermorel] Do not catch all 'Exception', narrow it to the one that matters.
+            // REMARK: [allisterb] Catch specific exceptions
+            catch (IOException ioe)
             {
-                Error(e, "Exception thrown loading configuration from file {0}.", ConfigFile.FullName);
+                Error(ioe, "Error reading from file {0}.", ConfigFile.FullName);
+            }
+            catch (JsonSerializationException jse)
+            {
+                Error(jse, "Error deserializing configuration from file {0}.", ConfigFile.FullName);
                 IsLoaded = false;
             }
 

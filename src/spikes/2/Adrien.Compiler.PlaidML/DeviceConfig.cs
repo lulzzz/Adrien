@@ -74,7 +74,9 @@ namespace Adrien.Compiler.PlaidML
             if (_ptr.IsZero())
             {
                 // TODO: [vermorel] Make it clear than an error is thrown here.
+                // REMARK: [allisterb] Throw PlaidMLApi exception on failure.
                 ReportApiCallError("plaidml_get_devconf");
+                throw new PlaidMLApiException<DeviceConfig>(this, "Could not get device config.");
             }
             else
             {

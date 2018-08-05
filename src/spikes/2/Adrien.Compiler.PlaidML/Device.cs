@@ -27,7 +27,8 @@ namespace Adrien.Compiler.PlaidML
             {
                 ReportApiCallError("plaidml_open_device");
                 // TODO: [vermorel] Don't return, throw an exception instead.
-                return;
+                // REMARK: [allisterb] Throw PlaidMLApi exception on failure.
+                throw new PlaidMLApiException<Device>(this, "Could not open device.");
             }
 
             DeviceConfig = devconf;

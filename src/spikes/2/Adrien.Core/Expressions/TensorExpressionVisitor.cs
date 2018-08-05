@@ -102,7 +102,8 @@ namespace Adrien.Trees
                 if (t.Dimensions.Length < Context.TensorIndicesQueue.Count)
                 {
                     // TODO: [vermorel] Don't throw 'Exception', use subtype.
-                    throw new Exception(
+                    // REMARK: [allisterb] Use ExpressionVisitorException
+                    throw new ExpressionVisitorException(this, node,
                         $"Tensor {t.Name.Label} has {t.Dimensions.Length} dimensions but the tensor indices queue has length {Context.TensorIndicesQueue.Count}.");
                 }
 

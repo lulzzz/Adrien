@@ -30,7 +30,8 @@ namespace Adrien.Compiler.PlaidML
         public Function(Context ctx, IntPtr functionPtr) : base(ctx)
         {
             // TODO: [vermorel] 'id' is never used, and 'Id' is never assigned. Probably not the intended behavior.
-            var id = "id_" + Guid.NewGuid().ToString("N");
+            // REMARK: [allisterb] Correctly assign Id value.
+            Id = "id_" + Guid.NewGuid().ToString("N");
             _ptr = functionPtr;
             IsAllocated = true;
             Info("Added function Id:{0} from pointer {1}", Id, functionPtr);

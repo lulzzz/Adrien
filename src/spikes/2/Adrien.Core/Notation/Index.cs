@@ -46,7 +46,7 @@ namespace Adrien.Notation
             Set = set;
             Order = order;
             DimensionExpression = dimExpression;
-            Type = IndexType.Expression;
+            Type = IndexType.DimensionExpression;
         }
 
         public static implicit operator Int32(Index i) => i.Order;

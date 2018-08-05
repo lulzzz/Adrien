@@ -22,7 +22,9 @@ namespace Adrien.Compiler.PlaidML
             if (_ptr.IsZero())
             {
                 // TODO: [vermorel] Make it obvious than an exception is thrown.
+                // REMARK: [allisterb] Failure conditions now throw PlaidMLApiException.
                 ReportApiCallError("plaidml_alloc_composer");
+                throw new PlaidMLApiException<Composer>(this, "Could not allocate composer.");
             }
             else
             {
@@ -48,8 +50,10 @@ namespace Adrien.Compiler.PlaidML
 
                 return r;
             }
-
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
         public bool AddOutputValue(Value o)
@@ -58,7 +62,7 @@ namespace Adrien.Compiler.PlaidML
 
             if (!o.IsAllocated)
             {
-                throw new ArgumentException("The output Value is not allocated.");
+                return false;
             }
 
             var r = plaidml.__Internal.PlaidmlAddComposerOutput(this, o.Name, o);
@@ -73,10 +77,10 @@ namespace Adrien.Compiler.PlaidML
         public bool AddOutputValue(string name, IntPtr varPtr)
         {
             ThrowIfNotAllocated();
-
             var v = new Value(_context, name, varPtr);
 
             // TODO: [vermorel] This condition does not appear consistent with 'ThrowIfNotAllocated()'
+            // REMARK: [allisterb] Return false instead of throwing exception.
             if (v.IsAllocated)
             {
                 return AddOutputValue(v);
@@ -159,8 +163,9 @@ namespace Adrien.Compiler.PlaidML
             if (p.IsZero())
             {
                 ReportApiCallError("plaidml_build_composed_function");
-                // TODO: [vermorel] Do not use 'null' to report faults. Throw exceptions. 
-                return null;
+                // TODO: [vermorel] Do not use 'null' to report faults. Throw exceptions.
+                // REMARK: [allisterb] Throw PlaidMLApi exception on failure.
+                throw new PlaidMLApiException<Composer>(this, "Could not build composed function.");
             }
             else
             {

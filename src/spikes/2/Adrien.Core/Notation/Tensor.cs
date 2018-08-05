@@ -24,6 +24,8 @@ namespace Adrien.Notation
         public int Rank => Dimensions.Length;
 
         // TODO: [vermorel] Do we have any use case for 'LongRank'? Would suggest to remove.
+        // REMARK: [allisterb] Native tensor compilers often use long/ulong types for all integer types
+
         public ulong LongRank => Convert.ToUInt64(Rank);
 
         public int NumberofElements

@@ -145,9 +145,21 @@ namespace Adrien
                 case UInt16 v:
                     return Const(checked((ushort) Rng.Next(0, UInt16.MaxValue)));
                 case Int64 v: // TODO: [vermorel] Not the proper way of generating a 64bits random int.
-                    return Const(checked((long) (Rng.NextDouble() * Int64.MaxValue)));
+                              // REMARK: [allisterb] Repl procedure from https://social.msdn.microsoft.com/Forums/vstudio/en-US/cb9c7f4d-5f1e-4900-87d8-013205f27587/64-bit-strong-random-function?forum=csharpgeneral
+                    byte[] buffer = new byte[8];
+                    Rng.NextBytes(buffer);
+                    short hi = (short)Rng.Next(4, 0x10000);
+                    buffer[7] = (byte)(hi >> 8);
+                    buffer[6] = (byte)hi;
+                    return Const(BitConverter.ToInt64(buffer, 0));
                 case UInt64 v: // TODO: [vermorel] Not the proper way of generating a 64bits random int.
-                    return Const(checked((ulong) (Rng.NextDouble() * UInt64.MaxValue)));
+                               // REMARK: [allisterb] This is a procedure from https://social.msdn.microsoft.com/Forums/vstudio/en-US/cb9c7f4d-5f1e-4900-87d8-013205f27587/64-bit-strong-random-function?forum=csharpgeneral
+                    buffer = new byte[8];
+                    Rng.NextBytes(buffer);
+                    hi = (short)Rng.Next(4, 0x10000);
+                    buffer[7] = (byte)(hi >> 8);
+                    buffer[6] = (byte)hi;
+                    return Const(BitConverter.ToUInt64(buffer, 0));
                 case Single v: // TODO: [vermorel] Semantic would have to be clarified.
                     return Const(checked(((Single) (Rng.NextDouble() * Int64.MaxValue))));
                 case Double v: // TODO: [vermorel] Semantic would have to be clarified.
@@ -156,7 +168,7 @@ namespace Adrien
                     return Const(Convert.ToBoolean(Rng.Next(0, 1)));
 
                 default:
-                    throw new ArithmeticException();
+                    throw new ArgumentException($"Cannot generate random value for type {typeof(TData).Name}.");
             }
         }
 

@@ -45,7 +45,8 @@ namespace Adrien.Trees
             else
             {
                 // TODO: [vermorel] Do not throw exception of type ' Exception', use subtype.
-                throw new Exception($"The current tree value node is not of type {typeof(T)}.");
+                // REMARK: [allisterb] throw InvalidOperationException
+                throw new InvalidOperationException($"The current tree value node is not of type {typeof(T)}.");
             }
         }
 

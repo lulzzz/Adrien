@@ -20,7 +20,9 @@ namespace Adrien.Compiler.PlaidML
             if (_ptr.IsZero())
             {
                 // TODO: [vermorel] Probably throws an exception but unclear. I suggest to rename 'ThrowApiCallError`.
+                // REMARK: [allisterb] ReportApiCallError only gets and logs the error by calling the native VaiLastStatus().
                 ReportApiCallError("plaidml_alloc_applier");
+                throw new PlaidMLApiException<Applier>(this, "Could not allocate applier.");
             }
             else
             {
@@ -67,7 +69,9 @@ namespace Adrien.Compiler.PlaidML
             if (p.IsZero())
             {
                 ReportApiCallError("plaidml_apply_alloc_output");
-                return null; // TODO: [vermorel] Throw an exception instead, don't use 'null' to report faults.
+                throw new PlaidMLApiException<Applier>(this, "Could not allocate output shape.");
+                // TODO: [vermorel] Throw an exception instead, don't use 'null' to report faults.
+                // REMARK: [allisterb] Throw PlaidMLApi exception on failure.
             }
 
             var o = new Value(_context, name, p);

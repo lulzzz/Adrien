@@ -47,7 +47,6 @@ namespace Adrien.Compiler
                     Compile();
                 }
 
-
                 return new Func<Var<T>[], Var<T>>((input) =>
                 {
                     if (input.Length != this.InputShapes.Count)
@@ -65,14 +64,16 @@ namespace Adrien.Compiler
                     }
 
                     var output = OutputTensor.Var(new T[OutputTensor.NumberofElements]);
-                    if (CompilerResult.Run(output, input) == RunStatus.Success)
+                    var runStatus = CompilerResult.Run(output, input);
+                    if (runStatus == RunStatus.Success)
                     {
                         return output;
                     }
                     else
                     {
                         // TODO: [vermorel] Don't use 'null' to signal a failure mode.
-                        return null;
+                        // REMARK: [allisterb] Throw RunException if run does not complete successfully.
+                        throw new RunException<T>(this, CompilerResult, runStatus, "Run did not complete successfully.");
                     }
                 });
             }

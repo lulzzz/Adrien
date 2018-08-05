@@ -21,7 +21,8 @@
 
         public Scalar With(out Scalar with)
         {
-            GeneratorContext = GeneratorContext ?? (this, 1); // TODO: [vermorel]  '1' magic number needs clarification.
+            int nameGeneratorStartIndex = 1;
+            GeneratorContext = GeneratorContext ?? (this, nameGeneratorStartIndex); // TODO: [vermorel]  '1' magic number needs clarification.
             with = new Scalar(GenerateName(GeneratorContext.Value.index, Name));
             GeneratorContext = (GeneratorContext.Value.tensor, GeneratorContext.Value.index + 1);
             return GeneratorContext.Value.tensor as Scalar;

@@ -69,8 +69,7 @@ namespace Adrien.Generator
         {
             if (Context.Count != 1)
             {
-                // TODO: [vermorel] Specialized exception should be used.
-                throw new Exception($"Context has {Context.Count} nodes, not 1.");
+                throw new LanguageGeneratorException<TOp, TWriter>(this, $"Context has {Context.Count} nodes, not 1.");
             }
 
             Success = true;

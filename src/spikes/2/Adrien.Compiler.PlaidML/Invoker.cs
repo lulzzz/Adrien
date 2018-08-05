@@ -117,8 +117,16 @@ namespace Adrien.Compiler.PlaidML
             }
 
             var invocation = Invoke();
-            if (invocation.IsAllocated)
+            if (!invocation.IsAllocated)
             {
+                // TODO: [vermorel] This condition should be first (pre-condition style).
+                // REMARK: [allisterb] Move condition to top.
+                RunStatusMessage = invocation.LastStatusString;
+                return RunStatus.ErrorExecuting;
+            }
+            else
+            {
+               
                 if (OutputTensor.CreateView<T>(MemoryMapType.Retain).CopyToAndFree(output.Span))
                 {
                     return RunStatus.Success;
@@ -128,12 +136,6 @@ namespace Adrien.Compiler.PlaidML
                     RunStatusMessage = invocation.LastStatusString;
                     return RunStatus.ErrorExecuting;
                 }
-            }
-            else
-            {
-                // TODO: [vermorel] This condition should be first (pre-condition style).
-                RunStatusMessage = invocation.LastStatusString;
-                return RunStatus.ErrorExecuting;
             }
         }
 

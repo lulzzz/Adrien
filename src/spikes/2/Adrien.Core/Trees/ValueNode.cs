@@ -53,7 +53,8 @@ namespace Adrien.Trees
         public T ValueAs<T>() where T : class
         {
             // TODO: [vermorel] Do not throw 'Exception', use a subtype.
-            return (Value as T) ?? throw new Exception();
+            // REMARK: [allisterb] Using a cast will throw an InvalidCastException
+            return (T)Value;
         }
     }
 }
