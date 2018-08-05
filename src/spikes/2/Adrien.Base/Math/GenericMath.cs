@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace Adrien
+namespace Adrien.Math
 {
     /// <summary>
     /// Methods to working with numeric values in generic classes like <code>Var{T}</code> 
@@ -96,7 +96,7 @@ namespace Adrien
             }
         }
 
-        public static TData Random(Random rng)
+        public static TData Random(IRandomGenerator rng)
         {
             TData e = default;
             switch (e)

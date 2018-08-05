@@ -35,6 +35,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using static System.Math;
 using Microsoft.Msagl.Core.Geometry.Curves;
 using Microsoft.Msagl.Core.Layout;
 using Point = Microsoft.Msagl.Core.Geometry.Point;
@@ -59,7 +60,7 @@ namespace Adrien.Diagrams
             var gr = geometryGraph.BoundingBox;
             if (clientRectangle.Height > 1 && clientRectangle.Width > 1)
             {
-                var scale = Math.Min(clientRectangle.Width * 0.9 / gr.Width, clientRectangle.Height * 0.9 / gr.Height);
+                var scale = Min(clientRectangle.Width * 0.9 / gr.Width, clientRectangle.Height * 0.9 / gr.Height);
                 var g0 = (gr.Left + gr.Right) / 2;
                 var g1 = (gr.Top + gr.Bottom) / 2;
 
@@ -120,7 +121,7 @@ namespace Adrien.Diagrams
                             {
                                 graphicsPath.AddArc((float) (el.Center.X - el.AxisA.X),
                                     (float) (el.Center.Y - el.AxisB.Y), (float) (el.AxisA.X * 2),
-                                    Math.Abs((float) el.AxisB.Y * 2), EllipseStartAngle(el), EllipseSweepAngle(el));
+                                    Abs((float) el.AxisB.Y * 2), EllipseStartAngle(el), EllipseSweepAngle(el));
                             }
                         }
                     }
@@ -151,7 +152,7 @@ namespace Adrien.Diagrams
 
             Point s = new Point(-dir.Y, dir.X);
 
-            s *= h.Length * ((float) Math.Tan(arrowAngle * 0.5f * (Math.PI / 180.0)));
+            s *= h.Length * ((float) Tan(arrowAngle * 0.5f * (PI / 180.0)));
 
             var points = new PointF[]
             {
@@ -169,12 +170,12 @@ namespace Adrien.Diagrams
 
         public static float EllipseSweepAngle(Ellipse el)
         {
-            return (float) ((el.ParEnd - el.ParStart) / Math.PI * 180);
+            return (float) ((el.ParEnd - el.ParStart) / PI * 180);
         }
 
         public static float EllipseStartAngle(Ellipse el)
         {
-            return (float) (el.ParStart / Math.PI * 180);
+            return (float) (el.ParStart / PI * 180);
         }
 
         public static void DrawNode(Node n, Pen pen, Graphics graphics)

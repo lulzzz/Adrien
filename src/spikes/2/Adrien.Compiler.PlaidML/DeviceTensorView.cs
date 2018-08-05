@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Adrien.Math;
 
 namespace Adrien.Compiler.PlaidML
 {
@@ -137,7 +138,7 @@ namespace Adrien.Compiler.PlaidML
 
         public INDArray Random()
         {
-            Random rng = new Random();
+            SystemRandom rng = new SystemRandom();
             for (var i = 0; i <= ElementCount; i++)
             {
                 Write(i, GenericMath<T>.Random(rng));

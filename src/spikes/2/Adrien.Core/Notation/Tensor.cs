@@ -7,6 +7,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Humanizer;
 using Adrien.Compiler;
+using Adrien.Math;
 using Adrien.Trees;
 
 namespace Adrien.Notation

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Adrien.Compiler;
+using Adrien.Math;
 using Adrien.Notation;
 
 namespace Adrien
@@ -270,7 +271,7 @@ namespace Adrien
         public INDArray Random()
         {
             // TODO: #23 non-determinism should be avoided.
-            Random rng = new Random();
+            SystemRandom rng = new SystemRandom();
             for (int i = 0; i <= ElementCount; i++)
             {
                 Write(i, GenericMath<T>.Random(rng));
