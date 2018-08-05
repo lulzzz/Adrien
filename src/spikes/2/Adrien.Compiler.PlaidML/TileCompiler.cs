@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Newtonsoft.Json;
-using Adrien.Compiler.PlaidML.Bindings;
 using Adrien.Compiler.PlaidML.Generator;
 
 namespace Adrien.Compiler.PlaidML
@@ -152,7 +151,7 @@ namespace Adrien.Compiler.PlaidML
             out IRunnable<TVectorKernel> result)
             where TVectorKernel : unmanaged, IEquatable<TVectorKernel>, IComparable<TVectorKernel>, IConvertible
         {
-            IVariableShape[] inputs = new IVariableShape[vectorCount];
+            var inputs = new IVariableShape[vectorCount];
             for (int i = 0; i < inputs.Length; i++)
             {
                 inputs[i] = new DeviceTensor(OpenFirstDevice(), CreateShape<TVectorKernel>(vectorLength),
