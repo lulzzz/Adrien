@@ -19,8 +19,6 @@ namespace Adrien.Notation
 
         public Dimensions Dim { get; protected set; }
 
-        public Dimensions Axis => Dim;
-
         public int Rank => Dimensions.Length;
 
         public int NumberofElements

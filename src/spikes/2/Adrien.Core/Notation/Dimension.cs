@@ -8,7 +8,7 @@ namespace Adrien.Notation
     {
         public Tensor Tensor { get; protected set; }
 
-        public new int Axis { get; protected set; }
+        public int Axis { get; protected set; }
 
         public new int Dim { get; protected set; }
 
