@@ -9,6 +9,10 @@ using Adrien.Notation;
 
 namespace Adrien
 {
+    /// <summary>
+    /// Bind a bind a tensor declaration to an array stored in memory. 
+    /// </summary>
+    /// <typeparam name="T">Numeric type of the tensor.</typeparam>
     public class Var<T> : IVariable<T>, IDisposable where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
     {
         public Tensor Tensor { get; internal set; }
