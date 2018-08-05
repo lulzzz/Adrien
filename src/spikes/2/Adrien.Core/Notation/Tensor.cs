@@ -21,7 +21,7 @@ namespace Adrien.Notation
 
         public int Rank => Dimensions.Length;
 
-        public int NumberofElements
+        public int ElementCount
         {
             get
             {

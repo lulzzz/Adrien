@@ -70,7 +70,7 @@ namespace Adrien.Tests
             Assert.Equal("M1", M1.Name);
             Assert.Equal(3, M1.Rank);
             Assert.Equal("M3", M3.Name);
-            Assert.Equal(8, M3.NumberofElements);
+            Assert.Equal(8, M3.ElementCount);
         }
 
         [Fact]

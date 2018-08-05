@@ -25,7 +25,7 @@ namespace Adrien
 
         public int Rank => Tensor.Rank;
 
-        public int ElementCount => Tensor.NumberofElements;
+        public int ElementCount => Tensor.ElementCount;
 
         public bool Initialized { get; protected set; }
 
@@ -41,7 +41,7 @@ namespace Adrien
             {
                 ThrowIfNotInitialized();
                 ThrowIfHandleIsNull();
-                return new Span<T>(MemoryHandle.Pointer, Tensor.NumberofElements);
+                return new Span<T>(MemoryHandle.Pointer, Tensor.ElementCount);
             }
         }
 
@@ -56,10 +56,10 @@ namespace Adrien
             {
                 throw new ArgumentException($"Zero data elements specified.");
             }
-            else if (tensor != null && tensor.NumberofElements != data.Length)
+            else if (tensor != null && tensor.ElementCount != data.Length)
             {
                 throw new ArgumentException($"The number of data elements specified ({data.Length}) "
-                    + $"does not mach the number of elements in tensor {tensor.Label} : {tensor.NumberofElements}.");
+                    + $"does not mach the number of elements in tensor {tensor.Label} : {tensor.ElementCount}.");
             }
 
             Tensor = tensor;
@@ -304,37 +304,37 @@ namespace Adrien
         }
         internal void ThrowIf1DArrayLengthIsNotTensorSize(Array data)
         {
-            if (Tensor.NumberofElements != data.Length)
+            if (Tensor.ElementCount != data.Length)
             {
                 throw new ArgumentException($"The number of data elements ({data.Length}) does not match " +
-                    $"the number of elements in tensor {Tensor.Label} : {Tensor.NumberofElements}.");
+                    $"the number of elements in tensor {Tensor.Label} : {Tensor.ElementCount}.");
             }
         }
 
         internal void ThrowIf1DArrayLengthIsNotTensorSize(params T[] data)
         {
-            if (Tensor.NumberofElements != data.Length)
+            if (Tensor.ElementCount != data.Length)
             {
                 throw new ArgumentException($"The number of data elements ({data.Length}) does not match " +
-                    $"the number of elements in tensor {Tensor.Label} : {Tensor.NumberofElements}.");
+                    $"the number of elements in tensor {Tensor.Label} : {Tensor.ElementCount}.");
             }
         }
 
         internal void ThrowIf1DArrayLengthIsNotTensorSize(Span<T> data)
         {
-            if (Tensor.NumberofElements != data.Length)
+            if (Tensor.ElementCount != data.Length)
             {
                 throw new ArgumentException($"The number of data elements ({data.Length}) does not match " +
-                    $"the number of elements in tensor {Tensor.Label} : {Tensor.NumberofElements}.");
+                    $"the number of elements in tensor {Tensor.Label} : {Tensor.ElementCount}.");
             }
         }
 
         internal void ThrowIfIndexOutOfRange(int index)
         {
-            if (index >= Tensor.NumberofElements)
+            if (index >= Tensor.ElementCount)
             {
                 throw new IndexOutOfRangeException($"Index {index} is greater than the maximum index of the memory " +
-                    $"buffer {Tensor.NumberofElements - 1}.");
+                    $"buffer {Tensor.ElementCount - 1}.");
             }
             else if (index < 0)
             {

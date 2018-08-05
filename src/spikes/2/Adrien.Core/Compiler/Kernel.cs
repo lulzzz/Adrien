@@ -63,7 +63,7 @@ namespace Adrien.Compiler
                         }
                     }
 
-                    var output = OutputTensor.Var(new T[OutputTensor.NumberofElements]);
+                    var output = OutputTensor.Var(new T[OutputTensor.ElementCount]);
                     var runStatus = CompilerResult.Run(output, input);
                     if (runStatus == RunStatus.Success)
                     {
