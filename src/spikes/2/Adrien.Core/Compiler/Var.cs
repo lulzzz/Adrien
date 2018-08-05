@@ -256,9 +256,10 @@ namespace Adrien
 
         public INDArray Random()
         {
+            Random rng = new Random();
             for (int i = 0; i <= ElementCount; i++)
             {
-                Write(i, GenericMath<T>.Random());
+                Write(i, GenericMath<T>.Random(rng));
             }
             return this;
         }

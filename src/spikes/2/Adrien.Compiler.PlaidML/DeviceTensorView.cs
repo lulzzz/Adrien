@@ -137,9 +137,10 @@ namespace Adrien.Compiler.PlaidML
 
         public INDArray Random()
         {
+            Random rng = new Random();
             for (var i = 0; i <= ElementCount; i++)
             {
-                Write(i, GenericMath<T>.Random());
+                Write(i, GenericMath<T>.Random(rng));
             }
 
             return this;

@@ -6,14 +6,10 @@ using System.Runtime.CompilerServices;
 namespace Adrien
 {
     public static class GenericMath<TData> where TData : unmanaged, IEquatable<TData>, IComparable<TData>, IConvertible
-    {
-        public static Random Rng { get; } = new Random();
-
-
+    {        
         static GenericMath()
         {
         }
-
 
         public static TData Const<TValue>(TValue v) where TValue : unmanaged, IEquatable<TValue>, IComparable<TValue>,
             IConvertible
@@ -64,38 +60,6 @@ namespace Adrien
             }
         }
 
-        public static double Sqrt(TData n)
-        {
-            switch (n)
-            {
-                case SByte v:
-                    return checked(Math.Sqrt(v));
-                case Byte v:
-                    return checked(Math.Sqrt(v));
-                case Int32 v:
-                    return checked(Math.Sqrt(v));
-                case UInt32 v:
-                    return checked(Math.Sqrt(v));
-                case Int16 v:
-                    return checked(Math.Sqrt(v));
-                case UInt16 v:
-                    return checked(Math.Sqrt(v));
-                case Int64 v:
-                    return checked(Math.Sqrt(v));
-                case UInt64 v:
-                    return checked(Math.Sqrt(v));
-                case Single v:
-                    return checked(Math.Sqrt(v));
-                case Double v:
-                    return checked(Math.Sqrt(v));
-                case bool v:
-                    throw new ArgumentException($"Cannot get the square root of a bool.");
-                default:
-                    throw new ArithmeticException();
-            }
-        }
-
-
         public static double F(Func<double, double> f, TData n)
         {
             switch (n)
@@ -127,98 +91,49 @@ namespace Adrien
             }
         }
 
-        public static TData Random()
+        public static TData Random(Random rng)
         {
             TData e = default;
             switch (e)
             {
                 case SByte v:
-                    return Const(checked((sbyte) Rng.Next(0, SByte.MaxValue)));
+                    return Const(checked((sbyte) rng.Next(0, SByte.MaxValue)));
                 case Byte v:
-                    return Const(checked((byte) Rng.Next(0, Byte.MaxValue)));
+                    return Const(checked((byte) rng.Next(0, Byte.MaxValue)));
                 case Int32 v:
-                    return Const(checked((int) Rng.Next(0, Int32.MaxValue)));
+                    return Const(checked((int) rng.Next(0, Int32.MaxValue)));
                 case UInt32 v:
-                    return Const(checked((uint) Rng.Next(0, Int32.MaxValue)));
+                    return Const(checked((uint) rng.Next(0, Int32.MaxValue)));
                 case Int16 v:
-                    return Const(checked((short) Rng.Next(0, Int16.MaxValue)));
+                    return Const(checked((short) rng.Next(0, Int16.MaxValue)));
                 case UInt16 v:
-                    return Const(checked((ushort) Rng.Next(0, UInt16.MaxValue)));
+                    return Const(checked((ushort) rng.Next(0, UInt16.MaxValue)));
                 case Int64 v: // TODO: [vermorel] Not the proper way of generating a 64bits random int.
                               // REMARK: [allisterb] Repl procedure from https://social.msdn.microsoft.com/Forums/vstudio/en-US/cb9c7f4d-5f1e-4900-87d8-013205f27587/64-bit-strong-random-function?forum=csharpgeneral
                     byte[] buffer = new byte[8];
-                    Rng.NextBytes(buffer);
-                    short hi = (short)Rng.Next(4, 0x10000);
+                    rng.NextBytes(buffer);
+                    short hi = (short)rng.Next(4, 0x10000);
                     buffer[7] = (byte)(hi >> 8);
                     buffer[6] = (byte)hi;
                     return Const(BitConverter.ToInt64(buffer, 0));
                 case UInt64 v: // TODO: [vermorel] Not the proper way of generating a 64bits random int.
                                // REMARK: [allisterb] This is a procedure from https://social.msdn.microsoft.com/Forums/vstudio/en-US/cb9c7f4d-5f1e-4900-87d8-013205f27587/64-bit-strong-random-function?forum=csharpgeneral
                     buffer = new byte[8];
-                    Rng.NextBytes(buffer);
-                    hi = (short)Rng.Next(4, 0x10000);
+                    rng.NextBytes(buffer);
+                    hi = (short)rng.Next(4, 0x10000);
                     buffer[7] = (byte)(hi >> 8);
                     buffer[6] = (byte)hi;
                     return Const(BitConverter.ToUInt64(buffer, 0));
                 case Single v: // TODO: [vermorel] Semantic would have to be clarified.
-                    return Const(checked(((Single) (Rng.NextDouble() * Int64.MaxValue))));
+                    return Const(checked(((Single) (rng.NextDouble() * Int64.MaxValue))));
                 case Double v: // TODO: [vermorel] Semantic would have to be clarified.
-                    return Const(checked((((double) Rng.NextDouble() * Int64.MaxValue))));
+                    return Const(checked((((double) rng.NextDouble() * Int64.MaxValue))));
                 case Boolean v:
-                    return Const(Convert.ToBoolean(Rng.Next(0, 1)));
+                    return Const(Convert.ToBoolean(rng.Next(0, 1)));
 
                 default:
                     throw new ArgumentException($"Cannot generate random value for type {typeof(TData).Name}.");
             }
-        }
-
-        public static TData Random(double max)
-        {
-            return Const(checked((double) Rng.NextDouble() * max));
-        }
-
-        public static (TData, TData) RandomMultiplyFactorAndValue()
-        {
-            TData e = default;
-            TData max;
-            int factor = Rng.Next(1, 4);
-            switch (e)
-            {
-                case SByte v:
-                    max = Random((sbyte) (sbyte.MaxValue / 4));
-                    break;
-                case Byte v:
-                    max = Random((byte) (byte.MaxValue / (byte) 4));
-                    break;
-                case Int16 v:
-                    max = Random((short) (short.MaxValue / (short) 4));
-                    break;
-                case UInt16 v:
-                    max = Random((ushort) (ushort.MaxValue / (ushort) 4));
-                    break;
-                case Int32 v:
-                    max = Random((int) (int.MaxValue / 4));
-                    break;
-                case UInt32 v:
-                    max = Random(uint.MaxValue / 4u);
-                    break;
-                case Int64 v:
-                    max = Random((long) (long.MaxValue / 4));
-                    break;
-                case UInt64 v:
-                    max = Random(ulong.MaxValue / 4u);
-                    break;
-                case Double v:
-                    max = Random((double) (long.MaxValue / 4));
-                    break;
-                case Single v:
-                    max = Random((Single) (long.MaxValue / 4));
-                    break;
-                default:
-                    throw new ArgumentException($"Cannot multiply type {nameof(TData)}.");
-            }
-
-            return (Const(factor), Const(max));
         }
 
         public static int[] StridesInElements(int[] dim)
