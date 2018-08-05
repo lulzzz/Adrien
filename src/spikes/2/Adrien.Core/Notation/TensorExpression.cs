@@ -4,11 +4,7 @@ using System.Reflection;
 using System.Linq;
 using System.Linq.Expressions;
 
-using Sawmill;
-using Sawmill.Expressions;
-
 using Adrien.Expressions;
-using Adrien.Notation;
 using Adrien.Trees;
 
 namespace Adrien.Notation
