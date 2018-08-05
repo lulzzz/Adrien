@@ -370,9 +370,6 @@ namespace Adrien
             T t = default;
             switch (t)
             {
-                case Boolean _:
-                    return DataType.BOOLEAN;
-
                 case SByte _:
                     return DataType.INT8;
 

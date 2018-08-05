@@ -3,7 +3,6 @@
     public enum DataType
     {
         NaN = - 1,
-        BOOLEAN,
         INT8,
         INT16,
         INT32,
