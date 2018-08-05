@@ -3,6 +3,12 @@ using System.Runtime.CompilerServices;
 
 namespace Adrien
 {
+    /// <summary>
+    /// Methods to working with numeric values in generic classes like <code>Var{T}</code> 
+    /// where the concrete type isn't known up-front e.g. INDArray defines a <code>Ones()</code>
+    /// method that <code>Var{T}</code> must implement that fills the array buffer with ones.
+    /// </summary>
+    /// <typeparam name="TData"></typeparam>
     public static class GenericMath<TData> where TData : unmanaged, IEquatable<TData>, IComparable<TData>, IConvertible
     {        
         static GenericMath()
@@ -12,6 +18,7 @@ namespace Adrien
         public static TData Const<TValue>(TValue v) where TValue : unmanaged, IEquatable<TValue>, IComparable<TValue>,
             IConvertible
         {
+            // TODO: [vermorel] Inefficient boxing caused by 'Convert.ChangeType()'.
             return (TData) Convert.ChangeType(v, typeof(TData));
         }
 
@@ -54,7 +61,7 @@ namespace Adrien
                     throw new ArgumentException($"Cannot multiply 2 bools.");
 
                 default:
-                    throw new Exception($"Unsupported math type: {typeof(TData).Name}");
+                    throw new NotSupportedException($"Unsupported math type: {typeof(TData).Name}");
             }
         }
 
