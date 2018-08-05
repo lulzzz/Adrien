@@ -69,9 +69,9 @@ namespace Adrien
        
         internal unsafe Var(Tensor tensor, Array array) : this(tensor)
         {
-            int[] zeroindex = new int[array.Rank];
-            object zeroelement = array.GetValue(zeroindex);
-            if (!(zeroelement is T))
+            var zeroIndex = new int[array.Rank];
+            var zeroElement = array.GetValue(zeroIndex);
+            if (!(zeroElement is T))
             {
                 throw new ArgumentException($"The array must have type {typeof(T).Name} to initialize this variable.");
             }
@@ -93,6 +93,7 @@ namespace Adrien
             GCHandle h = GCHandle.Alloc(array, GCHandleType.Pinned);
             if (!h.IsAllocated)
             {
+                // TODO: [vermorel] Do not throw naked 'Exception', use subtype.
                 throw new Exception("Could not allocate GCHandle for array.");
             }
             MemoryHandle = new MemoryHandle(h.AddrOfPinnedObject().ToPointer(), h, this);
@@ -115,7 +116,7 @@ namespace Adrien
                 ThrowIfNotInitialized();
                 ThrowIfHandleIsNull();
                 ThrowIfIndexOutOfRange(index);
-                return ref this.Read(index);
+                return ref Read(index);
             }
         }
 
@@ -125,17 +126,19 @@ namespace Adrien
 
         public static implicit operator Var<T>(T c) => new Var<T>(null, c);
 
-        public static implicit operator T (Var<T> v) 
+        public static implicit operator T (Var<T> v)
         {
             if (!v.Initialized)
             {
                 throw new InvalidOperationException($"The variable {v.Name} is not initialized");
             }
-            else if (v.ElementCount != 1)
+
+            if (v.ElementCount != 1)
             {
                 throw new InvalidCastException($"The variable {v.Name} has {v.ElementCount} elements.");
             }
-            else return v[0];
+
+            return v[0];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -194,9 +197,10 @@ namespace Adrien
             ThrowIf1DArrayLengthIsNotTensorSize(destination);
             ThrowIfNotInitialized();
             ThrowIfHandleIsNull();
-            bool r = this.Span.TryCopyTo(destination);
+            bool r = Span.TryCopyTo(destination);
             if (!r)
             {
+                // TODO: [vermorel] Do not throw naked 'Exception', use subtype instead.
                 throw new Exception("Copy operation failed.");
             }
         }
@@ -205,7 +209,7 @@ namespace Adrien
 
         public IVariable<T> Fill(T c)
         {
-            this.Span.Fill(c);
+            Span.Fill(c);
             return this;
         }
 
@@ -225,14 +229,14 @@ namespace Adrien
             Pins--;
         }
 
-        #region IEnumerable<T> implementation
+        // Begin IEnumerable<T> implementation
         public IEnumerator<T> GetEnumerator()
         {
-            if (this.Initialized)
+            if (Initialized)
             {
-                for (int i = 0; i < this.ElementCount; i++)
+                for (int i = 0; i < ElementCount; i++)
                 {
-                    yield return this.Read(i);
+                    yield return Read(i);
                 }
             }
             else
@@ -242,10 +246,10 @@ namespace Adrien
             
         }
 
-        IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
-        #endregion
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        // End IEnumerable<T> implementation
 
-        #region INDArray implementation
+        // Begin INDArray implementation
         public int NDim => Rank;
 
         public int[] DeviceBufferShape => Dimensions;
@@ -260,6 +264,7 @@ namespace Adrien
 
         public INDArray Random()
         {
+            // TODO: #23 non-determinism should be avoided.
             Random rng = new Random();
             for (int i = 0; i <= ElementCount; i++)
             {
@@ -268,7 +273,7 @@ namespace Adrien
             return this;
         }
 
-        #endregion
+        // End NDArray implementation
 
         internal unsafe void* PtrTo(int index)
         {
@@ -292,9 +297,9 @@ namespace Adrien
 
             }
         }
-        internal void ThrowIf1DArrayLenthIsNotTensorSize(Array data)
+        internal void ThrowIf1DArrayLengthIsNotTensorSize(Array data)
         {
-            if (this.Tensor.NumberofElements != data.Length)
+            if (Tensor.NumberofElements != data.Length)
             {
                 throw new ArgumentException($"The number of data elements ({data.Length}) does not match " +
                     $"the number of elements in tensor {Tensor.Label} : {Tensor.NumberofElements}.");
@@ -303,7 +308,7 @@ namespace Adrien
 
         internal void ThrowIf1DArrayLengthIsNotTensorSize(params T[] data)
         {
-            if (this.Tensor.NumberofElements != data.Length)
+            if (Tensor.NumberofElements != data.Length)
             {
                 throw new ArgumentException($"The number of data elements ({data.Length}) does not match " +
                     $"the number of elements in tensor {Tensor.Label} : {Tensor.NumberofElements}.");
@@ -312,7 +317,7 @@ namespace Adrien
 
         internal void ThrowIf1DArrayLengthIsNotTensorSize(Span<T> data)
         {
-            if (this.Tensor.NumberofElements != data.Length)
+            if (Tensor.NumberofElements != data.Length)
             {
                 throw new ArgumentException($"The number of data elements ({data.Length}) does not match " +
                     $"the number of elements in tensor {Tensor.Label} : {Tensor.NumberofElements}.");
