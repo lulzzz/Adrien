@@ -20,7 +20,7 @@ namespace Adrien.Tests.Compilers
        
         public PlaidMLCompilerApiTests()
         {
-            CompilerDriver.Log = SerilogLogger.CreateDefaultLogger("Adrien.Tests.log");
+            CompilerDriver.SetLogger(() => SerilogLogger.CreateDefaultLogger("Adrien.Tests.log"));
             testContext = new Context();
         }
 

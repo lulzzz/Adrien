@@ -19,7 +19,7 @@ namespace Adrien.Tests.Compilers
     {
         public TileCompilerTests()
         {
-            CompilerDriver.Log = SerilogLogger.CreateDefaultLogger("Adrien.Tests.log");
+            CompilerDriver.SetLogger(() => SerilogLogger.CreateDefaultLogger("Adrien.Tests.log"));
         }
 
         [Fact]

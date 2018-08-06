@@ -136,16 +136,7 @@ namespace Adrien.Compiler.PlaidML
 
         public INDArray Ones() => Fill(GenericMath<T>.Const(1));
 
-        public INDArray Random()
-        {
-            SystemRandom rng = new SystemRandom();
-            for (var i = 0; i <= ElementCount; i++)
-            {
-                Write(i, GenericMath<T>.Random(rng));
-            }
-
-            return this;
-        }
+        public INDArray Random() => throw new NotImplementedException();
 
         // End of INDArray implementation
 

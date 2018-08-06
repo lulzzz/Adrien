@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Linq;
 using Adrien.Compiler.PlaidML.Bindings;
 using Adrien.Math;
@@ -80,7 +81,7 @@ namespace Adrien.Compiler.PlaidML
             }
 
             IsAllocated = true;
-            var strides = GenericMath<int>.StridesInElements(dimensions);
+            var strides = StridesInElements(dimensions);
             for (int i = 0; i < dimensions.Length; i++)
             {
                 AddDimension((ulong) dimensions[i], strides[i]);
@@ -101,6 +102,41 @@ namespace Adrien.Compiler.PlaidML
                 ThrowIfNotAllocated();
                 return Dimensions[i];
             }
+        }
+
+        public static int[] StridesInElements(int[] dim)
+        {
+            var strides = new int[dim.Length];
+            float s = 1;
+            for (int i = 0; i < dim.Length; i++)
+            {
+                if (dim[i] > 0)
+                {
+                    s *= Convert.ToSingle(dim[i]);
+                }
+            }
+
+            for (int i = 0; i < dim.Length; i++)
+            {
+                if (dim[i] > 0)
+                {
+                    s /= Convert.ToSingle(dim[i]);
+                    strides[i] = Convert.ToInt32(s);
+                }
+            }
+
+            return strides;
+        }
+
+        public static int[] StridesInBytes<T>(int[] dim)
+        {
+            var strides = StridesInElements(dim);
+            for (int i = 0; i < strides.Length; i++)
+            {
+                strides[i] *= Unsafe.SizeOf<T>();
+            }
+
+            return strides;
         }
 
         public static PlaidmlDatatype ToDataType<T>() where T : unmanaged

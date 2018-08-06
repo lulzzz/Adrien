@@ -12,7 +12,7 @@ namespace Adrien.Compiler
 
         static Version AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version;
 
-        protected static ILog L => CompilerDriver.Log;
+        protected static ILog L => CompilerDriver.Logger;
 
         public CompilerApi()
         {

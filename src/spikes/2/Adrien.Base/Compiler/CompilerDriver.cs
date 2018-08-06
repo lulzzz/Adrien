@@ -1,22 +1,21 @@
-﻿using Serilog;
+﻿using System;
 
 namespace Adrien
 {
     public class CompilerDriver
     {
-        public static ILog Log
+        public static ILog Logger { get; private set; }
+        
+        public static void SetLogger(Func<ILog> logger)
         {
-            get => _Log;
-            set
+            lock(setLogLock)
             {
-                if (_Log == null)
+                if (Logger == null)
                 {
-                    _Log = value;
+                    Logger = logger();
                 }
             }
-        
         }
-
-        private static ILog _Log;
+        private static object setLogLock = new object();
     }
 }

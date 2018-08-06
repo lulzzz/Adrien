@@ -9,7 +9,7 @@ namespace Adrien.Log
 
         public static bool LoggerConfigured { get; protected set; }
 
-        public ILogger L { get; protected set; }
+        protected ILogger L { get; set; }
 
         internal SerilogLogger()
         {
@@ -17,13 +17,13 @@ namespace Adrien.Log
             {
                 throw new InvalidOperationException("The Serilog logger is not configured.");
             }
-            L = Serilog.Log.Logger; ;
+            L = Serilog.Log.Logger;
         }
 
         public static SerilogLogger CreateDefaultLogger(string logFilename = "Adrien.log")
         {
             if (!LoggerConfigured)
-            {
+            {       
                 LoggerConfiguration = new LoggerConfiguration()
                     .WriteTo.RollingFile(logFilename,
                         outputTemplate: "{Timestamp:HH:mm:ss} [{Level:u3}] {Message}{NewLine}{Exception}");

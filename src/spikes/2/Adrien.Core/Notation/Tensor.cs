@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Reflection;
 using System.Diagnostics;
 using System.Linq;
@@ -71,7 +72,7 @@ namespace Adrien.Notation
             }
 
             Dimensions = dim;
-            Strides = GenericMath<int>.StridesInElements(Dimensions);
+            Strides = StridesInElements(Dimensions);
             Dim = new Dimensions(this);
         }
 
@@ -145,6 +146,41 @@ namespace Adrien.Notation
         public static TensorExpression operator *(Tensor left, Tensor right) => left.Multiply(right);
 
         public static TensorExpression operator /(Tensor left, Tensor right) => left.Divide(right);
+
+        public static int[] StridesInElements(int[] dim)
+        {
+            var strides = new int[dim.Length];
+            float s = 1;
+            for (int i = 0; i < dim.Length; i++)
+            {
+                if (dim[i] > 0)
+                {
+                    s *= Convert.ToSingle(dim[i]);
+                }
+            }
+
+            for (int i = 0; i < dim.Length; i++)
+            {
+                if (dim[i] > 0)
+                {
+                    s /= Convert.ToSingle(dim[i]);
+                    strides[i] = Convert.ToInt32(s);
+                }
+            }
+
+            return strides;
+        }
+
+        public static int[] StridesInBytes<T>(int[] dim)
+        {
+            var strides = StridesInElements(dim);
+            for (int i = 0; i < strides.Length; i++)
+            {
+                strides[i] *= Unsafe.SizeOf<T>();
+            }
+
+            return strides;
+        }
 
         public TensorExpression Negate() => -(TensorExpression) this;
 
