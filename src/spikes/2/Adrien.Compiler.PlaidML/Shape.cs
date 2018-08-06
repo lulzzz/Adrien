@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Linq;
 using Adrien.Compiler.PlaidML.Bindings;
-using Adrien.Math;
 
 namespace Adrien.Compiler.PlaidML
 {
@@ -37,6 +36,7 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
+        /// <summary> 'Rank' in Adrien terminology. Mirrors the C api of PlaidML. </summary>
         public ulong DimensionCount
         {
             get

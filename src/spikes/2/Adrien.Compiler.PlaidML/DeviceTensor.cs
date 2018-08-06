@@ -16,6 +16,7 @@ namespace Adrien.Compiler.PlaidML
 
         public int Rank => Convert.ToInt32(Shape.DimensionCount);
 
+        /// <summary> 'Rank' in Adrien terminology. Mirrors the C api of PlaidML. </summary>
         public ulong DimensionCount => Shape.DimensionCount;
 
         public int[] Dimensions => Shape.Dimensions.Select(d => Convert.ToInt32(d.length)).ToArray();
