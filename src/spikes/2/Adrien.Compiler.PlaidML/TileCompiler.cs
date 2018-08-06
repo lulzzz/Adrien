@@ -19,7 +19,7 @@ namespace Adrien.Compiler.PlaidML
 
         public string CompilerStatusMessage { get; protected set; }
 
-        public Settings Settings => _context.settings;
+        public Settings Settings => _context.Settings;
 
         public string SessionId { get; protected set; }
 
@@ -38,7 +38,9 @@ namespace Adrien.Compiler.PlaidML
             {
                 CompilerStatusMessage = _context.LastStatusString;
                 // TODO: [vermorel] An exception should be thrown here.
-                return;
+                // REMARK: [allisterb] Throw PlaidMLApiException on failure.  
+                throw new PlaidMLApiException<TileCompiler>(this, "Could not allocate Context.");
+             
             }
 
             Options = options;

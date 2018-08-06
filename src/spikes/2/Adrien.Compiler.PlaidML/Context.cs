@@ -24,7 +24,7 @@ namespace Adrien.Compiler.PlaidML
 
         public string LastStatusString { get; protected set; }
 
-        public Settings settings { get; protected set; }
+        public Settings Settings { get; protected set; }
 
         public List<INDArray> Tensors { get; } = new List<INDArray>();
 
@@ -54,8 +54,8 @@ namespace Adrien.Compiler.PlaidML
                 ReportApiCallError("vai_set_event_log");
             }
 
-            settings = new Settings(configFile);
-            IsAllocated = settings.IsLoaded;
+            Settings = new Settings(configFile);
+            IsAllocated = Settings.IsLoaded;
         }
 
         public Context() : this("PlaidML.log", Settings.UseConfigFile.Default) {}

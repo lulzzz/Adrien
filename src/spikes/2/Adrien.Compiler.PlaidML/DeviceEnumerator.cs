@@ -38,9 +38,9 @@ namespace Adrien.Compiler.PlaidML
 
         public DeviceEnumerator(Context ctx) : base(ctx)
         {
-            if (_context.settings.IsManualConfig)
+            if (_context.Settings.IsManualConfig)
             {
-                _ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(_context, _context.settings.Config,
+                _ptr = plaidml.__Internal.PlaidmlAllocDeviceEnumeratorWithConfig(_context, _context.Settings.Config,
                     IntPtr.Zero, IntPtr.Zero);
             }
             else

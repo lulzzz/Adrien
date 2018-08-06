@@ -104,13 +104,14 @@ namespace Adrien.Compiler.PlaidML
             ThrowIfInputShapeMismatch(input);
 
             // TODO: [vermorel] Looks incorrect to call .Count() below.
-            for (int i = 0; i < input.Count(); i++)
+            // REMARK: [allisterb] Use array methods instead of IEnumerable methods.
+            for (int i = 0; i < input.Length; i++)
             {
                 var iv = InputTensors[i].CreateView<T>(MemoryMapType.Discard);
-                if (!iv.CopyFromAndFree(input.ElementAt(i).Span))
+                if (!iv.CopyFromAndFree(input[i].Span))
                 {
                     iv.Free();
-                    RunStatusMessage = $"Could not copy data from input variable {input.ElementAt(i).Name} to " +
+                    RunStatusMessage = $"Could not copy data from input variable {input[i].Name} to " +
                                        $"device tensor {iv.Name}.";
                     return RunStatus.ErrorAllocatingInput;
                 }

@@ -100,7 +100,8 @@ namespace Adrien
             if (!h.IsAllocated)
             {
                 // TODO: [vermorel] Do not throw naked 'Exception', use subtype.
-                throw new Exception("Could not allocate GCHandle for array.");
+                // REMARK: [allisterb] Throw OutOfMemoryException
+                throw new OutOfMemoryException("Could not allocate GCHandle for array.");
             }
             MemoryHandle = new MemoryHandle(h.AddrOfPinnedObject().ToPointer(), h, this);
             Pins = 1;
@@ -207,7 +208,8 @@ namespace Adrien
             if (!r)
             {
                 // TODO: [vermorel] Do not throw naked 'Exception', use subtype instead.
-                throw new Exception("Copy operation failed.");
+                // REMARK: [allisterb] Throw OutofMemoryException.
+                throw new OutOfMemoryException("Copy operation failed.");
             }
         }
 

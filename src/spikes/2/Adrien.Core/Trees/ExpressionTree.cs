@@ -88,8 +88,10 @@ namespace Adrien.Trees
         {
             var pos = parent.HasLeft ? TreeNodePosition.RIGHT : TreeNodePosition.LEFT;
             var nid = pos == TreeNodePosition.LEFT ? CountChildren(parent) + 1 : CountChildren(parent) + 2;
-            var node = new OperatorNode(nid, parent.Id, pos, op);
-            node.Parent = parent;
+            var node = new OperatorNode(nid, parent.Id, pos, op)
+            {
+                Parent = parent
+            };
             return node;
         }
 
@@ -97,8 +99,10 @@ namespace Adrien.Trees
         {
             var pos = parent.HasLeft ? TreeNodePosition.RIGHT : TreeNodePosition.LEFT;
             var nid = pos == TreeNodePosition.LEFT ? CountChildren(parent) + 1 : CountChildren(parent) + 2;
-            var node = new ValueNode(nid, parent.Id, pos, value);
-            node.Parent = parent;
+            var node = new ValueNode(nid, parent.Id, pos, value)
+            {
+                Parent = parent
+            };
             return node;
         }
 
@@ -158,9 +162,8 @@ namespace Adrien.Trees
                 {
                     return start;
                 }
-                else if (tn is OperatorNode)
+                else if (tn is OperatorNode on)
                 {
-                    var on = (OperatorNode) tn;
                     var lcount = on.Left != null ? Count(start + 1, on.Left) : start + 1;
                     var rcount = on.Right != null ? Count(lcount + 1, on.Right) : lcount;
                     return rcount;

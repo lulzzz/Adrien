@@ -5,7 +5,8 @@ namespace Adrien.Notation
 {
     public class UnaryOperator : IElementwiseOp
     {
-        Func<TensorExpression, TensorExpression> Operation;
+        protected Func<TensorExpression, TensorExpression> Operation { get; set; }
+
 
         public UnaryOperator(Func<TensorExpression, TensorExpression> op)
         {
