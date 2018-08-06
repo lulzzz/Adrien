@@ -17,7 +17,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AgileObjects.ReadableExpressions" Version="1.12.1" />
     <PackageReference Include="Humanizer.Core" Version="2.4.2" />
     <PackageReference Include="Sawmill" Version="2.1.0" />
     <PackageReference Include="System.Memory" Version="4.5.1" />

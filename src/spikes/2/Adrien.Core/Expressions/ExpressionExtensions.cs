@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using AgileObjects.ReadableExpressions;
 using Sawmill.Expressions;
 using Adrien.Notation;
 using Adrien.Trees;
@@ -30,9 +29,7 @@ namespace Adrien.Expressions
         [DebuggerStepThrough]
         public static TExpr As<TExpr>(this Expression expr) where TExpr : Expression
         {
-            return (expr as TExpr) ??
-                   throw new NotSupportedException(
-                       $"This expression {expr.ToReadableString()} is not type {typeof(TExpr)}.");
+            return (TExpr)expr;
         }
 
         

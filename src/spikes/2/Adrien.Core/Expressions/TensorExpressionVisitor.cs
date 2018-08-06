@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using AgileObjects.ReadableExpressions;
 using Adrien.Expressions;
 using Adrien.Notation;
 
@@ -72,7 +71,7 @@ namespace Adrien.Trees
                 t = node.Value as Tensor;
             }
             else
-                throw new InvalidOperationException($"Can't convert ConstantExpression {node.ToReadableString()}" +
+                throw new InvalidOperationException($"Can't convert ConstantExpression" +
                                                     @"of type {node.Value.GetType().Name} to type Tensor.");
 
             
