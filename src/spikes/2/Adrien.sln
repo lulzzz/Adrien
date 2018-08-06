@@ -35,6 +35,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adrien.Diagrams", "Adrien.D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adrien.Log.Serilog", "Adrien.Log.Serilog\Adrien.Log.Serilog.csproj", "{55B50F36-A3A8-4C8D-ADAD-EBE427913F9B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{572137D5-C3BA-457F-9C54-D81F153C08B3}"
+	ProjectSection(SolutionItems) = preProject
+		build.cmd = build.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BuildTemplates|Any CPU = BuildTemplates|Any CPU
