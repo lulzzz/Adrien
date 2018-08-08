@@ -70,7 +70,7 @@ namespace Adrien.Notation
 
         protected static MethodInfo GetDummyUnaryMethodInfo(TensorExpression l)
         {
-            Type lt = l.GetTensorExpressionType();
+            Type lt = l.TensorExpressionMethodParameterType;
 
             MethodInfo method = typeof(TensorExpression).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
                 .Where(m => m.Name == "DummyUnary" && m.GetParameters()[0].ParameterType == lt).First();
@@ -79,8 +79,8 @@ namespace Adrien.Notation
 
         protected static MethodInfo GetDummyBinaryMethodInfo(TensorExpression l, TensorExpression r)
         {
-            Type lt = l.GetTensorExpressionType();
-            Type rt = r.GetTensorExpressionType();
+            Type lt = l.TensorExpressionMethodParameterType;
+            Type rt = r.TensorExpressionMethodParameterType;
 
 
             MethodInfo method = typeof(TensorExpression).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
@@ -98,17 +98,20 @@ namespace Adrien.Notation
         protected static TensorExpression DummyBinary(TensorExpression l, TensorExpression r) => null;
 
 
-        private Type GetTensorExpressionType()
+        private Type TensorExpressionMethodParameterType
         {
-            if (LinqExpression.NodeType == ExpressionType.Constant)
+            get
             {
-                return (LinqExpression as ConstantExpression).Type;
+                if (LinqExpression is ConstantExpression ce)
+                {
+                    return ce.Type;
+                }
+                else if (LinqExpression is IndexExpression ie)
+                {
+                    return ie.Object.Type.GetElementType();
+                }
+                else return typeof(TensorExpression);
             }
-            else if (LinqExpression.NodeType == ExpressionType.Index)
-            {
-                return (LinqExpression as IndexExpression).Object.Type.GetElementType();
-            }
-            else return typeof(TensorExpression);
         }
     }
 }

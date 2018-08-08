@@ -22,14 +22,10 @@ namespace Adrien.Notation
                 {
                     throw new ArgumentException("This index is a dimension expression, not a dimension.");
                 }
-                if (i.Set == null || i.Set.Tensor == null || i.Set.Tensor != this.Tensor)
-                {
-                    throw new ArgumentException($"This index does not belong to an index set of tensor {Tensor.Name}.");
-                }
                 else
                 {
                     Tensor.ThrowIfIndicesExceedRank(i.Dimension.Value);
-                    return this[i.Dimension.Value];
+                    return base[i.Dimension.Value];
                 }
             }
         }

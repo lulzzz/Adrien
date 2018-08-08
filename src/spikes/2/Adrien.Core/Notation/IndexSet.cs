@@ -39,6 +39,10 @@ namespace Adrien.Notation
 
         public IndexSet(Tensor parent, params Index[] indices) : base(string.Empty)
         {
+            if (indices == null || indices.Length == 0)
+            {
+                throw new ArgumentException("The number of indices is zero.");
+            }
             for (int i = 0; i < indices.Length; i++)
             {
                 indices[i].Order = i;

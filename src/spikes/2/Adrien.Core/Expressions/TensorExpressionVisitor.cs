@@ -14,6 +14,7 @@ namespace Adrien.Trees
 
         internal TreeBuilderContext Context { get; set; }
 
+
         public TensorExpressionVisitor(Expression expr, bool visit = true)
         {
             LinqExpression = expr;
@@ -47,6 +48,7 @@ namespace Adrien.Trees
             }
         }
 
+
         public void Visit()
         {
             Visit(LinqExpression);
@@ -72,9 +74,8 @@ namespace Adrien.Trees
             }
             else
                 throw new InvalidOperationException($"Can't convert ConstantExpression" +
-                                                    @"of type {node.Value.GetType().Name} to type Tensor.");
+                                                    $"of type {node.Type.Name} to type Tensor.");
 
-            
             if (!t.IsElementwiseDefined)
             {
                 Context.AddValueNode(t);
@@ -120,6 +121,7 @@ namespace Adrien.Trees
         protected override Expression VisitParameter(ParameterExpression node)
         {
             base.VisitParameter(node);
+           
             var t = Context.Tensors.First();
             var i = Context.TensorIndicesQueue.Count;
             if (!Term.Table.ContainsKey(node.Name))

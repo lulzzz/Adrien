@@ -22,7 +22,7 @@ namespace Adrien.Tests
             Assert.Equal("a", a.Name);
             Assert.Equal("b", b.Name);
             var A1 = A[a, b];
-            Assert.IsType<System.Linq.Expressions.IndexExpression>((Expression) A1);
+            Assert.IsType<IndexExpression>((Expression) A1);
 
             var B = Tensor.ThreeD("B", (5, 6, 7), "i", out var ijk);
             var (i, j, k) = ijk;
@@ -31,8 +31,8 @@ namespace Adrien.Tests
             Assert.Equal("k", k.Name);
             Assert.Equal(1, j.Order);
 
-            Assert.IsType<System.Linq.Expressions.IndexExpression>((Expression) B[i]);
-            Assert.IsType<System.Linq.Expressions.IndexExpression>((Expression) B[ijk]);
+            Assert.IsType<IndexExpression>((Expression) B[i]);
+            Assert.IsType<IndexExpression>((Expression) B[ijk]);
             B[ijk] = A[i];
             Assert.True(B.IsAssigned);
             Assert.True(B.ContractionDefinition.IndexSet[1].Equals(j));

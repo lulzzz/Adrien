@@ -3,43 +3,52 @@ using System.Linq.Expressions;
 
 namespace Adrien.Notation
 {
-    public class UnaryOperator : IElementwiseOp
+    public class UnaryOperator<TExprParam, TExprReturn> : IElementwiseOp 
+        where TExprParam : TensorExpression
+        where TExprReturn: TensorExpression
     {
-        protected Func<TensorExpression, TensorExpression> Operation { get; set; }
+        protected Func<TExprParam, TExprReturn> Operation { get; set; }
 
 
-        public UnaryOperator(Func<TensorExpression, TensorExpression> op)
+        public UnaryOperator(Func<TExprParam, TExprReturn> op)
         {
             Operation = op;
         }
 
-        public TensorExpression this[TensorExpression e] => Operation(e);
+        public TExprReturn this[TExprParam e] => Operation(e);
 
-        public UnaryOperator this[UnaryOperator right] => new UnaryOperator((e) => this[right[e]]);
+        public UnaryOperator<TExprParam, TExprReturn> this[UnaryOperator<TExprParam, TExprParam> right] => 
+            new UnaryOperator<TExprParam, TExprReturn>((e) => this[right[e]]);
 
-        public BinaryOperator this[BinaryOperator right] => new BinaryOperator((l, r) => this[right[l, r]]);
+        public BinaryOperator<TExprParam, TensorExpression> this[BinaryOperator<TExprParam, TExprReturn> right] => 
+            new BinaryOperator<TExprParam, TensorExpression>((l, r) => new TensorExpression(right[l,r]));
 
-        public static UnaryOperator operator |(UnaryOperator left, UnaryOperator right)
-            => new UnaryOperator((e) => right[left[e]]);
+        public static UnaryOperator<TExprParam, TExprReturn> operator |(UnaryOperator<TExprParam, TExprReturn> left, 
+            UnaryOperator<TExprReturn, TExprReturn> right)
+            => new UnaryOperator<TExprParam, TExprReturn>((e) => right[left[e]]);
 
-        public static UnaryOperator operator +(UnaryOperator left, UnaryOperator right)
+        public static UnaryOperator<TExprParam, TensorExpression> operator +(UnaryOperator<TExprParam, TExprReturn> left, 
+            UnaryOperator<TExprParam, TExprReturn> right)
         {
-            return new UnaryOperator((e) => { return new TensorExpression(Expression.Add(left[e], right[e])); });
+            return new UnaryOperator<TExprParam, TensorExpression>((e) => new TensorExpression(left[e] + right[e]));
         }
 
-        public static UnaryOperator operator -(UnaryOperator left, UnaryOperator right)
+        public static UnaryOperator<TExprParam, TensorExpression> operator -(UnaryOperator<TExprParam, TExprReturn> left,
+           UnaryOperator<TExprParam, TExprReturn> right)
         {
-            return new UnaryOperator((e) => { return new TensorExpression(Expression.Subtract(left[e], right[e])); });
+            return new UnaryOperator<TExprParam, TensorExpression>((e) => new TensorExpression(left[e] - right[e]));
         }
 
-        public static UnaryOperator operator *(UnaryOperator left, UnaryOperator right)
+        public static UnaryOperator<TExprParam, TensorExpression> operator *(UnaryOperator<TExprParam, TExprReturn> left,
+           UnaryOperator<TExprParam, TExprReturn> right)
         {
-            return new UnaryOperator((e) => { return new TensorExpression(Expression.Multiply(left[e], right[e])); });
+            return new UnaryOperator<TExprParam, TensorExpression>((e) => new TensorExpression(left[e] * right[e]));
         }
 
-        public static UnaryOperator operator /(UnaryOperator left, UnaryOperator right)
+        public static UnaryOperator<TExprParam, TensorExpression> operator /(UnaryOperator<TExprParam, TExprReturn> left,
+                  UnaryOperator<TExprParam, TExprReturn> right)
         {
-            return new UnaryOperator((e) => { return new TensorExpression(Expression.Divide(left[e], right[e])); });
+            return new UnaryOperator<TExprParam, TensorExpression>((e) => new TensorExpression(left[e] / right[e]));
         }
     }
 }

@@ -23,6 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="backend.py" />
     <Compile Include="context.py" />
     <Compile Include="exceptions.py" />
     <Compile Include="library.py" />

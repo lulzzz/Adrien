@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Adrien.Notation
@@ -10,10 +11,17 @@ namespace Adrien.Notation
          new TensorContraction(Expression.Call(TensorExpression.GetOpMethodInfo<TensorExpression>("Op_Sum", 1),
              Expression.Convert(l.LinqExpression, typeof(TensorExpression))), l.Bounds);
 
-        public static TensorContraction Mean(TensorIndexExpression l)
+        public static TensorExpression Mean(TensorIndexExpression l)
         {
-            return null;
-            //new TensorContraction(Expression.Divide(SigmaSum(l), l);
+            var tensor = l.Tensors.Single();
+            var indices = l.IndexParameters;
+            TensorExpression mulExpr = indices.Count > 1 ?
+                tensor.Dim[indices[0]] * tensor.Dim[indices[1]] : tensor.Dim[indices[0]];
+            for (int i = 2; i < indices.Count; i++)
+            {
+                mulExpr = mulExpr * tensor.Dim[indices[i]];
+            }
+            return SigmaSum(l) / mulExpr;
         }
     }
 

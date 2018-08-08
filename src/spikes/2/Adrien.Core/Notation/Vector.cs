@@ -14,7 +14,7 @@
 
         public Vector(string name, string indexName, out Index i, int length) : base(name, length)
         {
-            i = new Index(null, 1, 1, indexName);
+            i = new Index(null, 0, 0, indexName);
         }
 
         public Vector(int length, out Index i) : this(vn.V0, "i", out i, length)

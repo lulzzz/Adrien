@@ -21,11 +21,10 @@ namespace Adrien.Compiler.PlaidML.Generator
             .ToList();
 
         public List<ITreeValueNode> InputTensors =>
-           Tree.TensorNodes
-           .Distinct(Tree)
-           .Where(t => t.Label != Tree.OutputNode.Label)
-           .Where(t => !Tree.VariableNodes.Contains(t))
-           .ToList();
+            Tensors
+            .Where(t => t.Label != Tree.OutputNode.Label)
+            .Where(t => !Tree.VariableNodes.Contains(t))
+            .ToList();
 
         public List<ITermShape> InputShapes => InputTensors.Select(t => t.ValueAs<ITermShape>()).ToList();
             

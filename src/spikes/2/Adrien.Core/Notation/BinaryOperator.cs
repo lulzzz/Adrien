@@ -3,48 +3,57 @@ using System.Linq.Expressions;
 
 namespace Adrien.Notation
 {
-    public class BinaryOperator : IElementwiseOp
+    public class BinaryOperator<TExprParam, TExprReturn> : IElementwiseOp
+        where TExprParam : TensorExpression
+        where TExprReturn : TensorExpression
     {
-        Func<TensorExpression, TensorExpression, TensorExpression> Operation;
+        protected Func<TExprParam, TExprParam, TExprReturn> Operation { get; }
 
-        public BinaryOperator(Func<TensorExpression, TensorExpression, TensorExpression> op)
+        public BinaryOperator(Func<TExprParam, TExprParam, TExprReturn> op) : base()
         {
             Operation = op;
         }
 
-        public TensorExpression this[TensorExpression l, TensorExpression r] => Operation(l, r);
+        public TExprReturn this[TExprParam l, TExprParam r] => Operation(l, r);
 
-        public BinaryOperator this[UnaryOperator g] => new BinaryOperator((l, r) => this[g[l], g[r]]);
+        public BinaryOperator<TExprParam, TExprReturn> this[UnaryOperator<TExprParam, TExprParam> g] => 
+            new BinaryOperator<TExprParam, TExprReturn>((l, r) => this[g[l], g[r]]);
 
-        public static BinaryOperator operator |(BinaryOperator left, UnaryOperator right) => left[right];
+       
+        public static BinaryOperator<TExprParam, TExprReturn> operator |
+            (BinaryOperator<TExprParam, TExprReturn> left, UnaryOperator<TExprParam, TExprParam> right) => left[right];
 
-        public static BinaryOperator operator +(BinaryOperator left, BinaryOperator right)
+        public static BinaryOperator<TExprParam, TensorExpression> operator +
+            (BinaryOperator<TExprParam, TExprReturn> left, BinaryOperator<TExprParam, TExprReturn> right)
         {
-            return new BinaryOperator((l, r) =>
+            return new BinaryOperator<TExprParam, TensorExpression>((l, r) =>
             {
                 return new TensorExpression(Expression.Add(left[l, r], right[l, r]));
             });
         }
 
-        public static BinaryOperator operator -(BinaryOperator left, BinaryOperator right)
+        public static BinaryOperator<TExprParam, TensorExpression> operator -
+            (BinaryOperator<TExprParam, TExprReturn> left, BinaryOperator<TExprParam, TExprReturn> right)
         {
-            return new BinaryOperator((l, r) =>
+            return new BinaryOperator<TExprParam, TensorExpression>((l, r) =>
             {
-                return new TensorExpression(Expression.Subtract(left[l, r], right[l, r]));
+                return new TensorExpression(left[l,r] - right[l,r]);
             });
         }
 
-        public static BinaryOperator operator *(BinaryOperator left, BinaryOperator right)
+        public static BinaryOperator<TExprParam, TensorExpression> operator *
+            (BinaryOperator<TExprParam, TExprReturn> left, BinaryOperator<TExprParam, TExprReturn> right)
         {
-            return new BinaryOperator((l, r) =>
+            return new BinaryOperator<TExprParam, TensorExpression>((l, r) =>
             {
                 return new TensorExpression(Expression.Multiply(left[l, r], right[l, r]));
             });
         }
 
-        public static BinaryOperator operator /(BinaryOperator left, BinaryOperator right)
+        public static BinaryOperator<TExprParam, TensorExpression> operator /
+            (BinaryOperator<TExprParam, TExprReturn> left, BinaryOperator<TExprParam, TExprReturn> right)
         {
-            return new BinaryOperator((l, r) =>
+            return new BinaryOperator<TExprParam, TensorExpression>((l, r) =>
             {
                 return new TensorExpression(Expression.Divide(left[l, r], right[l, r]));
             });

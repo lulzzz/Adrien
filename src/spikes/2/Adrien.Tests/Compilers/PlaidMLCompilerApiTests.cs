@@ -81,9 +81,9 @@ namespace Adrien.Tests.Compilers
             Assert.True(s.IsAllocated);
             Assert.Equal(PlaidmlDatatype.PLAIDML_DATA_FLOAT32, s.DataType);
             Assert.Equal(1ul, s.DimensionCount);
-            (ulong size, long stride) dim = s.Dimensions[0];
-            Assert.Equal(4ul, dim.size);
-            Assert.Equal(1L, dim.stride);
+            (ulong size, long stride) = s.Dimensions[0];
+            Assert.Equal(4ul, size);
+            Assert.Equal(1L, stride);
         }
 
         [Fact]
