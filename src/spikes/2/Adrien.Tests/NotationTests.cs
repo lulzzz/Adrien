@@ -34,7 +34,7 @@ namespace Adrien.Tests
             Assert.IsType<IndexExpression>((Expression) B[i]);
             Assert.IsType<IndexExpression>((Expression) B[ijk]);
             B[ijk] = A[i];
-            Assert.True(B.IsAssigned);
+            Assert.True(B.IsDefined);
             Assert.True(B.ContractionDefinition.IndexSet[1].Equals(j));
         }
 
@@ -98,7 +98,7 @@ namespace Adrien.Tests
         {
             var (A, B, C) = Tensor.TwoD("A", (4,3), "a", out Index a, out Index b).Three();
             C[a,b] = B[a,b] * C[b,a];
-            Assert.True(C.IsAssigned);
+            Assert.True(C.IsDefined);
         }
 
         [Fact]
@@ -108,11 +108,11 @@ namespace Adrien.Tests
             var (M, N, O) = Tensor.ThreeD("M", (7, 9, 6), "m", out Index m, out Index n, out Index o).Three();
 
             A[i,j] = (B[i + 2, j] * C[i + 2, j]);
-            Assert.True(A.IsAssigned);
+            Assert.True(A.IsDefined);
             Assert.True(A.ContractionDefinition.Expression.IndexParameters.Count == 4);
             List<Index> indices = A.ContractionDefinition.Expression.IndexParameters;
             M[n] = A[m][m + 7]; 
-            Assert.True(M.IsAssigned);
+            Assert.True(M.IsDefined);
             Assert.NotNull(M.ContractionDefinition.Expression.Bounds);
         }
 
@@ -124,16 +124,16 @@ namespace Adrien.Tests
             Assert.Equal("V1", V1.Name);
             var (c0, c1, c2) = new Scalar().Three();
 
-            V1[V0] = c0 * V0 + c1;
-            Assert.True(V1.IsAssigned);
+            V1.def = c0 * V0 + c1;
+            Assert.True(V1.IsDefined);
             Assert.Equal(3, V1.ElementwiseDefinition.Expression.Tensors.Count);
 
             var (x, y) = new Vector("x", 2).Two();
             Assert.Equal("x", x.Name);
             Assert.Equal("y", y.Name);
             var (a, b) = new Scalar("a").Two();
-            y[x] = a * x + b;
-            Assert.True(y.IsAssigned);
+            y.def = a * x + b;
+            Assert.True(y.IsDefined);
             Assert.Equal(3, y.ElementwiseDefinition.Expression.Tensors.Count);
         }
     }

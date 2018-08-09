@@ -38,7 +38,7 @@ namespace Adrien.Tests
         {
             var (x, y) = new Vector("x", out Index i, 5).Two();
             var (m, n) = new Scalar("m").Two();
-            y[x] = m * x + n;
+            y.def = m * x + n;
             Kernel<int> k = new Kernel<int>(y);
             Assert.Equal(y, k.OutputTensor);
             Assert.Equal(m, k.InputTensors[0]);

@@ -124,12 +124,12 @@ namespace Adrien.Trees
            
             var t = Context.Tensors.First();
             var i = Context.TensorIndicesQueue.Count;
-            if (!Term.Table.ContainsKey(node.Name))
+            if (!Term.Terms.ContainsKey(node.Name))
             {
                 throw new InvalidOperationException($"The term table does not contain a term with id {node.Name}.");
             }
             else
-                Context.TensorIndicesQueue.Enqueue((Index)Term.Table[node.Name]);
+                Context.TensorIndicesQueue.Enqueue((Index)Term.Terms[node.Name]);
             return node;
         }
 

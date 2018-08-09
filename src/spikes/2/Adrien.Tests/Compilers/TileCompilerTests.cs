@@ -107,10 +107,10 @@ namespace Adrien.Tests.Compilers
                 "yloss");
             var (a, b) = new Scalar().Two("a", "b");
 
-            ypred[x] = (a * x + b);
+            ypred.def = (a * x + b);
             Kernel<int> predict = new Kernel<int>(ypred, compiler);
 
-            yerror[ypred, yactual] = Pow2[yactual - ypred];
+            yerror.def = Pow2[yactual - ypred];
             Kernel<int> error = new Kernel<int>(yerror, compiler);
             Assert.True(error.Compile());
 

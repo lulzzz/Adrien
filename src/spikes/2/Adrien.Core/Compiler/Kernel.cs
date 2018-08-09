@@ -81,7 +81,7 @@ namespace Adrien.Compiler
 
         public Kernel(Tensor output)
         {
-            if (!output.IsAssigned)
+            if (!output.IsDefined)
             {
                 throw new ArgumentException
                     ($"The output tensor {output.Label} must be assigned an input expression.");

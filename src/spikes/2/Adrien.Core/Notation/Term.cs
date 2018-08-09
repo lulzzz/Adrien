@@ -11,7 +11,7 @@ namespace Adrien.Notation
     /// </summary>
     public abstract class Term : ITerm
     {
-        public static ConcurrentDictionary<string, Term> Table { get; }
+        public static ConcurrentDictionary<string, Term> Terms { get; }
 
         public string Id { get; protected set; }
 
@@ -30,14 +30,14 @@ namespace Adrien.Notation
 
         static Term()
         {
-            Table = new ConcurrentDictionary<string, Term>();
+            Terms = new ConcurrentDictionary<string, Term>();
         }
 
         internal Term(string name)
         {
             Id = Guid.NewGuid().ToString("N");
             Name = name;
-            if (!Table.TryAdd(Id, this))
+            if (!Terms.TryAdd(Id, this))
             {
                 throw new Exception($"Could not add term with Id {Id} to term table.");
             }
@@ -100,14 +100,17 @@ namespace Adrien.Notation
                 case BinaryExpression be:
                     return be.NodeType + "_" + GetNameFromLinqExpression(be.Left)
                            + "_" + GetNameFromLinqExpression(be.Right);
-                case ParameterExpression pe:
-                    return pe.Name;
+
+                case ParameterExpression pe: return pe.Name;
+
                 case IndexExpression ie:
-                    return "index" + "_" + GetNameFromLinqExpression(ie.Object) + "_" + ie.Arguments
+                    return "Index" + "_" + GetNameFromLinqExpression(ie.Object) + "_" + ie.Arguments
                                .Select(GetNameFromLinqExpression)
                                .Aggregate((s1, s2) => s1 + "_" + s2);
+
                 case MethodCallExpression me:
                     return me.Method.Name;
+
                 default:
                     throw new ArgumentException($"Unknown expression type: {expr.NodeType.ToString()} {expr.GetType().Name}.");
             }

@@ -37,6 +37,8 @@ namespace Adrien.Notation
             this.Tensor = parent;
         }
 
+        public IndexSet(Tensor tensor) : this(tensor, "i0", tensor.Dimensions) {}
+
         public IndexSet(Tensor parent, params Index[] indices) : base(string.Empty)
         {
             if (indices == null || indices.Length == 0)

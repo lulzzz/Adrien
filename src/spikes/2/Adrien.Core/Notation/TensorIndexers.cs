@@ -25,7 +25,7 @@ namespace Adrien.Notation
                 }
                 else
                 {
-                    ContractionDefinition = (new IndexSet(this, index1), Math.SigmaSum(value));
+                    ContractionDefinition = (new IndexSet(this, index1), Math.Sum(value));
                 }
 			}
 		}
@@ -51,7 +51,7 @@ namespace Adrien.Notation
                 }
                 else
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2), Math.SigmaSum(value));
+                    ContractionDefinition = (new IndexSet(this, index1, index2), Math.Sum(value));
                 }
 			}
 		}
@@ -78,7 +78,7 @@ namespace Adrien.Notation
                 }
                 else
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3), Math.SigmaSum(value));
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3), Math.Sum(value));
                 }
 			}
 		}
@@ -106,7 +106,7 @@ namespace Adrien.Notation
                 }
                 else
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4), Math.SigmaSum(value));
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4), Math.Sum(value));
                 }
 			}
 		}
@@ -135,7 +135,7 @@ namespace Adrien.Notation
                 }
                 else
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5), Math.SigmaSum(value));
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5), Math.Sum(value));
                 }
 			}
 		}
@@ -165,7 +165,7 @@ namespace Adrien.Notation
                 }
                 else
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6), Math.SigmaSum(value));
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6), Math.Sum(value));
                 }
 			}
 		}
@@ -196,7 +196,7 @@ namespace Adrien.Notation
                 }
                 else
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), Math.SigmaSum(value));
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), Math.Sum(value));
                 }
 			}
 		}
@@ -228,7 +228,7 @@ namespace Adrien.Notation
                 }
                 else
                 {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), Math.SigmaSum(value));
+                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), Math.Sum(value));
                 }
 			}
 		}

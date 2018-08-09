@@ -15,11 +15,15 @@ namespace Adrien.Notation
 {
     public partial class Tensor : Term, IAlgebra<Tensor, TensorExpression>, ITermShape
     {
+        public static Dictionary<TensorExpression, List<Tensor>> Definitions { get; private set; }
+
         public int[] Dimensions { get; protected set; }
 
         public int[] Strides { get; protected set; }
 
         public Dimensions Dim { get; protected set; }
+
+        public Dimension[] Axes => Dim.ToArray();
 
         public int Rank => Dimensions.Length;
 
@@ -39,19 +43,24 @@ namespace Adrien.Notation
 
         public (IndexSet IndexSet, TensorContraction Expression) ContractionDefinition { get; protected set; }
 
-        public (IEnumerable<Tensor> Dependents, TensorExpression Expression) ElementwiseDefinition
+        public (IEnumerable<Tensor> Dependents, TensorExpression Expression) ElementwiseDefinition { get; protected set; }
+        
+        public TensorExpression def
         {
-            get;
-            protected set;
+            set
+            {
+                ElementwiseDefinition = (value.Tensors, value);
+                Definitions.Add(value, value.Tensors);
+            }
         }
 
-        public bool IsAssigned => ContractionDefinition.Expression != null || ElementwiseDefinition.Expression != null;
+        public bool IsDefined => ContractionDefinition.Expression != null || ElementwiseDefinition.Expression != null;
 
         public bool IsElementwiseDefined => ElementwiseDefinition.Expression != null;
 
         public bool IsContractionDefined => ContractionDefinition.Expression != null;
 
-        internal override Expression LinqExpression => IsAssigned
+        internal override Expression LinqExpression => IsDefined
             ? IsContractionDefined
                 ? ContractionDefinition.Expression.LinqExpression
                 : ElementwiseDefinition.Expression.LinqExpression
@@ -59,6 +68,10 @@ namespace Adrien.Notation
 
         internal override Name DefaultNameBase { get; } = "A";
 
+        static Tensor()
+        {
+            Definitions = new Dictionary<TensorExpression, List<Tensor>>();
+        }
 
         protected (Tensor tensor, int index)? GeneratorContext { get; set; }
 
@@ -115,7 +128,7 @@ namespace Adrien.Notation
                 }
                 else if (value is TensorIndexExpression)
                 {
-                    ContractionDefinition = (I, Math.SigmaSum(value));
+                    ContractionDefinition = (I, Math.Sum(value));
                 }
             }
         }
@@ -127,7 +140,7 @@ namespace Adrien.Notation
 
         public static implicit operator ExpressionTree(Tensor t)
         {
-            if (t.IsAssigned)
+            if (t.IsDefined)
             {
                 return t.ContractionDefinition.Expression.ToTree((t, t.ContractionDefinition.IndexSet));
             }
@@ -236,7 +249,7 @@ namespace Adrien.Notation
             return GeneratorContext.Value.tensor;
         }
 
-        public ExpressionTree ToTree() => IsAssigned
+        public ExpressionTree ToTree() => IsDefined
             ? IsContractionDefined
                 ? ContractionDefinition.Expression.ToTree((this, ContractionDefinition.IndexSet))
                 : ElementwiseDefinition.Expression.ToTree((this, null))
