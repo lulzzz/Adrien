@@ -12,8 +12,5 @@
 
         public static UnaryOperator<TensorIndexExpression, TensorExpression> Mean { get; } = 
             new UnaryOperator<TensorIndexExpression, TensorExpression>((expr) => Math.Mean(expr));
-
-        public static UnaryOperator<TensorExpression, TensorExpression> MeanA { get; } =
-            new UnaryOperator<TensorExpression, TensorExpression>((expr) => Math.Mean(expr));
     }
 }

@@ -7,7 +7,7 @@ The goals of Adrien are:
 
 * Provide a C# environment for tensor computation using reverse-mode automatic differentiation on tensor kernels. 
 * Define an internal C# 7 DSL for constructing tensor comprehensions and compiling them into C# methods that can be 
-use from any C# code .
+used from any C# code .
 * Use native tensor kernel compilers like PlaidML via plugins for high performance tensor computations.
 
 
@@ -26,6 +26,7 @@ to native libraries required by Adrien's core and backends.
 individual component of Adrien.
 * [Adrien.Compiler.PlaidML](https://github.com/Lokad/Adrien/tree/master/src/spikes/2/Adrien.Compiler.PlaidML): Source code
 for the PlaidML tensor kernel compiler backend.
+* [Adrien.Log.*](https://github.com/Lokad/Adrien/tree/master/src/spikes/2/Adrien.Log.Serilog)
 * [NativeLibs](https://github.com/Lokad/Adrien/tree/master/src/spikes/2/NativeLibs): Contains Nuget packages with 
 platform-speciic native library dependencies.
 * [PythonLibs](https://github.com/Lokad/Adrien/tree/master/src/spikes/2/PythonLibs): Contains Python API projects for

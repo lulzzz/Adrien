@@ -18,6 +18,7 @@ namespace Adrien.Expressions
             {
                 case ExpressionType.Index: return TensorOp.Index;
                 case ExpressionType.Multiply: return TensorOp.Mul;
+                case ExpressionType.Divide: return TensorOp.Div;
                 case ExpressionType.Add: return TensorOp.Add;
                 case ExpressionType.Subtract: return TensorOp.Sub;
                 case ExpressionType.Power: return TensorOp.Pow;
@@ -32,14 +33,13 @@ namespace Adrien.Expressions
             return (TExpr)expr;
         }
 
-        
         public static List<T> GetConstants<T>(this Expression expr) where T : ITerm
         {
             IEnumerable<T> GetConstantsFromExpression(Expression expr0)
             {
                 return expr.SelfAndDescendants()
                 .OfType<ConstantExpression>()
-                .Where(e => e.Type == typeof(T))
+                .Where(e => e.Type == typeof(T) || e.Type.BaseType == typeof(T))
                 .Select(e => e.Value)
                 .Cast<T>()
                 .Distinct()
@@ -63,8 +63,12 @@ namespace Adrien.Expressions
             var c0 = GetConstantsFromExpression(expr);
             var c1 = GetConstantsFromArrayExpressions(expr);
             return c0.Concat(c1).ToList();
-            
-            
+        }
+
+        public static TReturn FlattenConstantExpressionArrayValue<TReturn>(this ConstantExpression node)
+        {
+            Array a = (Array)node.Value;
+            return a.Flatten<TReturn>().First();
         }
 
         public static List<T> GetParameters<T>(this Expression expr) where T : ITerm
@@ -612,5 +616,18 @@ namespace Adrien.Expressions
                 default: throw new NotImplementedException();
             }
         }
+
+        [DebuggerStepThrough]
+        public static void ThrowIfNotType<T>(this Expression expr)
+        {
+            if (expr.Type != typeof(T))
+            {
+                throw new ArgumentException($"This expression does not have type {typeof(T).Name}.");
+            }
+        }
+
+        [DebuggerStepThrough]
+        public static bool IsUndefinedTensor(this Expression expr) => 
+            (expr is ConstantExpression ce) && ce.Type == typeof(Tensor);
     }
 }

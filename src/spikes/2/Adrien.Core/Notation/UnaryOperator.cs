@@ -3,9 +3,9 @@ using System.Linq.Expressions;
 
 namespace Adrien.Notation
 {
-    public class UnaryOperator<TExprParam, TExprReturn> : IElementwiseOp 
+    public class UnaryOperator<TExprParam, TExprReturn> : IElementwiseOp
         where TExprParam : TensorExpression
-        where TExprReturn: TensorExpression
+        where TExprReturn : TensorExpression
     {
         protected Func<TExprParam, TExprReturn> Operation { get; set; }
 
@@ -15,7 +15,13 @@ namespace Adrien.Notation
             Operation = op;
         }
 
-        public TExprReturn this[TExprParam e] => Operation(e);
+        public TExprReturn this[TExprParam e]
+        {
+            get
+            {
+                return Operation(e);
+            }
+        }
 
         public UnaryOperator<TExprParam, TExprReturn> this[UnaryOperator<TExprParam, TExprParam> right] => 
             new UnaryOperator<TExprParam, TExprReturn>((e) => this[right[e]]);

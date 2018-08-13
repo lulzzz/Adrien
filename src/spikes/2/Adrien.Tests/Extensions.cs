@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Adrien.Tests
 {
-    public class Extensions
+    public class ExtensionsTests
     {
         [Fact]
         public void CanFlatten()

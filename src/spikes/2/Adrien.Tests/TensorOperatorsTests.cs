@@ -18,13 +18,13 @@ namespace Adrien.Tests
             var (a, b) = new Scalar().Two("a", "b");
 
             ypred.def = a * x + b;
-            Assert.Equal(3, ypred.ElementwiseDefinition.Expression.Tensors.Count);
-            yerror.def = Pow2[yactual[i] - ypred];
-            Assert.Equal(4, yerror.ElementwiseDefinition.Expression.Tensors.Count);
-            yloss[i] = yerror[i];
+            Assert.Equal(3, ypred.ElementwiseDefinition.Tensors.Count);
+            yerror.def = Pow2[yactual - ypred];
+            Assert.Equal(4, yerror.ElementwiseDefinition.Tensors.Count); 
+            yloss[i] = Sum[yerror[i]];
             Assert.True(yloss.IsDefined);
-            TensorContraction c = yloss.ContractionDefinition.Expression;
-            Assert.True(c.Tensors.Count > 0);
+            //TensorContraction c = yloss.ContractionDefinition.Expression;
+            //Assert.True(c.Tensors.Count > 0);
             
         }
 
@@ -36,10 +36,12 @@ namespace Adrien.Tests
             var (a, b) = new Scalar().Two("a", "b");
             ypred.def = a * x + b;
             yerror.def = Pow2[yactual - ypred];
-            yloss.def = MeanA[yerror];
+            yloss.def = Mean[yerror];
             Assert.True(yloss.IsDefined);
-            TensorExpression texpr = yloss.ElementwiseDefinition.Expression;
-            Assert.Equal(2, texpr.Tensors.Count);
+            TensorExpression texpr = yloss.ElementwiseDefinition;
+            Assert.Single(texpr.Tensors);
+            var t = texpr.Tensors;
+            //Assert.True()
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
+using Adrien.Trees;
 using Adrien.Expressions;
 
 namespace Adrien.Notation
@@ -11,7 +12,7 @@ namespace Adrien.Notation
     {
         public NewArrayExpression Bounds { get; protected set; }
 
-
+      
         public TensorIndexExpression(IndexExpression expr, NewArrayExpression bounds = null) : base(expr)
         {
             Bounds = bounds;
@@ -19,16 +20,19 @@ namespace Adrien.Notation
 
         public TensorIndexExpression(MethodCallExpression expr, NewArrayExpression bounds = null) : base(expr)
         {
+            expr.ThrowIfNotType<TensorIndexExpression>();
             Bounds = bounds;
         }
 
         public TensorIndexExpression(UnaryExpression expr, NewArrayExpression bounds = null) : base(expr)
         {
+            expr.ThrowIfNotType<TensorIndexExpression>();
             Bounds = bounds;
         }
 
         public TensorIndexExpression(BinaryExpression expr, NewArrayExpression bounds = null) : base(expr)
         {
+            expr.ThrowIfNotType<TensorIndexExpression>();
             Bounds = bounds;
         }
         
@@ -37,6 +41,7 @@ namespace Adrien.Notation
             this.Bounds = bounds;
         }
         
+
         public TensorIndexExpression this[Index d]
         {
             get => new TensorIndexExpression(this, Expression.NewArrayBounds(typeof(TensorContraction), 

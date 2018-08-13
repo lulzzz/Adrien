@@ -6,7 +6,7 @@ using Xunit;
 
 using Adrien.Log;
 using Adrien.Notation;
-using static Adrien.Notation.Math;
+//using static Adrien.Notation.Math;
 using static Adrien.Notation.TensorOperators;
 
 using Adrien.Compiler;
@@ -134,9 +134,9 @@ namespace Adrien.Tests.Compilers
                 Assert.Equal(System.Math.Pow(vya[index] - ((va * vx[index]) + vb), 2), vyerror[index]);
             }
 
-            //yloss[i] = Avg[yerror[i]];
-            //Kernel<int> loss = new Kernel<int>(yloss, compiler);
-            //Assert.True(loss.Compile());
+            yloss.def = Mean[yerror[i]];
+            Kernel<int> loss = new Kernel<int>(yloss, compiler);
+            Assert.True(loss.Compile());
             //Assert.Equal(RunStatus.Success, error.CompilerResult.Run(v, vya, va, vx, vb));
 
         }

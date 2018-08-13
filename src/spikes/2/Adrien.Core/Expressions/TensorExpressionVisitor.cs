@@ -54,19 +54,13 @@ namespace Adrien.Trees
             Visit(LinqExpression);
         }
 
-        internal static TReturn FlattenConstantExpressionValue<TReturn>(ConstantExpression node)
-        {
-            Array a = (Array) node.Value;
-            return a.Flatten<TReturn>().First();
-        }
-
         protected override Expression VisitConstant(ConstantExpression node)
         {
             base.VisitConstant(node);
             Tensor t;
             if (node.Value is Array)
             {
-                t = FlattenConstantExpressionValue<Tensor>(node);
+                t = node.FlattenConstantExpressionArrayValue<Tensor>();
             }
             else if (node.Value is Tensor)
             {
@@ -86,7 +80,7 @@ namespace Adrien.Trees
                 using (Context.Internal(on))
                 {
                     Context.AddValueNode(t);
-                    base.Visit(t.ElementwiseDefinition.Expression.LinqExpression);
+                    base.Visit(t.ElementwiseDefinition.LinqExpression);
                 }
             }
             return node;

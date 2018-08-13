@@ -15,18 +15,7 @@ namespace Adrien.Compiler.PlaidML.Generator
             TensorOp.Mul, TensorOp.Add, TensorOp.Sub, TensorOp.Div, TensorOp.Square
         };
 
-        public List<ITreeValueNode> Tensors =>
-            Tree.TensorNodes
-            .Distinct(Tree)
-            .ToList();
-
-        public List<ITreeValueNode> InputTensors =>
-            Tensors
-            .Where(t => t.Label != Tree.OutputNode.Label)
-            .Where(t => !Tree.VariableNodes.Contains(t))
-            .ToList();
-
-        public List<ITermShape> InputShapes => InputTensors.Select(t => t.ValueAs<ITermShape>()).ToList();
+        public List<ITermShape> InputShapes => Tree.InputVariableNodes.Select(t => t.ValueAs<ITermShape>()).ToList();
             
         public Dictionary<ITreeValueNode, string> TensorDimensionVariables { get; protected set; }
 
@@ -115,8 +104,8 @@ namespace Adrien.Compiler.PlaidML.Generator
 
         protected void GetDimensionVariableNames()
         {
-            TensorDimensionVariables = new Dictionary<ITreeValueNode, string>(InputTensors.Count);
-            foreach(ITreeValueNode v in Tensors)
+            TensorDimensionVariables = new Dictionary<ITreeValueNode, string>(Tree.InputVariableNodes.Count());
+            foreach(ITreeValueNode v in Tree.InputVariableNodes)
             {
                 string name = v.Label + "N";
                 int n = 0;
@@ -131,7 +120,7 @@ namespace Adrien.Compiler.PlaidML.Generator
         protected void WriteFunctionPrologue()
         {
             StringBuilder prologue = new StringBuilder("function(");
-            foreach(ITreeValueNode tensor in InputTensors)
+            foreach(ITreeValueNode tensor in Tree.InputVariableNodes)
             {
                 if (!Tree.IndexSetNodes.Any(set => set.Parent.Label == tensor.Label))
                 {

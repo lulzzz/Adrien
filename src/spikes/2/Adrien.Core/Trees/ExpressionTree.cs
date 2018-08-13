@@ -28,34 +28,36 @@ namespace Adrien.Trees
         {
             get
             {
-                if (Left is ITreeValueNode)
+                if (Root.Left is ITreeValueNode)
                 {
-                    return Left as ITreeValueNode;
+                    return Root.Left as ITreeValueNode;
                 }
-                else if ((Left is OperatorNode) && (Left as OperatorNode).Op == TensorOp.Index)
+                else if ((Root.Left is OperatorNode) && (Root.Left as OperatorNode).Op == TensorOp.Index)
                 {
                     return Left.Left as ITreeValueNode;
                 }
-                else throw new  InvalidOperationException("The tree's output node could not be determined.");
+                else throw new InvalidOperationException("The tree's output node cannnot be determined.");
             }
         }
-
-        public bool OutputIsTensor => (OutputNode != null);
 
         public IEnumerable<ITreeValueNode> TensorNodes => ValueNodes.Where(vn => vn.NodeType == ValueNodeType.TENSOR);
 
         public IEnumerable<ITreeValueNode> IndexSetNodes =>
             ValueNodes.Where(vn => vn.NodeType == ValueNodeType.INDEXSET);
 
-        public IEnumerable<ITreeValueNode> VariableNodes =>
+        public IEnumerable<ITreeValueNode> DefinedVariableNodes =>
             OperatorNodes
                 .Where(on => on.Op == TensorOp.ElementWiseAssign)
                 .Select(on => on.Left)
                 .Cast<ITreeValueNode>()
                 .Distinct(this);
 
+        public IEnumerable<ITreeValueNode> InputVariableNodes =>
+            TensorNodes.Except(DefinedVariableNodes).Where(n => n != OutputNode);
 
+        
         protected HashSet<ITreeNode> HashSet { get; } = new HashSet<ITreeNode>();
+
 
         public ExpressionTree() : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
         {

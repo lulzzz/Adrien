@@ -15,11 +15,18 @@ namespace Adrien.Notation
 
         internal override Name DefaultNameBase => "tensor_expr0";
 
+        public Tensor LHSTensor { get; protected set; }
+
+        public IndexSet LHSIndexSet { get; protected set; }
+
         public List<Tensor> Tensors => LinqExpression.GetConstants<Tensor>();
 
+        public List<Tensor> InputVariables => Tensors.Where(t => !t.IsDefined).ToList();
+
+
         public List<Index> IndexParameters => LinqExpression.GetParameters<Index>();
-            
-        public ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression).Tree;
+
+        public virtual ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression).Tree;
 
         public ExpressionTree ToTree((Tensor tensor, IndexSet indices) lhs) =>
             new TensorExpressionVisitor(this.LinqExpression, lhs, true).Tree;
@@ -30,7 +37,17 @@ namespace Adrien.Notation
             LinqExpression = e;
         }
 
+        public TensorExpression(Expression e, Tensor lhs) : this(e)
+        {
+            this.LHSTensor = lhs;
+        }
 
+        public TensorExpression(Expression e, Tensor lhs, IndexSet lhsIndexSet) : this(e, lhs)
+        {
+            this.LHSIndexSet = lhsIndexSet;
+        }
+
+        
         public static TensorExpression operator - (TensorExpression left) => left.Negate();
 
         public static TensorExpression operator + (TensorExpression left, TensorExpression right) => left.Add(right);
@@ -96,7 +113,10 @@ namespace Adrien.Notation
         protected static TensorExpression DummyBinary(TensorExpression l, Tensor r) => null;
         protected static TensorExpression DummyBinary(Tensor l, TensorExpression r) => null;
         protected static TensorExpression DummyBinary(TensorExpression l, TensorExpression r) => null;
-
+        protected static TensorExpression DummyBinary(Dimension l, TensorExpression r) => null;
+        protected static TensorExpression DummyBinary(TensorExpression l, Dimension r) => null;
+        protected static TensorExpression DummyBinary(Dimension l, TensorIndexExpression r) => null;
+        protected static TensorExpression DummyBinary(TensorIndexExpression l, Dimension r) => null;
 
         private Type TensorExpressionMethodParameterType
         {
@@ -104,7 +124,7 @@ namespace Adrien.Notation
             {
                 if (LinqExpression is ConstantExpression ce)
                 {
-                    return ce.Type;
+                    return typeof(Tensor);
                 }
                 else if (LinqExpression is IndexExpression ie)
                 {

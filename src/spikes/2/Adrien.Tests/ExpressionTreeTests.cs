@@ -7,6 +7,7 @@ using Xunit;
 
 using Adrien.Notation;
 using Adrien.Trees;
+using static Adrien.Notation.Math;
 
 namespace Adrien.Tests
 {
@@ -35,8 +36,20 @@ namespace Adrien.Tests
             children = tree.Right.GetChildren();
             Assert.Equal(right, children.First);
             Assert.Equal(left, children.Second);
+        }
 
-            
+        [Fact]
+        public void CanConstructTreeFromTensorIndexExpression()
+        {
+            var A = Tensor.ThreeD("A", (2, 2, 2), "a", out Index a, out Index b, out Index c)
+             .With(out Tensor B)
+             .With(out Tensor C)
+             .With(out Tensor D);
+            C[a, b] = A[a, b] * B[b, a];
+            Assert.True(C.IsContractionDefined);
+            var tree = C.ToTree();
+            Assert.True(tree.Op == TensorOp.Assign);
+            //D = Mean()
         }
     }
 }

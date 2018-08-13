@@ -5,22 +5,45 @@ using System.Linq.Expressions;
 using System.Text;
 
 using Adrien.Expressions;
+using Adrien.Trees;
 
 namespace Adrien.Notation
 {
     public class TensorContraction : TensorIndexExpression, IContractionOp
     {
-        public TensorContraction(IndexExpression expr, NewArrayExpression bounds = null) : base(expr, bounds) { }
+        public TensorContraction(TensorIndexExpression expr, Tensor lhsTensor, IndexSet lhsIndexSet, NewArrayExpression bounds = null)
+            : base(expr, bounds)
+        {
+            this.LHSTensor = lhsTensor;
+            this.LHSIndexSet = lhsIndexSet;
+        }
 
-        public TensorContraction(MethodCallExpression expr, NewArrayExpression bounds = null) : base(expr, bounds) { }
+        public TensorContraction(MethodCallExpression expr, TensorIndexExpression tie, NewArrayExpression bounds = null) : base(expr, bounds)
+        {
+            expr.ThrowIfNotType<TensorContraction>();
+            this.LHSTensor = tie.LHSTensor;
+            this.LHSIndexSet = tie.LHSIndexSet;
+        }
 
-        public TensorContraction(UnaryExpression expr, NewArrayExpression bounds = null) : base(expr, bounds) { }
+        public TensorContraction(UnaryExpression expr, TensorIndexExpression tie, NewArrayExpression bounds = null) : base(expr, bounds)
+        {
+            {
+                expr.ThrowIfNotType<TensorContraction>();
+                this.LHSTensor = tie.LHSTensor;
+                this.LHSIndexSet = tie.LHSIndexSet;
+            }
+        }
 
-        public TensorContraction(BinaryExpression expr, NewArrayExpression bounds = null) : base(expr, bounds) { }
+        public TensorContraction(BinaryExpression expr, TensorIndexExpression tie, NewArrayExpression bounds = null) : base(expr, bounds)
+        {
+            {
+                expr.ThrowIfNotType<TensorContraction>();
+                this.LHSTensor = tie.LHSTensor;
+                this.LHSIndexSet = tie.LHSIndexSet;
+            }
+        }
 
-        public TensorContraction(TensorIndexExpression c, NewArrayExpression bounds = null) : base(c, bounds) {}
-
-        public static TensorContraction operator * (TensorContraction left, TensorContraction right) =>
-            new TensorContraction(Expression.Multiply(left, right, GetDummyBinaryMethodInfo(right, right)));
+        public override ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression, (this.LHSTensor,
+            this.LHSIndexSet), true).Tree;
     }
 }

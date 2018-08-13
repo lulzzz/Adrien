@@ -19,15 +19,11 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				if (value.LinqExpression.NodeType == ExpressionType.Call)
-                {
-                    ContractionDefinition = (new IndexSet(this, index1), value as TensorContraction);
-                }
-                else
-                {
-                    ContractionDefinition = (new IndexSet(this, index1), Math.Sum(value));
-                }
+				IndexSet s = new IndexSet(this, index1);
+				TensorContraction tc = new TensorContraction(value, this, s);
+				ContractionDefinition = (s, tc);
 			}
+			
 		}
 		  
 		public TensorIndexExpression this[Index index1, Index index2]
@@ -45,15 +41,11 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				if (value.LinqExpression.NodeType == ExpressionType.Call)
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2), value as TensorContraction);
-                }
-                else
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2), Math.Sum(value));
-                }
+				IndexSet s = new IndexSet(this, index1, index2);
+				TensorContraction tc = new TensorContraction(value, this, s);
+				ContractionDefinition = (s, tc);
 			}
+			
 		}
 		  
 		public TensorIndexExpression this[Index index1, Index index2, Index index3]
@@ -72,15 +64,11 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				if (value.LinqExpression.NodeType == ExpressionType.Call)
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3), value as TensorContraction);
-                }
-                else
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3), Math.Sum(value));
-                }
+				IndexSet s = new IndexSet(this, index1, index2, index3);
+				TensorContraction tc = new TensorContraction(value, this, s);
+				ContractionDefinition = (s, tc);
 			}
+			
 		}
 		  
 		public TensorIndexExpression this[Index index1, Index index2, Index index3, Index index4]
@@ -100,15 +88,11 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				if (value.LinqExpression.NodeType == ExpressionType.Call)
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4), value as TensorContraction);
-                }
-                else
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4), Math.Sum(value));
-                }
+				IndexSet s = new IndexSet(this, index1, index2, index3, index4);
+				TensorContraction tc = new TensorContraction(value, this, s);
+				ContractionDefinition = (s, tc);
 			}
+			
 		}
 		  
 		public TensorIndexExpression this[Index index1, Index index2, Index index3, Index index4, Index index5]
@@ -129,15 +113,11 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				if (value.LinqExpression.NodeType == ExpressionType.Call)
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5), value as TensorContraction);
-                }
-                else
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5), Math.Sum(value));
-                }
+				IndexSet s = new IndexSet(this, index1, index2, index3, index4, index5);
+				TensorContraction tc = new TensorContraction(value, this, s);
+				ContractionDefinition = (s, tc);
 			}
+			
 		}
 		  
 		public TensorIndexExpression this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6]
@@ -159,15 +139,11 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				if (value.LinqExpression.NodeType == ExpressionType.Call)
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6), value as TensorContraction);
-                }
-                else
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6), Math.Sum(value));
-                }
+				IndexSet s = new IndexSet(this, index1, index2, index3, index4, index5, index6);
+				TensorContraction tc = new TensorContraction(value, this, s);
+				ContractionDefinition = (s, tc);
 			}
+			
 		}
 		  
 		public TensorIndexExpression this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6, Index index7]
@@ -190,15 +166,11 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				if (value.LinqExpression.NodeType == ExpressionType.Call)
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), value as TensorContraction);
-                }
-                else
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), Math.Sum(value));
-                }
+				IndexSet s = new IndexSet(this, index1, index2, index3, index4, index5, index6, index7);
+				TensorContraction tc = new TensorContraction(value, this, s);
+				ContractionDefinition = (s, tc);
 			}
+			
 		}
 		  
 		public TensorIndexExpression this[Index index1, Index index2, Index index3, Index index4, Index index5, Index index6, Index index7, Index index8]
@@ -222,15 +194,11 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				if (value.LinqExpression.NodeType == ExpressionType.Call)
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), value as TensorContraction);
-                }
-                else
-                {
-                    ContractionDefinition = (new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), Math.Sum(value));
-                }
+				IndexSet s = new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8);
+				TensorContraction tc = new TensorContraction(value, this, s);
+				ContractionDefinition = (s, tc);
 			}
+			
 		}
 			}
 }

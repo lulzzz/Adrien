@@ -14,6 +14,8 @@ namespace Adrien.Trees
 
         IEnumerable<ITreeValueNode> IndexSetNodes { get; }
 
-        IEnumerable<ITreeValueNode> VariableNodes { get; }
+        IEnumerable<ITreeValueNode> DefinedVariableNodes { get; }
+
+        IEnumerable<ITreeValueNode> InputVariableNodes { get; }
     }
 }

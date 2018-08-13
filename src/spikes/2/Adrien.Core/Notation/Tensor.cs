@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Humanizer;
 using Adrien.Compiler;
+using Adrien.Expressions;
 using Adrien.Math;
 using Adrien.Trees;
 
@@ -15,8 +16,6 @@ namespace Adrien.Notation
 {
     public partial class Tensor : Term, IAlgebra<Tensor, TensorExpression>, ITermShape
     {
-        public static Dictionary<TensorExpression, List<Tensor>> Definitions { get; private set; }
-
         public int[] Dimensions { get; protected set; }
 
         public int[] Strides { get; protected set; }
@@ -43,35 +42,32 @@ namespace Adrien.Notation
 
         public (IndexSet IndexSet, TensorContraction Expression) ContractionDefinition { get; protected set; }
 
-        public (IEnumerable<Tensor> Dependents, TensorExpression Expression) ElementwiseDefinition { get; protected set; }
-        
+        public TensorExpression  ElementwiseDefinition { get; protected set; }
+
+#pragma warning disable IDE1006
         public TensorExpression def
         {
+            get => ElementwiseDefinition;
             set
             {
-                ElementwiseDefinition = (value.Tensors, value);
-                Definitions.Add(value, value.Tensors);
+                ElementwiseDefinition = new TensorExpression(value, this);
             }
         }
+#pragma warning restore IDE1006
 
-        public bool IsDefined => ContractionDefinition.Expression != null || ElementwiseDefinition.Expression != null;
+        public bool IsDefined => ContractionDefinition.Expression != null || ElementwiseDefinition != null;
 
-        public bool IsElementwiseDefined => ElementwiseDefinition.Expression != null;
+        public bool IsElementwiseDefined => ElementwiseDefinition != null;
 
         public bool IsContractionDefined => ContractionDefinition.Expression != null;
 
         internal override Expression LinqExpression => IsDefined
-            ? IsContractionDefined
-                ? ContractionDefinition.Expression.LinqExpression
-                : ElementwiseDefinition.Expression.LinqExpression
-            : Expression.Constant(this, typeof(Tensor));
+           ? IsContractionDefined
+               ? ContractionDefinition.Expression.LinqExpression
+               : ElementwiseDefinition.LinqExpression
+           : Expression.Constant(this, typeof(Tensor));
 
         internal override Name DefaultNameBase { get; } = "A";
-
-        static Tensor()
-        {
-            Definitions = new Dictionary<TensorExpression, List<Tensor>>();
-        }
 
         protected (Tensor tensor, int index)? GeneratorContext { get; set; }
 
@@ -128,21 +124,63 @@ namespace Adrien.Notation
                 }
                 else if (value is TensorIndexExpression)
                 {
-                    ContractionDefinition = (I, Math.Sum(value));
+                    ContractionDefinition = (I, new TensorContraction(Math.Sum(value), this, I));
                 }
             }
         }
 
         public static implicit operator TensorExpression(Tensor t)
         {
-            return new TensorExpression(t.LinqExpression);
+            if (t.IsElementwiseDefined)
+            {
+                return t.ElementwiseDefinition;
+            }
+            else
+            {
+                return new TensorExpression(Expression.Constant(t));
+            }
+        }
+
+        public static implicit operator TensorIndexExpression(Tensor t)
+        {
+            if (t.IsContractionDefined)
+            {
+                return t.ContractionDefinition.Expression;
+            }
+            else
+            {
+                throw new InvalidCastException($"Tensor {t.Name} is not defined as a contraction.");
+            }
+        }
+
+        public static implicit operator Tensor(TensorIndexExpression expr) => 
+            expr.LinqExpression.GetConstants<Tensor>().Single();
+            
+        
+
+        public static explicit operator Tensor(TensorExpression e)
+        {
+            if (e.LinqExpression is ConstantExpression ce && (ce.Type == typeof(Tensor) || ce.Type.BaseType == 
+                typeof(Tensor)))
+            {
+                return (Tensor)ce.Value;
+            }
+            else if (e.LHSTensor != null)
+            {
+                return e.LHSTensor;
+            }
+            else throw new InvalidCastException("This tensor expression is not a tensor variable or definition.");
         }
 
         public static implicit operator ExpressionTree(Tensor t)
         {
-            if (t.IsDefined)
+            if (t.IsContractionDefined)
             {
                 return t.ContractionDefinition.Expression.ToTree((t, t.ContractionDefinition.IndexSet));
+            }
+            else if (t.IsElementwiseDefined)
+            {
+                return t.ElementwiseDefinition.ToTree((t, null));
             }
             else
             {
@@ -159,6 +197,7 @@ namespace Adrien.Notation
         public static TensorExpression operator *(Tensor left, Tensor right) => left.Multiply(right);
 
         public static TensorExpression operator /(Tensor left, Tensor right) => left.Divide(right);
+
 
         public static int[] StridesInElements(int[] dim)
         {
@@ -207,7 +246,7 @@ namespace Adrien.Notation
 
         public Tensor With(out Tensor with)
         {
-            GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
+            GeneratorContext = GeneratorContext ?? ((this, 1));
             with = new Tensor(GenerateName(GeneratorContext.Value.index, Name), Dimensions);
             GeneratorContext = (GeneratorContext.Value.tensor, GeneratorContext.Value.index + 1);
             return GeneratorContext.Value.tensor;
@@ -215,7 +254,7 @@ namespace Adrien.Notation
 
         public Tensor With(out Tensor with, string name)
         {
-            GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
+            GeneratorContext = GeneratorContext ?? (this, 1);
             with = new Tensor(name, Dimensions);
             GeneratorContext = (GeneratorContext.Value.tensor, GeneratorContext.Value.index + 1);
             return GeneratorContext.Value.tensor;
@@ -223,7 +262,7 @@ namespace Adrien.Notation
 
         public Tensor With(out Tensor with, params int[] dim)
         {
-            GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
+            GeneratorContext = GeneratorContext ?? (this, 1);
             if (dim.Length != GeneratorContext.Value.tensor.Dimensions.Length)
             {
                 throw new ArgumentException($"The rank of the new tensor must be the same as the original: " +
@@ -237,7 +276,7 @@ namespace Adrien.Notation
 
         public Tensor With(out Tensor with, string name, params int[] dim)
         {
-            GeneratorContext = GeneratorContext.HasValue ? GeneratorContext.Value : (this, 1);
+            GeneratorContext = GeneratorContext ?? (this, 1);
             if (dim.Length != GeneratorContext.Value.tensor.Dimensions.Length)
             {
                 throw new ArgumentException($"The rank of the new tensor must be the same as the original: " +
@@ -252,7 +291,7 @@ namespace Adrien.Notation
         public ExpressionTree ToTree() => IsDefined
             ? IsContractionDefined
                 ? ContractionDefinition.Expression.ToTree((this, ContractionDefinition.IndexSet))
-                : ElementwiseDefinition.Expression.ToTree((this, null))
+                : ElementwiseDefinition.ToTree((this, null))
             : new TensorExpression(LinqExpression).ToTree();
 
         public Var<T> Var<T>(Array array) where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible

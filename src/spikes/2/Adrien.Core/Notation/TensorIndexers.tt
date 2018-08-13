@@ -30,15 +30,11 @@ namespace Adrien.Notation
 			set
 			{
 				ThrowIfAlreadyAssiged();
-				if (value.LinqExpression.NodeType == ExpressionType.Call)
-                {
-                    ContractionDefinition = (new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>), value as TensorContraction);
-                }
-                else
-                {
-                    ContractionDefinition = (new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>), Math.Sum(value));
-                }
+				IndexSet s = new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>);
+				TensorContraction tc = new TensorContraction(value, this, s);
+				ContractionDefinition = (s, tc);
 			}
+			
 		}
 		<#}#>
 	}
