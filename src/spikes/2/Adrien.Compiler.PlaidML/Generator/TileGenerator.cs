@@ -51,12 +51,12 @@ namespace Adrien.Compiler.PlaidML.Generator
                         lhs = (string)Context.Pop();
                         
                     }
-                    Writer.VariableDefinitions.Enqueue(string.Format("{0}[] = {1};", lhs, rhs) + Environment.NewLine);
+                    Writer.VariableDefinitions.Enqueue(string.Format("{0} = {1};", lhs, rhs) + Environment.NewLine);
                     Context.Push(Writer.WriteOperator(on.Op, lhs));
                     return;
 
                 case TensorOp.Index:
-                    if (Context.Count > 1 || !ContextIsOpStart(TensorOp.Assign))
+                    if (Context.Count <= 1 && ContextIsOpStart(TensorOp.Assign)) //Start of an assignment op
                     {
                         base.VisitInternal(on);
                         return;
@@ -69,14 +69,13 @@ namespace Adrien.Compiler.PlaidML.Generator
                         base.Visit(on.Left);
                         lhs = (string)Context.Pop();
                     }
-
                     ITreeValueNode tensor;
                     if (on.Left is ITreeValueNode)
                     {
                         tensor = on.Left as ITreeValueNode;
                         if (tensor.NodeType != ValueNodeType.TENSOR)
                         {
-                            throw new Exception("The LHS of the Index operation is not a tensor.");
+                            throw new TileGeneratorException(this, "The LHS of the Index operation is not a tensor.");
                         }
                     }
                     else if (on.Left is ITreeOperatorNode<TensorOp> && 
@@ -85,15 +84,22 @@ namespace Adrien.Compiler.PlaidML.Generator
                         tensor = (on.Left as ITreeOperatorNode<TensorOp>).Left as ITreeValueNode;
                         if (tensor.NodeType != ValueNodeType.TENSOR)
                         {
-                            throw new Exception("The LHS of the Index operation is not a tensoe.");
+                            throw new TileGeneratorException(this, "The LHS of the Index operation is not a tensor.");
                         }
                     }
                     else
                     {
-                        throw new Exception("Could not determine the LHS side of the Index operation");
+                        throw new TileGeneratorException(this, "Could not determine the LHS of the Index operation");
                     }
-                    var dim = TensorDimensionVariables[tensor];
-                    Context.Push(Writer.WriteOperator(on.Op, lhs, rhs + ":" + dim));
+                    if (Tree.InputVariableNodes.Contains(tensor))
+                    {
+                        var dim = TensorDimensionVariables[tensor];
+                        Context.Push(Writer.WriteOperator(on.Op, lhs, rhs + ":" + dim));
+                    }
+                    else
+                    {
+                        Context.Push(Writer.WriteOperator(on.Op, lhs, rhs));
+                    }
                     return;
 
                 default:

@@ -47,10 +47,17 @@ namespace Adrien.Notation
 #pragma warning disable IDE1006
         public TensorExpression def
         {
-            get => ElementwiseDefinition;
+            get => IsDefined ? IsElementwiseDefined ? ElementwiseDefinition : ContractionDefinition.Expression : null;
             set
             {
-                ElementwiseDefinition = new TensorExpression(value, this);
+                if (value is TensorIndexExpression)
+                {
+                    ContractionDefinition = (null, new TensorContraction((TensorIndexExpression)value, this, null));
+                }
+                else
+                {
+                    ElementwiseDefinition = new TensorExpression(value, this);
+                }
             }
         }
 #pragma warning restore IDE1006
@@ -129,6 +136,14 @@ namespace Adrien.Notation
             }
         }
 
+        public Dimension this[int axis]
+        {
+            get
+            {
+                return this.Axes[axis];
+            }
+        }
+
         public static implicit operator TensorExpression(Tensor t)
         {
             if (t.IsElementwiseDefined)
@@ -149,7 +164,7 @@ namespace Adrien.Notation
             }
             else
             {
-                throw new InvalidCastException($"Tensor {t.Name} is not defined as a contraction.");
+                throw new InvalidCastException($"Tensor {t.Label} is not defined as a contraction.");
             }
         }
 
@@ -157,7 +172,6 @@ namespace Adrien.Notation
             expr.LinqExpression.GetConstants<Tensor>().Single();
             
         
-
         public static explicit operator Tensor(TensorExpression e)
         {
             if (e.LinqExpression is ConstantExpression ce && (ce.Type == typeof(Tensor) || ce.Type.BaseType == 
@@ -360,7 +374,7 @@ namespace Adrien.Notation
         [DebuggerStepThrough]
         internal void ThrowIfAlreadyAssiged()
         {
-            if (ContractionDefinition.IndexSet != null)
+            if (IsDefined)
             {
                 throw new InvalidOperationException("This tensor variable has an existing assigment. + " +
                                                     $"You can only assign to a tensor variable once.");
@@ -371,8 +385,15 @@ namespace Adrien.Notation
         internal void ThrowIfIndicesExceedRank(int c)
         {
             if (Rank < c)
-                throw new ArgumentOutOfRangeException("The number of indices exceeds the dimensions of " +
+                throw new ArgumentOutOfRangeException("The number of indices exceeds the number of dimensions of " +
                                                       $"this tensor.");
+        }
+
+        [DebuggerStepThrough]
+        internal void ThrowIfAxisExceedRank(int a)
+        {
+            if (Rank < a)
+                throw new ArgumentOutOfRangeException("The specified axis exceeds the rank of this tensor.");
         }
     }
 }

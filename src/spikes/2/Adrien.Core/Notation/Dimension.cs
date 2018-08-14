@@ -10,14 +10,14 @@ namespace Adrien.Notation
 
         public int Axis { get; protected set; }
 
-        public new int Dim { get; protected set; }
+        public int Length { get; protected set; }
 
         public int Stride { get; protected set; }
 
-        internal Dimension(Tensor t, int axis, int dim) : base(t.Name + "_" + axis.ToString())
+        internal Dimension(Tensor t, int axis, int length) : base(t.Name + "_" + axis.ToString())
         {
             this.Tensor = t;
-            this.Dim = dim;
+            this.Length = length;
             this.Stride = t.Strides[axis];
         }
     }

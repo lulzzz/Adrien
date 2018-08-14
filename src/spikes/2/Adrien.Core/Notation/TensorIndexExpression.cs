@@ -15,6 +15,7 @@ namespace Adrien.Notation
       
         public TensorIndexExpression(IndexExpression expr, NewArrayExpression bounds = null) : base(expr)
         {
+            expr.ThrowIfNotType<Tensor>();
             Bounds = bounds;
         }
 
@@ -26,13 +27,13 @@ namespace Adrien.Notation
 
         public TensorIndexExpression(UnaryExpression expr, NewArrayExpression bounds = null) : base(expr)
         {
-            expr.ThrowIfNotType<TensorIndexExpression>();
+            expr.ThrowIfNotType<TensorExpression>();
             Bounds = bounds;
         }
 
         public TensorIndexExpression(BinaryExpression expr, NewArrayExpression bounds = null) : base(expr)
         {
-            expr.ThrowIfNotType<TensorIndexExpression>();
+            expr.ThrowIfNotType<TensorExpression>();
             Bounds = bounds;
         }
         

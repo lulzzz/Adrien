@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -20,7 +20,7 @@
     <ProjectReference Include="..\Adrien.Compiler.PlaidML\Adrien.Compiler.PlaidML.csproj" />
     <ProjectReference Include="..\Adrien.Core\Adrien.Core.csproj" />
     <ProjectReference Include="..\Adrien.Diagrams\Adrien.Diagrams.csproj" />
-    <ProjectReference Include="..\Adrien.Log.Serilog\Adrien.Log.Serilog.csproj" />
+    <ProjectReference Include="..\Loggers\Adrien.Log.Serilog\Adrien.Log.Serilog.csproj" />
   </ItemGroup>
 
 </Project>

@@ -21,7 +21,7 @@ namespace Adrien.Tests
             Assert.Equal(3, ypred.ElementwiseDefinition.Tensors.Count);
             yerror.def = Pow2[yactual - ypred];
             Assert.Equal(4, yerror.ElementwiseDefinition.Tensors.Count); 
-            yloss[i] = Sum[yerror[i]];
+            yloss[i / 2] = Sum[yerror[i]];
             Assert.True(yloss.IsDefined);
             //TensorContraction c = yloss.ContractionDefinition.Expression;
             //Assert.True(c.Tensors.Count > 0);
@@ -36,7 +36,7 @@ namespace Adrien.Tests
             var (a, b) = new Scalar().Two("a", "b");
             ypred.def = a * x + b;
             yerror.def = Pow2[yactual - ypred];
-            yloss.def = Mean[yerror];
+            yloss.def = Mean[yerror[i]]; 
             Assert.True(yloss.IsDefined);
             TensorExpression texpr = yloss.ElementwiseDefinition;
             Assert.Single(texpr.Tensors);

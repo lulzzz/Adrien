@@ -137,6 +137,7 @@ namespace Adrien.Tests.Compilers
             yloss.def = Mean[yerror[i]];
             Kernel<int> loss = new Kernel<int>(yloss, compiler);
             Assert.True(loss.Compile());
+            var g = yloss[2];
             //Assert.Equal(RunStatus.Success, error.CompilerResult.Run(v, vya, va, vx, vb));
 
         }

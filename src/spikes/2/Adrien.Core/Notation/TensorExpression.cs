@@ -108,6 +108,7 @@ namespace Adrien.Notation
 
         protected static TensorExpression DummyUnary(Tensor l) => null;
         protected static TensorExpression DummyUnary(TensorExpression l) => null;
+        protected static TensorExpression DummyUnary(TensorIndexExpression l) => null;
 
         protected static TensorExpression DummyBinary(Tensor l, Tensor r) => null;
         protected static TensorExpression DummyBinary(TensorExpression l, Tensor r) => null;
@@ -117,6 +118,7 @@ namespace Adrien.Notation
         protected static TensorExpression DummyBinary(TensorExpression l, Dimension r) => null;
         protected static TensorExpression DummyBinary(Dimension l, TensorIndexExpression r) => null;
         protected static TensorExpression DummyBinary(TensorIndexExpression l, Dimension r) => null;
+        protected static TensorExpression DummyBinary(TensorIndexExpression l, TensorIndexExpression r) => null;
 
         private Type TensorExpressionMethodParameterType
         {

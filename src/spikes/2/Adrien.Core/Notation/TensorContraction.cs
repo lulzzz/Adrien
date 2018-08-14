@@ -20,7 +20,7 @@ namespace Adrien.Notation
 
         public TensorContraction(MethodCallExpression expr, TensorIndexExpression tie, NewArrayExpression bounds = null) : base(expr, bounds)
         {
-            expr.ThrowIfNotType<TensorContraction>();
+            expr.ThrowIfNotType<TensorExpression>();
             this.LHSTensor = tie.LHSTensor;
             this.LHSIndexSet = tie.LHSIndexSet;
         }
@@ -28,7 +28,7 @@ namespace Adrien.Notation
         public TensorContraction(UnaryExpression expr, TensorIndexExpression tie, NewArrayExpression bounds = null) : base(expr, bounds)
         {
             {
-                expr.ThrowIfNotType<TensorContraction>();
+                expr.ThrowIfNotType<TensorExpression>();
                 this.LHSTensor = tie.LHSTensor;
                 this.LHSIndexSet = tie.LHSIndexSet;
             }
@@ -37,7 +37,7 @@ namespace Adrien.Notation
         public TensorContraction(BinaryExpression expr, TensorIndexExpression tie, NewArrayExpression bounds = null) : base(expr, bounds)
         {
             {
-                expr.ThrowIfNotType<TensorContraction>();
+                expr.ThrowIfNotType<TensorExpression>();
                 this.LHSTensor = tie.LHSTensor;
                 this.LHSIndexSet = tie.LHSIndexSet;
             }

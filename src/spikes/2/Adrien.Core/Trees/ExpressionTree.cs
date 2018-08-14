@@ -36,7 +36,7 @@ namespace Adrien.Trees
                 {
                     return Left.Left as ITreeValueNode;
                 }
-                else throw new InvalidOperationException("The tree's output node cannnot be determined.");
+                else throw new ExpressionTreeException(this, "The tree's output node cannnot be determined.");
             }
         }
 
@@ -52,11 +52,12 @@ namespace Adrien.Trees
                 .Cast<ITreeValueNode>()
                 .Distinct(this);
 
+        public IEnumerable<ITreeValueNode> TensorDimensionNodes => ValueNodes.Where(vn => vn.Value is Dimension);
+            
         public IEnumerable<ITreeValueNode> InputVariableNodes =>
-            TensorNodes.Except(DefinedVariableNodes).Where(n => n != OutputNode);
+            TensorNodes.Except(TensorDimensionNodes).Except(DefinedVariableNodes).Where(n => n != OutputNode);
 
-        
-        protected HashSet<ITreeNode> HashSet { get; } = new HashSet<ITreeNode>();
+        protected HashSet<TreeNode> HashSet { get; } = new HashSet<TreeNode>();
 
 
         public ExpressionTree() : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
@@ -117,7 +118,7 @@ namespace Adrien.Trees
             }
             else
             {
-                throw new ArgumentException($"Argument node is not type TreeNode.");
+                throw new ExpressionTreeException(this, n, $"Argument to AddNode is not of type TreeNode.");
             }
 
             if (n.Parent is TreeNode parentNode)
@@ -126,14 +127,14 @@ namespace Adrien.Trees
             }
             else
             {
-                throw new ArgumentException($"Argument node's parent is not type TreeNode.");
+                throw new ExpressionTreeException(this, n, $"Argument AddNode's parent is not of type TreeNode.");
             }
 
             if (node.Position == TreeNodePosition.LEFT)
             {
                 if (parent.HasLeft)
                 {
-                    throw new Exception($"Parent tree node with id {parent.Id} already has a left child.");
+                    throw new ExpressionTreeException(this, node, $"Parent tree node with id {parent.Id} already has a left child.");
                 }
 
                 parent.Left = node;
@@ -142,7 +143,7 @@ namespace Adrien.Trees
             {
                 if (parent.HasRight)
                 {
-                    throw new Exception($"Parent tree node with id {parent.Id} already has a right child.");
+                    throw new ExpressionTreeException(this, node, $"Parent tree node with id {parent.Id} already has a right child.");
                 }
 
                 parent.Right = node;
@@ -170,7 +171,7 @@ namespace Adrien.Trees
                     var rcount = on.Right != null ? Count(lcount + 1, on.Right) : lcount;
                     return rcount;
                 }
-                else throw new NotSupportedException($"Unknown tree node type: {node.GetType().Name}.");
+                else throw new ExpressionTreeException(this, node, $"Unknown tree node type: {node.GetType().Name}.");
             }
 
             return Count(0, node);
@@ -180,22 +181,22 @@ namespace Adrien.Trees
 
         public int GetHashCode(ITreeNode node)
         {
-            return node.Label.GetHashCode();
+            return (node as TreeNode).GetHashCode();
         }
 
         public bool Equals(ITreeNode left, ITreeNode right)
         {
-            return left.Label == right.Label;
+            return (left as TreeNode).Equals(right as TreeNode);
         }
 
         public int GetHashCode(ITreeValueNode node)
         {
-            return node.NodeType.GetHashCode() ^ node.Label.GetHashCode();
+            return (node as ValueNode).GetHashCode();
         }
 
         public bool Equals(ITreeValueNode left, ITreeValueNode right)
         {
-            return (left.NodeType == right.NodeType) && (left.Label == right.Label);
+            return (left as ValueNode).Equals(right as ValueNode);
         }
     }
 }

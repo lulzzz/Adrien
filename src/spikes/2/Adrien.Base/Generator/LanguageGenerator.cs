@@ -16,9 +16,7 @@ namespace Adrien.Generator
         protected TWriter Writer { get; set; }
 
 
-        public LanguageGenerator(IExpressionTree tree) : base(tree, false)
-        {
-        }
+        public LanguageGenerator(IExpressionTree tree) : base(tree, false) {}
 
 
         public override void VisitInternal(ITreeOperatorNode<TOp> on)
@@ -30,9 +28,9 @@ namespace Adrien.Generator
 
                 if (on.Right != null)
                 {
-                    if (on.Right is ITreeOperatorNode<TOp> && NestedBinaryOperators.Contains(on.Op)
-                                                           && NestedBinaryOperators.Contains(
-                                                               (on.Right as ITreeOperatorNode<TOp>).Op))
+                    if (on.Right is ITreeOperatorNode<TOp> 
+                        && NestedBinaryOperators.Contains(on.Op)
+                        && NestedBinaryOperators.Contains((on.Right as ITreeOperatorNode<TOp>).Op))
                     {
                         operands.Push("(" + (string) Context.Pop() + ")");
                     }
@@ -44,9 +42,9 @@ namespace Adrien.Generator
 
                 if (on.Left != null)
                 {
-                    if (on.Left is ITreeOperatorNode<TOp> && NestedBinaryOperators.Contains(on.Op)
-                                                          && NestedBinaryOperators.Contains(
-                                                              (on.Left as ITreeOperatorNode<TOp>).Op))
+                    if (on.Left is ITreeOperatorNode<TOp> 
+                        && NestedBinaryOperators.Contains(on.Op)
+                        && NestedBinaryOperators.Contains((on.Left as ITreeOperatorNode<TOp>).Op))
                     {
                         operands.Push("(" + (string) Context.Pop() + ")");
                     }

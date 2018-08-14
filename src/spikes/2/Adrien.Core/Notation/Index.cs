@@ -36,11 +36,6 @@ namespace Adrien.Notation
             Type = IndexType.Dimension;
         }
 
-        public Index(int i) : base(GetNameFromLinqExpression(Expression.Constant(i)))
-        {
-            DimensionExpression = Expression.Constant(i);
-            Type = IndexType.Literal;
-        }
         public Index(IndexSet set, int order, Expression dimExpression) : base(GetNameFromLinqExpression(dimExpression))
         {
             Set = set;
@@ -48,6 +43,13 @@ namespace Adrien.Notation
             DimensionExpression = dimExpression;
             Type = IndexType.DimensionExpression;
         }
+
+        public Index(int i) : base(GetNameFromLinqExpression(Expression.Constant(i)))
+        {
+            DimensionExpression = Expression.Constant(i);
+            Type = IndexType.Literal;
+        }
+        
 
         public static implicit operator Int32(Index i) => i.Order;
 
