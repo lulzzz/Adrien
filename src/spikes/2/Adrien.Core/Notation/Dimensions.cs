@@ -20,12 +20,12 @@ namespace Adrien.Notation
             {
                 if(i.Type != IndexType.Dimension)
                 {
-                    throw new ArgumentException("This index is a dimension expression, not a dimension.");
+                    throw new ArgumentException("This index is a dimension expression or literal, not a dimension.");
                 }
                 else
                 {
-                    Tensor.ThrowIfIndicesExceedRank(i.Dimension.Value);
-                    return base[i.Dimension.Value];
+                    Tensor.ThrowIfIndicesExceedRank(i.Order);
+                    return base[i.Order];
                 }
             }
         }

@@ -81,7 +81,7 @@ namespace Adrien.Tests.Compilers
             Assert.Equal(8, r[0]);
 
             var (y1, y2) = new Vector(5).Two("y1", "y2");
-            var kloss = new Kernel<int>(y, Pow2[y2 - y1]);
+            var kloss = new Kernel<int>(y, POW2[y2 - y1]);
         }
 
         [Fact]
@@ -110,7 +110,7 @@ namespace Adrien.Tests.Compilers
             ypred.def = (a * x + b);
             Kernel<int> predict = new Kernel<int>(ypred, compiler);
 
-            yerror.def = Pow2[yactual - ypred];
+            yerror.def = POW2[yactual - ypred];
             Kernel<int> error = new Kernel<int>(yerror, compiler);
             Assert.True(error.Compile());
 
@@ -133,11 +133,11 @@ namespace Adrien.Tests.Compilers
             {
                 Assert.Equal(System.Math.Pow(vya[index] - ((va * vx[index]) + vb), 2), vyerror[index]);
             }
-
-            yloss.def = Mean[yerror[i]];
+            
+            yloss[i] = MEAN[yerror[i]];
             Kernel<int> loss = new Kernel<int>(yloss, compiler);
-            Assert.True(loss.Compile());
-            var g = yloss[2];
+            //Assert.True(loss.Compile());
+            //var g = yloss[2];
             //Assert.Equal(RunStatus.Success, error.CompilerResult.Run(v, vya, va, vx, vb));
 
         }

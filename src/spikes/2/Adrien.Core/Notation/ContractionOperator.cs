@@ -4,7 +4,7 @@ namespace Adrien.Notation
 {
     public class ContractionOperator : IContractionOp
     {
-        Func<TensorIndexExpression, TensorIndexExpression> Operation;
+        protected readonly Func<TensorIndexExpression, TensorIndexExpression> Operation;
 
         public ContractionOperator(Func<TensorIndexExpression, TensorIndexExpression> op)
         {

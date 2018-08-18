@@ -2,15 +2,14 @@
 {
     public static class TensorOperators
     {
-        public static ContractionOperator Sum { get; } = new ContractionOperator((expr) => Math.Sum(expr));
+        public static ContractionOperator SUM { get; } = new ContractionOperator((expr) => Math.Sum(expr));
 
-        public static UnaryOperator<TensorExpression, TensorExpression> Pow2 { get; } = 
+        public static ContractionOperator MEAN { get; } = new ContractionOperator((expr) => Math.Mean(expr));
+
+        public static UnaryOperator<TensorExpression, TensorExpression> POW2 { get; } = 
             new UnaryOperator<TensorExpression, TensorExpression>((expr) => Math.Square(expr));
 
-        public static UnaryOperator<TensorExpression, TensorExpression> Sqrt { get; } = 
+        public static UnaryOperator<TensorExpression, TensorExpression> SQRT { get; } = 
             new UnaryOperator<TensorExpression, TensorExpression>((expr) => Math.Sqrt(expr));
-
-        public static UnaryOperator<TensorIndexExpression, TensorExpression> Mean { get; } = 
-            new UnaryOperator<TensorIndexExpression, TensorExpression>((expr) => Math.Mean(expr));
     }
 }

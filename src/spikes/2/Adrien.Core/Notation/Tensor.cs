@@ -168,9 +168,17 @@ namespace Adrien.Notation
             }
         }
 
-        public static implicit operator Tensor(TensorIndexExpression expr) => 
-            expr.LinqExpression.GetConstants<Tensor>().Single();
-            
+        public static implicit operator Tensor(TensorIndexExpression expr)
+        {
+            if (expr.LinqExpression is IndexExpression && expr.LinqExpression.Type == typeof(Tensor))
+            {
+                return expr.Tensors.Single();
+            }
+            else
+            {
+                throw new InvalidCastException("This tensor index expression cannot be cast to a tensor.");
+            }
+        }
         
         public static explicit operator Tensor(TensorExpression e)
         {

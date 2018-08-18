@@ -5,8 +5,9 @@ namespace Adrien.Notation
 {
     public static partial class Math
     {
-        public static TensorExpression Add(TensorExpression l, TensorExpression right) =>
-            new TensorExpression(Expression.Add(l.LinqExpression, right.LinqExpression));
+        public static TensorExpression Add<TExprLeft, TExprRight>(TExprLeft l, TExprRight right)
+           where TExprLeft : TensorExpression where TExprRight : TensorExpression
+           => new TensorExpression(Expression.Add(l.LinqExpression, right.LinqExpression));
 
         public static TensorExpression Sub(TensorExpression l, TensorExpression right) =>
             new TensorExpression(Expression.Subtract(l.LinqExpression, right.LinqExpression));

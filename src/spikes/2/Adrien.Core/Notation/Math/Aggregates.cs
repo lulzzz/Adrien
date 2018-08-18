@@ -7,13 +7,12 @@ namespace Adrien.Notation
 {
     public static partial class Math
     {
-        public static TensorIndexExpression Sum(TensorIndexExpression l) =>
-            new TensorIndexExpression(Expression.Call(TensorExpression.GetOpMethodInfo<TensorIndexExpression>("Op_Sum", 1), 
-                Expression.Convert(l, typeof(TensorIndexExpression))));
+        public static TensorIndexExpression Sum(TensorIndexExpression l) => 
+            new TensorIndexExpression(GetOpMethodCall("Sum", l));
 
-        public static TensorExpression Mean(TensorIndexExpression l)
+        public static TensorIndexExpression Mean(TensorIndexExpression l)
         {
-            var tensor = (Tensor) l;
+            var tensor = l.Tensors.Single();
             var indices = l.IndexParameters;
             TensorExpression mulExpr = indices.Count > 1 ?
                 tensor.Dim[indices[0]] * tensor.Dim[indices[1]] : tensor.Dim[indices[0]];
@@ -21,8 +20,15 @@ namespace Adrien.Notation
             {
                 mulExpr = mulExpr * tensor.Dim[indices[i]];
             }
-            return Sum(l) / mulExpr;
-        }       
+            return new TensorIndexExpression(Expression.Divide(Sum(l), mulExpr, 
+                TensorExpression.GetDummyBinaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(Sum(l), mulExpr)));
+        }
+
+        private static MethodCallExpression GetOpMethodCall(string op, params TensorIndexExpression[] args)
+        {
+            return Expression.Call(TensorExpression.GetOpMethodInfo<TensorIndexExpression>("Op_" + op, args.Length),
+                args.Select(a => Expression.Convert(a, typeof(TensorIndexExpression))).ToArray());
+        }
     }
 
     public partial class TensorExpression

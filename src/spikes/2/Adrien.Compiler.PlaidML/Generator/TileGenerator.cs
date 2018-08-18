@@ -25,7 +25,6 @@ namespace Adrien.Compiler.PlaidML.Generator
         {
             Context = new TileGeneratorContext(tree);
             Writer = new TileWriter();
-            GetDimensionVariableNames();
             this.VisitTree();
         }
 
@@ -56,7 +55,7 @@ namespace Adrien.Compiler.PlaidML.Generator
                     return;
 
                 case TensorOp.Index:
-                    if (Context.Count <= 1 && ContextIsOpStart(TensorOp.Assign)) //Start of an assignment op
+                    if (Context.Count <= 1 && ContextIsOpStart(TensorOp.Assign)) //Start of final assignment op
                     {
                         base.VisitInternal(on);
                         return;
@@ -91,15 +90,8 @@ namespace Adrien.Compiler.PlaidML.Generator
                     {
                         throw new TileGeneratorException(this, "Could not determine the LHS of the Index operation");
                     }
-                    if (Tree.InputVariableNodes.Contains(tensor))
-                    {
-                        var dim = TensorDimensionVariables[tensor];
-                        Context.Push(Writer.WriteOperator(on.Op, lhs, rhs + ":" + dim));
-                    }
-                    else
-                    {
-                        Context.Push(Writer.WriteOperator(on.Op, lhs, rhs));
-                    }
+                    
+                    Context.Push(Writer.WriteOperator(on.Op, lhs, rhs));
                     return;
 
                 default:
@@ -108,30 +100,23 @@ namespace Adrien.Compiler.PlaidML.Generator
             }
         }
 
-        protected void GetDimensionVariableNames()
+        protected string WriteInputVariableDimensions(ITermShape input)
         {
-            TensorDimensionVariables = new Dictionary<ITreeValueNode, string>(Tree.InputVariableNodes.Count());
-            foreach(ITreeValueNode v in Tree.InputVariableNodes)
-            {
-                string name = v.Label + "N";
-                int n = 0;
-                while (TensorDimensionVariables.Values.Contains(name))
-                {
-                    name = name + (++n).ToString();
-                }
-                TensorDimensionVariables.Add(v, name.ToUpper());
-            }
+            StringBuilder dimensions = new StringBuilder("[");
+            dimensions.Append(Enumerable.Range(0, input.Rank)
+                .Select(d => input.Label + d.ToString())
+                .Aggregate((d1, d2) => d1 + "," + d2));
+            dimensions.Append("]");
+            return dimensions.ToString();
         }
+
 
         protected void WriteFunctionPrologue()
         {
             StringBuilder prologue = new StringBuilder("function(");
-            foreach(ITreeValueNode tensor in Tree.InputVariableNodes)
+            foreach(ITermShape tensor in InputShapes)
             {
-                if (!Tree.IndexSetNodes.Any(set => set.Parent.Label == tensor.Label))
-                {
-                    prologue.AppendFormat("{0}, ", tensor.Label.ToUpper());
-                }
+                prologue.AppendFormat("{0}{1}, ", tensor.Label.ToUpper(), WriteInputVariableDimensions(tensor).ToUpper());   
             }
             prologue.Remove(prologue.Length - 2, 2);
             prologue.Append(") -> ");

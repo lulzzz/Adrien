@@ -14,7 +14,7 @@ namespace Adrien.Notation
 
         public int Stride { get; protected set; }
 
-        internal Dimension(Tensor t, int axis, int length) : base(t.Name + "_" + axis.ToString())
+        internal Dimension(Tensor t, int axis, int length) : base(t.Label + axis.ToString())
         {
             this.Tensor = t;
             this.Length = length;
