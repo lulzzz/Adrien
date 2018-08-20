@@ -12,17 +12,18 @@ namespace Adrien.Notation
 
         public static TensorIndexExpression Mean(TensorIndexExpression l)
         {
-            var tensor = l.Tensors.Single();
+            var tensor = (Tensor) l;
             var indices = l.IndexParameters;
-            Dimension mulExpr = indices.Count > 1 ?
-                tensor.Dim[indices[0]] * tensor.Dim[indices[1]] : tensor.Dim[indices[0]];
+            var mulExpr = tensor.GetDimensionProductExpression(indices);
+            /*
+            TensorExpression mulExpr = indices.Count > 1 ?
+                (Scalar) tensor.Dim[indices[0]] * (Scalar) tensor.Dim[indices[1]] : (Scalar) tensor.Dim[indices[0]];
             for (int i = 2; i < indices.Count; i++)
             {
-                mulExpr = mulExpr * tensor.Dim[indices[i]];
+                mulExpr = mulExpr * (Scalar) tensor.Dim[indices[i]];
             }
-            return Sum(l);
-            //return new TensorIndexExpression(Expression.Divide(Sum(l), mulExpr, 
-            //    TensorExpression.GetDummyBinaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(Sum(l), mulExpr)));
+            */
+            return Sum(l) / mulExpr;
         }
 
         private static MethodCallExpression GetOpMethodCall(string op, params TensorIndexExpression[] args)

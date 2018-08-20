@@ -115,15 +115,18 @@ namespace Adrien.Trees
         protected override Expression VisitParameter(ParameterExpression node)
         {
             base.VisitParameter(node);
-           
-            var t = Context.Tensors.First();
-            var i = Context.TensorIndicesQueue.Count;
-            if (!Term.Terms.ContainsKey(node.Name))
+
+            if (Context.InternalNode.Op == TensorOp.Index)
             {
-                throw new InvalidOperationException($"The term table does not contain a term with id {node.Name}.");
+                var t = Context.Tensors.First();
+                var i = Context.TensorIndicesQueue.Count;
+                if (!Term.Terms.ContainsKey(node.Name))
+                {
+                    throw new InvalidOperationException($"The term table does not contain a term with id {node.Name}.");
+                }
+                else
+                    Context.TensorIndicesQueue.Enqueue((Index)Term.Terms[node.Name]);
             }
-            else
-                Context.TensorIndicesQueue.Enqueue((Index)Term.Terms[node.Name]);
             return node;
         }
 

@@ -173,7 +173,7 @@ namespace Adrien.Notation
 
         public static explicit operator Tensor(TensorIndexExpression expr)
         {
-            if (expr.LinqExpression is IndexExpression && expr.LinqExpression.Type == typeof(Tensor))
+            if (expr.LinqExpression is IndexExpression && expr.ExpressionType == typeof(Tensor))
             {
                 return expr.Tensors.Single();
             }
@@ -257,6 +257,17 @@ namespace Adrien.Notation
             }
 
             return strides;
+        }
+
+        public TensorExpression GetDimensionProductExpression(List<Index> indices)
+        {
+            TensorExpression mulExpr = indices.Count > 1 ?
+               (Scalar)Dim[indices[0]] * (Scalar)Dim[indices[1]] : (Scalar)Dim[indices[0]];
+            for (int i = 2; i < indices.Count; i++)
+            {
+                mulExpr = mulExpr * (Scalar)Dim[indices[i]];
+            }
+            return mulExpr;
         }
 
         public TensorExpression Negate() => -(TensorExpression) this;

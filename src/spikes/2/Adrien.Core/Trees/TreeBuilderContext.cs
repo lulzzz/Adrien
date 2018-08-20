@@ -22,6 +22,8 @@ namespace Adrien.Trees
 
         public Queue<Index> TensorIndicesQueue { get; }
 
+        public Queue<Dimension> TensorDimensionsQueue { get; }
+
         public ITreeOperatorNode<TensorOp> InternalNodeAsOperatorNode =>
             (InternalNode as ITreeOperatorNode<TensorOp>) ??
             throw new Exception("The current context node is not an operator node.");

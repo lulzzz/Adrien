@@ -3,6 +3,7 @@
     public enum DimensionType
     {
         Constant = 1,
-        Expression = 2
+        Expression = 2,
+        Literal = 3
     }
 }

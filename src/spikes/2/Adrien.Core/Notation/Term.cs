@@ -120,7 +120,7 @@ namespace Adrien.Notation
             }
         }
 
-        protected static MethodInfo GetDummyUnaryMethodInfo<TType, TReturn>(Term l) 
+        internal static MethodInfo GetDummyUnaryMethodInfo<TType, TReturn>(Term l) 
             where TType: Term where TReturn : Term
         {
             Type lt = l.ExpressionType;
@@ -131,7 +131,7 @@ namespace Adrien.Notation
             return method;
         }
 
-        protected static MethodInfo GetDummyBinaryMethodInfo<TType, TReturn>(Term l, Term r)
+        internal static MethodInfo GetDummyBinaryMethodInfo<TType, TReturn>(Term l, Term r)
             where TType : Term where TReturn : Term
         {
             Type lt = l.ExpressionType;

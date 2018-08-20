@@ -14,7 +14,7 @@
         {
         }
 
-        public Scalar(object value) : this("__value")
+        public Scalar(string name, object value) : this(name)
         {
             Value = value;
         }

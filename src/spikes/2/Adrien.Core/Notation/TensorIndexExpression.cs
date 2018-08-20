@@ -11,10 +11,10 @@ namespace Adrien.Notation
 {
     public class TensorIndexExpression : TensorExpression, IAlgebra<TensorIndexExpression, TensorIndexExpression>
     {
-        public NewArrayExpression Bounds { get; protected set; }
+        public ParameterExpression Bounds { get; protected set; }
 
       
-        internal TensorIndexExpression(IndexExpression expr, NewArrayExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(IndexExpression expr, ParameterExpression bounds = null) : base(expr)
         {
             expr.ThrowIfNotType<Tensor>();
             if (!(expr.Object is ConstantExpression))
@@ -24,42 +24,33 @@ namespace Adrien.Notation
             Bounds = bounds;
         }
 
-        internal TensorIndexExpression(MethodCallExpression expr, NewArrayExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(MethodCallExpression expr, ParameterExpression bounds = null) : base(expr)
         {
             expr.ThrowIfNotType<TensorIndexExpression>();
             Bounds = bounds;
         }
 
-        internal TensorIndexExpression(UnaryExpression expr, NewArrayExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(UnaryExpression expr, ParameterExpression bounds = null) : base(expr)
         {
             expr.ThrowIfNotType<TensorExpression>();
             expr.Operand.ThrowIfNotType<TensorIndexExpression>();
             Bounds = bounds;
         }
 
-        internal TensorIndexExpression(BinaryExpression expr, NewArrayExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(BinaryExpression expr, ParameterExpression bounds = null) : base(expr)
         {
             expr.ThrowIfNotType<TensorIndexExpression>();
             Bounds = bounds;
         }
 
-        internal TensorIndexExpression(TensorIndexExpression c, NewArrayExpression bounds = null) : base(c.LinqExpression)
+        internal TensorIndexExpression(TensorIndexExpression c, ParameterExpression bounds = null) : base(c.LinqExpression)
         {
             this.Bounds = bounds;
         }
 
-        public TensorIndexExpression this[Dimension n]
-        {
-            get => new TensorIndexExpression(this, Expression.NewArrayBounds(typeof(TensorIndexExpression),
-                Expression.Convert(n.LinqExpression, typeof(Int32)), Expression.Convert(n.LinqExpression, typeof(Int32))));
-        }
-
-        public TensorIndexExpression this[Index l, Index u]
-        {
-            get => new TensorIndexExpression(this, Expression.NewArrayBounds(typeof(TensorIndexExpression), 
-                Expression.Convert(l.LinqExpression, typeof(Int32)), Expression.Convert(u.LinqExpression, typeof(Int32))));
-        }
-
+        public TensorIndexExpression this[Dimension n] => new TensorIndexExpression(this,
+            (ParameterExpression) n.LinqExpression);
+  
         public static TensorIndexExpression operator +(TensorIndexExpression left, TensorIndexExpression right) =>
            new TensorIndexExpression(Expression.Add(left, right,
                GetDummyBinaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(left, right)));
@@ -74,8 +65,7 @@ namespace Adrien.Notation
 
         public static TensorIndexExpression operator *(TensorIndexExpression left, TensorExpression right) =>
             new TensorIndexExpression(Expression.Multiply(left, right,
-                GetDummyBinaryMethodInfo<TensorIndexExpression, TensorExpression>(left, right)));
-
+                GetDummyBinaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(left, right)));
 
         public static TensorIndexExpression operator /(TensorIndexExpression left, TensorIndexExpression right) =>
             new TensorIndexExpression(Expression.Divide(left, right,
@@ -83,7 +73,8 @@ namespace Adrien.Notation
 
         public static TensorIndexExpression operator /(TensorIndexExpression left, TensorExpression right) =>
             new TensorIndexExpression(Expression.Divide(left, right,
-                GetDummyBinaryMethodInfo<TensorIndexExpression, TensorExpression>(right, right)));
+                GetDummyBinaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(left, right)));
+
 
         public new TensorIndexExpression Negate() => new TensorIndexExpression(Expression.Negate(this, 
             GetDummyUnaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(this)));
@@ -104,6 +95,8 @@ namespace Adrien.Notation
         private static TensorIndexExpression DummyBinary(Tensor l, Tensor r) => null;
         private static TensorIndexExpression DummyBinary(TensorIndexExpression l, Tensor r) => null;
         private static TensorIndexExpression DummyBinary(TensorIndexExpression l, TensorIndexExpression r) => null;
-        private static TensorIndexExpression DummyBinary(TensorIndexExpression l, TensorExpression r) => null; 
+        private static TensorIndexExpression DummyBinary(TensorIndexExpression l, TensorExpression r) => null;
+        private static TensorIndexExpression DummyBinary(TensorIndexExpression l, Scalar r) => null;
+        private static TensorIndexExpression DummyBinary(Scalar l, TensorIndexExpression r) => null;
     }
 }

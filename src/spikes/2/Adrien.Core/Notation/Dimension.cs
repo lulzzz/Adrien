@@ -9,7 +9,7 @@ namespace Adrien.Notation
 {
     public class Dimension : Term, IChildTerm, IAlgebra<Dimension, Dimension>
     {
-        public Tensor Tensor { get; protected set; }
+        public Tensor Tensor { get; internal set; }
 
         public ITerm Parent => Tensor;
 
@@ -25,8 +25,7 @@ namespace Adrien.Notation
 
         internal override Name DefaultNameBase { get; } = "N0";
 
-        internal override Expression LinqExpression => Expression.NewArrayBounds(typeof(TensorIndexExpression),
-                Expression.Convert(DimensionExpression, typeof(int)));
+        internal override Expression LinqExpression => Expression.Parameter(typeof(Dimension), Id);
 
         internal override Type ExpressionType { get; } = typeof(Dimension);
 
@@ -34,25 +33,24 @@ namespace Adrien.Notation
         {
             this.Tensor = t;
             this.Order = order;
-            this.DimensionExpression = Expression.Parameter(typeof(int), Id);
         }
 
         internal Dimension(Tensor t, int order, int length) : this(t, order, t.Label + order.ToString())
         {
             this.Length = length;
             this.Stride = t.Strides[order];
+            this.DimensionExpression = Expression.Constant(Length);
             this.DimensionType = DimensionType.Constant;
         }
 
-        internal Dimension(Tensor t, int order, Expression dimExpression) : this(t, order, t.Label + order.ToString())
+        internal Dimension(Expression dimExpression) : this(null, -1, 
+            "dim_" + GetNameFromLinqExpression(dimExpression))
         {
             this.DimensionExpression = dimExpression;
             this.DimensionType = DimensionType.Expression;
         }
 
-        internal Dimension(Dimension dim, Expression dimExpression) : 
-            this(dim.Tensor, dim.Order, "dim_" + GetNameFromLinqExpression(dimExpression)) {}
-
+        internal Dimension(Int32 i) : this(Expression.Constant(i)) {}
 
         public static Dimension operator -(Dimension left) => left.Negate();
 
@@ -64,21 +62,26 @@ namespace Adrien.Notation
 
         public static Dimension operator /(Dimension left, Dimension right) => left.Divide(right);
 
+        public static implicit operator Dimension(int d) => new Dimension(null, -1, d);
 
-        public Dimension Negate() => new Dimension(this, Expression.Negate(DimensionExpression, 
+        public static explicit operator Scalar(Dimension d) => d.DimensionType == DimensionType.Constant ?
+            new Scalar(d.Label) : throw new ArgumentException("The specified dimension is not a dimension constant");
+
+        public Dimension Negate() => new Dimension(Expression.Negate(DimensionExpression, 
             GetDummyUnaryMethodInfo<Dimension, Dimension>(this)));
 
-        public Dimension Add(Dimension right) => new Dimension(this, Expression.Add(this, 
+        public Dimension Add(Dimension right) => new Dimension(Expression.Add(this, 
             right.DimensionExpression, GetDummyBinaryMethodInfo<Dimension, Dimension>(this, right)));
 
-        public Dimension Subtract(Dimension right) => new Dimension(this, Expression.Subtract(this, 
+        public Dimension Subtract(Dimension right) => new Dimension(Expression.Subtract(this, 
             right.DimensionExpression, GetDummyBinaryMethodInfo<Dimension, Dimension>(this, right)));
 
-        public Dimension Multiply(Dimension right) => new Dimension(this, Expression.Multiply(this, 
+        public Dimension Multiply(Dimension right) => new Dimension(Expression.Multiply(this, 
             right.DimensionExpression, GetDummyBinaryMethodInfo<Dimension, Dimension>(this, right)));
 
-        public Dimension Divide(Dimension right) => new Dimension(this, Expression.Divide(this, 
+        public Dimension Divide(Dimension right) => new Dimension(Expression.Divide(this, 
             right.DimensionExpression, GetDummyBinaryMethodInfo<Dimension, Dimension>(this, right)));
+
 
         private static Dimension DummyUnary(Dimension l) => null;
         private static Dimension DummyBinary(Dimension l, Dimension r) => null;

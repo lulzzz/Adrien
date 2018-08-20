@@ -11,21 +11,21 @@ namespace Adrien.Notation
 {
     public class TensorContraction : TensorIndexExpression, IContractionOp
     {
-        public TensorContraction(TensorIndexExpression expr, Tensor lhsTensor, IndexSet lhsIndexSet, NewArrayExpression bounds = null)
+        public TensorContraction(TensorIndexExpression expr, Tensor lhsTensor, IndexSet lhsIndexSet, ParameterExpression bounds = null)
             : base(expr, bounds)
         {
             this.LHSTensor = lhsTensor;
             this.LHSIndexSet = lhsIndexSet;
         }
 
-        public TensorContraction(MethodCallExpression expr, TensorIndexExpression tie, NewArrayExpression bounds = null) : base(expr, bounds)
+        public TensorContraction(MethodCallExpression expr, TensorIndexExpression tie, ParameterExpression bounds = null) : base(expr, bounds)
         {
             expr.ThrowIfNotType<TensorExpression>();
             this.LHSTensor = tie.LHSTensor;
             this.LHSIndexSet = tie.LHSIndexSet;
         }
 
-        public TensorContraction(UnaryExpression expr, TensorIndexExpression tie, NewArrayExpression bounds = null) : base(expr, bounds)
+        public TensorContraction(UnaryExpression expr, TensorIndexExpression tie, ParameterExpression bounds = null) : base(expr, bounds)
         {
             {
                 expr.ThrowIfNotType<TensorExpression>();
@@ -34,7 +34,7 @@ namespace Adrien.Notation
             }
         }
 
-        public TensorContraction(BinaryExpression expr, TensorIndexExpression tie, NewArrayExpression bounds = null) : base(expr, bounds)
+        public TensorContraction(BinaryExpression expr, TensorIndexExpression tie, ParameterExpression bounds = null) : base(expr, bounds)
         {
             {
                 expr.ThrowIfNotType<TensorExpression>();

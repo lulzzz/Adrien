@@ -24,19 +24,8 @@ namespace Adrien.Notation
 
         public List<Index> IndexParameters => LinqExpression.GetParameters<Index>();
 
-        internal override Type ExpressionType
-        {
-            get
-            {
-                if ((LinqExpression is ConstantExpression ce) || (LinqExpression is IndexExpression))
-                {
-                    return typeof(Tensor);
-                }
-                else return this.GetType();
-            }
-        }
-
-      
+        internal override Type ExpressionType => LinqExpression.Type;
+         
         public TensorExpression(Expression e) : base(GetNameFromLinqExpression(e))
         {
             LinqExpression = e;
@@ -85,6 +74,7 @@ namespace Adrien.Notation
         public TensorExpression Divide(TensorExpression right) => new TensorExpression(Expression.Divide(this, right,
             GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)));
 
+        
         internal static MethodInfo GetOpMethodInfo<T>(string name, int parameters) where T : Term
         {
             MethodInfo method = typeof(TensorExpression)
@@ -94,13 +84,39 @@ namespace Adrien.Notation
                 .First();
             return method;
         }
-      
+
+
+        #region Dummy unary and binary methods for IAlgerba methods
         private static TensorExpression DummyUnary(Tensor l) => null;
         private static TensorExpression DummyUnary(TensorExpression l) => null;
 
         private static TensorExpression DummyBinary(Tensor l, Tensor r) => null;
         private static TensorExpression DummyBinary(TensorExpression l, Tensor r) => null;
         private static TensorExpression DummyBinary(Tensor l, TensorExpression r) => null;
-        private static TensorExpression DummyBinary(TensorExpression l, TensorExpression r) => null;  
+        private static TensorExpression DummyBinary(TensorExpression l, TensorExpression r) => null;
+
+        private static TensorExpression DummyUnary(Scalar l) => null;  
+        private static TensorExpression DummyBinary(Scalar l, Scalar r) => null;
+        private static TensorExpression DummyBinary(TensorExpression l, Scalar r) => null;
+        private static TensorExpression DummyBinary(Scalar l, TensorExpression r) => null;
+
+        private static TensorExpression DummyUnary(Vector l) => null;
+        private static TensorExpression DummyBinary(Vector l, Vector r) => null;
+        private static TensorExpression DummyBinary(TensorExpression l, Vector r) => null;
+        private static TensorExpression DummyBinary(Vector l, TensorExpression r) => null;
+
+        private static TensorExpression DummyUnary(Matrix l) => null;
+        private static TensorExpression DummyBinary(Matrix l, Matrix r) => null;
+        private static TensorExpression DummyBinary(TensorExpression l, Matrix r) => null;
+        private static TensorExpression DummyBinary(Matrix l, TensorExpression r) => null;
+
+        private static TensorExpression DummyBinary(Scalar l, Vector r) => null;
+        private static TensorExpression DummyBinary(Vector l, Scalar r) => null;
+        private static TensorExpression DummyBinary(Scalar l, Matrix r) => null;
+        private static TensorExpression DummyBinary(Matrix l, Scalar r) => null;
+        private static TensorExpression DummyBinary(Matrix l, Vector r) => null;
+        private static TensorExpression DummyBinary(Vector l, Matrix r) => null;
+        #endregion
+
     }
 }
