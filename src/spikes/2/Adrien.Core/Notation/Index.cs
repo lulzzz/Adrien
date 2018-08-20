@@ -7,7 +7,7 @@ namespace Adrien.Notation
 {
 #pragma warning disable CS0660
 
-    public class Index : Term, IChild, IAlgebra<Index, Index>, IComparable<Index>
+    public class Index : Term, IChildTerm, IAlgebra<Index, Index>, IComparable<Index>
     {
         public static PropertyInfo OrderInfo { get; } = typeof(Index).GetProperty("Order");
 
@@ -21,12 +21,17 @@ namespace Adrien.Notation
 
         public int? Dimension { get; internal set; }
 
-        protected Expression DimensionExpression { get; set; }
+        public int N => Dimension ?? throw new Exception();
+
+        protected Expression IndexExpression { get; set; }
 
         internal override Expression LinqExpression =>
-            Type == IndexType.Dimension ? Expression.Constant(this) : DimensionExpression;
-        
+            Type == IndexType.Dimension ? Expression.Constant(this) : IndexExpression;
+
+        internal override Type ExpressionType { get; } = typeof(Index);
+
         internal override Name DefaultNameBase { get; } = "i";
+
 
         public Index(IndexSet set, int order, int dim, string name) : base(name)
         {
@@ -36,17 +41,17 @@ namespace Adrien.Notation
             Type = IndexType.Dimension;
         }
 
-        public Index(IndexSet set, int order, Expression dimExpression) : base(GetNameFromLinqExpression(dimExpression))
+        public Index(IndexSet set, int order, Expression expr) : base(GetNameFromLinqExpression(expr))
         {
             Set = set;
             Order = order;
-            DimensionExpression = dimExpression;
-            Type = IndexType.DimensionExpression;
+            IndexExpression = expr;
+            Type = IndexType.Expression;
         }
 
         public Index(int i) : base(GetNameFromLinqExpression(Expression.Constant(i)))
         {
-            DimensionExpression = Expression.Constant(i);
+            IndexExpression = Expression.Constant(i);
             Type = IndexType.Literal;
         }
         

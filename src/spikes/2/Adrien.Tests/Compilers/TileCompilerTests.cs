@@ -133,10 +133,10 @@ namespace Adrien.Tests.Compilers
             {
                 Assert.Equal(System.Math.Pow(vya[index] - ((va * vx[index]) + vb), 2), vyerror[index]);
             }
-            
+            var N = yactual[0];
             yloss[i] = MEAN[yerror[i]];
             Kernel<int> loss = new Kernel<int>(yloss, compiler);
-            //Assert.True(loss.Compile());
+            Assert.True(loss.Compile());
             //var g = yloss[2];
             //Assert.Equal(RunStatus.Success, error.CompilerResult.Run(v, vya, va, vx, vb));
 

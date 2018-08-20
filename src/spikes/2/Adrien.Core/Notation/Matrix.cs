@@ -14,17 +14,17 @@ namespace Adrien.Notation
 
         public Matrix(int rows, int columns) : this(mn.A, rows, columns) {}
 
-        public Matrix(string name, string indexNameBase, out Index i0, out Index i1, int rows, int columns) : 
+        public Matrix(string name, int rows, int columns, string indexNameBase, out Index i, out Index j) : 
             base(name, rows, columns)
         {
-            i0 = new Index(null, 0, rows, indexNameBase);
-            i1 = new Index(null, 1, columns, this.GenerateName(1, indexNameBase));
+            i = new Index(null, 0, rows, indexNameBase);
+            j = new Index(null, 1, columns, this.GenerateName(1, indexNameBase));
         }
 
-        public Matrix(int rows, int columns, out Index i0, out Index i1) 
-            : this(mn.A, "i", out i0, out i1, rows, columns) {}
+        public Matrix(int rows, int columns, out Index i, out Index j) 
+            : this(mn.A, rows, columns, "i", out i, out j) {}
 
-        public Matrix(string name, out Index i0, out Index i1, int rows, int columns) 
-            : this(name, "i", out i0, out i1, rows, columns) {}
+        public Matrix(string name, out Index i, out Index j, int rows, int columns) 
+            : this(name, rows, columns, "i", out i, out j) {}
     }
 }

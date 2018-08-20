@@ -111,7 +111,7 @@ namespace Adrien.Tests
             Assert.True(A.IsDefined);
             Assert.True(A.ContractionDefinition.Expression.IndexParameters.Count == 4);
             List<Index> indices = A.ContractionDefinition.Expression.IndexParameters;
-            M[n] = A[m][m + 7]; 
+            M[n] = A[m]; 
             Assert.True(M.IsDefined);
             //Assert.NotNull(M.ContractionDefinition.Expression.Bounds);
         }

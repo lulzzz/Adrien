@@ -74,6 +74,8 @@ namespace Adrien.Notation
                : ElementwiseDefinition.LinqExpression
            : Expression.Constant(this, typeof(Tensor));
 
+        internal override Type ExpressionType { get; } = typeof(Tensor);
+
         internal override Name DefaultNameBase { get; } = "A";
 
         protected (Tensor tensor, int index)? GeneratorContext { get; set; }
@@ -125,7 +127,8 @@ namespace Adrien.Notation
             set
             {
                 ThrowIfAlreadyAssiged();
-                if (value is TensorContraction && value.LinqExpression.NodeType == ExpressionType.Call)
+                if (value is TensorContraction && value.LinqExpression.NodeType == 
+                    System.Linq.Expressions.ExpressionType.Call)
                 {
                     ContractionDefinition = (I, value as TensorContraction);
                 }
@@ -156,7 +159,7 @@ namespace Adrien.Notation
             }
         }
 
-        public static implicit operator TensorIndexExpression(Tensor t)
+        public static explicit operator TensorIndexExpression(Tensor t)
         {
             if (t.IsContractionDefined)
             {
@@ -168,7 +171,7 @@ namespace Adrien.Notation
             }
         }
 
-        public static implicit operator Tensor(TensorIndexExpression expr)
+        public static explicit operator Tensor(TensorIndexExpression expr)
         {
             if (expr.LinqExpression is IndexExpression && expr.LinqExpression.Type == typeof(Tensor))
             {

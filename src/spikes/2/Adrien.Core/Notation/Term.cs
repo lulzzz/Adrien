@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Adrien.Notation
 {
@@ -22,6 +23,8 @@ namespace Adrien.Notation
         internal abstract Name DefaultNameBase { get; }
 
         internal abstract Expression LinqExpression { get; }
+
+        internal abstract Type ExpressionType { get; }
 
         private static readonly int A = 'A';
         private static readonly int a = 'a';
@@ -112,8 +115,34 @@ namespace Adrien.Notation
                     return me.Method.Name;
 
                 default:
-                    throw new ArgumentException($"Unknown expression type: {expr.NodeType.ToString()} {expr.GetType().Name}.");
+                    throw new ArgumentException($"Unknown expression type: {expr.NodeType.ToString()} " +
+                        $"{expr.GetType().Name}.");
             }
+        }
+
+        protected static MethodInfo GetDummyUnaryMethodInfo<TType, TReturn>(Term l) 
+            where TType: Term where TReturn : Term
+        {
+            Type lt = l.ExpressionType;
+
+            MethodInfo method = typeof(TType).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
+                .Where(m => m.Name == "DummyUnary" && m.GetParameters()[0].ParameterType == lt
+                                                   && m.ReturnType == typeof(TReturn)).First();
+            return method;
+        }
+
+        protected static MethodInfo GetDummyBinaryMethodInfo<TType, TReturn>(Term l, Term r)
+            where TType : Term where TReturn : Term
+        {
+            Type lt = l.ExpressionType;
+            Type rt = r.ExpressionType;
+
+
+            MethodInfo method = typeof(TType).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
+                .Where(m => m.Name == "DummyBinary" && m.GetParameters()[0].ParameterType == lt
+                                                    && m.GetParameters()[1].ParameterType == rt
+                                                    && m.ReturnType == typeof(TReturn)).First();
+            return method;
         }
     }
 }

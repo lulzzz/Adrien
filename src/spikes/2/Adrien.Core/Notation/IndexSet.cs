@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace Adrien.Notation
 {
-    public class IndexSet : Term, IChild, IEnumerable<ITerm>
+    public class IndexSet : Term, IChildTerm, IEnumerable<ITerm>
     {
         public static PropertyInfo IndicesArrayInfo { get; } = typeof(Index).GetProperty("IndicesArray");
 
@@ -22,6 +22,8 @@ namespace Adrien.Notation
         internal override Name DefaultNameBase { get; } = "I";
 
         internal override Expression LinqExpression => Expression.Constant(this);
+
+        internal override Type ExpressionType { get; } = typeof(IndexSet);
 
         public IndexSet(Tensor parent, string indexNameBase = "", params int[] dim) : base(string.Empty)
         {

@@ -14,14 +14,15 @@ namespace Adrien.Notation
         {
             var tensor = l.Tensors.Single();
             var indices = l.IndexParameters;
-            TensorExpression mulExpr = indices.Count > 1 ?
+            Dimension mulExpr = indices.Count > 1 ?
                 tensor.Dim[indices[0]] * tensor.Dim[indices[1]] : tensor.Dim[indices[0]];
             for (int i = 2; i < indices.Count; i++)
             {
                 mulExpr = mulExpr * tensor.Dim[indices[i]];
             }
-            return new TensorIndexExpression(Expression.Divide(Sum(l), mulExpr, 
-                TensorExpression.GetDummyBinaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(Sum(l), mulExpr)));
+            return Sum(l);
+            //return new TensorIndexExpression(Expression.Divide(Sum(l), mulExpr, 
+            //    TensorExpression.GetDummyBinaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(Sum(l), mulExpr)));
         }
 
         private static MethodCallExpression GetOpMethodCall(string op, params TensorIndexExpression[] args)

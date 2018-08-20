@@ -1,6 +1,6 @@
 ﻿namespace Adrien.Notation
 {
-    public interface IChild
+    public interface IChildTerm
     {
         ITerm Parent { get; }
     }

@@ -14,7 +14,7 @@ namespace Adrien.Notation
         public NewArrayExpression Bounds { get; protected set; }
 
       
-        public TensorIndexExpression(IndexExpression expr, NewArrayExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(IndexExpression expr, NewArrayExpression bounds = null) : base(expr)
         {
             expr.ThrowIfNotType<Tensor>();
             if (!(expr.Object is ConstantExpression))
@@ -24,35 +24,40 @@ namespace Adrien.Notation
             Bounds = bounds;
         }
 
-        public TensorIndexExpression(MethodCallExpression expr, NewArrayExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(MethodCallExpression expr, NewArrayExpression bounds = null) : base(expr)
         {
             expr.ThrowIfNotType<TensorIndexExpression>();
             Bounds = bounds;
         }
 
-        public TensorIndexExpression(UnaryExpression expr, NewArrayExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(UnaryExpression expr, NewArrayExpression bounds = null) : base(expr)
         {
             expr.ThrowIfNotType<TensorExpression>();
             expr.Operand.ThrowIfNotType<TensorIndexExpression>();
             Bounds = bounds;
         }
 
-        public TensorIndexExpression(BinaryExpression expr, NewArrayExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(BinaryExpression expr, NewArrayExpression bounds = null) : base(expr)
         {
             expr.ThrowIfNotType<TensorIndexExpression>();
             Bounds = bounds;
         }
-        
-        public TensorIndexExpression(TensorIndexExpression c, NewArrayExpression bounds = null) : base(c.LinqExpression)
+
+        internal TensorIndexExpression(TensorIndexExpression c, NewArrayExpression bounds = null) : base(c.LinqExpression)
         {
             this.Bounds = bounds;
         }
-        
 
-        public TensorIndexExpression this[Index d]
+        public TensorIndexExpression this[Dimension n]
+        {
+            get => new TensorIndexExpression(this, Expression.NewArrayBounds(typeof(TensorIndexExpression),
+                Expression.Convert(n.LinqExpression, typeof(Int32)), Expression.Convert(n.LinqExpression, typeof(Int32))));
+        }
+
+        public TensorIndexExpression this[Index l, Index u]
         {
             get => new TensorIndexExpression(this, Expression.NewArrayBounds(typeof(TensorIndexExpression), 
-                Expression.Convert(d.LinqExpression, typeof(Int32))));
+                Expression.Convert(l.LinqExpression, typeof(Int32)), Expression.Convert(u.LinqExpression, typeof(Int32))));
         }
 
         public static TensorIndexExpression operator +(TensorIndexExpression left, TensorIndexExpression right) =>

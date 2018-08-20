@@ -31,17 +31,8 @@ namespace Adrien.Tests
         [Fact]
         public void CanConstructMeanOperation()
         {
-            var (x, ypred, yactual, yerror, yloss) = new Vector(5, out Index i).Five("x", "ypred", "yactual", "yerror",
-               "yloss");
-            var (a, b) = new Scalar().Two("a", "b");
-            ypred.def = a * x + b;
-            yerror.def = POW2[yactual - ypred];
-            yloss.def = MEAN[yerror[i]]; 
-            Assert.True(yloss.IsDefined);
-            TensorContraction texpr = yloss.ContractionDefinition.Expression;
-            Assert.Single(texpr.Tensors);
-            var t = texpr.Tensors;
-            //Assert.True()
+            var (M, N, O) = new Matrix(6, 6, out Index i, out Index j).Three();
+            O.def = MEAN[M[i]];
         }
     }
 }
