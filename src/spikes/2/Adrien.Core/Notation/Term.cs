@@ -24,7 +24,7 @@ namespace Adrien.Notation
 
         internal abstract Expression LinqExpression { get; }
 
-        internal abstract Type ExpressionType { get; }
+        internal virtual Type ExpressionType => LinqExpression.Type;
 
         private static readonly int A = 'A';
         private static readonly int a = 'a';

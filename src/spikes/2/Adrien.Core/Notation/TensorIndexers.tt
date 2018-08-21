@@ -14,27 +14,26 @@ namespace Adrien.Notation
 {
 	public partial class Tensor
 	{
-		<#for (int i = 1; i <= 8; i++) {#>  
-		public TensorIndexExpression this[<#for (int j = 1; j < i; j++) {#>Index index<#=j#>, <#}#>Index index<#=i#>]
+		<#for (int i = 2; i <= 8; i++) {#>  
+		public TensorIndexExpression this[<#for (int j = 1; j < i; j++) {#>Index index<#=j#>, <#}#>Index index<#=i#>, 
+		<#if(i > 1){#>(<#for (int j = 1; j < i; j++) {#>Dimension n<#=j#>, <#}#>Dimension n<#=i#>) <#}#><#else{#>Dimension <#}#>N]		
 		{
 			get
 			{
 				ThrowIfIndicesExceedRank(<#=i#>);
-				return new TensorIndexExpression(Expression.ArrayAccess
-					(Expression.Constant(new Tensor[<#for (int j = 1; j < i; j++) {#>,<#}#>] 
-				<#for (int j = 1; j <= i; j++) {#>{<#}#>this<#for (int j = 1; j <= i; j++) {#>}<#}#>), 
-				new Expression[] {
-					<#for (int j = 1; j < i; j++) {#>Expression.Parameter(typeof(int), index<#=j#>.Id), 
-					<#}#>Expression.Parameter(typeof(int), index<#=i#>.Id)}));
+				Dimension[] shape = new[] {<#for (int j = 1; j < i; j++) {#>N.n<#=j#>, <#}#>N.n<#=i#>};
+				return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(new Tensor[<#for (int j = 1; j < i; j++) {#>,<#}#>] <#for (int j = 1; j <= i; j++) {#>{<#}#>this<#for (int j = 1; j <= i; j++) {#>}<#}#>), 
+				new Expression[] {<#for (int j = 1; j < i; j++) {#>Expression.Parameter(typeof(int), index<#=j#>.Id), 
+				<#}#>Expression.Parameter(typeof(int), index<#=i#>.Id)}), shape);
 			}
 			set
 			{
 				ThrowIfAlreadyAssiged();
+				Dimension[] shape = new[] {<#for (int j = 1; j < i; j++) {#>N.n<#=j#>, <#}#>N.n<#=i#>};
 				IndexSet s = new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>);
-				TensorContraction tc = new TensorContraction(value, this, s);
+				TensorContraction tc = new TensorContraction(value, this, s, shape);
 				ContractionDefinition = (s, tc);
 			}
-			
 		}
 		<#}#>
 	}

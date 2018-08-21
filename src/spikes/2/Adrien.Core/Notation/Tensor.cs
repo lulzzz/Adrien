@@ -74,8 +74,6 @@ namespace Adrien.Notation
                : ElementwiseDefinition.LinqExpression
            : Expression.Constant(this, typeof(Tensor));
 
-        internal override Type ExpressionType { get; } = typeof(Tensor);
-
         internal override Name DefaultNameBase { get; } = "A";
 
         protected (Tensor tensor, int index)? GeneratorContext { get; set; }
@@ -136,6 +134,44 @@ namespace Adrien.Notation
                 {
                     ContractionDefinition = (I, new TensorContraction(Math.Sum(value), this, I));
                 }
+            }
+        }
+
+        public TensorIndexExpression this[params Index[] indices]
+        {
+            get
+            {
+                ThrowIfIndicesExceedRank(indices.Length);
+                var t = Array.CreateInstance(typeof(Tensor), indices.Select((i,d) => this.Dimensions[d]).ToArray());
+                t.SetValue(this, new int[t.Rank]);
+                return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(t), 
+                    indices.Select(i => Expression.Parameter(typeof(int), i.Id)).ToArray()));
+            }
+            set
+            {
+                ThrowIfAlreadyAssiged();
+                IndexSet s = new IndexSet(this, indices);
+                TensorContraction tc = new TensorContraction(value, this, s);
+                ContractionDefinition = (s, tc);
+            }
+        }
+
+        public TensorIndexExpression this[Index index, Dimension N]
+        {
+            get
+            {
+                ThrowIfIndicesExceedRank(2);
+                Dimension[] shape = new[] { N };
+                return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(new Tensor[] {this}), 
+                    new Expression[] { Expression.Parameter(typeof(int), index.Id) }), shape);
+            }
+            set
+            {
+                ThrowIfAlreadyAssiged();
+                Dimension[] shape = new[] { N };
+                IndexSet s = new IndexSet(this, index);
+                TensorContraction tc = new TensorContraction(value, this, s, shape);
+                ContractionDefinition = (s, tc);
             }
         }
 

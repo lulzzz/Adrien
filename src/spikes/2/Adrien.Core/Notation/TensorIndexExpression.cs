@@ -11,45 +11,44 @@ namespace Adrien.Notation
 {
     public class TensorIndexExpression : TensorExpression, IAlgebra<TensorIndexExpression, TensorIndexExpression>
     {
-        public ParameterExpression Bounds { get; protected set; }
+        public Dimension[] Shape { get; protected set; }
 
       
-        internal TensorIndexExpression(IndexExpression expr, ParameterExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(IndexExpression expr, params Dimension[] shape) : base(expr)
         {
             expr.ThrowIfNotType<Tensor>();
             if (!(expr.Object is ConstantExpression))
             {
                 throw new ArgumentException("This Linq expression cannot be used as a tensor index expression.");
             }    
-            Bounds = bounds;
+            Shape = shape;
         }
 
-        internal TensorIndexExpression(MethodCallExpression expr, ParameterExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(MethodCallExpression expr, params Dimension[] shape) : base(expr)
         {
             expr.ThrowIfNotType<TensorIndexExpression>();
-            Bounds = bounds;
+            Shape = shape;
         }
 
-        internal TensorIndexExpression(UnaryExpression expr, ParameterExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(UnaryExpression expr, params Dimension[] shape) : base(expr)
         {
             expr.ThrowIfNotType<TensorExpression>();
             expr.Operand.ThrowIfNotType<TensorIndexExpression>();
-            Bounds = bounds;
+            Shape = shape;
         }
 
-        internal TensorIndexExpression(BinaryExpression expr, ParameterExpression bounds = null) : base(expr)
+        internal TensorIndexExpression(BinaryExpression expr, params Dimension[] shape ) : base(expr)
         {
             expr.ThrowIfNotType<TensorIndexExpression>();
-            Bounds = bounds;
+            Shape = shape;
         }
 
-        internal TensorIndexExpression(TensorIndexExpression c, ParameterExpression bounds = null) : base(c.LinqExpression)
+        internal TensorIndexExpression(TensorIndexExpression c, params Dimension[] shape ) : base(c.LinqExpression)
         {
-            this.Bounds = bounds;
+            this.Shape = shape;
         }
 
-        public TensorIndexExpression this[Dimension n] => new TensorIndexExpression(this,
-            (ParameterExpression) n.LinqExpression);
+        public TensorIndexExpression this[Dimension n] => new TensorIndexExpression(this, n);
   
         public static TensorIndexExpression operator +(TensorIndexExpression left, TensorIndexExpression right) =>
            new TensorIndexExpression(Expression.Add(left, right,

@@ -15,14 +15,6 @@ namespace Adrien.Notation
             var tensor = (Tensor) l;
             var indices = l.IndexParameters;
             var mulExpr = tensor.GetDimensionProductExpression(indices);
-            /*
-            TensorExpression mulExpr = indices.Count > 1 ?
-                (Scalar) tensor.Dim[indices[0]] * (Scalar) tensor.Dim[indices[1]] : (Scalar) tensor.Dim[indices[0]];
-            for (int i = 2; i < indices.Count; i++)
-            {
-                mulExpr = mulExpr * (Scalar) tensor.Dim[indices[i]];
-            }
-            */
             return Sum(l) / mulExpr;
         }
 

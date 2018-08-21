@@ -25,9 +25,7 @@ namespace Adrien.Notation
 
         internal override Name DefaultNameBase { get; } = "N0";
 
-        internal override Expression LinqExpression => Expression.Parameter(typeof(Dimension), Id);
-
-        internal override Type ExpressionType { get; } = typeof(Dimension);
+        internal override Expression LinqExpression => DimensionExpression;
 
         protected Dimension(Tensor t, int order, string label) : base(label)
         {
@@ -82,10 +80,13 @@ namespace Adrien.Notation
         public Dimension Divide(Dimension right) => new Dimension(Expression.Divide(this, 
             right.DimensionExpression, GetDummyBinaryMethodInfo<Dimension, Dimension>(this, right)));
 
+        public static Dimension[] ToArray((Dimension n1, Dimension n2) dim) => new [] {dim.n1, dim.n2};
+        public static Dimension[] ToArray((Dimension n1, Dimension n2, Dimension n3) dim) => new[] { dim.n1, dim.n2 , dim.n3};
+
+
 
         private static Dimension DummyUnary(Dimension l) => null;
         private static Dimension DummyBinary(Dimension l, Dimension r) => null;
-
     }
 
 }
