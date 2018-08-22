@@ -13,8 +13,8 @@ namespace Adrien.Compiler.PlaidML.Generator
         protected override Dictionary<TensorOp, string> OperatorTemplate { get; } = new Dictionary<TensorOp, string>
         {
             { TensorOp.Assign, "{0} = {1};" },
-            { TensorOp.ElementWiseAssign, "{0}" },
-            { TensorOp.Index, "{0}[{1}]" },
+            { TensorOp.ElementWiseAssign, "{0} = {1};" },
+            { TensorOp.IndexAssign, "{0}[{1}]" },
             { TensorOp.Add, "{0} + {1}" },
             { TensorOp.Mul, "{0} * {1}" },
             { TensorOp.Sub, "{0} - {1}" },

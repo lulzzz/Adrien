@@ -98,7 +98,7 @@ namespace Adrien.Tests.Compilers
             Assert.Equal(RunStatus.Success, result.Run(O, ref G, I));
             Assert.Equal(8, G[3]);
         }
-
+        
         [Fact]
         public void CanCompileLinearRegressionKernel()
         {
@@ -133,10 +133,11 @@ namespace Adrien.Tests.Compilers
             {
                 Assert.Equal(System.Math.Pow(vya[index] - ((va * vx[index]) + vb), 2), vyerror[index]);
             }
-            var N = yactual[0];
-            yloss[i,N=yactual[0]] = MEAN[yerror[i]];
+            yloss[i, yactual[0]] = MEAN[yerror[i]];
             Assert.True(yloss.IsDefined);
             Assert.Equal(yactual[0], yloss.ContractionDefinition.Expression.Shape[0]);
+            Kernel<int> loss = new Kernel<int>(yloss, compiler);
+            Assert.True(loss.Compile());
         }
     }
 }

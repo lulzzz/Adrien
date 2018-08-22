@@ -30,7 +30,7 @@ namespace Adrien.Tests
             TensorExpressionVisitor v = new TensorExpressionVisitor(te);
 
             Assert.Equal(5, v.Tree.Count);
-            Assert.Equal(TensorOp.Index, v.Tree.OperatorNodeAtIndex(2).Op);
+            Assert.Equal(TensorOp.IndexAssign, v.Tree.OperatorNodeAtIndex(2).Op);
             Assert.NotNull(v.Tree.OperatorNodeAtIndex(2).Left);
             Assert.NotNull(v.Tree.OperatorNodeAtIndex(2).Right);
             Assert.IsType<Tensor>(v.Tree.ValueNodeAtIndex(3).Value);
@@ -52,8 +52,8 @@ namespace Adrien.Tests
             ExpressionTree tree = O.ToTree();
             Assert.Equal(9, tree.Count);
             Assert.Equal(TensorOp.Mul, tree.OperatorNodeAtIndex(2).Op);
-            Assert.Equal(TensorOp.Index, tree.OperatorNodeAtIndex(3).Op);
-            Assert.Equal(TensorOp.Index, tree.OperatorNodeAtIndex(6).Op);
+            Assert.Equal(TensorOp.IndexAssign, tree.OperatorNodeAtIndex(3).Op);
+            Assert.Equal(TensorOp.IndexAssign, tree.OperatorNodeAtIndex(6).Op);
             OperatorNode on = tree.OperatorNodeAtIndex(6);
             Assert.IsType<ValueNode>(on.Left);
             ValueNode vn = on.Left as ValueNode;

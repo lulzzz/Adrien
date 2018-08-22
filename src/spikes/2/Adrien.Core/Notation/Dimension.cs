@@ -48,7 +48,7 @@ namespace Adrien.Notation
             this.DimensionType = DimensionType.Expression;
         }
 
-        internal Dimension(Int32 i) : this(Expression.Constant(i)) {}
+        internal Dimension(int i) : this(Expression.Constant(i)) {}
 
         public static Dimension operator -(Dimension left) => left.Negate();
 
@@ -60,7 +60,7 @@ namespace Adrien.Notation
 
         public static Dimension operator /(Dimension left, Dimension right) => left.Divide(right);
 
-        public static implicit operator Dimension(int d) => new Dimension(null, -1, d);
+        public static implicit operator Dimension(int d) => new Dimension(d);
 
         public static explicit operator Scalar(Dimension d) => d.DimensionType == DimensionType.Constant ?
             new Scalar(d.Label) : throw new ArgumentException("The specified dimension is not a dimension constant");

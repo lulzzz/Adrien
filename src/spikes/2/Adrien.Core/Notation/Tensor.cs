@@ -22,8 +22,6 @@ namespace Adrien.Notation
 
         public Dimensions Dim { get; protected set; }
 
-        public Dimension[] Axes => Dim.ToArray();
-
         public int Rank => Dimensions.Length;
 
         public int ElementCount
@@ -175,11 +173,11 @@ namespace Adrien.Notation
             }
         }
 
-        public Dimension this[int axis]
+        public Dimension this[int dimension]
         {
             get
             {
-                return this.Axes[axis];
+                return this.Dim.ElementAt(dimension);
             }
         }
 

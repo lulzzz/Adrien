@@ -32,7 +32,7 @@ namespace Adrien.Trees
                 {
                     return Root.Left as ITreeValueNode;
                 }
-                else if ((Root.Left is OperatorNode) && (Root.Left as OperatorNode).Op == TensorOp.Index)
+                else if ((Root.Left is OperatorNode) && (Root.Left as OperatorNode).Op == TensorOp.IndexAssign)
                 {
                     return Left.Left as ITreeValueNode;
                 }
@@ -81,7 +81,7 @@ namespace Adrien.Trees
             }
             else
             {
-                var n = AddNode(CreateOperatorNode(this, TensorOp.Index)) as OperatorNode;
+                var n = AddNode(CreateOperatorNode(this, TensorOp.IndexAssign)) as OperatorNode;
                 AddNode(CreateValueNode(n, lhsTensor));
                 AddNode(CreateValueNode(n, lhsTensorIndices));
             }

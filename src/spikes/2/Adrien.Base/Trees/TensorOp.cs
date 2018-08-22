@@ -8,7 +8,7 @@
         Sqrt,
         Assign,
         ElementWiseAssign,
-        Index,
+        IndexAssign,
         Log,
         Log10,
         Add,

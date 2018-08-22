@@ -88,7 +88,7 @@ namespace Adrien.Trees
                  
         protected override Expression VisitIndex(IndexExpression node)
         {
-            var on = Context.AddOperatorNode(TensorOp.Index);
+            var on = Context.AddOperatorNode(TensorOp.IndexAssign);
             using (Context.Internal(on))
             {
                 base.VisitIndex(node);
@@ -116,7 +116,7 @@ namespace Adrien.Trees
         {
             base.VisitParameter(node);
 
-            if (Context.InternalNode.Op == TensorOp.Index)
+            if (Context.InternalNode.Op == TensorOp.IndexAssign)
             {
                 var t = Context.Tensors.First();
                 var i = Context.TensorIndicesQueue.Count;
