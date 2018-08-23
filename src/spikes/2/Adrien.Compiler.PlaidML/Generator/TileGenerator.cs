@@ -84,7 +84,6 @@ namespace Adrien.Compiler.PlaidML.Generator
                                 (string)Context.Pop());
                             s = string.Format(Writer.GetOperatorTemplate(TensorOp.ElementWiseAssign), leftIndexVarName, rightOp); 
                             AddElementwiseVariableDefinition(leftIndexVarName, rightOp, s);
-
                             Context.Push(Writer.WriteOperator(TensorOp.ElementWiseAssign, leftIndexVarName, rightOp));
                         }
                         return;

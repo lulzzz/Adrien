@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using System.Linq.Expressions;
+using Adrien.Compiler;
 using Adrien.Expressions;
 using Adrien.Trees;
 
 namespace Adrien.Notation
 {
-    public partial class TensorExpression : Term, IAlgebra<TensorExpression, TensorExpression>
+    public partial class TensorExpression : Term, IAlgebra<TensorExpression, TensorExpression>, IShape
     {
         internal override Expression LinqExpression { get; }
 
@@ -20,12 +21,21 @@ namespace Adrien.Notation
 
         public List<Tensor> Tensors => LinqExpression.GetConstants<Tensor>();
 
+        public int[] Dimensions => InputVariables.First().Dimensions;
+
+        public int[] Strides => InputVariables.First().Strides;
+
+        public int Rank => InputVariables.First().Rank;
+
+        public Dimensions Dim => InputVariables.First().Dim;
+
         public List<Tensor> InputVariables => Tensors.Where(t => !t.IsDefined).ToList();
 
         public List<Index> IndexParameters => LinqExpression.GetParameters<Index>();
 
         internal override Type ExpressionType => LinqExpression.Type;
-         
+        
+        
         public TensorExpression(Expression e) : base(GetNameFromLinqExpression(e))
         {
             LinqExpression = e;
@@ -36,6 +46,16 @@ namespace Adrien.Notation
             this.LHSTensor = lhs;
         }
 
+
+        public Dimension this[int dimension]
+        {
+            get
+            {
+                return this.Dim.ElementAt(dimension);
+            }
+        }
+
+        
         public static TensorExpression operator -(TensorExpression left) => left.Negate();
 
         public static TensorExpression operator +(TensorExpression left, TensorExpression right) => left.Add(right);
@@ -95,6 +115,10 @@ namespace Adrien.Notation
 
         private static TensorExpression DummyUnary(Vector l) => null;
         private static TensorExpression DummyBinary(Vector l, Vector r) => null;
+        private static TensorExpression DummyBinary(Tensor l, Vector r) => null;
+        private static TensorExpression DummyBinary(Vector l, Tensor r) => null;
+
+
         private static TensorExpression DummyBinary(TensorExpression l, Vector r) => null;
         private static TensorExpression DummyBinary(Vector l, TensorExpression r) => null;
 

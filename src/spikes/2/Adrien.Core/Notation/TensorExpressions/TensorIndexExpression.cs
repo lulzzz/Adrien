@@ -11,9 +11,29 @@ namespace Adrien.Notation
 {
     public class TensorIndexExpression : TensorExpression, IAlgebra<TensorIndexExpression, TensorIndexExpression>
     {
+        public new int[] Dimensions { get; protected set; }
+
+        public new int[] Strides { get; protected set; }
+
+        public new int Rank { get; protected set; }
+
         public Dimension[] Shape { get; protected set; }
 
-      
+
+        internal TensorIndexExpression(TensorExpression expr) : base(expr.LinqExpression)
+        {
+            if (expr.LinqExpression is UnaryExpression || expr.LinqExpression is BinaryExpression
+                || expr.LinqExpression is MethodCallExpression)
+            {
+
+                this.Dimensions = new int[0];
+                this.Strides = new int[0];
+                this.Rank = 0;
+                this.Shape = new[] { new Dimension(0) };
+            }
+            else throw new ArgumentException("This tensor expression cannot be used as a tensor index expression");
+        }
+
         internal TensorIndexExpression(IndexExpression expr, params Dimension[] shape) : base(expr)
         {
             expr.ThrowIfNotType<Tensor>();

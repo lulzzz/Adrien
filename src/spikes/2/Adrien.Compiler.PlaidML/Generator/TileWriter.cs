@@ -16,12 +16,21 @@ namespace Adrien.Compiler.PlaidML.Generator
             { TensorOp.ElementWiseAssign, "{0} = {1};" },
             { TensorOp.IndexedAssign, "{0} = {1};" },
             { TensorOp.Index, "{0}[{1}]" },
+
             { TensorOp.Add, "{0} + {1}" },
             { TensorOp.Mul, "{0} * {1}" },
             { TensorOp.Sub, "{0} - {1}" },
             { TensorOp.Div, "{0} / {1}" },
+
+            { TensorOp.Square, "({0} * {0})" },
+            { TensorOp.Sqrt, "sqrt({0})"},
+
             { TensorOp.Sum, "+({0})" },
-            { TensorOp.Square, "({0} * {0})" }
+            { TensorOp.Product, "*({0})" },
+            { TensorOp.Max, ">({0})" },
+            { TensorOp.Min, "<({0})" },
+
+            
         };
 
 

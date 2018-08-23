@@ -3,23 +3,30 @@
     public enum TensorOp
     {
         NoOp = 1,
-        Sum,
-        Square,
-        Sqrt,
+
         Assign,
         ElementWiseAssign,
         IndexedAssign,
         Index,
-        Log,
-        Log10,
+
+        Sum,
+        Product,
+        Max,
+        Min,
+        
         Add,
-        AddCons,
         Sub,
-        SubCons,
         Mul,
-        Pow,
         Div,
+        Square,
+        Pow,
+
+        Sqrt,
+        Log,
+        Exp,
         Sin,
         Cos,
+        Tanh,
+        Sigmoid
     }
 }

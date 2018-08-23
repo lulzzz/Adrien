@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using Xunit;
@@ -21,18 +22,17 @@ namespace Adrien.Tests
             Assert.Equal(3, ypred.ElementwiseDefinition.Tensors.Count);
             yerror.def = SQUARE[yactual - ypred];
             Assert.Equal(4, yerror.ElementwiseDefinition.Tensors.Count); 
-            yloss[i / 2] = SUM[yerror[i]];
+            yloss[i, i / 2] = SUM[yerror[i]];
             Assert.True(yloss.IsDefined);
-            //TensorContraction c = yloss.ContractionDefinition.Expression;
-            //Assert.True(c.Tensors.Count > 0);
-            
+            TensorContraction c = yloss.ContractionDefinition.Expression;
+            Assert.True(c.Tensors.Single() == yerror);
         }
 
         [Fact]
         public void CanConstructMeanOperation()
         {
             var (M, N, O) = new Matrix(6, 6, out Index i, out Index j).Three();
-            O.def = MEAN[M[i]];
+            O[i] = MEAN[M[i]];
         }
     }
 }

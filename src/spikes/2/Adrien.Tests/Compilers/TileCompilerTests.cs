@@ -140,5 +140,27 @@ namespace Adrien.Tests.Compilers
             Kernel<int> loss = new Kernel<int>(yloss, compiler);
             Assert.True(loss.Compile());
         }
+
+        [Fact]
+        public void CanCompileLogisticRegressionKernel()
+        {
+            int ClientsDim = 2276210, ProductsDim = 58989, HDim = 24, LDim = 1;
+
+            Vector clients = new Vector("clients", ClientsDim), products = new Vector("products", ProductsDim),
+                labels = new Vector(HDim);
+
+            var (W0, W1) = Tensor.TwoD("W0", (HDim, ClientsDim), "i", out Index i, out Index j).Two();
+            var (b0, b1) = new Scalar("b0", HDim).Two();
+
+            var E1 = new Tensor("E1", W0 * clients + b0);
+            var E2 = new Tensor("E2", W1 * clients + b1);
+            var z = new Scalar("z", SUM[E1 * E2]);
+
+            Assert.Equal(2, E1.Rank);
+            Assert.Equal(2, E2.Rank);
+            Assert.Equal(1, z.Rank);
+
+
+        }
     }
 }

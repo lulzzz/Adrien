@@ -612,6 +612,10 @@ namespace Adrien.Expressions
             switch (expr.Method.Name)
             {
                 case "Op_Sum": return TensorOp.Sum;
+                case "Op_Product": return TensorOp.Max;
+                case "Op_Max": return TensorOp.Max;
+                case "Op_Min": return TensorOp.Min;
+
                 case "Op_Square": return TensorOp.Square;
                 case "Op_Sqrt": return TensorOp.Sqrt;
                 default: throw new NotImplementedException();

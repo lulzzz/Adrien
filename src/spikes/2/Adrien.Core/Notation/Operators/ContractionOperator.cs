@@ -12,5 +12,7 @@ namespace Adrien.Notation
         }
 
         public TensorIndexExpression this[TensorIndexExpression e] => Operation(e);
+
+        public TensorIndexExpression this[TensorExpression e] => Operation(new TensorIndexExpression(e));
     }
 }

@@ -9,10 +9,17 @@ namespace Adrien.Notation
     {
         public Tensor Tensor { get; protected set; }
 
+
+        internal Dimensions(Tensor t, int n) : base(n)
+        {
+            this.Tensor = t;
+        }
+
         internal Dimensions(Tensor t) : base(t.Dimensions.Select((d,a) => new Dimension(t, a, d)))
         {
             this.Tensor = t;
         }
+
 
         public Dimension this[Index i]
         {
@@ -29,5 +36,7 @@ namespace Adrien.Notation
                 }
             }
         }
+
+        public static explicit operator IndexSet(Dimensions d) => new IndexSet(d.Tensor);
     }
 }

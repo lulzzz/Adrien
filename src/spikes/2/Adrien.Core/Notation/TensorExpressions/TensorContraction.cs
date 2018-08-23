@@ -11,6 +11,12 @@ namespace Adrien.Notation
 {
     public class TensorContraction : TensorIndexExpression, IContractionOp
     {
+        public TensorContraction(TensorIndexExpression expr, Tensor lhsTensor)
+            : base(expr, expr.Shape)
+        {
+            this.LHSTensor = lhsTensor;
+        }
+
         public TensorContraction(TensorIndexExpression expr, Tensor lhsTensor, IndexSet lhsIndexSet, params Dimension[] shape)
             : base(expr, shape)
         {

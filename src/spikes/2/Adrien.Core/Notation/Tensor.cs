@@ -66,12 +66,6 @@ namespace Adrien.Notation
 
         public bool IsContractionDefined => ContractionDefinition.Expression != null;
 
-        /*internal override Expression LinqExpression => IsDefined
-           ? IsContractionDefined
-               ? ContractionDefinition.Expression.LinqExpression
-               : ElementwiseDefinition.LinqExpression
-           : Expression.Constant(this, typeof(Tensor));
-           */
         internal override Expression LinqExpression { get; }
 
         internal override Name DefaultNameBase { get; } = "A";
@@ -104,6 +98,15 @@ namespace Adrien.Notation
 
         public Tensor(ITermShape shape) : this(shape.Label, shape.Dimensions) {}
 
+        public Tensor(string name, TensorIndexExpression expr) : this(name, expr.Dimensions)
+        {
+            this.ContractionDefinition = (null, new TensorContraction(expr, this));
+        }
+
+        public Tensor(string name, TensorExpression expr) : this(name, expr.Dimensions)
+        {
+            this.ElementwiseDefinition = new TensorExpression(expr.LinqExpression, this);
+        }
 
         public TensorIndexExpression this[IndexSet I]
         {
@@ -204,7 +207,7 @@ namespace Adrien.Notation
             }
             else
             {
-                throw new InvalidCastException($"Tensor {t.Label} is not defined as a contraction.");
+                return t[(IndexSet)t.Dim];
             }
         }
 
