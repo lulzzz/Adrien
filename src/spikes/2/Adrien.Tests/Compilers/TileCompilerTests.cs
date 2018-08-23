@@ -81,7 +81,7 @@ namespace Adrien.Tests.Compilers
             Assert.Equal(8, r[0]);
 
             var (y1, y2) = new Vector(5).Two("y1", "y2");
-            var kloss = new Kernel<int>(y, POW2[y2 - y1]);
+            var kloss = new Kernel<int>(y, SQUARE[y2 - y1]);
         }
 
         [Fact]
@@ -107,10 +107,11 @@ namespace Adrien.Tests.Compilers
                 "yloss");
             var (a, b) = new Scalar().Two("a", "b");
 
-            ypred.def = (a * x + b);
+            ypred.def = a * x + b;
             Kernel<int> predict = new Kernel<int>(ypred, compiler);
+            Assert.True(predict.Compile());
 
-            yerror.def = POW2[yactual - ypred];
+            yerror.def = SQUARE[yactual - ypred];
             Kernel<int> error = new Kernel<int>(yerror, compiler);
             Assert.True(error.Compile());
 

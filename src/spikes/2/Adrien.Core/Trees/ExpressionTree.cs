@@ -55,7 +55,10 @@ namespace Adrien.Trees
         public IEnumerable<ITreeValueNode> TensorDimensionNodes => ValueNodes.Where(vn => vn.Value is Dimension);
             
         public IEnumerable<ITreeValueNode> InputVariableNodes =>
-            TensorNodes.Except(TensorDimensionNodes).Except(DefinedVariableNodes).Where(n => n != OutputNode);
+            TensorNodes.Distinct(this)
+            .Except(TensorDimensionNodes)
+            .Except(DefinedVariableNodes)
+            .Where(n => n != OutputNode);
 
         protected HashSet<TreeNode> HashSet { get; } = new HashSet<TreeNode>();
 
@@ -180,22 +183,22 @@ namespace Adrien.Trees
 
         public int GetHashCode(ITreeNode node)
         {
-            return (node as TreeNode).GetHashCode();
+            return (node.Label).GetHashCode();
         }
 
         public bool Equals(ITreeNode left, ITreeNode right)
         {
-            return (left as TreeNode).Equals(right as TreeNode);
+            return (left.Label).Equals(right.Label);
         }
 
         public int GetHashCode(ITreeValueNode node)
         {
-            return (node as ValueNode).GetHashCode();
+            return (node.Label).GetHashCode();
         }
 
         public bool Equals(ITreeValueNode left, ITreeValueNode right)
         {
-            return (left as ValueNode).Equals(right as ValueNode);
+            return (left.Label).Equals(right.Label);
         }
     }
 }

@@ -66,6 +66,10 @@ namespace Adrien.Notation
             new TensorIndexExpression(Expression.Multiply(left, right,
                 GetDummyBinaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(left, right)));
 
+        public static TensorIndexExpression operator *(TensorExpression left, TensorIndexExpression right) =>
+           new TensorIndexExpression(Expression.Multiply(right, left,
+               GetDummyBinaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(right, left)));
+
         public static TensorIndexExpression operator /(TensorIndexExpression left, TensorIndexExpression right) =>
             new TensorIndexExpression(Expression.Divide(left, right,
                 GetDummyBinaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(left, right)));

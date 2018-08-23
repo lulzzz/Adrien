@@ -45,11 +45,10 @@ namespace Adrien.Tests
              .With(out Tensor B)
              .With(out Tensor C)
              .With(out Tensor D);
-            C[a, b] = A[a, b] * B[b, a];
+            C[a, c] = A[a, b] * B[b, c];
             Assert.True(C.IsContractionDefined);
             var tree = C.ToTree();
-            Assert.True(tree.Op == TensorOp.Assign);
-            //D = Mean()
+            Assert.True(tree.Op == TensorOp.IndexedAssign);
         }
     }
 }

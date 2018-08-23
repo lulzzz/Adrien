@@ -19,7 +19,7 @@ namespace Adrien.Tests
 
             ypred.def = a * x + b;
             Assert.Equal(3, ypred.ElementwiseDefinition.Tensors.Count);
-            yerror.def = POW2[yactual - ypred];
+            yerror.def = SQUARE[yactual - ypred];
             Assert.Equal(4, yerror.ElementwiseDefinition.Tensors.Count); 
             yloss[i / 2] = SUM[yerror[i]];
             Assert.True(yloss.IsDefined);

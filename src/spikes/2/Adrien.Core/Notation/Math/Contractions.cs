@@ -10,6 +10,15 @@ namespace Adrien.Notation
         public static TensorIndexExpression Sum(TensorIndexExpression l) => 
             new TensorIndexExpression(GetOpMethodCall("Sum", l));
 
+        public static TensorIndexExpression Product(TensorIndexExpression l) =>
+           new TensorIndexExpression(GetOpMethodCall("Product", l));
+
+        public static TensorIndexExpression Max(TensorIndexExpression l) =>
+            new TensorIndexExpression(GetOpMethodCall("Max", l));
+
+        public static TensorIndexExpression Min(TensorIndexExpression l) =>
+            new TensorIndexExpression(GetOpMethodCall("Min", l));
+
         public static TensorIndexExpression Mean(TensorIndexExpression l)
         {
             var tensor = (Tensor) l;
@@ -17,17 +26,12 @@ namespace Adrien.Notation
             var mulExpr = tensor.GetDimensionProductExpression(indices);
             return Sum(l) / mulExpr;
         }
-
-        private static MethodCallExpression GetOpMethodCall(string op, params TensorIndexExpression[] args)
-        {
-            return Expression.Call(TensorExpression.GetOpMethodInfo<TensorIndexExpression>("Op_" + op, args.Length),
-                args.Select(a => Expression.Convert(a, typeof(TensorIndexExpression))).ToArray());
-        }
     }
+
 
     public partial class TensorExpression
     {
         private static TensorIndexExpression Op_Sum(TensorIndexExpression l) => null;
-        private static TensorIndexExpression Op_Mean(TensorIndexExpression l) => null;
+        private static TensorIndexExpression Op_Product(TensorIndexExpression l) => null;
     }
 }
