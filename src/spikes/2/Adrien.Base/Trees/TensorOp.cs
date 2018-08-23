@@ -2,13 +2,14 @@
 {
     public enum TensorOp
     {
-        NoOp,
+        NoOp = 1,
         Sum,
         Square,
         Sqrt,
         Assign,
         ElementWiseAssign,
         IndexAssign,
+        Index,
         Log,
         Log10,
         Add,

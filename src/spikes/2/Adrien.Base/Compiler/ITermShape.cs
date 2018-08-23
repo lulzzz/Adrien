@@ -4,5 +4,6 @@ namespace Adrien.Compiler
 {
     public interface ITermShape : IShape, ITerm, IEnumerable<int>
     {
+        ITermShape CloneShape(string namme);
     }
 }

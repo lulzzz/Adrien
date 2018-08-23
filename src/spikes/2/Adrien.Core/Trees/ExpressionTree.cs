@@ -32,7 +32,7 @@ namespace Adrien.Trees
                 {
                     return Root.Left as ITreeValueNode;
                 }
-                else if ((Root.Left is OperatorNode) && (Root.Left as OperatorNode).Op == TensorOp.IndexAssign)
+                else if ((Root.Left is OperatorNode) && (Root.Left as OperatorNode).Op == TensorOp.Index)
                 {
                     return Left.Left as ITreeValueNode;
                 }
@@ -71,20 +71,19 @@ namespace Adrien.Trees
             LinqExpression = term.LinqExpression;
         }
 
+        public ExpressionTree(Tensor lhsTensor) : base(0, null, TreeNodePosition.RIGHT, TensorOp.Assign)
+        {
+            HashSet.Add(this);
+            AddNode(CreateValueNode(this, lhsTensor));
+        }
+
         public ExpressionTree(Tensor lhsTensor, IndexSet lhsTensorIndices) : base(0, null, TreeNodePosition.RIGHT,
             TensorOp.Assign)
         {
             HashSet.Add(this);
-            if (lhsTensorIndices == null)
-            {
-                AddNode(CreateValueNode(this, lhsTensor));
-            }
-            else
-            {
-                var n = AddNode(CreateOperatorNode(this, TensorOp.IndexAssign)) as OperatorNode;
-                AddNode(CreateValueNode(n, lhsTensor));
-                AddNode(CreateValueNode(n, lhsTensorIndices));
-            }
+            var n = AddNode(CreateOperatorNode(this, TensorOp.Index)) as OperatorNode;
+            AddNode(CreateValueNode(n, lhsTensor));
+            AddNode(CreateValueNode(n, lhsTensorIndices));
         }
 
         public OperatorNode CreateOperatorNode(OperatorNode parent, TensorOp op)

@@ -55,6 +55,9 @@ namespace Adrien.Compiler.PlaidML
             IsAllocated = true;
         }
 
+
+        public ITermShape CloneShape(string name) => new DeviceTensor(this.Device, this.Shape, name);
+
         public DeviceTensorView<T> CreateView<T>(MemoryMapType mapType)
             where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
         {

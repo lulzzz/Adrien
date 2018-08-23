@@ -70,11 +70,11 @@ namespace Adrien.Trees
                 throw new InvalidOperationException($"Can't convert ConstantExpression" +
                                                     $"of type {node.Type.Name} to type Tensor.");
 
-            if (!t.IsElementwiseDefined)
+            if (!t.IsDefined)
             {
                 Context.AddValueNode(t);
             }
-            else
+            else if (t.IsElementwiseDefined)
             {
                 var on = Context.AddOperatorNode(TensorOp.ElementWiseAssign);
                 using (Context.Internal(on))
@@ -83,12 +83,21 @@ namespace Adrien.Trees
                     base.Visit(t.ElementwiseDefinition.LinqExpression);
                 }
             }
+            else if (t.IsContractionDefined)
+            {
+                var on = Context.AddOperatorNode(TensorOp.IndexAssign);
+                using (Context.Internal(on))
+                {
+                    Context.AddValueNode(t);
+                    base.Visit(t.ContractionDefinition.Expression.LinqExpression);
+                }
+            }
             return node;
         }
                  
         protected override Expression VisitIndex(IndexExpression node)
         {
-            var on = Context.AddOperatorNode(TensorOp.IndexAssign);
+            var on = Context.AddOperatorNode(TensorOp.Index);
             using (Context.Internal(on))
             {
                 base.VisitIndex(node);
@@ -116,7 +125,7 @@ namespace Adrien.Trees
         {
             base.VisitParameter(node);
 
-            if (Context.InternalNode.Op == TensorOp.IndexAssign)
+            if (Context.InternalNode.Op == TensorOp.Index)
             {
                 var t = Context.Tensors.First();
                 var i = Context.TensorIndicesQueue.Count;
@@ -161,6 +170,13 @@ namespace Adrien.Trees
                 base.VisitMethodCall(node);
             }
             return node;
+        }
+
+        protected override Expression VisitRuntimeVariables(RuntimeVariablesExpression node)
+        {
+            var v = node.Variables.Single();
+            return node;
+            //Term.Terms[v.Name]
         }
     }
 }

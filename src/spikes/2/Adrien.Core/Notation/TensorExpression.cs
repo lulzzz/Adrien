@@ -36,12 +36,6 @@ namespace Adrien.Notation
             this.LHSTensor = lhs;
         }
 
-        public TensorExpression(Expression e, Tensor lhs, IndexSet lhsIndexSet) : this(e, lhs)
-        {
-            this.LHSIndexSet = lhsIndexSet;
-        }
-
-
         public static TensorExpression operator -(TensorExpression left) => left.Negate();
 
         public static TensorExpression operator +(TensorExpression left, TensorExpression right) => left.Add(right);
@@ -55,10 +49,9 @@ namespace Adrien.Notation
         public static TensorExpression operator /(TensorExpression left, TensorExpression right) => left.Divide(right);
 
 
-        public virtual ExpressionTree ToTree() => new TensorExpressionVisitor(this.LinqExpression).Tree;
-
-        public ExpressionTree ToTree((Tensor tensor, IndexSet indices) lhs) =>
-            new TensorExpressionVisitor(this.LinqExpression, lhs, true).Tree;
+        public virtual ExpressionTree ToTree() => 
+            LHSTensor == null ? new TensorExpressionVisitor(this.LinqExpression).Tree : 
+            new TensorExpressionVisitor(this.LinqExpression, LHSTensor, true).Tree;
 
         public TensorExpression Negate() => new TensorExpression(Expression.Negate(this));
 

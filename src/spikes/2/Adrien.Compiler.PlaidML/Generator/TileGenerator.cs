@@ -15,6 +15,12 @@ namespace Adrien.Compiler.PlaidML.Generator
             TensorOp.Mul, TensorOp.Add, TensorOp.Sub, TensorOp.Div, TensorOp.Square
         };
 
+        public override List<TensorOp> IndexOperators { get; } = new List<TensorOp>()
+        {
+            TensorOp.Sum
+        };
+
+
         public List<ITermShape> InputShapes => Tree.InputVariableNodes.Select(t => t.ValueAs<ITermShape>()).ToList();
             
         public Dictionary<ITreeValueNode, string> TensorDimensionVariables { get; protected set; }
@@ -28,7 +34,6 @@ namespace Adrien.Compiler.PlaidML.Generator
             this.VisitTree();
         }
 
-        
         public override void AfterVisitTree()
         {
             base.AfterVisitTree();
@@ -47,11 +52,52 @@ namespace Adrien.Compiler.PlaidML.Generator
                     Context.Push(lhs);
                     return;
 
+                case TensorOp.IndexAssign:
+                    if (on.Right is ITreeValueNode || TreeNodeIsIndexOp(on.Right))
+                    {
+                        base.VisitInternal(on);
+                        return;
+                    }
+                    else
+                    {
+                        var rhsOp = (ITreeOperatorNode<TensorOp>)on.Right;
+                        var l = rhsOp.Left;
+                        var r = rhsOp.Right;
+                        if (TreeNodeIsIndexOp(l) && TreeNodeIsElementwiseOp(r))
+                        {
+                            base.Visit(on.Left);
+                            string indexVar = (string)Context.Pop();
+                            string newIndexVarName = GetValidNewIndexVariableName(on.Left.Label);
+                            indexVar = indexVar.Replace(on.Left.Label, newIndexVarName);
+                            base.Visit(l);
+                            string indexOp = (string) Context.Pop();
+                            s = indexVar  + " = " + indexOp;
+                            Writer.VariableDefinitions.Enqueue(s);
+                            base.Visit(r);
+                            string rr = (string)Context.Pop();
+                            Context.Push(Writer.WriteOperator(on.Op, indexOp, rr));
+                        }
+                        return;
+                        
+                    }
+
                 default:
                     base.VisitInternal(on);
                     return;
             }
         }
+
+        protected bool TreeNodeIsIndexAssign(ITreeNode node) =>
+            node is ITreeOperatorNode<TensorOp> on && on.Op == TensorOp.IndexAssign;
+
+        protected bool TreeNodeIsElementwiseAssign(ITreeNode node) =>
+            node is ITreeOperatorNode<TensorOp> on && on.Op == TensorOp.ElementWiseAssign;
+
+        protected bool TreeNodeIsIndexOp(ITreeNode node) =>
+          node is ITreeOperatorNode<TensorOp> on && IndexOperators.Contains(on.Op);
+
+        protected bool TreeNodeIsElementwiseOp(ITreeNode node) =>
+          node is ITreeOperatorNode<TensorOp> on && !IndexOperators.Contains(on.Op);
 
         protected bool LHSIsTensor(ITreeOperatorNode<TensorOp> on)
         {

@@ -16,7 +16,8 @@ namespace Adrien.Expressions
         {
             switch (et)
             {
-                case ExpressionType.Index: return TensorOp.IndexAssign;
+                case ExpressionType.Assign: return TensorOp.Assign;
+                case ExpressionType.Index: return TensorOp.Index;
                 case ExpressionType.Multiply: return TensorOp.Mul;
                 case ExpressionType.Divide: return TensorOp.Div;
                 case ExpressionType.Add: return TensorOp.Add;

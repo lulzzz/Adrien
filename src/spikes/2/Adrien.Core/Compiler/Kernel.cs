@@ -107,7 +107,8 @@ namespace Adrien.Compiler
 
         public Kernel(Tensor output, TensorExpression expr)
         {
-            Tree = expr.ToTree((output, null));
+            output.def = expr;
+            Tree = output.ToTree();
             InputShapes = InputTensors;
             OutputShape = output;
         }

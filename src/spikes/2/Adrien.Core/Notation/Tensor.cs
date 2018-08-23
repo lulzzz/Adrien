@@ -66,11 +66,13 @@ namespace Adrien.Notation
 
         public bool IsContractionDefined => ContractionDefinition.Expression != null;
 
-        internal override Expression LinqExpression => IsDefined
+        /*internal override Expression LinqExpression => IsDefined
            ? IsContractionDefined
                ? ContractionDefinition.Expression.LinqExpression
                : ElementwiseDefinition.LinqExpression
            : Expression.Constant(this, typeof(Tensor));
+           */
+        internal override Expression LinqExpression { get; }
 
         internal override Name DefaultNameBase { get; } = "A";
 
@@ -88,6 +90,7 @@ namespace Adrien.Notation
             Dimensions = dim;
             Strides = StridesInElements(Dimensions);
             Dim = new Dimensions(this);
+            LinqExpression = Expression.Constant(this);
         }
 
         public Tensor(params int[] dim) : this("A", dim)
@@ -235,11 +238,11 @@ namespace Adrien.Notation
         {
             if (t.IsContractionDefined)
             {
-                return t.ContractionDefinition.Expression.ToTree((t, t.ContractionDefinition.IndexSet));
+                return t.ContractionDefinition.Expression.ToTree();
             }
             else if (t.IsElementwiseDefined)
             {
-                return t.ElementwiseDefinition.ToTree((t, null));
+                return t.ElementwiseDefinition.ToTree();
             }
             else
             {
@@ -358,11 +361,26 @@ namespace Adrien.Notation
             return GeneratorContext.Value.tensor;
         }
 
-        public ExpressionTree ToTree() => IsDefined
-            ? IsContractionDefined
-                ? ContractionDefinition.Expression.ToTree((this, ContractionDefinition.IndexSet))
-                : ElementwiseDefinition.ToTree((this, null))
-            : new TensorExpression(LinqExpression).ToTree();
+        public ITermShape CloneShape(string name) => new Tensor(name, this.Dimensions);
+
+        public ExpressionTree ToTree()
+        {
+            if (IsDefined)
+            {
+                if (IsContractionDefined)
+                {
+                    return this.ContractionDefinition.Expression.ToTree();
+                }
+                else
+                {
+                    return ElementwiseDefinition.ToTree();
+                }
+            }
+            else
+            {
+                return new TensorExpression(LinqExpression).ToTree();
+            }
+        }
 
         public Var<T> Var<T>(Array array) where T : unmanaged, IEquatable<T>, IComparable<T>, IConvertible
             => new Var<T>(this, array);

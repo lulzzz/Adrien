@@ -9,6 +9,12 @@ namespace Adrien.Generator
     {
         public abstract List<TOp> NestedBinaryOperators { get; }
 
+        public abstract List<TOp> IndexOperators { get; }
+
+        public Dictionary<string, string> ElementwiseVariableDefinitions { get; } = new Dictionary<string, string>();
+
+        public Dictionary<string, string> IndexVariableDefinitions { get; } = new Dictionary<string, string>();
+
         public string Text => Context.InternalNode;
 
         public bool Success { get; protected set; }
@@ -18,7 +24,7 @@ namespace Adrien.Generator
 
         public LanguageGenerator(IExpressionTree tree) : base(tree, false) {}
 
-
+       
         public override void VisitInternal(ITreeOperatorNode<TOp> on)
         {
             var operands = new Stack<string>();
@@ -77,5 +83,18 @@ namespace Adrien.Generator
         {
             return (string) Context.Peek() == Writer.GetOperatorTemplate(op);
         }
+
+        protected string GetValidNewIndexVariableName(string name, int n = 0)
+        {
+            if (!IndexVariableDefinitions.ContainsKey(name + n.ToString()))
+            {
+                return GetValidNewIndexVariableName(name, n + 1);
+            }
+            else
+            {
+                return name + n.ToString();
+            }
+        }
+
     }
 }
