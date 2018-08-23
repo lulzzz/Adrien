@@ -85,7 +85,7 @@ namespace Adrien.Trees
             }
             else if (t.IsContractionDefined)
             {
-                var on = Context.AddOperatorNode(TensorOp.IndexAssign);
+                var on = Context.AddOperatorNode(TensorOp.IndexedAssign);
                 using (Context.Internal(on))
                 {
                     Context.AddValueNode(t);

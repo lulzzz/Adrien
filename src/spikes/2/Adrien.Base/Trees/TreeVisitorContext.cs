@@ -12,6 +12,8 @@ namespace Adrien.Trees
 
         public bool IsLeaf => Count > 0 && Peek() is TLeaf;
 
+        public bool IsEmpty => !IsInternal && !IsLeaf;
+
         public TInternal InternalNode => Peek() is TInternal
             ? (TInternal) Peek()
             : throw new Exception("The last context node is not a internal node.");

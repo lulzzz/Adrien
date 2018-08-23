@@ -14,7 +14,7 @@ namespace Adrien.Compiler.PlaidML.Generator
         {
             { TensorOp.Assign, "{0} = {1};" },
             { TensorOp.ElementWiseAssign, "{0} = {1};" },
-            { TensorOp.IndexAssign, "{0} = {1};" },
+            { TensorOp.IndexedAssign, "{0} = {1};" },
             { TensorOp.Index, "{0}[{1}]" },
             { TensorOp.Add, "{0} + {1}" },
             { TensorOp.Mul, "{0} * {1}" },
@@ -30,7 +30,9 @@ namespace Adrien.Compiler.PlaidML.Generator
             switch(op)
             {
                 case TensorOp.Assign:
-                case TensorOp.IndexAssign:
+                case TensorOp.ElementWiseAssign:
+                case TensorOp.IndexedAssign:
+                
                     StringBuilder sb = new StringBuilder();
                     while (VariableDefinitions.Count > 0)
                     {

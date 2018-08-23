@@ -78,7 +78,7 @@ namespace Adrien.Trees
         }
 
         public ExpressionTree(Tensor lhsTensor, IndexSet lhsTensorIndices) : base(0, null, TreeNodePosition.RIGHT,
-            TensorOp.Assign)
+            TensorOp.IndexedAssign)
         {
             HashSet.Add(this);
             var n = AddNode(CreateOperatorNode(this, TensorOp.Index)) as OperatorNode;

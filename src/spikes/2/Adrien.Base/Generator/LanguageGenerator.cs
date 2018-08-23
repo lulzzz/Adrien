@@ -9,7 +9,7 @@ namespace Adrien.Generator
     {
         public abstract List<TOp> NestedBinaryOperators { get; }
 
-        public abstract List<TOp> IndexOperators { get; }
+        public abstract List<TOp> ContractionOperators { get; }
 
         public Dictionary<string, string> ElementwiseVariableDefinitions { get; } = new Dictionary<string, string>();
 
@@ -84,15 +84,28 @@ namespace Adrien.Generator
             return (string) Context.Peek() == Writer.GetOperatorTemplate(op);
         }
 
-        protected string GetValidNewIndexVariableName(string name, int n = 0)
+        protected void AddElementwiseVariableDefinition(string name, string value, string definition)
         {
-            if (!IndexVariableDefinitions.ContainsKey(name + n.ToString()))
+            this.ElementwiseVariableDefinitions.Add(name, value);
+            this.Writer.VariableDefinitions.Enqueue(definition);
+        }
+
+        protected void AddIndexVariableDefinition(string name, string value, string definition)
+        {
+            this.IndexVariableDefinitions.Add(name, value);
+            this.Writer.VariableDefinitions.Enqueue(definition);
+        }
+
+        protected string GetNewIndexVariableName(string nameBase, int n = 0)
+        {
+            string name = nameBase + n.ToString();
+            if (IndexVariableDefinitions.ContainsKey(name))
             {
-                return GetValidNewIndexVariableName(name, n + 1);
+                return GetNewIndexVariableName(nameBase, n + 1);
             }
             else
             {
-                return name + n.ToString();
+                return name;
             }
         }
 

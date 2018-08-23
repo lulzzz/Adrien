@@ -15,7 +15,7 @@ namespace Adrien.Compiler.PlaidML.Generator
             TensorOp.Mul, TensorOp.Add, TensorOp.Sub, TensorOp.Div, TensorOp.Square
         };
 
-        public override List<TensorOp> IndexOperators { get; } = new List<TensorOp>()
+        public override List<TensorOp> ContractionOperators { get; } = new List<TensorOp>()
         {
             TensorOp.Sum
         };
@@ -47,35 +47,44 @@ namespace Adrien.Compiler.PlaidML.Generator
                 case TensorOp.ElementWiseAssign:
                     base.VisitInternal(on);
                     string s = (string)Context.Pop();
-                    Writer.VariableDefinitions.Enqueue(s);
-                    string lhs = s.Split('=').First().TrimEnd();
+                    string lhs = s.Split('=').First().TrimEnd(), rhs = s.Split('=').Last().TrimEnd();
+                    AddElementwiseVariableDefinition(lhs, rhs, s);
                     Context.Push(lhs);
                     return;
 
-                case TensorOp.IndexAssign:
-                    if (on.Right is ITreeValueNode || TreeNodeIsIndexOp(on.Right))
+                case TensorOp.IndexedAssign:
+                    if (TreeNodeIsTensor(on.Right) || TreeNodeIsContractionOp(on.Right))
                     {
                         base.VisitInternal(on);
+                        s = (string)Context.Pop();
+                        lhs = s.Split('=').First().TrimEnd(); rhs = s.Split('=').Last().TrimEnd();
+                        AddIndexVariableDefinition(lhs, rhs, s);
+                        Context.Push(lhs);
                         return;
                     }
                     else
                     {
                         var rhsOp = (ITreeOperatorNode<TensorOp>)on.Right;
-                        var l = rhsOp.Left;
-                        var r = rhsOp.Right;
-                        if (TreeNodeIsIndexOp(l) && TreeNodeIsElementwiseOp(r))
+                        if (TreeNodeIsContractionOp(rhsOp.Left) && 
+                           (TreeNodeIsElementwiseOp(rhsOp.Right) || TreeNodeIsTensor(rhsOp.Right)))
                         {
-                            base.Visit(on.Left);
+                            string indexVarName = on.Left.Left.Label.ToUpper();
+                            Visit(on.Left);
                             string indexVar = (string)Context.Pop();
-                            string newIndexVarName = GetValidNewIndexVariableName(on.Left.Label);
-                            indexVar = indexVar.Replace(on.Left.Label, newIndexVarName);
-                            base.Visit(l);
-                            string indexOp = (string) Context.Pop();
-                            s = indexVar  + " = " + indexOp;
-                            Writer.VariableDefinitions.Enqueue(s);
-                            base.Visit(r);
-                            string rr = (string)Context.Pop();
-                            Context.Push(Writer.WriteOperator(on.Op, indexOp, rr));
+                            string newIndexVarName = GetNewIndexVariableName(indexVarName);
+                            string newIndexVar = indexVar.Replace(indexVarName, newIndexVarName);
+
+                            Visit(rhsOp.Left);
+                            string contractionOp = (string) Context.Pop();
+                            s = string.Format(Writer.GetOperatorTemplate(TensorOp.IndexedAssign), newIndexVar, contractionOp);
+                            AddIndexVariableDefinition(newIndexVar, contractionOp, s);
+
+                            Visit(rhsOp.Right);
+                            string rightOp = string.Format(Writer.GetOperatorTemplate(rhsOp.Op), newIndexVarName, 
+                                (string)Context.Pop());
+                            s = string.Format(Writer.GetOperatorTemplate(TensorOp.ElementWiseAssign), indexVarName, rightOp); 
+                            AddElementwiseVariableDefinition(indexVarName, rightOp, s);
+                            Context.Push(Writer.WriteOperator(TensorOp.ElementWiseAssign, indexVarName, rightOp));
                         }
                         return;
                         
@@ -87,17 +96,17 @@ namespace Adrien.Compiler.PlaidML.Generator
             }
         }
 
-        protected bool TreeNodeIsIndexAssign(ITreeNode node) =>
-            node is ITreeOperatorNode<TensorOp> on && on.Op == TensorOp.IndexAssign;
-
-        protected bool TreeNodeIsElementwiseAssign(ITreeNode node) =>
-            node is ITreeOperatorNode<TensorOp> on && on.Op == TensorOp.ElementWiseAssign;
+        protected bool TreeNodeIsTensor(ITreeNode node) =>
+            node is ITreeValueNode vn && vn.NodeType == ValueNodeType.TENSOR;
 
         protected bool TreeNodeIsIndexOp(ITreeNode node) =>
-          node is ITreeOperatorNode<TensorOp> on && IndexOperators.Contains(on.Op);
+         node is ITreeOperatorNode<TensorOp> on && on.Op == TensorOp.Index;
+
+        protected bool TreeNodeIsContractionOp(ITreeNode node) =>
+          node is ITreeOperatorNode<TensorOp> on && ContractionOperators.Contains(on.Op);
 
         protected bool TreeNodeIsElementwiseOp(ITreeNode node) =>
-          node is ITreeOperatorNode<TensorOp> on && !IndexOperators.Contains(on.Op);
+          node is ITreeOperatorNode<TensorOp> on && !ContractionOperators.Contains(on.Op);
 
         protected bool LHSIsTensor(ITreeOperatorNode<TensorOp> on)
         {
