@@ -450,8 +450,8 @@ namespace Adrien.Notation
         {
             if (IsDefined)
             {
-                throw new InvalidOperationException("This tensor variable has an existing assigment. + " +
-                                                    $"You can only assign to a tensor variable once.");
+                throw new InvalidOperationException(
+                    $"This tensor variable has an existing assigment. You can only assign to a tensor variable once.");
             }
         }
 
@@ -459,15 +459,15 @@ namespace Adrien.Notation
         internal void ThrowIfIndicesExceedRank(int c)
         {
             if (Rank < c)
-                throw new ArgumentOutOfRangeException("The number of indices exceeds the number of dimensions of " +
-                                                      $"this tensor.");
+                throw new ArgumentOutOfRangeException(nameof(c),
+                    "The number of indices exceeds the number of dimensions of this tensor.");
         }
 
         [DebuggerStepThrough]
         internal void ThrowIfAxisExceedRank(int a)
         {
             if (Rank < a)
-                throw new ArgumentOutOfRangeException("The specified axis exceeds the rank of this tensor.");
+                throw new ArgumentOutOfRangeException(nameof(a), "The specified axis exceeds the rank of this tensor.");
         }
     }
 }
