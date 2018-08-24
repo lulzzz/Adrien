@@ -18,9 +18,9 @@ namespace Adrien.Notation
     {
         public Shape Shape { get; protected set; }
 
-        public int[] Dimensions { get; protected set; }
+        public int[] Dimensions => Shape.Count > 0 ? Shape.Select(d => d.Length).DefaultIfEmpty(0).ToArray() : new int[0];
 
-        public int[] Strides { get; protected set; }
+        public int[] Strides => Shape.Count > 0 ? Shape.Select(d => d.Stride).DefaultIfEmpty(0).ToArray() : new int[0];
 
         public int Rank => Dimensions.Length;
 
@@ -81,25 +81,12 @@ namespace Adrien.Notation
         {
             if (dim == null)
             {
-                throw new ArgumentNullException("dim");
+                throw new ArgumentNullException("The dim parameter cannot be null in this parameter.");
             }
-            else if (dim.Length == 0)
-            {
-                Dimensions = dim;
-                Strides = new int[0];
-                Shape = new Shape();
-            }
-            else
-            {
-                Dimensions = dim;
-                Strides = StridesInElements(Dimensions);
-                Shape = new Shape(this);
-            }
+            Shape = new Shape(dim, this);
         }
 
-        public Tensor(params int[] dim) : this("A", dim)
-        {
-        }
+        public Tensor(params int[] dim) : this("A", dim) {}
 
         public Tensor(string name, string indexNameBase, out IndexSet I, params int[] dim) : this(name, dim)
         {
@@ -275,40 +262,7 @@ namespace Adrien.Notation
         public static TensorExpression operator /(Tensor left, Tensor right) => left.Divide(right);
 
 
-        public static int[] StridesInElements(int[] dim)
-        {
-            var strides = new int[dim.Length];
-            float s = 1;
-            for (int i = 0; i < dim.Length; i++)
-            {
-                if (dim[i] > 0)
-                {
-                    s *= Convert.ToSingle(dim[i]);
-                }
-            }
-
-            for (int i = 0; i < dim.Length; i++)
-            {
-                if (dim[i] > 0)
-                {
-                    s /= Convert.ToSingle(dim[i]);
-                    strides[i] = Convert.ToInt32(s);
-                }
-            }
-
-            return strides;
-        }
-
-        public static int[] StridesInBytes<T>(int[] dim)
-        {
-            var strides = StridesInElements(dim);
-            for (int i = 0; i < strides.Length; i++)
-            {
-                strides[i] *= Unsafe.SizeOf<T>();
-            }
-
-            return strides;
-        }
+       
 
         public TensorExpression GetDimensionProductExpression(List<Index> indices)
         {
