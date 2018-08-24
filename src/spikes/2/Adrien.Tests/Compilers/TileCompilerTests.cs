@@ -149,17 +149,18 @@ namespace Adrien.Tests.Compilers
             Vector clients = new Vector("clients", ClientsDim), products = new Vector("products", ProductsDim),
                 labels = new Vector(HDim);
 
-            var (W0, W1) = new Matrix("W0", HDim, ClientsDim, "i", out Index i, out Index j).Two();
+            var W0 = new Matrix("W0", HDim, ClientsDim, "i", out Index i, out Index j);
+            var W1 = new Matrix("W1", HDim, ClientsDim);
             var (b0, b1) = new Scalar("b0", HDim).Two();
 
-            var E1 = new Tensor("E1", W0 * clients + b0);
-            var E2 = new Tensor("E2", W1 * clients + b1);
+            var E1 = W0 * clients;
+            var E2 = W1 * clients;
             var z = new Scalar("z", SUM[E1 * E2]);
 
             Assert.Equal(ClientsDim, clients.Length);
             Assert.Equal(2, E1.Rank);
             Assert.Equal(2, E2.Rank);
-            Assert.Equal(1, z.Rank);
+            Assert.Equal(0, z.Rank);
         }
     }
 }
