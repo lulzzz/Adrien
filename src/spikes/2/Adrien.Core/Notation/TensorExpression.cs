@@ -47,6 +47,11 @@ namespace Adrien.Notation
             Shape = new Shape(dim);
         }
 
+        public TensorExpression(Expression e, Shape shape) : this(e)
+        {
+            Shape = shape;
+        }
+
         public TensorExpression(Expression e, Tensor lhs) : this(e)
         {
             this.LHSTensor = lhs;
@@ -84,19 +89,19 @@ namespace Adrien.Notation
             LHSTensor == null ? new TensorExpressionVisitor(this.LinqExpression).Tree : 
             new TensorExpressionVisitor(this.LinqExpression, LHSTensor, true).Tree;
 
-        public TensorExpression Negate() => new TensorExpression(Expression.Negate(this));
+        public TensorExpression Negate() => new TensorExpression(Expression.Negate(this), Shape);
 
         public TensorExpression Add(TensorExpression right) => new TensorExpression(Expression.Add(this, right,
-            GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)));
+            GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), Shape);
 
         public TensorExpression Subtract(TensorExpression right) => new TensorExpression(Expression.Subtract(this,
-            right, GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)));
+            right, GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), Shape);
 
         public TensorExpression Multiply(TensorExpression right) => new TensorExpression(Expression.Multiply(this,
-            right, GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)));
+            right, GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), Shape);
 
         public TensorExpression Divide(TensorExpression right) => new TensorExpression(Expression.Divide(this, right,
-            GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)));
+            GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), Shape);
 
         
         internal static MethodInfo GetOpMethodInfo<T>(string name, int parameters) where T : Term

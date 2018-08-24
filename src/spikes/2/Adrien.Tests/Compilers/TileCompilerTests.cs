@@ -153,8 +153,8 @@ namespace Adrien.Tests.Compilers
             var W1 = new Matrix("W1", HDim, ClientsDim);
             var (b0, b1) = new Scalar("b0", HDim).Two();
 
-            var E1 = W0 * clients;
-            var E2 = W1 * clients;
+            var E1 = W0 * clients + b0;
+            var E2 = W1 * clients + b1;
             var z = new Scalar("z", SUM[E1 * E2]);
 
             Assert.Equal(ClientsDim, clients.Length);
