@@ -48,7 +48,12 @@ namespace Adrien.Notation
             this.DimensionType = DimensionType.Expression;
         }
 
-        internal Dimension(int i) : this(Expression.Constant(i)) {}
+        internal Dimension(int d) : this(Expression.Constant(d)) {}
+
+        internal Dimension(int d, int order) : this(Expression.Constant(d))
+        {
+            Order = order;
+        }
 
         public static Dimension operator -(Dimension left) => left.Negate();
 

@@ -70,6 +70,10 @@ namespace Adrien.Trees
                 throw new InvalidOperationException($"Can't convert ConstantExpression" +
                                                     $"of type {node.Type.Name} to type Tensor.");
 
+            if (Context.InternalNode.Op == TensorOp.Index)
+            {
+                Context.TensorQueue.Enqueue(t);
+            }
             if (!t.IsDefined)
             {
                 Context.AddValueNode(t);
@@ -101,7 +105,7 @@ namespace Adrien.Trees
             using (Context.Internal(on))
             {
                 base.VisitIndex(node);
-                var t = Context.Tensors.First();
+                var t = Context.TensorQueue.Dequeue();
                 if (t.Dimensions.Length < Context.TensorIndicesQueue.Count)
                 {
                     throw new ExpressionVisitorException(this, node,
@@ -125,8 +129,7 @@ namespace Adrien.Trees
         {
             base.VisitParameter(node);
 
-            if (Context.InternalNode.Op == TensorOp.Index)
-            {
+            
                 var t = Context.Tensors.First();
                 var i = Context.TensorIndicesQueue.Count;
                 if (!Term.Terms.ContainsKey(node.Name))
@@ -135,7 +138,7 @@ namespace Adrien.Trees
                 }
                 else
                     Context.TensorIndicesQueue.Enqueue((Index)Term.Terms[node.Name]);
-            }
+            
             return node;
         }
 

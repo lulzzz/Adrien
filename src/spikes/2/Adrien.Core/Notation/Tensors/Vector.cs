@@ -4,6 +4,8 @@
     {
         internal override Name DefaultNameBase => "V0";
 
+        public int Length => Dimensions[0];
+
         protected Vector(string name) : base(name) { }
 
         public Vector(string name, int length) : base(name, length) {}

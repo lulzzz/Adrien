@@ -8,14 +8,12 @@ namespace Adrien.Notation
 
         public object Value { get; protected set; }
 
-        public Scalar(string name) : base(name, 1)
+        public Scalar(string name) : base(name, new int[0])
         {
-           
+            this.Shape = new Shape();
         }
 
-        public Scalar() : this("a")
-        {
-        }
+        public Scalar() : this("a") {}
 
         public Scalar(string name, object value) : this(name)
         {

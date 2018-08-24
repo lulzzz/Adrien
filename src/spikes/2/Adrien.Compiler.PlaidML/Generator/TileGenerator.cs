@@ -127,6 +127,10 @@ namespace Adrien.Compiler.PlaidML.Generator
 
         protected string WriteInputVariableDimensions(ITermShape input)
         {
+            if (input.Rank == 0)
+            {
+                return "[]";
+            }
             StringBuilder dimensions = new StringBuilder("[");
             dimensions.Append(Enumerable.Range(0, input.Rank)
                 .Select(d => input.Label + d.ToString())

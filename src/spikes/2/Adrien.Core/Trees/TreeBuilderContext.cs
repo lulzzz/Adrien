@@ -22,7 +22,7 @@ namespace Adrien.Trees
 
         public Queue<Index> TensorIndicesQueue { get; }
 
-        public Queue<Dimension> TensorDimensionsQueue { get; }
+        public Queue<Tensor> TensorQueue { get; }
 
         public ITreeOperatorNode<TensorOp> InternalNodeAsOperatorNode =>
             (InternalNode as ITreeOperatorNode<TensorOp>) ??
@@ -35,6 +35,7 @@ namespace Adrien.Trees
             ExpressionTree = tree;
             TreeNodeStack = new Stack<ITreeNode>();
             TreeNodeStack.Push(Tree);
+            TensorQueue = new Queue<Tensor>();
             TensorIndicesQueue = new Queue<Index>();
         }
 

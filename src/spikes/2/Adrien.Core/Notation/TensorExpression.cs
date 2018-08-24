@@ -21,13 +21,13 @@ namespace Adrien.Notation
 
         public List<Tensor> Tensors => LinqExpression.GetConstants<Tensor>();
 
-        public int[] Dimensions => InputVariables.First().Dimensions;
+        public Shape Shape { get; protected set; }
 
-        public int[] Strides => InputVariables.First().Strides;
+        public int[] Dimensions => Shape?.Select(d => d.Length).ToArray();
 
-        public int Rank => InputVariables.First().Rank;
+        public int[] Strides => InputVariables?.First().Strides;
 
-        public Dimensions Dim => InputVariables.First().Dim;
+        public int Rank => Dimensions.Length;
 
         public List<Tensor> InputVariables => Tensors.Where(t => !t.IsDefined).ToList();
 
@@ -39,19 +39,30 @@ namespace Adrien.Notation
         public TensorExpression(Expression e) : base(GetNameFromLinqExpression(e))
         {
             LinqExpression = e;
+            Shape = new Shape();
+        }
+
+        public TensorExpression(Expression e, params Dimension[] dim) : this(e)
+        {
+            Shape = new Shape(dim);
         }
 
         public TensorExpression(Expression e, Tensor lhs) : this(e)
         {
             this.LHSTensor = lhs;
+            Shape = new Shape();
         }
 
+        public TensorExpression(Expression e, Tensor lhs, params Dimension[] dim) : this(e, dim)
+        {
+            this.LHSTensor = lhs;
+        }
 
         public Dimension this[int dimension]
         {
             get
             {
-                return this.Dim.ElementAt(dimension);
+                return this.Shape.ElementAt(dimension);
             }
         }
 

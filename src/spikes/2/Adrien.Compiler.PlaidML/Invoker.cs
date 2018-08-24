@@ -252,15 +252,20 @@ namespace Adrien.Compiler.PlaidML
                 var iv = InputTensors[i];
                 var id = input.ElementAt(i);
 
-                if (!iv.Dimensions.SequenceEqual(id.Dimensions))
+                if (iv.Rank != id.Rank)
+                {
+                    throw new ArgumentException($"The rank of kernel input tensor {iv.Name} does not match the " +
+                                                $"rank of the input data variable {id.Name}.");
+                }
+                else if (!iv.Dimensions.SequenceEqual(id.Dimensions))
                 {
                     throw new ArgumentException($"The dimensions of kernel input tensor {iv.Name} do not match the " +
                                                 $"dimensions of the input data variable {id.Name}.");
                 }
-                else if (iv.Rank != id.Rank)
+                else if (iv.Strides != id.Strides)
                 {
-                    throw new ArgumentException($"The rank of kernel input tensor {iv.Name} does not match the " +
-                                                $"rank of the input data variable {id.Name}.");
+                    throw new ArgumentException($"The stride of kernel input tensor {iv.Name} does not match the " +
+                                                $"stride of the input data variable {id.Name}.");
                 }
                 else if (!iv.Strides.SequenceEqual(id.Strides))
                 {

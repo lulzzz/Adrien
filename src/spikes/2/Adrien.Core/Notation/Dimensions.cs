@@ -5,21 +5,24 @@ using System.Text;
 
 namespace Adrien.Notation
 {
-    public class Dimensions : List<Dimension>
+    public class Shape : List<Dimension>
     {
         public Tensor Tensor { get; protected set; }
 
+        internal Shape() : base(0)
+        {
+            
+        }
 
-        internal Dimensions(Tensor t, int n) : base(n)
+        internal Shape(params Dimension[] dim) : base(dim)
+        {
+
+        }
+
+        internal Shape(Tensor t) : base(t.Dimensions.Select((d,a) => new Dimension(t, a, d)))
         {
             this.Tensor = t;
         }
-
-        internal Dimensions(Tensor t) : base(t.Dimensions.Select((d,a) => new Dimension(t, a, d)))
-        {
-            this.Tensor = t;
-        }
-
 
         public Dimension this[Index i]
         {
@@ -37,6 +40,8 @@ namespace Adrien.Notation
             }
         }
 
-        public static explicit operator IndexSet(Dimensions d) => new IndexSet(d.Tensor);
+        public new Dimension this[int i] => base[i];
+
+        public static explicit operator IndexSet(Shape d) => new IndexSet(d.Tensor);
     }
 }

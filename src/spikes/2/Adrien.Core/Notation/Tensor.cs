@@ -16,11 +16,11 @@ namespace Adrien.Notation
 {
     public partial class Tensor : Term, IAlgebra<Tensor, TensorExpression>, ITermShape
     {
+        public Shape Shape { get; protected set; }
+
         public int[] Dimensions { get; protected set; }
 
         public int[] Strides { get; protected set; }
-
-        public Dimensions Dim { get; protected set; }
 
         public int Rank => Dimensions.Length;
 
@@ -72,19 +72,29 @@ namespace Adrien.Notation
 
         protected (Tensor tensor, int index)? GeneratorContext { get; set; }
 
-        protected Tensor(string name) : base(name) { }
-
-        public Tensor(string name, params int[] dim) : base(name)
+        protected Tensor(string name) : base(name)
         {
-            if (dim == null || dim.Length == 0)
-            {
-                throw new ArgumentException("The number of dimensions must be at least 1.");
-            }
-
-            Dimensions = dim;
-            Strides = StridesInElements(Dimensions);
-            Dim = new Dimensions(this);
             LinqExpression = Expression.Constant(this);
+        }
+
+        public Tensor(string name, params int[] dim) : this(name)
+        {
+            if (dim == null)
+            {
+                throw new ArgumentNullException("dim");
+            }
+            else if (dim.Length == 0)
+            {
+                Dimensions = dim;
+                Strides = new int[0];
+                Shape = new Shape();
+            }
+            else
+            {
+                Dimensions = dim;
+                Strides = StridesInElements(Dimensions);
+                Shape = new Shape(this);
+            }
         }
 
         public Tensor(params int[] dim) : this("A", dim)
@@ -103,9 +113,10 @@ namespace Adrien.Notation
             this.ContractionDefinition = (null, new TensorContraction(expr, this));
         }
 
-        public Tensor(string name, TensorExpression expr) : this(name, expr.Dimensions)
+        public Tensor(string name, TensorExpression expr) : this(name)
         {
             this.ElementwiseDefinition = new TensorExpression(expr.LinqExpression, this);
+            
         }
 
         public TensorIndexExpression this[IndexSet I]
@@ -183,7 +194,7 @@ namespace Adrien.Notation
         {
             get
             {
-                return this.Dim.ElementAt(dimension);
+                return this.Shape.ElementAt(dimension);
             }
         }
 
@@ -207,7 +218,7 @@ namespace Adrien.Notation
             }
             else
             {
-                return t[(IndexSet)t.Dim];
+                return t[(IndexSet)t.Shape];
             }
         }
 
@@ -302,23 +313,23 @@ namespace Adrien.Notation
         public TensorExpression GetDimensionProductExpression(List<Index> indices)
         {
             TensorExpression mulExpr = indices.Count > 1 ?
-               (Scalar)Dim[indices[0]] * (Scalar)Dim[indices[1]] : (Scalar)Dim[indices[0]];
+               (Scalar)Shape[indices[0]] * (Scalar)Shape[indices[1]] : (Scalar)Shape[indices[0]];
             for (int i = 2; i < indices.Count; i++)
             {
-                mulExpr = mulExpr * (Scalar)Dim[indices[i]];
+                mulExpr = mulExpr * (Scalar)Shape[indices[i]];
             }
             return mulExpr;
         }
 
-        public TensorExpression Negate() => -(TensorExpression) this;
+        public virtual TensorExpression Negate() => -(TensorExpression) this;
 
-        public TensorExpression Add(Tensor right) => (TensorExpression) this + right;
+        public virtual TensorExpression Add(Tensor right) => (TensorExpression) this + right;
 
-        public TensorExpression Subtract(Tensor right) => (TensorExpression) this - right;
+        public virtual TensorExpression Subtract(Tensor right) => (TensorExpression) this - right;
 
-        public TensorExpression Multiply(Tensor right) => (TensorExpression) this * right;
+        public virtual TensorExpression Multiply(Tensor right) => (TensorExpression) this * right;
 
-        public TensorExpression Divide(Tensor right) => (TensorExpression) this / right;
+        public virtual TensorExpression Divide(Tensor right) => (TensorExpression) this / right;
 
         public Tensor With(out Tensor with)
         {
