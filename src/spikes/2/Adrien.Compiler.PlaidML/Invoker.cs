@@ -244,14 +244,17 @@ namespace Adrien.Compiler.PlaidML
             }
         }
 
-        [DebuggerStepThrough]
+        //[DebuggerStepThrough]
         internal void ThrowIfInputShapeMismatch(IEnumerable<IVariable<T>> input)
         {
             for (int i = 0; i < InputTensors.Count; i++)
             {
                 var iv = InputTensors[i];
                 var id = input.ElementAt(i);
-
+                if (iv.Rank == 0 && id.Rank == 0)
+                {
+                    continue;
+                }
                 if (iv.Rank != id.Rank)
                 {
                     throw new ArgumentException($"The rank of kernel input tensor {iv.Name} does not match the " +
@@ -261,11 +264,6 @@ namespace Adrien.Compiler.PlaidML
                 {
                     throw new ArgumentException($"The dimensions of kernel input tensor {iv.Name} do not match the " +
                                                 $"dimensions of the input data variable {id.Name}.");
-                }
-                else if (iv.Strides != id.Strides)
-                {
-                    throw new ArgumentException($"The stride of kernel input tensor {iv.Name} does not match the " +
-                                                $"stride of the input data variable {id.Name}.");
                 }
                 else if (!iv.Strides.SequenceEqual(id.Strides))
                 {
