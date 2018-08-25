@@ -11,6 +11,8 @@ namespace Adrien.Generator
 
         public abstract List<TOp> ContractionOperators { get; }
 
+        public abstract List<TOp> AssignmentOperators { get; }
+
         public Dictionary<string, string> ElementwiseVariableDefinitions { get; } = new Dictionary<string, string>();
 
         public Dictionary<string, string> IndexVariableDefinitions { get; } = new Dictionary<string, string>();
@@ -96,12 +98,12 @@ namespace Adrien.Generator
             this.Writer.VariableDefinitions.Enqueue(definition);
         }
 
-        protected string GetNewIndexVariableName(string nameBase, int n = 0)
+        protected string GetNewVariableName(string nameBase, int n = 0)
         {
             string name = nameBase + n.ToString();
-            if (IndexVariableDefinitions.ContainsKey(name))
+            if (IndexVariableDefinitions.ContainsKey(name) || ElementwiseVariableDefinitions.ContainsKey(name))
             {
-                return GetNewIndexVariableName(nameBase, n + 1);
+                return GetNewVariableName(nameBase, n + 1);
             }
             else
             {

@@ -107,6 +107,7 @@ namespace Adrien.Tests.Compilers
                 "yloss");
             var (a, b) = new Scalar().Two("a", "b");
 
+            var N = yactual[0];
             ypred.def = a * x + b;
             Kernel<int> predict = new Kernel<int>(ypred, compiler);
             Assert.True(predict.Compile());
@@ -134,9 +135,9 @@ namespace Adrien.Tests.Compilers
             {
                 Assert.Equal(System.Math.Pow(vya[index] - ((va * vx[index]) + vb), 2), vyerror[index]);
             }
-            yloss[i, yactual[0]] = MEAN[yerror[i]];
+            yloss[i, N] = MEAN[yerror[i]];
             Assert.True(yloss.IsDefined);
-            Assert.Equal(yactual[0], yloss.ContractionDefinition.Expression.Shape[0]);
+            Assert.Equal(N, yloss.ContractionDefinition.Expression.Shape[0]);
             Kernel<int> loss = new Kernel<int>(yloss, compiler);
             Assert.True(loss.Compile());
         }
@@ -149,18 +150,24 @@ namespace Adrien.Tests.Compilers
             Vector clients = new Vector("clients", ClientsDim), products = new Vector("products", ProductsDim),
                 labels = new Vector(HDim);
 
-            var W0 = new Matrix("W0", HDim, ClientsDim, "i", out Index i, out Index j);
-            var W1 = new Matrix("W1", HDim, ClientsDim);
-            var (b0, b1) = new Scalar("b0", HDim).Two();
+            var (W0, W1) = new Matrix("W0", HDim, ClientsDim).Two();
+                                
+            var (b0, b1) = new Vector("b0", HDim).Two();
 
             var E1 = W0 * clients + b0;
             var E2 = W1 * clients + b1;
-            var z = new Scalar("z", SUM[E1 * E2]);
+            Scalar z = new Scalar("z", SUM[E1 * E2]);
 
             Assert.Equal(ClientsDim, clients.Length);
             Assert.Equal(2, E1.Rank);
             Assert.Equal(2, E2.Rank);
             Assert.Equal(0, z.Rank);
+
+            Kernel<int> kz = new Kernel<int>(z, new TileCompiler());
+            Assert.True(kz.Compile());
+
+
+            
         }
     }
 }

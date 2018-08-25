@@ -11,62 +11,44 @@ namespace Adrien.Notation
 {
     public class TensorIndexExpression : TensorExpression, IAlgebra<TensorIndexExpression, TensorIndexExpression>
     {
-        public new int[] Dimensions { get; protected set; }
-
-        public new int[] Strides { get; protected set; }
-
-        public new int Rank { get; protected set; }
-
-        public Dimension[] Shape { get; protected set; }
-
-
         internal TensorIndexExpression(TensorExpression expr) : base(expr.LinqExpression)
         {
-            if (expr.LinqExpression is UnaryExpression || expr.LinqExpression is BinaryExpression
-                || expr.LinqExpression is MethodCallExpression)
+            if (!(expr.LinqExpression is UnaryExpression || expr.LinqExpression is BinaryExpression
+                || expr.LinqExpression is MethodCallExpression))
             {
-
-                this.Dimensions = new int[0];
-                this.Strides = new int[0];
-                this.Rank = 0;
-                this.Shape = new[] { new Dimension(0) };
+                throw new ArgumentException("This tensor expression cannot be used as a tensor index expression");
             }
-            else throw new ArgumentException("This tensor expression cannot be used as a tensor index expression");
         }
 
-        internal TensorIndexExpression(IndexExpression expr, params Dimension[] shape) : base(expr)
+        internal TensorIndexExpression(IndexExpression expr, params Dimension[] dim) : base(expr, dim)
         {
             expr.ThrowIfNotType<Tensor>();
             if (!(expr.Object is ConstantExpression))
             {
                 throw new ArgumentException("This Linq expression cannot be used as a tensor index expression.");
             }    
-            Shape = shape;
         }
 
-        internal TensorIndexExpression(MethodCallExpression expr, params Dimension[] shape) : base(expr)
-        {
-            expr.ThrowIfNotType<TensorIndexExpression>();
-            Shape = shape;
-        }
+        internal TensorIndexExpression(MethodCallExpression expr, params Dimension[] dim) : base(expr, dim) {}
 
-        internal TensorIndexExpression(UnaryExpression expr, params Dimension[] shape) : base(expr)
+
+        internal TensorIndexExpression(UnaryExpression expr, params Dimension[] dim) : base(expr, dim)
         {
             expr.ThrowIfNotType<TensorExpression>();
             expr.Operand.ThrowIfNotType<TensorIndexExpression>();
-            Shape = shape;
         }
 
-        internal TensorIndexExpression(BinaryExpression expr, params Dimension[] shape ) : base(expr)
+        internal TensorIndexExpression(BinaryExpression expr, params Dimension[] dim) : base(expr, dim)
         {
             expr.ThrowIfNotType<TensorIndexExpression>();
-            Shape = shape;
         }
 
-        internal TensorIndexExpression(TensorIndexExpression c, params Dimension[] shape ) : base(c.LinqExpression)
-        {
-            this.Shape = shape;
-        }
+        internal TensorIndexExpression(TensorIndexExpression c, params Dimension[] dim) : base(c.LinqExpression, dim)
+        { }
+
+        internal TensorIndexExpression(TensorIndexExpression c, Tensor lhsTensor, params Dimension[] dim) :
+            base(c.LinqExpression, lhsTensor, dim)
+        { }
 
         public TensorIndexExpression this[Dimension n] => new TensorIndexExpression(this, n);
   

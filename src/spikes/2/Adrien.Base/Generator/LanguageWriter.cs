@@ -45,5 +45,11 @@ namespace Adrien.Generator
         public virtual string GetOperatorTemplate(ITreeOperatorNode<TOp> on) => OperatorTemplate[on.Op];
 
         public virtual string GetOperatorTemplate(TOp op) => OperatorTemplate[op];
+
+
+        public string GetOperator(TOp op, params string[] operands)
+        {
+            return string.Format(OperatorTemplate[op], operands);
+        }
     }
 }

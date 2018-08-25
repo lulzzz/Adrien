@@ -12,6 +12,7 @@ namespace Adrien.Compiler.PlaidML.Generator
     {
         protected override Dictionary<TensorOp, string> OperatorTemplate { get; } = new Dictionary<TensorOp, string>
         {
+            { TensorOp.NoOp, string.Empty },
             { TensorOp.Assign, "{0} = {1};" },
             { TensorOp.ElementWiseAssign, "{0} = {1};" },
             { TensorOp.IndexedAssign, "{0} = {1};" },
@@ -34,14 +35,13 @@ namespace Adrien.Compiler.PlaidML.Generator
         };
 
 
-        public override string WriteOperator(TensorOp op, params string[] operands)
+        public override string WriteOperator(TensorOp op, string[] operands)
         {
             switch(op)
             {
                 case TensorOp.Assign:
                 case TensorOp.ElementWiseAssign:
                 case TensorOp.IndexedAssign:
-                
                     StringBuilder sb = new StringBuilder();
                     while (VariableDefinitions.Count > 0)
                     {
@@ -51,7 +51,6 @@ namespace Adrien.Compiler.PlaidML.Generator
                     return sb.ToString();
 
                 default: return base.WriteOperator(op, operands);
-
             }
         }
 

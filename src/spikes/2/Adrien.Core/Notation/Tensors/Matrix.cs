@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Adrien.Notation
 {
-    public class Matrix : Tensor
+    public partial class Matrix : Tensor
     {
         public Dimension Rows => Shape[0];
 

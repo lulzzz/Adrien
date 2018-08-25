@@ -1,6 +1,6 @@
 ﻿namespace Adrien.Notation
 {
-    public class Vector : Tensor
+    public partial class Vector : Tensor
     {
         internal override Name DefaultNameBase => "V0";
 

@@ -10,6 +10,11 @@ namespace Adrien.Compiler.PlaidML.Generator
 {
     public class TileGenerator : LanguageGenerator<TensorOp, TileWriter>
     {
+        public override List<TensorOp> AssignmentOperators { get; } = new List<TensorOp>()
+        {
+            TensorOp.ElementWiseAssign, TensorOp.IndexedAssign
+        };
+
         public override List<TensorOp> NestedBinaryOperators { get; } = new List<TensorOp>()
         {
             TensorOp.Mul, TensorOp.Add, TensorOp.Sub, TensorOp.Div, TensorOp.Square
@@ -42,7 +47,17 @@ namespace Adrien.Compiler.PlaidML.Generator
 
         public override void VisitInternal(ITreeOperatorNode<TensorOp> on)
         {
-            switch(on.Op)
+            if (TreeNodeIsContractionOp(on) && !(TreeNodeIsTensor(on.Left) || TreeNodeIsAssignmentOp(on.Left)))
+            {
+                base.Visit(on.Left);
+                string lhs = GetNewVariableName("SY");
+                string rhs = (string) Context.Pop();
+                AddElementwiseVariableDefinition(lhs, rhs, Writer.GetOperator(TensorOp.ElementWiseAssign, lhs, rhs));
+                Context.Push(Writer.WriteOperator(on.Op, lhs));
+                return;
+            }
+            
+            switch (on.Op)
             {
                 case TensorOp.ElementWiseAssign:
                     base.VisitInternal(on);
@@ -53,6 +68,11 @@ namespace Adrien.Compiler.PlaidML.Generator
                     return;
 
                 case TensorOp.IndexedAssign:
+                    if (TreeNodeIsRoot(on))
+                    {
+                        base.VisitInternal(on);
+                        return;
+                    }
                     if (TreeNodeIsTensor(on.Right) || TreeNodeIsContractionOp(on.Right))
                     {
                         base.VisitInternal(on);
@@ -71,7 +91,7 @@ namespace Adrien.Compiler.PlaidML.Generator
                             string leftIndexVarName = on.Left.Left.Label.ToUpper();
                             Visit(on.Left);
                             string leftIndexVar = (string)Context.Pop();
-                            string newLeftIndexVarName = GetNewIndexVariableName(leftIndexVarName);
+                            string newLeftIndexVarName = GetNewVariableName(leftIndexVarName);
                             string newLeftIndexVar = leftIndexVar.Replace(leftIndexVarName, newLeftIndexVarName);
 
                             Visit(rhsOp.Left);
@@ -105,8 +125,13 @@ namespace Adrien.Compiler.PlaidML.Generator
         protected bool TreeNodeIsContractionOp(ITreeNode node) =>
           node is ITreeOperatorNode<TensorOp> on && ContractionOperators.Contains(on.Op);
 
+        protected bool TreeNodeIsAssignmentOp(ITreeNode node) =>
+            node is ITreeOperatorNode<TensorOp> on && ContractionOperators.Contains(on.Op);
+
         protected bool TreeNodeIsElementwiseOp(ITreeNode node) =>
           node is ITreeOperatorNode<TensorOp> on && !ContractionOperators.Contains(on.Op);
+
+        protected bool TreeNodeIsRoot(ITreeNode node) => node.Id == 0;
 
         protected bool TreeOperatorNodeLHSIsTensor(ITreeOperatorNode<TensorOp> on)
         {

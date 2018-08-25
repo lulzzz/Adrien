@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Humanizer.Core" Version="2.4.2" />
-    <PackageReference Include="Sawmill" Version="2.1.0" />
+    <PackageReference Include="Sawmill" Version="2.2.0" />
     <PackageReference Include="System.Memory" Version="4.5.1" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.1" />
   </ItemGroup>
@@ -28,6 +28,21 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>KernelFuncs.tt</DependentUpon>
+    </None>
+    <None Include="Notation\Tensors\MatrixConstructors.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MatrixConstructors.tt</DependentUpon>
+    </None>
+    <None Include="Notation\Tensors\ScalarConstructors.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ScalarConstructors.tt</DependentUpon>
+    </None>
+    <None Include="Notation\Tensors\VectorConstructors.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>VectorConstructors.tt</DependentUpon>
     </None>
   </ItemGroup>
 
@@ -45,15 +60,30 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>KernelFuncs.tt</DependentUpon>
     </Compile>
-    <Compile Update="Notation\TensorConstructors.cs">
+    <Compile Update="Notation\Tensors\MatrixConstructors.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MatrixConstructors.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Notation\Tensors\ScalarConstructors.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ScalarConstructors.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Notation\Tensors\TensorConstructors.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>TensorConstructors.tt</DependentUpon>
     </Compile>
-    <Compile Update="Notation\TensorIndexers.cs">
+    <Compile Update="Notation\Tensors\TensorIndexers.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>TensorIndexers.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Notation\Tensors\VectorConstructors.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>VectorConstructors.tt</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -62,13 +92,25 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>KernelFuncs.cs</LastGenOutput>
     </None>
-    <None Update="Notation\TensorConstructors.tt">
+    <None Update="Notation\Tensors\MatrixConstructors.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MatrixConstructors.cs</LastGenOutput>
+    </None>
+    <None Update="Notation\Tensors\ScalarConstructors.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ScalarConstructors.cs</LastGenOutput>
+    </None>
+    <None Update="Notation\Tensors\TensorConstructors.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TensorConstructors.cs</LastGenOutput>
     </None>
-    <None Update="Notation\TensorIndexers.tt">
+    <None Update="Notation\Tensors\TensorIndexers.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TensorIndexers.cs</LastGenOutput>
+    </None>
+    <None Update="Notation\Tensors\VectorConstructors.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>VectorConstructors.cs</LastGenOutput>
     </None>
   </ItemGroup>
 

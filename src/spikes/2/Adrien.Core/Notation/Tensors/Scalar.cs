@@ -2,7 +2,7 @@
 
 namespace Adrien.Notation
 {
-    public class Scalar : Tensor
+    public partial class Scalar : Tensor
     {
         internal override Name DefaultNameBase => "a";
 
@@ -15,15 +15,11 @@ namespace Adrien.Notation
 
         public Scalar() : this("a") {}
 
-        public Scalar(string name, object value) : this(name)
-        {
-            Value = value;
-        }
-
         public Scalar(string name, TensorIndexExpression expr) : this(name)
         {
             this.ContractionDefinition = (null, new TensorContraction(expr, this));
         }
+
 
         public Scalar With(out Scalar with)
         {
