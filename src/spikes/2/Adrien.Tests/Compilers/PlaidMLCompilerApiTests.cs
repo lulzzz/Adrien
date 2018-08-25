@@ -164,9 +164,9 @@ namespace Adrien.Tests.Compilers
             var A = Tensor.TwoD("A", (8, 17), "a", out Index a, out Index b);
             var B = Tensor.TwoD("B", (8, 17));
             TileGenerator g = new TileGenerator((A[a, b] * B[a, b]).ToTree());
-            Assert.Equal("[] = A[a, b] * B[a, b];", g.Text);
+            Assert.Equal(" = A[a, b] * B[a, b];", g.Text);
             g = new TileGenerator(A[b].ToTree());
-            Assert.Equal("[] = A[b];", g.Text);
+            Assert.Equal(" = A[b];", g.Text);
 
             var (x, y) = new Vector("x", 2).Two();
             Assert.Equal("x", x.Name);

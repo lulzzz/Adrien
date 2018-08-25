@@ -68,25 +68,27 @@ namespace Adrien.Compiler.PlaidML.Generator
                     return;
 
                 case TensorOp.IndexedAssign:
-                    if (TreeNodeIsRoot(on))
+                    if (TreeNodeIsTensorValue(on.Right) || TreeNodeIsContractionOp(on.Right))
                     {
                         base.VisitInternal(on);
-                        return;
-                    }
-                    if (TreeNodeIsTensor(on.Right) || TreeNodeIsContractionOp(on.Right))
-                    {
-                        base.VisitInternal(on);
-                        s = (string)Context.Pop();
-                        lhs = s.Split('=').First().TrimEnd(); rhs = s.Split('=').Last().TrimEnd();
-                        AddIndexVariableDefinition(lhs, rhs, s);
-                        Context.Push(lhs);
-                        return;
+                        if (TreeNodeIsRoot(on))
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            s = (string)Context.Pop();
+                            lhs = s.Split('=').First().TrimEnd(); rhs = s.Split('=').Last().TrimEnd();
+                            AddIndexVariableDefinition(lhs, rhs, s);
+                            Context.Push(lhs);
+                            return;
+                        }
                     }
                     else
                     {
                         var rhsOp = (ITreeOperatorNode<TensorOp>)on.Right;
                         if (TreeNodeIsContractionOp(rhsOp.Left) && 
-                           (TreeNodeIsElementwiseOp(rhsOp.Right) || TreeNodeIsTensor(rhsOp.Right)))
+                           (TreeNodeIsElementwiseOp(rhsOp.Right) || TreeNodeIsTensorValue(rhsOp.Right)))
                         {
                             string leftIndexVarName = on.Left.Left.Label.ToUpper();
                             Visit(on.Left);
@@ -116,8 +118,11 @@ namespace Adrien.Compiler.PlaidML.Generator
             }
         }
 
-        protected bool TreeNodeIsTensor(ITreeNode node) =>
+        protected bool TreeNodeIsTensorValue(ITreeNode node) =>
             node is ITreeValueNode vn && vn.NodeType == ValueNodeType.TENSOR;
+
+        protected bool TreeNodeIsTensor(ITreeNode node) =>
+           TreeNodeIsIndexOp(node) || node is ITreeValueNode vn && vn.NodeType == ValueNodeType.TENSOR;
 
         protected bool TreeNodeIsIndexOp(ITreeNode node) =>
          node is ITreeOperatorNode<TensorOp> on && on.Op == TensorOp.Index;
