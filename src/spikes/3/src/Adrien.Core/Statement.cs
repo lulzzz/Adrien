@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Adrien.Core
+﻿namespace Adrien.Core
 {
     public enum StatementKind
     {
@@ -15,40 +12,21 @@ namespace Adrien.Core
     /// </summary>
     public class Statement
     {
-        public bool InitializeAtZero { get; set; }
+        public bool InitializeAtZero { get; }
 
-        public Element Left { get; set; }
+        public StatementKind Kind { get; }
 
-        public StatementKind Kind { get; set; }
+        public ElementExpression Left { get; }
 
-        public ElementExpression Expression { get; set; }
+        public ElementExpression Right { get; }
 
-        public IReadOnlyList<Index> Indices
+        public Statement(bool initializeAtZero, StatementKind kind, 
+            ElementExpression left, ElementExpression right)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public IReadOnlyList<Symbol> Symbols
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public Statement(Element left, StatementKind kind, ElementExpression expression)
-        {
-            Left = left;
+            InitializeAtZero = initializeAtZero;
             Kind = kind;
-            Expression = expression;
-        }
-
-        public void Add(Index index)
-        {
-            throw new NotImplementedException();
+            Left = left;
+            Right = right;
         }
     }
 }

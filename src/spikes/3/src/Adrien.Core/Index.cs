@@ -12,6 +12,16 @@ namespace Adrien.Core
     /// </remarks>
     public class Index
     {
+        public string Name { get; }
+
+        /// <summary>
+        /// Late assignment at geometric inference.
+        /// </summary>
         public IReadOnlyList<Range> Ranges { get; set; }
+
+        public Index(string name)
+        {
+            Name = name;
+        }
     }
 }

@@ -8,8 +8,14 @@ namespace Adrien.Core
     /// </summary>
     public class Shape
     {
-        public ElementKind Kind { get; set; }
+        public ElementKind Kind { get; }
 
         public IReadOnlyList<int> Dimensions { get; }
+
+        public Shape(ElementKind kind, IReadOnlyList<int> dimensions)
+        {
+            Kind = kind;
+            Dimensions = dimensions;
+        }
     }
 }

@@ -2,8 +2,6 @@
 
 Adrien is an differentiable programming framework intended for .NET.
 
-TODO: add lookup table embeddings 
-
 ## Abstraction levels
 
 The library can be seen as an DSL-in-C# for differentiable programming.
@@ -35,12 +33,16 @@ those arrays are intended to be delegated to specialized hardware such as
 a GPU or a TPU.
 
 
-## Basic vs Fluent APIs
+## Basic API vs Fluent APIs
 
 The DSL-like APIs for differential programming are referred as _fluent_.
 Those APIs are intended for inline compact notations. Those API somewhat
 stretches the capabilities of the C# syntax, are isolated as an overlay
 of the more basic APIs.
+
+The basic API - as the name suggests - is intended for simplicity. It
+decouples the intricacies of the frontend syntax from the compilation
+task which converts a tile into a kernel.
 
 ## Numeric backend
 

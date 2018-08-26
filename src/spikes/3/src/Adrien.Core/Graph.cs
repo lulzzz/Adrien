@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Adrien.Core
 {
@@ -8,25 +7,18 @@ namespace Adrien.Core
     /// </summary>
     public class Graph
     {
-        public IReadOnlyList<Tile> Tiles
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        private readonly List<Edge> _edges;
 
-        public IReadOnlyList<Edge> Edges
+        public IReadOnlyList<Edge> Edges => _edges;
+
+        public Graph()
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            _edges = new List<Edge>();
         }
 
         public void Add(Edge edge)
         {
-            throw new NotImplementedException();
+            _edges.Add(edge);
         }
     }
 }

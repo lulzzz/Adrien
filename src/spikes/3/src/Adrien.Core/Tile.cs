@@ -9,48 +9,30 @@ namespace Adrien.Core
     /// </summary>
     public class Tile
     {
-        public IReadOnlyList<Symbol> Inputs
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        private readonly List<Statement> _statements;
 
-        public IReadOnlyList<Symbol> Outputs
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        private readonly List<Beam<Symbol>> _beams;
+
+        public string Name { get; }
 
         public IReadOnlyList<Statement> Statements
+            => _statements;
+
+        public Tile(string name)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            Name = name;
+            _statements = new List<Statement>();
+            _beams = new List<Beam<Symbol>>();
         }
 
         public void Add(Statement statement)
         {
-            throw new NotImplementedException();
+            _statements.Add(statement);
         }
 
-        public void Add(Variable v, Func<Symbol,Beam> getBeam)
+        public void Add(Beam<Symbol> beam)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Add(Variable v1, Variable v2, Func<Symbol, Symbol, Beam> getBeam)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IReadOnlyList<Beam> GetBeams(IReadOnlyDictionary<Variable, Symbol> map)
-        {
-            throw new NotImplementedException();
+            _beams.Add(beam);
         }
     }
 }

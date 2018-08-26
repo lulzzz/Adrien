@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Adrien.Core
+﻿namespace Adrien.Core
 {
     public enum IndexExpressionArityKind
     {
         Constant,
         Term,
-        Lookup,
         Binary
     }
 
     public enum BinaryIndexExpressionKind
     {
+        None,
+
         Add,
         Subtract,
         Multiply,
@@ -25,24 +23,39 @@ namespace Adrien.Core
     /// </summary>
     public class IndexExpression
     {
-        public IndexExpressionArityKind ArityKind { get; set; }
+        public IndexExpressionArityKind ArityKind { get; }
 
-        public BinaryExpressionKind BinaryKind { get; set; }
+        public BinaryExpressionKind BinaryKind { get; }
 
-        public Index Term { get; set; }
+        public int Constant { get; }
+
+        public Index Term { get; }
+
+        public IndexExpression Expr1 { get; }
+
+        public IndexExpression Expr2 { get; }
+
+        public IndexExpression(int constant)
+        {
+            ArityKind = IndexExpressionArityKind.Constant;
+            BinaryKind = BinaryExpressionKind.None;
+            Constant = constant;
+        }
 
         public IndexExpression(Index term)
         {
             ArityKind = IndexExpressionArityKind.Term;
+            BinaryKind = BinaryExpressionKind.None;
             Term = term;
         }
 
-        public IReadOnlyList<Index> Indices
+        public IndexExpression(BinaryExpressionKind kind,
+            IndexExpression expr1, IndexExpression expr2)
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            ArityKind = IndexExpressionArityKind.Binary;
+            BinaryKind = kind;
+            Expr1 = expr1;
+            Expr2 = expr2;
         }
     }
 }

@@ -9,5 +9,11 @@
         public int Offset { get; }
 
         public int Count { get; }
+
+        public Range(int offset, int count)
+        {
+            Offset = offset;
+            Count = count;
+        }
     }
 }

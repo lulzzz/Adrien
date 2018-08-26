@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Adrien.Core
 {
@@ -13,27 +12,16 @@ namespace Adrien.Core
     /// </remarks>
     public class Element
     {
-        public Symbol Symbol { get; set; }
+        private readonly IndexExpression[] _expressions;
 
-        public IReadOnlyList<Index> Indices
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public Symbol Symbol { get; }
 
-        public IReadOnlyList<IndexExpression> Expressions
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
+        public IReadOnlyList<IndexExpression> Expressions => _expressions;
 
         public Element(Symbol symbol, params IndexExpression[] expressions)
         {
-            throw new NotImplementedException();
+            Symbol = symbol;
+            _expressions = expressions;
         }
     }
 }

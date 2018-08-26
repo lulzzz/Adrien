@@ -14,54 +14,81 @@ namespace Adrien.Core
     }
 
     /// <summary>
-    /// A constraint on the shape of a variable.
+    /// A constraint on the shape of a symbol or of a variable.
     /// </summary>
     /// <remarks>
     /// The geometric inference is the process used to identify
     /// the unique shape associated to each variable as a resolution
     /// of the system of constraints defined by the beams.
     /// </remarks>
-    public class Beam
+    public class Beam<T> where T : class
     {
         public BeamKind Kind { get; }
 
-        public Variable Target { get; set; }
+        public T Target { get; }
 
-        public Variable Dependency { get; set; }
+        public T Dependency { get; }
 
-        public static Beam SetShape(Variable target, Shape shape)
+        public Shape Shape { get; }
+
+        public ElementKind ElementKind { get; }
+
+        public int Rank { get; }
+
+        public (int,int) Dimension { get; }
+
+        public Func<int,int> InferRank { get; }
+
+        public int InferredDimension { get; }
+
+        public Func<int, int> InferDimension { get; }
+
+        public Beam(T target, Shape shape)
         {
-            throw new NotImplementedException();
+            Kind = BeamKind.SetShape;
+            Shape = shape;
         }
 
-        public static Beam SetElementKind(Variable target, ElementKind kind)
+        public Beam(T target, ElementKind kind)
         {
-            throw new NotImplementedException();
+            Kind = BeamKind.SetElementKind;
+            ElementKind = kind;
         }
 
-        public static Beam PairElementKind(Variable target, Variable dependency)
+        public Beam(T target, int rank)
         {
-            throw new NotImplementedException();
+            Kind = BeamKind.SetRank;
+            Rank = rank;
         }
 
-        public static Beam SetRank(Variable target, int rank)
+        public Beam(T target, int dimIndex, int dimSize)
         {
-            throw new NotImplementedException();
+            Kind = BeamKind.SetDimension;
+            Dimension = (dimIndex, dimSize);
         }
 
-        public static Beam InferRank(Variable target, Variable dependency, Func<int, int> infer)
+        public Beam(T target, T dependency)
         {
-            throw new NotImplementedException();
+            Kind = BeamKind.PairElementKind;
+            Target = target;
+            Dependency = dependency;
         }
 
-        public static Beam SetDimension(Variable target, int dimIndex, int dimSize)
+        public Beam(T target, T dependency, Func<int, int> inferRank)
         {
-            throw new NotImplementedException();
+            Kind = BeamKind.InferRank;
+            Target = target;
+            Dependency = dependency;
+            InferRank = inferRank;
         }
 
-        public static Beam SetDimension(Variable target, Variable dependency, int dimIndex, Func<int, int> infer)
+        public Beam(T target, T dependency, int dimIndex, Func<int, int> inferDimension)
         {
-            throw new NotImplementedException();
+            Kind = BeamKind.InferDimension;
+            Target = target;
+            Dependency = dependency;
+            InferredDimension = dimIndex;
+            InferDimension = inferDimension;
         }
     }
 }

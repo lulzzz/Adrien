@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Adrien.Core
 {
@@ -10,14 +9,15 @@ namespace Adrien.Core
     {
         public Tile Tile { get; }
 
-        public IReadOnlyList<Variable> Inputs
-        {
-            get {  throw new NotImplementedException(); }
-        }
+        public IReadOnlyList<Variable> Inputs { get; }
 
-        public IReadOnlyList<Variable> Ouputs
+        public IReadOnlyList<Variable> Outputs { get; }
+
+        public Edge(Tile tile, IReadOnlyList<Variable> inputs, IReadOnlyList<Variable> outputs)
         {
-            get {  throw new NotImplementedException(); }
+            Tile = tile;
+            Inputs = inputs;
+            Outputs = outputs;
         }
     }
 }
