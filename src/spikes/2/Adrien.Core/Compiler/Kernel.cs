@@ -18,10 +18,10 @@ namespace Adrien.Compiler
 
         public ExpressionTree Tree { get; protected set; }
 
-        public IReadOnlyList<Tensor> Tensors => Tree.TensorNodes.Distinct(Tree).Select(n => n.ValueAs<Tensor>())
-            .ToList();
+        public IReadOnlyList<Tensor> Tensors => 
+            Tree.TensorNodes.Distinct(Tree).Select(n => n.ValueAs<Tensor>()).ToList();
 
-        public IReadOnlyList<Tensor> InputTensors => Tensors.Where(t => t.Label != OutputTensor.Name.Label).ToList();
+        public IReadOnlyList<Tensor> InputTensors => Tree.InputVariableNodes.Select(n => n.ValueAs<Tensor>()).ToList();
 
         public Tensor OutputTensor => Tree.OutputTensor;
 

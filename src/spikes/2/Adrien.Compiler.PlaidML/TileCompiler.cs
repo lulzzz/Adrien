@@ -100,9 +100,12 @@ namespace Adrien.Compiler.PlaidML
                 CompilerStatusMessage = invoker.LastStatusString;
                 return false;
             }
-
-            result = invoker;
-            return true;
+            else
+            {
+                result = invoker;
+                Status = CompilerStatus.Success;
+                return true;
+            }
         }
 
         public bool Compile<TKernel>(IEnumerable<ITermShape> inputShapes, ITermShape outputShape, string code,

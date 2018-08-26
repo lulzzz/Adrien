@@ -40,14 +40,16 @@ namespace Adrien.Tests
         public void CanConstructMeanOperation()
         {
             var (M, N, O) = new Matrix("M", 2, 2, out Index i, out Index j).Three();
-            Scalar m = new Scalar("m");
-            m.def = MEAN[M];
-            Assert.True(m.IsDefined);
-            Assert.Equal(0, m.Rank);
-            Kernel<int> km = new Kernel<int>(m, new TileCompiler());
+            Scalar S = new Scalar("S")
+            {
+                def = MEAN[M]
+            };
+            Assert.True(S.IsDefined);
+            Assert.Equal(0, S.Rank);
+            Kernel<int> km = new Kernel<int>(S, new TileCompiler());
             var r = km.Compile(out CompilerStatus status);
             Assert.Equal(CompilerStatus.Success, status);
-            var rs = r.Run(N.Var(new int[4]), M.Var(3, 3, 3, 3));
+            //var rs = r.Run(N.Var(new int[4]), M.Var(3, 3, 3, 3));
         }
     }
 }

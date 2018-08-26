@@ -33,7 +33,7 @@ namespace Adrien.Notation
             this.Order = order;
         }
 
-        internal Dimension(Tensor t, int order, int length, int stride) : this(t, order, t.Label + order.ToString())
+        internal Dimension(Tensor t, int order, int length, int stride) : this(t, order, t.Label + "DIM" + order.ToString())
         {
             this.Length = length;
             this.Stride = stride;

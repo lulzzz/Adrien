@@ -52,7 +52,7 @@ namespace Adrien.Compiler.PlaidML.Generator
             if (TreeNodeIsContractionOp(on) && !(TreeNodeIsTensor(on.Left) || TreeNodeIsAssignmentOp(on.Left)))
             {
                 base.Visit(on.Left);
-                string lhs = GetNewVariableName("SY");
+                string lhs = GetNewVariableName("SYN");
                 string rhs = (string) Context.Pop();
                 AddElementwiseVariableDefinition(lhs, rhs, Writer.GetOperator(TensorOp.IndexedAssign, lhs, rhs));
                 Context.Push(Writer.WriteOperator(on.Op, lhs +"[]"));
@@ -95,7 +95,7 @@ namespace Adrien.Compiler.PlaidML.Generator
                             string leftIndexVarName = on.Left.Left.Label.ToUpper();
                             Visit(on.Left);
                             string leftIndexVar = (string)Context.Pop();
-                            string newLeftIndexVarName = GetNewVariableName(leftIndexVarName);
+                            string newLeftIndexVarName = GetNewVariableName("SYN" + leftIndexVarName);
                             string newLeftIndexVar = leftIndexVar.Replace(leftIndexVarName, newLeftIndexVarName);
 
                             Visit(rhsOp.Left);
@@ -165,7 +165,7 @@ namespace Adrien.Compiler.PlaidML.Generator
             }
             StringBuilder dimensions = new StringBuilder("[");
             dimensions.Append(Enumerable.Range(0, input.Rank)
-                .Select(d => input.Label + d.ToString())
+                .Select(d => input.Label + "DIM" + d.ToString())
                 .Aggregate((d1, d2) => d1 + "," + d2));
             dimensions.Append("]");
             return dimensions.ToString();

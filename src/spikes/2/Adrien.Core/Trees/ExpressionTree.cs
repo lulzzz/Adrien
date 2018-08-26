@@ -53,11 +53,32 @@ namespace Adrien.Trees
                 .Distinct(this);
 
         public IEnumerable<ITreeValueNode> TensorDimensionNodes => ValueNodes.Where(vn => vn.Value is Dimension);
-            
+        
+        public IEnumerable<ITreeValueNode> TensorDimensionAsScalarNodes
+        {
+            get
+            {
+                List<string> names = TensorNodes.Distinct(this).Select(n => n.Label).ToList();
+                List<ITreeValueNode> nodes = new List<ITreeValueNode>();
+                foreach(ITreeValueNode n in TensorNodes.Distinct(this))
+                {
+                    if (n.Value is Scalar s && s.Label.Contains("DIM") && Char.IsDigit(s.Label.Last()))
+                    {
+                        string prefix = s.Label.Remove(s.Label.IndexOf("DIM"));
+                        if (names.Contains(prefix))
+                        {
+                            nodes.Add(n);
+                        }
+                    }
+                }
+                return nodes;
+            }
+        }
         public IEnumerable<ITreeValueNode> InputVariableNodes =>
             TensorNodes.Distinct(this)
             .Except(TensorDimensionNodes)
             .Except(DefinedVariableNodes)
+            .Except(TensorDimensionAsScalarNodes)
             .Where(n => n != OutputNode);
 
         protected HashSet<TreeNode> HashSet { get; } = new HashSet<TreeNode>();
