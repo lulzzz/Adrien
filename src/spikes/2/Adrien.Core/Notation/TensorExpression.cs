@@ -35,6 +35,9 @@ namespace Adrien.Notation
 
         public List<Index> IndexParameters => LinqExpression.GetParameters<Index>();
 
+        public bool IsTensorVariable => LinqExpression is ConstantExpression ce
+            && (ce.Type == typeof(Tensor) || ce.Type.BaseType == typeof(Tensor));
+
         internal override Type ExpressionType => LinqExpression.Type;
         
         

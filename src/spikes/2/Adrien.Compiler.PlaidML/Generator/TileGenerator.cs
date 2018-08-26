@@ -22,9 +22,8 @@ namespace Adrien.Compiler.PlaidML.Generator
 
         public override List<TensorOp> ContractionOperators { get; } = new List<TensorOp>()
         {
-            TensorOp.Sum
+            TensorOp.Sum, TensorOp.Product, TensorOp.Max, TensorOp.Min
         };
-
 
         public List<ITermShape> InputShapes => Tree.InputVariableNodes.Select(t => t.ValueAs<ITermShape>()).ToList();
             
@@ -47,13 +46,16 @@ namespace Adrien.Compiler.PlaidML.Generator
 
         public override void VisitInternal(ITreeOperatorNode<TensorOp> on)
         {
+            /* When the operand of a contraction op is not a tensor variable, synthesize a scalar variable
+             * to represent the expression
+            */
             if (TreeNodeIsContractionOp(on) && !(TreeNodeIsTensor(on.Left) || TreeNodeIsAssignmentOp(on.Left)))
             {
                 base.Visit(on.Left);
                 string lhs = GetNewVariableName("SY");
                 string rhs = (string) Context.Pop();
-                AddElementwiseVariableDefinition(lhs, rhs, Writer.GetOperator(TensorOp.ElementWiseAssign, lhs, rhs));
-                Context.Push(Writer.WriteOperator(on.Op, lhs));
+                AddElementwiseVariableDefinition(lhs, rhs, Writer.GetOperator(TensorOp.IndexedAssign, lhs, rhs));
+                Context.Push(Writer.WriteOperator(on.Op, lhs +"[]"));
                 return;
             }
             
@@ -79,7 +81,7 @@ namespace Adrien.Compiler.PlaidML.Generator
                         {
                             s = (string)Context.Pop();
                             lhs = s.Split('=').First().TrimEnd(); rhs = s.Split('=').Last().TrimEnd();
-                            AddIndexVariableDefinition(lhs, rhs, s);
+                            AddIndexedVariableDefinition(lhs, rhs, s);
                             Context.Push(lhs);
                             return;
                         }
@@ -99,7 +101,7 @@ namespace Adrien.Compiler.PlaidML.Generator
                             Visit(rhsOp.Left);
                             string contractionOp = (string) Context.Pop();
                             s = string.Format(Writer.GetOperatorTemplate(TensorOp.IndexedAssign), newLeftIndexVar, contractionOp);
-                            AddIndexVariableDefinition(newLeftIndexVar, contractionOp, s);
+                            AddIndexedVariableDefinition(newLeftIndexVar, contractionOp, s);
 
                             Visit(rhsOp.Right);
                             string rightOp = string.Format(Writer.GetOperatorTemplate(rhsOp.Op), newLeftIndexVarName, 

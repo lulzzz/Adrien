@@ -15,7 +15,7 @@ namespace Adrien.Generator
 
         public Dictionary<string, string> ElementwiseVariableDefinitions { get; } = new Dictionary<string, string>();
 
-        public Dictionary<string, string> IndexVariableDefinitions { get; } = new Dictionary<string, string>();
+        public Dictionary<string, string> IndexedVariableDefinitions { get; } = new Dictionary<string, string>();
 
         public string Text => Context.InternalNode;
 
@@ -92,16 +92,16 @@ namespace Adrien.Generator
             this.Writer.VariableDefinitions.Enqueue(definition);
         }
 
-        protected void AddIndexVariableDefinition(string name, string value, string definition)
+        protected void AddIndexedVariableDefinition(string name, string value, string definition)
         {
-            this.IndexVariableDefinitions.Add(name, value);
+            this.IndexedVariableDefinitions.Add(name, value);
             this.Writer.VariableDefinitions.Enqueue(definition);
         }
 
         protected string GetNewVariableName(string nameBase, int n = 0)
         {
             string name = nameBase + n.ToString();
-            if (IndexVariableDefinitions.ContainsKey(name) || ElementwiseVariableDefinitions.ContainsKey(name))
+            if (IndexedVariableDefinitions.ContainsKey(name) || ElementwiseVariableDefinitions.ContainsKey(name))
             {
                 return GetNewVariableName(nameBase, n + 1);
             }
