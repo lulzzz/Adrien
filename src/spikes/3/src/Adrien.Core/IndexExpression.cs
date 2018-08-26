@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Adrien.Core.Symbolic
+namespace Adrien.Core
 {
     public enum IndexExpressionArityKind
     {
@@ -21,7 +21,7 @@ namespace Adrien.Core.Symbolic
 
     /// <summary>
     /// An expression that logically represents the calculation
-    /// associated to index that parametrize the access to a symbol. 
+    /// associated to index that parametrizes the access to a symbol. 
     /// </summary>
     public class IndexExpression
     {

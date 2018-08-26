@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Adrien.Core.Symbolic
+namespace Adrien.Core
 {
     public enum StatementKind
     {
@@ -11,17 +11,17 @@ namespace Adrien.Core.Symbolic
     }
 
     /// <summary>
-    /// One logical calculation step within a flow.
+    /// One logical calculation step within a tile.
     /// </summary>
     public class Statement
     {
         public bool InitializeAtZero { get; set; }
 
-        public IndexedSymbol Left { get; set; }
+        public Element Left { get; set; }
 
         public StatementKind Kind { get; set; }
 
-        public Expression Expression { get; set; }
+        public ElementExpression Expression { get; set; }
 
         public IReadOnlyList<Index> Indices
         {
@@ -39,7 +39,7 @@ namespace Adrien.Core.Symbolic
             }
         }
 
-        public Statement(IndexedSymbol left, StatementKind kind, Expression expression)
+        public Statement(Element left, StatementKind kind, ElementExpression expression)
         {
             Left = left;
             Kind = kind;

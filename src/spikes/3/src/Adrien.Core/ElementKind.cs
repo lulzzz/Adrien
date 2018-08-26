@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Adrien.Core
+﻿namespace Adrien.Core
 {
     public enum ElementKind
     {

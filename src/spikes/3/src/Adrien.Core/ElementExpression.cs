@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Adrien.Core.Symbolic
+namespace Adrien.Core
 {
     public enum ArityKind
     {
@@ -25,9 +25,9 @@ namespace Adrien.Core.Symbolic
         Divide
     }
 
-    /// <summary>Abstract calculation that combines indexed symbols.
-    /// Represents the right part of a statement with a flow.</summary>
-    public class Expression
+    /// <summary>Abstract calculation that combines elements.
+    /// Represents the right part of a statement of a tile.</summary>
+    public class ElementExpression
     {
         public ArityKind ArityKind { get; set; }
 
@@ -35,19 +35,19 @@ namespace Adrien.Core.Symbolic
 
         public BinaryExpressionKind BinaryKind { get; set; }
 
-        public IReadOnlyList<IndexedSymbol> Symbols
+        public IReadOnlyList<Element> Symbols
         {
             get {  throw new NotImplementedException(); }
         }
 
-        public Expression(IndexedSymbol indexed)
+        public ElementExpression(Element indexed)
         {
             ArityKind = ArityKind.Term;
 
             throw new NotImplementedException();
         }
 
-        public Expression(UnaryExpressionKind kind, Expression expr)
+        public ElementExpression(UnaryExpressionKind kind, ElementExpression expr)
         {
             ArityKind = ArityKind.Unary;
             UnaryKind = kind;
@@ -55,7 +55,7 @@ namespace Adrien.Core.Symbolic
             throw new NotImplementedException();
         }
 
-        public Expression(BinaryExpressionKind kind, Expression expr1, Expression expr2)
+        public ElementExpression(BinaryExpressionKind kind, ElementExpression expr1, ElementExpression expr2)
         {
             ArityKind = ArityKind.Binary;
             BinaryKind = kind;
@@ -63,7 +63,7 @@ namespace Adrien.Core.Symbolic
             throw new NotImplementedException();
         }
 
-        public Expression(Expression test, Expression ifTrue, Expression ifFalse)
+        public ElementExpression(ElementExpression test, ElementExpression ifTrue, ElementExpression ifFalse)
         {
             ArityKind = ArityKind.Ternary;
 
