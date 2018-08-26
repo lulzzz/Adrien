@@ -35,8 +35,7 @@ namespace Adrien.Notation
 
         public List<Index> IndexParameters => LinqExpression.GetParameters<Index>();
 
-        public bool IsTensorVariable => LinqExpression is ConstantExpression ce
-            && (ce.Type == typeof(Tensor) || ce.Type.BaseType == typeof(Tensor));
+        public bool IsTensorVariable => LinqExpression.IsTensorVariable();
 
         internal override Type ExpressionType => LinqExpression.Type;
         
@@ -47,9 +46,24 @@ namespace Adrien.Notation
             Shape = new Shape();
         }
 
+        public TensorExpression(Expression e, Shape shape) : this(e)
+        {
+            Shape = shape;
+        }
+
         public TensorExpression(Expression e, params Dimension[] dim) : this(e)
         {
             Shape = new Shape(dim);
+        }
+
+        public TensorExpression(TensorExpression expr, Tensor lhs) : this(expr.LinqExpression, expr.Shape)
+        {
+            LHSTensor = lhs; 
+        }
+
+        public TensorExpression(Expression e, Tensor lhs, Shape shape) : this(e, lhs)
+        {
+            Shape = shape;
         }
 
         public TensorExpression(Expression e, Tensor lhs, params Dimension[] dim) : this(e, dim)
@@ -57,23 +71,6 @@ namespace Adrien.Notation
             this.LHSTensor = lhs;
         }
 
-        public TensorExpression(Expression e, Shape shape) : this(e)
-        {
-            Shape = shape;
-        }
-
-       
-        public TensorExpression(Expression e, Tensor lhs) : this(e)
-        {
-            this.LHSTensor = lhs;
-            Shape = new Shape();
-        }
-
-
-        public TensorExpression(Expression e, Tensor lhs, Shape shape) : this(e, lhs)
-        {
-            Shape = shape;
-        }
 
         public Dimension this[int dimension]
         {
@@ -83,7 +80,6 @@ namespace Adrien.Notation
             }
         }
 
-        
         public static TensorExpression operator -(TensorExpression left) => left.Negate();
 
         public static TensorExpression operator +(TensorExpression left, TensorExpression right) => left.Add(right);

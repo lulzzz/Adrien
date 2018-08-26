@@ -632,7 +632,7 @@ namespace Adrien.Expressions
         }
 
         [DebuggerStepThrough]
-        public static bool IsUndefinedTensor(this Expression expr) => 
-            (expr is ConstantExpression ce) && ce.Type == typeof(Tensor);
+        public static bool IsTensorVariable(this Expression expr) => 
+            (expr is ConstantExpression ce) && (ce.Type == typeof(Tensor) || ce.Type.BaseType == typeof(Tensor));
     }
 }

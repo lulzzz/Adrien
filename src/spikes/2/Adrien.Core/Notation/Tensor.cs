@@ -102,8 +102,8 @@ namespace Adrien.Notation
 
         public Tensor(string name, TensorExpression expr) : this(name)
         {
-            this.ElementwiseDefinition = new TensorExpression(expr.LinqExpression, this);
-            
+            this.ElementwiseDefinition = expr;
+            this.Shape = expr.Shape;
         }
 
         public TensorIndexExpression this[IndexSet I]
@@ -193,7 +193,7 @@ namespace Adrien.Notation
             }
             else
             {
-                return new TensorExpression(Expression.Constant(t));
+                return new TensorExpression(Expression.Constant(t), t.Shape);
             }
         }
 
