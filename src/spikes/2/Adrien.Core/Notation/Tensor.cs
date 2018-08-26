@@ -18,9 +18,11 @@ namespace Adrien.Notation
     {
         public Shape Shape { get; protected set; }
 
-        public int[] Dimensions => Shape.Count > 0 ? Shape.Select(d => d.Length).DefaultIfEmpty(0).ToArray() : new int[0];
+        public int[] Dimensions => 
+            Shape.Count > 0 ? Shape.Select(d => d.Length).ToArray() : new int[0];
 
-        public int[] Strides => Shape.Count > 0 ? Shape.Select(d => d.Stride).DefaultIfEmpty(0).ToArray() : new int[0];
+        public int[] Strides => 
+            Shape.Count > 0 ? Shape.Select(d => d.Stride).ToArray() : new int[0];
 
         public int Rank => Dimensions.Length;
 
@@ -111,18 +113,19 @@ namespace Adrien.Notation
             get
             {
                 ThrowIfIndicesExceedRank(1);
-
+                Dimension[] dim = new Dimension[I.Indices.Count];
                 int[] tdim = new int[I.Indices.Count];
                 int[] tidx = new int[I.Indices.Count];
                 for (int i = 0; i < tdim.Length; i++)
                 {
+                    dim[i] = this.Shape[i];
                     tdim[i] = 1;
                 }
 
                 Array t = Array.CreateInstance(typeof(Tensor), tdim);
                 t.SetValue(this, tidx);
-                Expression[] e = I.Indices.Select(i => Expression.Parameter(typeof(int), i.Name)).ToArray();
-                return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(t), e));
+                Expression[] e = I.Indices.Select(i => Expression.Parameter(typeof(int), i.Id)).ToArray();
+                return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(t), e), I, dim);
             }
             set
             {
@@ -146,14 +149,17 @@ namespace Adrien.Notation
                 ThrowIfIndicesExceedRank(indices.Length);
                 var t = Array.CreateInstance(typeof(Tensor), indices.Select((i,d) => this.Dimensions[d]).ToArray());
                 t.SetValue(this, new int[t.Rank]);
+                Dimension[] dim = indices.Select((i, d) => i.Type == IndexType.Dimension ? this.Shape[d] : 0).ToArray();
                 return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(t), 
-                    indices.Select(i => Expression.Parameter(typeof(int), i.Id)).ToArray()));
+                    indices.Select(i => Expression.Parameter(typeof(int), i.Id)).ToArray()), new IndexSet(this, indices),
+                    dim);
             }
             set
             {
                 ThrowIfAlreadyAssiged();
                 IndexSet s = new IndexSet(this, indices);
-                TensorContraction tc = new TensorContraction(value, this, s);
+                Dimension[] dim = indices.Select((i, d) => i.Type == IndexType.Dimension? this.Shape[d] : 0).ToArray();
+                TensorContraction tc = new TensorContraction(value, this, s, dim);
                 ContractionDefinition = (s, tc);
             }
         }
@@ -163,9 +169,9 @@ namespace Adrien.Notation
             get
             {
                 ThrowIfIndicesExceedRank(2);
-                Dimension[] shape = new[] { N };
+                IndexSet s = new IndexSet(this, index);
                 return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(new Tensor[] {this}), 
-                    new Expression[] { Expression.Parameter(typeof(int), index.Id) }), shape);
+                    new Expression[] { Expression.Parameter(typeof(int), index.Id) }), s, new[] { N });
             }
             set
             {
@@ -213,7 +219,7 @@ namespace Adrien.Notation
         {
             if (expr.LinqExpression is IndexExpression && expr.ExpressionType == typeof(Tensor))
             {
-                return expr.Tensors.Single();
+                return expr.TensorReferences.Single();
             }
             else
             {
@@ -429,6 +435,14 @@ namespace Adrien.Notation
             if (Rank < c)
                 throw new ArgumentOutOfRangeException(nameof(c),
                     "The number of indices exceeds the number of dimensions of this tensor.");
+        }
+
+        [DebuggerStepThrough]
+        internal void ThrowIfIndicesNotEqualToRank(int c)
+        {
+            if (Rank != c)
+                throw new ArgumentOutOfRangeException(nameof(c),
+                    "The number of indices is not the same as the number of dimensions of this tensor.");
         }
 
         [DebuggerStepThrough]

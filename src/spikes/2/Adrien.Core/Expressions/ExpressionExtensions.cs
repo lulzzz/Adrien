@@ -625,7 +625,7 @@ namespace Adrien.Expressions
         [DebuggerStepThrough]
         public static void ThrowIfNotType<T>(this Expression expr)
         {
-            if (expr.Type != typeof(T))
+            if (expr.Type != typeof(T) && expr.Type.BaseType != typeof(T))
             {
                 throw new ArgumentException($"This expression does not have type {typeof(T).Name}.");
             }

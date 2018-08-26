@@ -11,7 +11,9 @@ namespace Adrien.Notation
 {
     public class TensorIndexExpression : TensorExpression, IAlgebra<TensorIndexExpression, TensorIndexExpression>
     {
-        internal TensorIndexExpression(TensorExpression expr) : base(expr.LinqExpression)
+        public IndexSet IndexSet { get; protected set; }
+
+        internal TensorIndexExpression(TensorExpression expr) : base(expr.LinqExpression, expr.Shape)
         {
             if (!(expr.LinqExpression is UnaryExpression || expr.LinqExpression is BinaryExpression
                 || expr.LinqExpression is MethodCallExpression))
@@ -20,13 +22,14 @@ namespace Adrien.Notation
             }
         }
 
-        internal TensorIndexExpression(IndexExpression expr, params Dimension[] dim) : base(expr, dim)
+        internal TensorIndexExpression(IndexExpression expr, IndexSet set, Dimension[] dim) : base(expr, dim)
         {
             expr.ThrowIfNotType<Tensor>();
             if (!(expr.Object is ConstantExpression))
             {
                 throw new ArgumentException("This Linq expression cannot be used as a tensor index expression.");
-            }    
+            }
+            IndexSet = set;
         }
 
         internal TensorIndexExpression(MethodCallExpression expr, params Dimension[] dim) : base(expr, dim) {}

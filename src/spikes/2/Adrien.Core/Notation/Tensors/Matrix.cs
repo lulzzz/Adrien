@@ -57,8 +57,7 @@ namespace Adrien.Notation
             {
                 if (this.Columns.Length == vr.Length)
                 {
-                    return new TensorExpression(base.Multiply(right), new Dimension(this.Rows.Length, 0),
-                        new Dimension(vr.Length, 1));
+                    return new TensorExpression(base.Multiply(right), new Dimension(vr.Length, 1));
                 }
                 else
                 {

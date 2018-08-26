@@ -23,5 +23,7 @@ namespace Adrien.Compiler
         IRunnable<T> CompilerResult { get; }
 
         bool Compile();
+
+        IRunnable<T> Compile(out CompilerStatus status);
     }
 }

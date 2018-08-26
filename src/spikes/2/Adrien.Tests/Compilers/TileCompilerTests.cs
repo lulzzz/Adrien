@@ -150,24 +150,26 @@ namespace Adrien.Tests.Compilers
             Vector clients = new Vector("clients", ClientsDim), products = new Vector("products", ProductsDim),
                 labels = new Vector(HDim);
 
+            Assert.Equal(ClientsDim, clients[0].Length);
+
             var (W0, W1) = new Matrix("W0", HDim, ClientsDim).Two();
                                 
             var (b0, b1) = new Vector("b0", HDim).Two();
 
+            var z = new Scalar("z");
+
             var E1 = W0 * clients + b0;
             var E2 = W1 * clients + b1;
-            Scalar z = new Scalar("z", SUM[E1 * E2]);
 
-            Assert.Equal(ClientsDim, clients.Length);
-            Assert.Equal(2, E1.Rank);
-            Assert.Equal(2, E2.Rank);
+            Assert.Equal(1, E1.Rank);
+            Assert.Equal(1, E2.Rank);
+
+            z.def = SUM[E1 * E2];
+
             Assert.Equal(0, z.Rank);
 
             Kernel<int> kz = new Kernel<int>(z, new TileCompiler());
             Assert.True(kz.Compile());
-
-
-            
         }
     }
 }

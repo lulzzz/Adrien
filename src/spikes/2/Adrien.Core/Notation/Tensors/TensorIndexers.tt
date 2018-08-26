@@ -23,16 +23,17 @@ namespace Adrien.Notation
 				ThrowIfIndicesExceedRank(<#=i#>);
 				Dimension[] shape = new[] {<#for (int j = 1; j < i; j++) {#>N.n<#=j#>, <#}#>N.n<#=i#>};
 				return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(new Tensor[<#for (int j = 1; j < i; j++) {#>,<#}#>] <#for (int j = 1; j <= i; j++) {#>{<#}#>this<#for (int j = 1; j <= i; j++) {#>}<#}#>), 
-				new Expression[] {<#for (int j = 1; j < i; j++) {#>Expression.Parameter(typeof(int), index<#=j#>.Id), 
-				<#}#>Expression.Parameter(typeof(int), index<#=i#>.Id)}), shape);
+					new Expression[] {<#for (int j = 1; j < i; j++) {#>Expression.Parameter(typeof(int), index<#=j#>.Id), 
+						<#}#>Expression.Parameter(typeof(int), index<#=i#>.Id)}), 
+					new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>), shape);
 			}
 			set
 			{
 				ThrowIfAlreadyAssiged();
 				Dimension[] shape = new[] {<#for (int j = 1; j < i; j++) {#>N.n<#=j#>, <#}#>N.n<#=i#>};
-				IndexSet s = new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>);
-				TensorContraction tc = new TensorContraction(value, this, s, shape);
-				ContractionDefinition = (s, tc);
+				IndexSet lhsIndexSet = new IndexSet(this, <#for(int j = 1; j < i; j++){#>index<#=j#>, <#}#>index<#=i#>);
+				TensorContraction tc = new TensorContraction(value, this, lhsIndexSet, shape);
+				ContractionDefinition = (lhsIndexSet, tc);
 			}
 		}
 		<#}#>

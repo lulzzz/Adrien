@@ -19,7 +19,7 @@ namespace Adrien.Notation
 
         public IndexSet LHSIndexSet { get; protected set; }
 
-        public List<Tensor> Tensors => LinqExpression.GetConstants<Tensor>();
+        public List<Tensor> TensorReferences => LinqExpression.GetConstants<Tensor>();
 
         public Shape Shape { get; protected set; }
 
@@ -29,7 +29,7 @@ namespace Adrien.Notation
 
         public int Rank => Dimensions.Length;
 
-        public List<Tensor> InputVariables => Tensors.Where(t => !t.IsDefined).ToList();
+        public List<Tensor> InputVariables => TensorReferences.Where(t => !t.IsDefined).ToList();
 
         public List<Tensor> TensorInputVariables { get; protected set; }
 

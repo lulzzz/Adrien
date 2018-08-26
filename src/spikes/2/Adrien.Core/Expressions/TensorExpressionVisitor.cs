@@ -130,7 +130,7 @@ namespace Adrien.Trees
             base.VisitParameter(node);
 
             
-                var t = Context.Tensors.First();
+                var t = Context.TensorQueue.First();
                 var i = Context.TensorIndicesQueue.Count;
                 if (!Term.Terms.ContainsKey(node.Name))
                 {

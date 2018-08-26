@@ -158,6 +158,21 @@ namespace Adrien.Compiler
             return CompileSuccess;
         }
 
+        public IRunnable<T> Compile(out CompilerStatus status)
+        {
+            if (this.Compile())
+            {
+                status = this.Compiler.Status;
+                return CompilerResult;
+            }
+            else
+            {
+                status = this.Compiler.Status;
+                return null;
+            }
+        }
+       
+
         protected void ThrowIfNotCompileSuccess()
         {
             if (!CompileSuccess)

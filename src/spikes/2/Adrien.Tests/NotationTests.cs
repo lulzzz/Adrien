@@ -126,7 +126,7 @@ namespace Adrien.Tests
             Assert.Equal("c1", c1.Name);
             V1.def = c0 * V0 + c1;
             Assert.True(V1.IsDefined);
-            Assert.Equal(3, V1.ElementwiseDefinition.Tensors.Count);
+            Assert.Equal(3, V1.ElementwiseDefinition.TensorReferences.Count);
 
             var (x, y) = new Vector("x", 2).Two();
             Assert.Equal("x", x.Name);
@@ -134,7 +134,7 @@ namespace Adrien.Tests
             var (a, b) = new Scalar("a").Two();
             y.def = a * x + b;
             Assert.True(y.IsDefined);
-            Assert.Equal(3, y.ElementwiseDefinition.Tensors.Count);
+            Assert.Equal(3, y.ElementwiseDefinition.TensorReferences.Count);
         }
     }
 }

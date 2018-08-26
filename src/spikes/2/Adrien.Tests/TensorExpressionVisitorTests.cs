@@ -24,8 +24,8 @@ namespace Adrien.Tests
             var C = Tensor.TwoD("C", (8, 9));
             TensorExpression te = A[a, b];
 
-            Assert.Single(te.Tensors);
-            Assert.Equal(A, te.Tensors.First());
+            Assert.Single(te.TensorReferences);
+            Assert.Equal(A, te.TensorReferences.First());
 
             TensorExpressionVisitor v = new TensorExpressionVisitor(te);
 

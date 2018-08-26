@@ -13,16 +13,17 @@ namespace Adrien.Notation
 				ThrowIfIndicesExceedRank(2);
 				Dimension[] shape = new[] {N.n1, N.n2};
 				return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(new Tensor[,] {{this}}), 
-				new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
-				Expression.Parameter(typeof(int), index2.Id)}), shape);
+					new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
+						Expression.Parameter(typeof(int), index2.Id)}), 
+					new IndexSet(this, index1, index2), shape);
 			}
 			set
 			{
 				ThrowIfAlreadyAssiged();
 				Dimension[] shape = new[] {N.n1, N.n2};
-				IndexSet s = new IndexSet(this, index1, index2);
-				TensorContraction tc = new TensorContraction(value, this, s, shape);
-				ContractionDefinition = (s, tc);
+				IndexSet lhsIndexSet = new IndexSet(this, index1, index2);
+				TensorContraction tc = new TensorContraction(value, this, lhsIndexSet, shape);
+				ContractionDefinition = (lhsIndexSet, tc);
 			}
 		}
 		  
@@ -34,17 +35,18 @@ namespace Adrien.Notation
 				ThrowIfIndicesExceedRank(3);
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3};
 				return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(new Tensor[,,] {{{this}}}), 
-				new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
-				Expression.Parameter(typeof(int), index2.Id), 
-				Expression.Parameter(typeof(int), index3.Id)}), shape);
+					new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
+						Expression.Parameter(typeof(int), index2.Id), 
+						Expression.Parameter(typeof(int), index3.Id)}), 
+					new IndexSet(this, index1, index2, index3), shape);
 			}
 			set
 			{
 				ThrowIfAlreadyAssiged();
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3};
-				IndexSet s = new IndexSet(this, index1, index2, index3);
-				TensorContraction tc = new TensorContraction(value, this, s, shape);
-				ContractionDefinition = (s, tc);
+				IndexSet lhsIndexSet = new IndexSet(this, index1, index2, index3);
+				TensorContraction tc = new TensorContraction(value, this, lhsIndexSet, shape);
+				ContractionDefinition = (lhsIndexSet, tc);
 			}
 		}
 		  
@@ -56,18 +58,19 @@ namespace Adrien.Notation
 				ThrowIfIndicesExceedRank(4);
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3, N.n4};
 				return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(new Tensor[,,,] {{{{this}}}}), 
-				new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
-				Expression.Parameter(typeof(int), index2.Id), 
-				Expression.Parameter(typeof(int), index3.Id), 
-				Expression.Parameter(typeof(int), index4.Id)}), shape);
+					new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
+						Expression.Parameter(typeof(int), index2.Id), 
+						Expression.Parameter(typeof(int), index3.Id), 
+						Expression.Parameter(typeof(int), index4.Id)}), 
+					new IndexSet(this, index1, index2, index3, index4), shape);
 			}
 			set
 			{
 				ThrowIfAlreadyAssiged();
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3, N.n4};
-				IndexSet s = new IndexSet(this, index1, index2, index3, index4);
-				TensorContraction tc = new TensorContraction(value, this, s, shape);
-				ContractionDefinition = (s, tc);
+				IndexSet lhsIndexSet = new IndexSet(this, index1, index2, index3, index4);
+				TensorContraction tc = new TensorContraction(value, this, lhsIndexSet, shape);
+				ContractionDefinition = (lhsIndexSet, tc);
 			}
 		}
 		  
@@ -79,19 +82,20 @@ namespace Adrien.Notation
 				ThrowIfIndicesExceedRank(5);
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3, N.n4, N.n5};
 				return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(new Tensor[,,,,] {{{{{this}}}}}), 
-				new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
-				Expression.Parameter(typeof(int), index2.Id), 
-				Expression.Parameter(typeof(int), index3.Id), 
-				Expression.Parameter(typeof(int), index4.Id), 
-				Expression.Parameter(typeof(int), index5.Id)}), shape);
+					new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
+						Expression.Parameter(typeof(int), index2.Id), 
+						Expression.Parameter(typeof(int), index3.Id), 
+						Expression.Parameter(typeof(int), index4.Id), 
+						Expression.Parameter(typeof(int), index5.Id)}), 
+					new IndexSet(this, index1, index2, index3, index4, index5), shape);
 			}
 			set
 			{
 				ThrowIfAlreadyAssiged();
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3, N.n4, N.n5};
-				IndexSet s = new IndexSet(this, index1, index2, index3, index4, index5);
-				TensorContraction tc = new TensorContraction(value, this, s, shape);
-				ContractionDefinition = (s, tc);
+				IndexSet lhsIndexSet = new IndexSet(this, index1, index2, index3, index4, index5);
+				TensorContraction tc = new TensorContraction(value, this, lhsIndexSet, shape);
+				ContractionDefinition = (lhsIndexSet, tc);
 			}
 		}
 		  
@@ -103,20 +107,21 @@ namespace Adrien.Notation
 				ThrowIfIndicesExceedRank(6);
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3, N.n4, N.n5, N.n6};
 				return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(new Tensor[,,,,,] {{{{{{this}}}}}}), 
-				new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
-				Expression.Parameter(typeof(int), index2.Id), 
-				Expression.Parameter(typeof(int), index3.Id), 
-				Expression.Parameter(typeof(int), index4.Id), 
-				Expression.Parameter(typeof(int), index5.Id), 
-				Expression.Parameter(typeof(int), index6.Id)}), shape);
+					new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
+						Expression.Parameter(typeof(int), index2.Id), 
+						Expression.Parameter(typeof(int), index3.Id), 
+						Expression.Parameter(typeof(int), index4.Id), 
+						Expression.Parameter(typeof(int), index5.Id), 
+						Expression.Parameter(typeof(int), index6.Id)}), 
+					new IndexSet(this, index1, index2, index3, index4, index5, index6), shape);
 			}
 			set
 			{
 				ThrowIfAlreadyAssiged();
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3, N.n4, N.n5, N.n6};
-				IndexSet s = new IndexSet(this, index1, index2, index3, index4, index5, index6);
-				TensorContraction tc = new TensorContraction(value, this, s, shape);
-				ContractionDefinition = (s, tc);
+				IndexSet lhsIndexSet = new IndexSet(this, index1, index2, index3, index4, index5, index6);
+				TensorContraction tc = new TensorContraction(value, this, lhsIndexSet, shape);
+				ContractionDefinition = (lhsIndexSet, tc);
 			}
 		}
 		  
@@ -128,21 +133,22 @@ namespace Adrien.Notation
 				ThrowIfIndicesExceedRank(7);
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3, N.n4, N.n5, N.n6, N.n7};
 				return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(new Tensor[,,,,,,] {{{{{{{this}}}}}}}), 
-				new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
-				Expression.Parameter(typeof(int), index2.Id), 
-				Expression.Parameter(typeof(int), index3.Id), 
-				Expression.Parameter(typeof(int), index4.Id), 
-				Expression.Parameter(typeof(int), index5.Id), 
-				Expression.Parameter(typeof(int), index6.Id), 
-				Expression.Parameter(typeof(int), index7.Id)}), shape);
+					new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
+						Expression.Parameter(typeof(int), index2.Id), 
+						Expression.Parameter(typeof(int), index3.Id), 
+						Expression.Parameter(typeof(int), index4.Id), 
+						Expression.Parameter(typeof(int), index5.Id), 
+						Expression.Parameter(typeof(int), index6.Id), 
+						Expression.Parameter(typeof(int), index7.Id)}), 
+					new IndexSet(this, index1, index2, index3, index4, index5, index6, index7), shape);
 			}
 			set
 			{
 				ThrowIfAlreadyAssiged();
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3, N.n4, N.n5, N.n6, N.n7};
-				IndexSet s = new IndexSet(this, index1, index2, index3, index4, index5, index6, index7);
-				TensorContraction tc = new TensorContraction(value, this, s, shape);
-				ContractionDefinition = (s, tc);
+				IndexSet lhsIndexSet = new IndexSet(this, index1, index2, index3, index4, index5, index6, index7);
+				TensorContraction tc = new TensorContraction(value, this, lhsIndexSet, shape);
+				ContractionDefinition = (lhsIndexSet, tc);
 			}
 		}
 		  
@@ -154,22 +160,23 @@ namespace Adrien.Notation
 				ThrowIfIndicesExceedRank(8);
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3, N.n4, N.n5, N.n6, N.n7, N.n8};
 				return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(new Tensor[,,,,,,,] {{{{{{{{this}}}}}}}}), 
-				new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
-				Expression.Parameter(typeof(int), index2.Id), 
-				Expression.Parameter(typeof(int), index3.Id), 
-				Expression.Parameter(typeof(int), index4.Id), 
-				Expression.Parameter(typeof(int), index5.Id), 
-				Expression.Parameter(typeof(int), index6.Id), 
-				Expression.Parameter(typeof(int), index7.Id), 
-				Expression.Parameter(typeof(int), index8.Id)}), shape);
+					new Expression[] {Expression.Parameter(typeof(int), index1.Id), 
+						Expression.Parameter(typeof(int), index2.Id), 
+						Expression.Parameter(typeof(int), index3.Id), 
+						Expression.Parameter(typeof(int), index4.Id), 
+						Expression.Parameter(typeof(int), index5.Id), 
+						Expression.Parameter(typeof(int), index6.Id), 
+						Expression.Parameter(typeof(int), index7.Id), 
+						Expression.Parameter(typeof(int), index8.Id)}), 
+					new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8), shape);
 			}
 			set
 			{
 				ThrowIfAlreadyAssiged();
 				Dimension[] shape = new[] {N.n1, N.n2, N.n3, N.n4, N.n5, N.n6, N.n7, N.n8};
-				IndexSet s = new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8);
-				TensorContraction tc = new TensorContraction(value, this, s, shape);
-				ContractionDefinition = (s, tc);
+				IndexSet lhsIndexSet = new IndexSet(this, index1, index2, index3, index4, index5, index6, index7, index8);
+				TensorContraction tc = new TensorContraction(value, this, lhsIndexSet, shape);
+				ContractionDefinition = (lhsIndexSet, tc);
 			}
 		}
 			}

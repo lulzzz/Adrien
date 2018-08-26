@@ -4,13 +4,21 @@ using System.Linq;
 using System.Text;
 
 using Xunit;
+using Adrien.Compiler;
 using Adrien.Notation;
+using Adrien.Log;
 using static Adrien.Notation.TensorOperators;
+using Adrien.Compiler.PlaidML;
 
 namespace Adrien.Tests
 {
     public class TensorOperatorsTests
     {
+        public TensorOperatorsTests()
+        {
+            CompilerDriver.SetLogger(() => SerilogLogger.CreateDefaultLogger("Adrien.Tests.log"));
+        }
+
         [Fact]
         public void CanContructContractionOperation()
         {
@@ -19,20 +27,27 @@ namespace Adrien.Tests
             var (a, b) = new Scalar().Two("a", "b");
 
             ypred.def = a * x + b;
-            Assert.Equal(3, ypred.ElementwiseDefinition.Tensors.Count);
+            Assert.Equal(3, ypred.ElementwiseDefinition.TensorReferences.Count);
             yerror.def = SQUARE[yactual - ypred];
-            Assert.Equal(4, yerror.ElementwiseDefinition.Tensors.Count); 
+            Assert.Equal(4, yerror.ElementwiseDefinition.TensorReferences.Count); 
             yloss[i, i / 2] = SUM[yerror[i]];
             Assert.True(yloss.IsDefined);
             TensorContraction c = yloss.ContractionDefinition.Expression;
-            Assert.True(c.Tensors.Single() == yerror);
+            Assert.True(c.TensorReferences.Single() == yerror);
         }
 
         [Fact]
         public void CanConstructMeanOperation()
         {
-            var (M, N, O) = new Matrix(6, 6, out Index i, out Index j).Three();
-            O[i] = MEAN[M[i]];
+            var (M, N, O) = new Matrix("M", 2, 2, out Index i, out Index j).Three();
+            Scalar m = new Scalar("m");
+            m.def = MEAN[M];
+            Assert.True(m.IsDefined);
+            Assert.Equal(0, m.Rank);
+            Kernel<int> km = new Kernel<int>(m, new TileCompiler());
+            var r = km.Compile(out CompilerStatus status);
+            Assert.Equal(CompilerStatus.Success, status);
+            var rs = r.Run(N.Var(new int[4]), M.Var(3, 3, 3, 3));
         }
     }
 }
