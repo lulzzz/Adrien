@@ -22,7 +22,8 @@ namespace Adrien.Tests
         public void CanCompileLinearRegressionKernel()
         {
             TileCompiler compiler = new TileCompiler();
-            var (yactual, a, x, b) = new Vector(5, out Index i).Four("yactual", "a", "x", "b");
+            var (yactual, x) = new Vector(5, out Index i).Two("yactual", "x");
+            Scalar a = new Scalar("a"), b = new Scalar("b");
             var ypred = a * x + b;
             var yloss = MEAN[SQUARE[yactual - ypred]];
             Kernel<int> loss = new Kernel<int>(yloss, compiler);
