@@ -52,7 +52,7 @@ namespace Adrien.Notation
             {
                 if (value is TensorIndexExpression)
                 {
-                    ContractionDefinition = (null, new TensorContraction((TensorIndexExpression)value, this, null));
+                    ContractionDefinition = (null, new TensorContraction((TensorIndexExpression) value, this, null));
                 }
                 else
                 {
@@ -97,40 +97,44 @@ namespace Adrien.Notation
 
         public Tensor(ITermShape shape) : this(shape.Label, shape.Dimensions) {}
 
-        public Tensor(string name, TensorIndexExpression expr) : this(name, expr.Dimensions)
-        {
-            this.ContractionDefinition = (null, new TensorContraction(expr, this));
-        }
-
         public Tensor(string name, TensorExpression expr) : this(name)
         {
             this.ElementwiseDefinition = expr;
             this.Shape = expr.Shape;
         }
 
+
         public TensorIndexExpression this[IndexSet I]
         {
             get
             {
                 ThrowIfIndicesExceedRank(1);
-                Dimension[] dim = new Dimension[I.Indices.Count];
+                List<Dimension> dim = new List<Dimension>(Shape.Count - I.Indices.Count);
                 int[] tdim = new int[I.Indices.Count];
                 int[] tidx = new int[I.Indices.Count];
+     
                 for (int i = 0; i < tdim.Length; i++)
                 {
-                    dim[i] = this.Shape[i];
                     tdim[i] = 1;
                 }
-
+                
+                for (int i = 0; i < this.Dimensions.Length; i++)
+                {
+                    if (!I.IntegerIndices.Contains(i))
+                    {
+                        dim.Add(this.Shape[i]);
+                    }
+                }
+                
                 Array t = Array.CreateInstance(typeof(Tensor), tdim);
                 t.SetValue(this, tidx);
                 Expression[] e = I.Indices.Select(i => Expression.Parameter(typeof(int), i.Id)).ToArray();
-                return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(t), e), I, dim);
+                return new TensorIndexExpression(Expression.ArrayAccess(Expression.Constant(t), e), I, dim.ToArray());
             }
             set
             {
                 ThrowIfAlreadyAssiged();
-                if (value is TensorContraction && value.LinqExpression.NodeType == 
+                if (value is TensorContraction && value.LinqExpression.NodeType ==
                     System.Linq.Expressions.ExpressionType.Call)
                 {
                     ContractionDefinition = (I, value as TensorContraction);
@@ -157,7 +161,7 @@ namespace Adrien.Notation
             set
             {
                 ThrowIfAlreadyAssiged();
-                IndexSet s = new IndexSet(this, indices);
+                IndexSet s = new IndexSet(this);
                 Dimension[] dim = indices.Select((i, d) => i.Type == IndexType.Dimension? this.Shape[d] : 0).ToArray();
                 TensorContraction tc = new TensorContraction(value, this, s, dim);
                 ContractionDefinition = (s, tc);
@@ -268,7 +272,15 @@ namespace Adrien.Notation
         public static TensorExpression operator /(Tensor left, Tensor right) => left.Divide(right);
 
 
-       
+        public virtual TensorExpression Negate() => -(TensorExpression) this;
+
+        public virtual TensorExpression Add(Tensor right) => (TensorExpression) this + right;
+
+        public virtual TensorExpression Subtract(Tensor right) => (TensorExpression) this - right;
+
+        public virtual TensorExpression Multiply(Tensor right) => (TensorExpression) this * right;
+
+        public virtual TensorExpression Divide(Tensor right) => (TensorExpression) this / right;
 
         public TensorExpression GetDimensionProductExpression(List<Index> indices)
         {
@@ -280,16 +292,6 @@ namespace Adrien.Notation
             }
             return mulExpr;
         }
-
-        public virtual TensorExpression Negate() => -(TensorExpression) this;
-
-        public virtual TensorExpression Add(Tensor right) => (TensorExpression) this + right;
-
-        public virtual TensorExpression Subtract(Tensor right) => (TensorExpression) this - right;
-
-        public virtual TensorExpression Multiply(Tensor right) => (TensorExpression) this * right;
-
-        public virtual TensorExpression Divide(Tensor right) => (TensorExpression) this / right;
 
         public Tensor With(out Tensor with)
         {
@@ -352,7 +354,7 @@ namespace Adrien.Notation
             }
             else
             {
-                return new TensorExpression(LinqExpression).ToTree();
+                return ((TensorExpression) this).ToTree();
             }
         }
 

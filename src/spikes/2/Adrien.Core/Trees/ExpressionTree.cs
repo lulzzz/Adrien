@@ -202,6 +202,34 @@ namespace Adrien.Trees
 
         public int CountChildren() => CountChildren(this);
 
+        public bool TreeNodeIsDimensionVariable(ITreeNode node)
+        {
+            if (node is ITreeValueNode vn)
+            {
+                List<string> names = TensorNodes.Distinct(this).Select(n => n.Label).ToList();
+                if (vn.Value is Scalar s && s.Label.Contains("DIM") && Char.IsDigit(s.Label.Last()))
+                {
+                    string prefix = s.Label.Remove(s.Label.IndexOf("DIM"));
+                    if (names.Contains(prefix))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public int GetHashCode(ITreeNode node)
         {
             return (node.Label).GetHashCode();

@@ -40,7 +40,7 @@ namespace Adrien.Notation
             var tensor = (Tensor) l;
             var indices = l.IndexSet.Indices.ToList();
             var mulExpr = tensor.GetDimensionProductExpression(indices);
-            return Sum(l) / mulExpr;
+            return Sum(l) / tensor.GetDimensionProductExpression(indices);
         }
     }
 

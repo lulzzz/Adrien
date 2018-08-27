@@ -68,7 +68,7 @@ namespace Adrien.Notation
         public static implicit operator Dimension(int d) => new Dimension(d);
 
         public static explicit operator Scalar(Dimension d) => d.DimensionType == DimensionType.Constant ?
-            new Scalar(d.Label) : throw new ArgumentException("The specified dimension is not a dimension constant");
+            new Scalar(d.Label, true) : throw new ArgumentException("The specified dimension is not a dimension constant");
 
         public Dimension Negate() => new Dimension(Expression.Negate(DimensionExpression, 
             GetDummyUnaryMethodInfo<Dimension, Dimension>(this)));

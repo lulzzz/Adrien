@@ -4,13 +4,16 @@ namespace Adrien.Notation
 {
     public partial class Scalar : Tensor
     {
-        internal override Name DefaultNameBase => "a";
-
         public object Value { get; protected set; }
 
-        public Scalar(string name) : base(name, new int[0])
+        public bool IsDimensionVariable { get; protected set; }
+
+        internal override Name DefaultNameBase => "a";
+
+
+        public Scalar(string name, bool isDimensionVariable = false) : base(name, new int[0])
         {
-            this.Shape = new Shape();
+            this.IsDimensionVariable = isDimensionVariable;
         }
 
         public Scalar() : this("a") {}

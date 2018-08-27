@@ -19,10 +19,6 @@ namespace Adrien.Notation
 
         public int Order { get; internal set; }
 
-        public int? Dimension { get; internal set; }
-
-        public int N => Dimension ?? throw new Exception();
-
         protected Expression IndexExpression { get; set; }
 
         internal override Expression LinqExpression =>
@@ -37,7 +33,6 @@ namespace Adrien.Notation
         {
             Set = set;
             Order = order;
-            Dimension = dim;
             Type = IndexType.Dimension;
         }
 
@@ -93,20 +88,6 @@ namespace Adrien.Notation
             return Order.CompareTo(i.Order);
         }
 
-        /*
-        internal Type GetIndexSystemType()
-        {
-            if (Type == IndexType.Constant)
-            {
-                return typeof(Index);
-            }
-            else if (DimensionExpression.LinqExpression.NodeType == ExpressionType.Constant)
-            {
-                return (DimensionExpression.LinqExpression as ConstantExpression).Type;
-            }
-            else return typeof(DimensionExpression);
-        }
-        */
         private static MethodInfo GetDummyBinaryMethodInfo(Index l, Index r)
         {
             var method = typeof(Index).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)

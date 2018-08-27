@@ -13,6 +13,8 @@ namespace Adrien.Notation
 
         public SortedSet<Index> Indices { get; protected set; }
 
+        public SortedSet<int> IntegerIndices { get; protected set; }
+
         public Tensor Tensor { get; protected set; }
 
         public ITerm Parent => Tensor;
@@ -32,6 +34,7 @@ namespace Adrien.Notation
             {
                 Indices.Add(new Index(this, i, dim[i], GenerateName(i, indexNameBase)));
             }
+            IntegerIndices = new SortedSet<int>(Indices.Select(i => i.Order));
 
             Name = dim.Length > 0
                 ? Indices.Select(i => i.Name).Aggregate((a, b) => a + b)

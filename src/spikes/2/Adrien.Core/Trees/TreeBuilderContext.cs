@@ -65,8 +65,9 @@ namespace Adrien.Trees
             if (value is Tensor && TensorIndicesQueue.Count > 0)
             {
                 Tensor t = value as Tensor;
-                throw new Exception(
-                    $"Attempting to add new value node for Tensor {t.Name} but the tensor indices queue still has {TensorIndicesQueue.Count} elements and last element: {TensorIndicesQueue.Peek().Name}");
+                throw new ExpressionTreeException(ExpressionTree,
+                    $"Attempting to add new value node for Tensor {t.Name} but the tensor indices queue still has " 
+                + $"{TensorIndicesQueue.Count} elements and last element: {TensorIndicesQueue.Peek().Name}");
             }
 
             var parent = InternalNodeAsOperatorNode;

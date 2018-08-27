@@ -17,5 +17,7 @@ namespace Adrien.Trees
         IEnumerable<ITreeValueNode> DefinedVariableNodes { get; }
 
         IEnumerable<ITreeValueNode> InputVariableNodes { get; }
+
+        bool TreeNodeIsDimensionVariable(ITreeNode node);
     }
 }

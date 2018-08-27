@@ -26,7 +26,7 @@ namespace Adrien.Compiler.PlaidML.Generator
         };
 
         public List<ITermShape> InputShapes => Tree.InputVariableNodes.Select(t => t.ValueAs<ITermShape>()).ToList();
-            
+
         public Dictionary<ITreeValueNode, string> TensorDimensionVariables { get; protected set; }
 
         public string FunctionText { get; protected set; }
@@ -53,12 +53,12 @@ namespace Adrien.Compiler.PlaidML.Generator
             {
                 base.Visit(on.Left);
                 string lhs = GetNewVariableName("SYN");
-                string rhs = (string) Context.Pop();
+                string rhs = (string)Context.Pop();
                 AddElementwiseVariableDefinition(lhs, rhs, Writer.GetOperator(TensorOp.IndexedAssign, lhs, rhs));
-                Context.Push(Writer.WriteOperator(on.Op, lhs +"[]"));
+                Context.Push(Writer.WriteOperator(on.Op, lhs + "[]"));
                 return;
             }
-            
+
             switch (on.Op)
             {
                 case TensorOp.ElementWiseAssign:
@@ -89,7 +89,7 @@ namespace Adrien.Compiler.PlaidML.Generator
                     else
                     {
                         var rhsOp = (ITreeOperatorNode<TensorOp>)on.Right;
-                        if (TreeNodeIsContractionOp(rhsOp.Left) && 
+                        if (TreeNodeIsContractionOp(rhsOp.Left) &&
                            (TreeNodeIsElementwiseOp(rhsOp.Right) || TreeNodeIsTensorValue(rhsOp.Right)))
                         {
                             string leftIndexVarName = on.Left.Left.Label.ToUpper();
@@ -99,25 +99,59 @@ namespace Adrien.Compiler.PlaidML.Generator
                             string newLeftIndexVar = leftIndexVar.Replace(leftIndexVarName, newLeftIndexVarName);
 
                             Visit(rhsOp.Left);
-                            string contractionOp = (string) Context.Pop();
+                            string contractionOp = (string)Context.Pop();
                             s = string.Format(Writer.GetOperatorTemplate(TensorOp.IndexedAssign), newLeftIndexVar, contractionOp);
                             AddIndexedVariableDefinition(newLeftIndexVar, contractionOp, s);
 
                             Visit(rhsOp.Right);
-                            string rightOp = string.Format(Writer.GetOperatorTemplate(rhsOp.Op), newLeftIndexVarName, 
+                            string rightOp = string.Format(Writer.GetOperatorTemplate(rhsOp.Op), newLeftIndexVarName,
                                 (string)Context.Pop());
-                            s = string.Format(Writer.GetOperatorTemplate(TensorOp.ElementWiseAssign), leftIndexVarName, rightOp); 
+                            s = string.Format(Writer.GetOperatorTemplate(TensorOp.ElementWiseAssign), leftIndexVarName, rightOp);
                             AddElementwiseVariableDefinition(leftIndexVarName, rightOp, s);
                             Context.Push(Writer.WriteOperator(TensorOp.ElementWiseAssign, leftIndexVarName, rightOp));
                         }
                         return;
-                        
+
                     }
 
                 default:
                     base.VisitInternal(on);
                     return;
             }
+        }
+
+        public override void VisitLeaf(ITreeValueNode node)
+        {
+            if (!TreeNodeIsDimensionVariable(node))
+            {
+                base.VisitLeaf(node);
+                return;
+            }
+            else
+            {
+                (ITreeValueNode parent, int dim) = GetDimensionVariableParent(node);
+                if (Tree.InputVariableNodes.Contains(parent))
+                {
+                    base.VisitLeaf(node);
+                    return;
+                }
+                else
+                {
+                    ITermShape parentShape = parent.ValueAs<ITermShape>();
+                    ITermShape substituteParentShape =
+                        InputShapes.FirstOrDefault(s => s.Dimensions.SequenceEqual(parentShape.Dimensions));
+                    if (substituteParentShape == null)
+                    {
+                        throw new TileGeneratorException(this, "Could not find input variable node to substitute for "
+                            + $"{parentShape.Label}.");
+                    }
+                    else
+                    {
+                        Context.Push(substituteParentShape.Label.ToUpper() + "DIM" + dim.ToString());
+                    }
+                }
+            }
+
         }
 
         protected bool TreeNodeIsTensorValue(ITreeNode node) =>
@@ -146,7 +180,7 @@ namespace Adrien.Compiler.PlaidML.Generator
             {
                 return vn.NodeType == ValueNodeType.TENSOR;
             }
-            else if ((on.Left is ITreeOperatorNode<TensorOp> op) 
+            else if ((on.Left is ITreeOperatorNode<TensorOp> op)
                  && (op.Op == TensorOp.ElementWiseAssign || op.Op == TensorOp.IndexedAssign))
             {
                 return TreeOperatorNodeLHSIsTensor(op);
@@ -155,6 +189,25 @@ namespace Adrien.Compiler.PlaidML.Generator
             {
                 return false;
             }
+        }
+
+        protected bool TreeNodeIsDimensionVariable(ITreeNode node) => Tree.TreeNodeIsDimensionVariable(node);
+
+        protected (ITreeValueNode parent, int dim) GetDimensionVariableParent(ITreeValueNode node)
+        {
+            if (!TreeNodeIsDimensionVariable(node))
+            {
+                throw new ArgumentException($"The {node.Label} is not a dimension variable.");
+            }
+            ITermShape dim = node.ValueAs<ITermShape>();
+            string[] p = dim.Label.Split(new[] { "DIM" }, StringSplitOptions.RemoveEmptyEntries);
+            if (p.Length != 2 || !int.TryParse(p[1], out int idx))
+            {
+                throw new TileGeneratorException(this, $"Could not parse the dimension variable label {node.Label}");
+            }
+            ITreeValueNode parent =
+                Tree.TensorNodes.First(shape => shape.Label == p[0]);
+            return (parent, idx);
         }
 
         protected string WriteInputVariableDimensions(ITermShape input)

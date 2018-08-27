@@ -45,6 +45,8 @@ namespace Adrien.Notation
         {
             expr.ThrowIfNotType<TensorIndexExpression>();
         }
+        
+        internal TensorIndexExpression(TensorIndexExpression tie) : base(tie.LinqExpression, new Dimension[0]) {}
 
         internal TensorIndexExpression(TensorIndexExpression c, params Dimension[] dim) : base(c.LinqExpression, dim)
         { }

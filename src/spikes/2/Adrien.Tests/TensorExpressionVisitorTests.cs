@@ -38,7 +38,7 @@ namespace Adrien.Tests
 
             IndexSet s = v.Tree.ValueNodeAtIndex(4).ValueAs<IndexSet>();
             Assert.Equal(2, s.Indices.Count);
-            Assert.Equal(4, s.Indices.ElementAt(0).Dimension);
+            Assert.Equal(1, s.Indices.ElementAt(1).Order);
             Assert.Equal("b", s.Indices.ElementAt(1).Name);
         }
 
