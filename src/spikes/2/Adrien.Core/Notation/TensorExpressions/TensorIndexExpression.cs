@@ -13,13 +13,17 @@ namespace Adrien.Notation
     {
         public IndexSet IndexSet { get; protected set; }
 
-        internal TensorIndexExpression(TensorExpression expr) : base(expr.LinqExpression, expr.Shape)
+        public Shape ExpressionShape { get; protected set; }
+
+        internal TensorIndexExpression(TensorExpression expr) : base(expr.LinqExpression)
         {
             if (!(expr.LinqExpression is UnaryExpression || expr.LinqExpression is BinaryExpression
                 || expr.LinqExpression is MethodCallExpression))
             {
                 throw new ArgumentException("This tensor expression cannot be used as a tensor index expression");
             }
+            ExpressionShape = expr.Shape;
+
         }
 
         internal TensorIndexExpression(IndexExpression expr, IndexSet set, Dimension[] dim) : base(expr, dim)
@@ -54,6 +58,7 @@ namespace Adrien.Notation
         internal TensorIndexExpression(TensorIndexExpression c, Tensor lhsTensor, params Dimension[] dim) :
             base(c.LinqExpression, lhsTensor, dim)
         { }
+
 
         public TensorIndexExpression this[Dimension n] => new TensorIndexExpression(this, n);
   
@@ -100,6 +105,18 @@ namespace Adrien.Notation
 
         public TensorIndexExpression Divide(TensorIndexExpression right) => new TensorIndexExpression(Expression.Divide(this, right,
             GetDummyBinaryMethodInfo<TensorIndexExpression, TensorIndexExpression>(this, right)));
+
+        public TensorExpression GetDimensionProductExpression()
+        {
+            Shape exprShape = this.IndexSet != null ? this.IndexSet.Tensor.Shape : this.ExpressionShape;  
+            TensorExpression mulExpr = exprShape.Count() > 1 ?
+               (Scalar)exprShape[0] * (Scalar)exprShape[1] : (Scalar)exprShape[0];
+            for (int i = 2; i < exprShape.Count(); i++)
+            {
+                mulExpr = mulExpr * (Scalar)exprShape[i];
+            }
+            return mulExpr;
+        }
 
         private static TensorIndexExpression DummyUnary(Tensor l) => null;
         private static TensorIndexExpression DummyBinary(Tensor l, Tensor r) => null;

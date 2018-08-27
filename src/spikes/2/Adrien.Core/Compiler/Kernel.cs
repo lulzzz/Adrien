@@ -88,7 +88,6 @@ namespace Adrien.Compiler
             }
 
             Tree = output.ToTree();
-
             InputShapes = InputTensors;
             OutputShape = output;
         }
@@ -97,12 +96,6 @@ namespace Adrien.Compiler
         {
             Compiler = compiler;
             DeviceType = deviceType;
-        }
-
-        public Kernel(TensorExpression expr)
-        {
-            Tree = expr.ToTree();
-            InputShapes = InputTensors;
         }
 
         public Kernel(Tensor output, TensorExpression expr)
@@ -120,7 +113,7 @@ namespace Adrien.Compiler
         }
 
         public Kernel(TensorExpression expr, ICompiler compiler, DeviceType deviceType = DeviceType.CPU)
-            : this(expr)
+            : this(new Tensor("O", expr))
         {
             Compiler = compiler;
             DeviceType = deviceType;

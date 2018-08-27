@@ -7,7 +7,7 @@ using Xunit;
 using Adrien.Compiler;
 using Adrien.Notation;
 using Adrien.Log;
-using static Adrien.Notation.TensorOperators;
+using static Adrien.Notation.Operators;
 using Adrien.Compiler.PlaidML;
 
 namespace Adrien.Tests

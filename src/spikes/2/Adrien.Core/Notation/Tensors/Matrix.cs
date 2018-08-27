@@ -42,31 +42,32 @@ namespace Adrien.Notation
         {
             if (right is Matrix r)
             {
-
                 if (this.Columns.Length == r.Rows.Length)
                 {
-                    return new TensorExpression(this * right, new Dimension(this.Rows.Length, 0),
-                        new Dimension(r.Columns.Length, 1));
+                    return new TensorExpression(this * right, new Shape(this, new Dimension(this.Rows.Length, 0),
+                        new Dimension(r.Columns.Length, 1)));
                 }
                 else
                 {
-                    throw new ArgumentException("The number of columns of the LHS matrix does not match the number of RHS rows.");
+                    throw new TensorExpressionException(this, 
+                        "The number of columns of the LHS matrix does not match the number of RHS matrix rows.");
                 }
             }
             else if (right is Vector vr)
             {
                 if (this.Columns.Length == vr.Length)
                 {
-                    return new TensorExpression(base.Multiply(right), new Dimension(vr.Length, 1));
+                    return new TensorExpression(base.Multiply(right), new Shape(this, new Dimension(vr.Length, 1)));
                 }
                 else
                 {
-                    throw new ArgumentException("The number of columns of the LHS matrix does not match the length of the RHS vector.");
+                    throw new TensorExpressionException(this,
+                        "The number of columns of the LHS matrix does not match the length of the RHS vector.");
                 }
             }
             else
             {
-                throw new ArgumentException("The RHS tensor is not a matrix or a vector.");
+                throw new TensorExpressionException(this, "The RHS tensor is not a matrix or a vector.");
             }
         }
 

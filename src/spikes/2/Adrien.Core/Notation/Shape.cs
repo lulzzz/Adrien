@@ -20,7 +20,17 @@ namespace Adrien.Notation
             }
         }
 
-        internal Shape(int[] dim, Tensor t = null) 
+        internal Shape(Tensor t, params Dimension[] dim) : base(dim)
+        {
+            Tensor = t;
+            if (dim == null)
+            {
+                throw new ArgumentNullException("The dim parameter cannot be null in this constructor.");
+            }
+        }
+
+
+        internal Shape(int[] dim, Tensor t) 
         {
             if (dim == null)
             {
@@ -44,7 +54,7 @@ namespace Adrien.Notation
                 }
                 else
                 {
-                    Tensor.ThrowIfIndicesExceedRank(i.Order);
+                    Tensor?.ThrowIfIndicesExceedRank(i.Order);
                     return base[i.Order];
                 }
             }
@@ -55,7 +65,8 @@ namespace Adrien.Notation
         public static explicit operator IndexSet(Shape d) => 
             new IndexSet(d.Tensor ?? throw new InvalidCastException("No tensor is associated with this Shape."));
 
-
+        public List<Index> ToIndices() => this.Select((d, i) => new Index(i)).ToList();
+        
         public static int[] StridesInElements(int[] dim)
         {
             if (dim == null)

@@ -37,10 +37,8 @@ namespace Adrien.Notation
 
         public static TensorIndexExpression Mean(TensorIndexExpression l)
         {
-            var tensor = (Tensor) l;
-            var indices = l.IndexSet.Indices.ToList();
-            var mulExpr = tensor.GetDimensionProductExpression(indices);
-            return Sum(l) / tensor.GetDimensionProductExpression(indices);
+            var mulExpr = l.GetDimensionProductExpression();
+            return Sum(l) / mulExpr;
         }
     }
 

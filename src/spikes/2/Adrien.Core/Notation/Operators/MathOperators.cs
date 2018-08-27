@@ -1,6 +1,6 @@
 ﻿namespace Adrien.Notation
 {
-    public static partial class TensorOperators
+    public static partial class Operators
     {
         public static ContractionOperator SUM { get; } = new ContractionOperator((expr) => Math.Sum(expr));
 

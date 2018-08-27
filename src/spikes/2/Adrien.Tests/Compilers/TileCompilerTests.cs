@@ -6,8 +6,7 @@ using Xunit;
 
 using Adrien.Log;
 using Adrien.Notation;
-//using static Adrien.Notation.Math;
-using static Adrien.Notation.TensorOperators;
+using static Adrien.Notation.Operators;
 
 using Adrien.Compiler;
 using Adrien.Compiler.PlaidML;
@@ -147,13 +146,13 @@ namespace Adrien.Tests.Compilers
         {
             int ClientsDim = 2276210, ProductsDim = 58989, HDim = 24, LDim = 1;
 
+            //Define inputs
             Vector clients = new Vector("clients", ClientsDim), products = new Vector("products", ProductsDim),
                 labels = new Vector(HDim);
-
             Assert.Equal(ClientsDim, clients[0].Length);
 
+            //core network definitions
             var (W0, W1) = new Matrix("W0", HDim, ClientsDim).Two();
-                                
             var (b0, b1) = new Vector("b0", HDim).Two();
 
             var z = new Scalar("z");

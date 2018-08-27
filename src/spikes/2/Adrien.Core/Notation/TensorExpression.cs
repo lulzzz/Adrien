@@ -92,24 +92,23 @@ namespace Adrien.Notation
 
         public static TensorExpression operator /(TensorExpression left, TensorExpression right) => left.Divide(right);
 
-
         public virtual ExpressionTree ToTree() => 
             LHSTensor == null ? new TensorExpressionVisitor(this.LinqExpression).Tree : 
             new TensorExpressionVisitor(this.LinqExpression, LHSTensor, true).Tree;
 
-        public TensorExpression Negate() => new TensorExpression(Expression.Negate(this), Shape);
+        public TensorExpression Negate() => new TensorExpression(Expression.Negate(this), GetUnaryOpShapeOrThrow());
 
         public TensorExpression Add(TensorExpression right) => new TensorExpression(Expression.Add(this, right,
-            GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), Shape);
+            GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), GetBinaryOpShapeOrThrow(right));
 
         public TensorExpression Subtract(TensorExpression right) => new TensorExpression(Expression.Subtract(this,
-            right, GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), Shape);
+            right, GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), GetBinaryOpShapeOrThrow(right));
 
         public TensorExpression Multiply(TensorExpression right) => new TensorExpression(Expression.Multiply(this,
-            right, GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), Shape);
+            right, GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), GetBinaryOpShapeOrThrow(right));
 
         public TensorExpression Divide(TensorExpression right) => new TensorExpression(Expression.Divide(this, right,
-            GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), Shape);
+            GetDummyBinaryMethodInfo<TensorExpression, TensorExpression>(this, right)), GetBinaryOpShapeOrThrow(right));
 
         
         internal static MethodInfo GetOpMethodInfo<T>(string name, int parameters) where T : Term
@@ -119,10 +118,31 @@ namespace Adrien.Notation
                 .Where(m => m.Name == name && m.GetParameters().Count() == parameters &&
                             m.GetParameters().First().ParameterType == typeof(T))
                 .First();
-            return method;
+            return method; 
+        }
+        protected Shape GetUnaryOpShapeOrThrow()
+        {
+            if (this.Shape != null)
+            {
+                return this.Shape;
+            }
+            else throw new TensorExpressionException(this, $"Could not determine the shape of unary operation with " +
+                    $"operand {this.Label}.");
         }
 
-
+        protected Shape GetBinaryOpShapeOrThrow(TensorExpression right)
+        {
+            if (this.Shape != null)
+            {
+                return this.Shape;
+            }
+            else if (right.Shape != null)
+            {
+                return right.Shape;
+            }
+            else throw new TensorExpressionException(this, $"Could not determine the shape of binary operation with " +
+                    $"operands {this.Label} and {right.Label}.");
+        }
         #region Dummy unary and binary methods for IAlgerba methods
         private static TensorExpression DummyUnary(Tensor l) => null;
         private static TensorExpression DummyUnary(TensorExpression l) => null;

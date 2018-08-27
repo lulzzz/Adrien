@@ -99,8 +99,8 @@ namespace Adrien.Notation
 
         public Tensor(string name, TensorExpression expr) : this(name)
         {
-            this.ElementwiseDefinition = expr;
-            this.Shape = expr.Shape;
+            def = expr;
+            Shape = expr.Shape;
         }
 
 
@@ -219,32 +219,6 @@ namespace Adrien.Notation
             }
         }
 
-        public static explicit operator Tensor(TensorIndexExpression expr)
-        {
-            if (expr.LinqExpression is IndexExpression && expr.ExpressionType == typeof(Tensor))
-            {
-                return expr.TensorReferences.Single();
-            }
-            else
-            {
-                throw new InvalidCastException("This tensor index expression cannot be cast to a tensor.");
-            }
-        }
-        
-        public static explicit operator Tensor(TensorExpression e)
-        {
-            if (e.LinqExpression is ConstantExpression ce && (ce.Type == typeof(Tensor) || ce.Type.BaseType == 
-                typeof(Tensor)))
-            {
-                return (Tensor)ce.Value;
-            }
-            else if (e.LHSTensor != null)
-            {
-                return e.LHSTensor;
-            }
-            else throw new InvalidCastException("This tensor expression is not a tensor variable or definition.");
-        }
-
         public static implicit operator ExpressionTree(Tensor t)
         {
             if (t.IsContractionDefined)
@@ -282,16 +256,6 @@ namespace Adrien.Notation
 
         public virtual TensorExpression Divide(Tensor right) => (TensorExpression) this / right;
 
-        public TensorExpression GetDimensionProductExpression(List<Index> indices)
-        {
-            TensorExpression mulExpr = indices.Count > 1 ?
-               (Scalar)Shape[indices[0]] * (Scalar)Shape[indices[1]] : (Scalar)Shape[indices[0]];
-            for (int i = 2; i < indices.Count; i++)
-            {
-                mulExpr = mulExpr * (Scalar)Shape[indices[i]];
-            }
-            return mulExpr;
-        }
 
         public Tensor With(out Tensor with)
         {

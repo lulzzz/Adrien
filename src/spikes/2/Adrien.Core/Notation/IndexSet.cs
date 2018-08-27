@@ -27,6 +27,7 @@ namespace Adrien.Notation
 
         internal override Type ExpressionType { get; } = typeof(IndexSet);
 
+
         public IndexSet(Tensor parent, string indexNameBase = "", params int[] dim) : base(string.Empty)
         {
             Indices = new SortedSet<Index>();
