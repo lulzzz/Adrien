@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Adrien.Core.Numeric
+namespace Adrien.Core.Numerics
 {
     /// <summary>
     /// A multi-dimensional array. Tensors are dependent

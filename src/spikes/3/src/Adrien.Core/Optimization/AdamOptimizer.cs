@@ -1,5 +1,5 @@
 ﻿using System;
-using Adrien.Core.Numeric;
+using Adrien.Core.Numerics;
 
 namespace Adrien.Core.Optimization
 {

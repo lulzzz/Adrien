@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Adrien.Core.Numeric
+namespace Adrien.Core.Numerics
 {
     /// <summary>
     /// Intended to import (resp. export) data into (resp. from) a flow.

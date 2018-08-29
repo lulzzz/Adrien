@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Adrien.Core.Numeric
+namespace Adrien.Core.Numerics
 {
     /// <summary>
     /// The compiled equivalent of a graph where tiles have

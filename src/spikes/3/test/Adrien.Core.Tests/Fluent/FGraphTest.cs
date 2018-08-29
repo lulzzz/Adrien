@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Adrien.Core.Fluent;
 using Adrien.Core.Geometric;
-using Adrien.Core.Numeric;
+using Adrien.Core.Numerics;
 using Adrien.Core.Optimization;
 using Xunit;
 

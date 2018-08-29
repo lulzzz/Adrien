@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Adrien.Core.Numeric
+namespace Adrien.Core.Numerics
 {
     /// <summary>
     /// A function that operates through side-effects on the

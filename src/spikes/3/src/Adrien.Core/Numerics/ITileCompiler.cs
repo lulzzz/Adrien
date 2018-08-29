@@ -1,4 +1,4 @@
-﻿namespace Adrien.Core.Numeric
+﻿namespace Adrien.Core.Numerics
 {
     /// <summary>
     /// Intended to be inherited by backend implementations for Adrien.

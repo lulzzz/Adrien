@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Adrien.Core.Numeric
+namespace Adrien.Core.Numerics
 {
     /// <summary>
     /// A logical compute unit within a flow.

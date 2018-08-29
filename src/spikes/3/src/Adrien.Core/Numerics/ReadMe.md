@@ -1,4 +1,4 @@
-﻿# Numeric backend
+﻿# Numerics backend
 
 This namespace defines the key interfaces that must be implemented
 in order to perform actual calculations.
