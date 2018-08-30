@@ -7,7 +7,7 @@ namespace Adrien.Core
         Tile,
 
         /// <summary>
-        /// No-op, only interpreting a tensor under a compatible geometric shape.
+        /// No-op, re-interpret a tensor under a series of compatible geometric shapes.
         /// </summary>
         /// <remarks>
         /// Reshaping cannot change <see cref="ElementKind"/> associated to a variable.
@@ -17,8 +17,16 @@ namespace Adrien.Core
         /// Reshaping is only redefining the geometric interpretation of variable.
         /// Numerically, the reshape operation is a no-op and has no numerical effect
         /// on the tensor itself.
+        ///
+        /// The reshape operation can be either simple or complex. A simple reshape
+        /// operation reinterprets a single variable as another variable with a
+        /// compatible shape.
+        ///
+        /// A complex reshape operation reinterprets a single variable as a list of
+        /// variables, which, put together, represent a compatible shape. Complex
+        /// reshape is intended for "slice" operations.
         /// </remarks>
-        Reshape
+        Reshape,
     }
 
     /// <summary>
@@ -44,11 +52,11 @@ namespace Adrien.Core
         }
 
         /// <summary>Reshape edge.</summary>
-        public Edge(Variable input, Variable output)
+        public Edge(Variable input, IReadOnlyList<Variable> outputs)
         {
             Kind = EdgeKind.Reshape;
             Inputs = new[] {input};
-            Outputs = new[] {output};
+            Outputs = outputs;
         }
     }
 }

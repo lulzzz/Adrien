@@ -2,8 +2,6 @@
 
 Adrien is an differentiable programming framework intended for .NET.
 
-TODO: splice operation mostly not supported, might need support
-
 ## Abstraction levels
 
 The library can be seen as an DSL-in-C# for differentiable programming.

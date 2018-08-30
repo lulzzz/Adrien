@@ -95,7 +95,10 @@ namespace Adrien.Core.Tests.Fluent
 
     public class MyTensorAllocator : ITensorAllocator
     {
-        public ITensor Create(Shape shape, string name) => throw new NotImplementedException();
+        public ITensor Create(Shape shape, string name) 
+            => throw new NotImplementedException();
+        public IReadOnlyList<ITensor> Slice(ITensor tensor, IReadOnlyList<Shape> shapes)
+            => throw new NotImplementedException();
     }
 
     public class FGraphTest
