@@ -60,7 +60,7 @@ namespace Adrien.Core.Tests.Fluent
             for (var j = 0; j < 32; j++)
                 span[i * 32 + j] = image[i, j];
 
-            input.Write(span, offset: 0);
+            span.CopyTo(((ITensor<float>)input).Buffer.Span);
         }
     }
 
@@ -80,7 +80,7 @@ namespace Adrien.Core.Tests.Fluent
             var res = tensors["res"];
 
             Span<float> span = stackalloc float[10];
-            res.Read(span, 0);
+            ((ITensor<float>)res).Buffer.Span.CopyTo(span);
 
             var argmax = 0; // snipped 'argmax(span)'
 

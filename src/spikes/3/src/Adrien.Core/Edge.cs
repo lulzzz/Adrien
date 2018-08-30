@@ -25,6 +25,7 @@ namespace Adrien.Core
         /// A complex reshape operation reinterprets a single variable as a list of
         /// variables, which, put together, represent a compatible shape. Complex
         /// reshape is intended for "slice" operations.
+        /// 
         /// </remarks>
         Reshape,
     }
@@ -43,6 +44,11 @@ namespace Adrien.Core
         public IReadOnlyList<Variable> Outputs { get; }
 
         /// <summary>Tile edge.</summary>
+        /// <remarks>
+        /// Semantically, the input and output variables are respectively
+        /// mapped - in the same order - to the input and output symbols
+        /// of the tile.
+        /// </remarks>
         public Edge(Tile tile, IReadOnlyList<Variable> inputs, IReadOnlyList<Variable> outputs)
         {
             Kind = EdgeKind.Tile;

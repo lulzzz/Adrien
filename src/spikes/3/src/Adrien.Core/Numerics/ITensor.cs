@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Adrien.Core.Numerics
 {
@@ -11,14 +10,14 @@ namespace Adrien.Core.Numerics
     {
         ElementKind Kind { get; }
 
-        int Rank { get; }
-
-        IReadOnlyList<int> Dimensions { get; }
+        int Count { get; }
 
         string Name { get; }
 
-        void Read<T>(Span<T> into, int offset);
+    }
 
-        void Write<T>(Span<T> from, int offset);
+    public interface ITensor<T> : ITensor
+    {
+        Memory<T> Buffer { get; }
     }
 }
