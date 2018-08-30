@@ -9,7 +9,7 @@ namespace Adrien.Core.Optimization
     /// </remarks>
     public class AdamOptimizer
     {
-        public AdamOptimizer(ITileCompiler compiler)
+        public AdamOptimizer(ITileCompiler compiler, ITensorAllocator allocator)
         {
             throw new NotImplementedException();
         }

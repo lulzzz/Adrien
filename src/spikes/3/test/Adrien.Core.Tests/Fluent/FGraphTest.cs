@@ -8,7 +8,6 @@ using Xunit;
 
 namespace Adrien.Core.Tests.Fluent
 {
-
     public static class Layers
     {
         public static FTile Dense()
@@ -25,11 +24,10 @@ namespace Adrien.Core.Tests.Fluent
         {
             var layer = new FTile();
             var (input, res) = FSymbol.New("input", "res");
-            layer.Sum((i,j) => res[i] = input[j] * input[j]);
+            layer.Sum((i, j) => res[i] = input[j] * input[j]);
 
             return layer;
         }
-
     }
 
     public static class Activations
@@ -58,7 +56,7 @@ namespace Adrien.Core.Tests.Fluent
 
             Span<float> span = stackalloc float[32 * 32];
 
-            for(var i = 0; i < 32; i++)
+            for (var i = 0; i < 32; i++)
             for (var j = 0; j < 32; j++)
                 span[i * 32 + j] = image[i, j];
 
@@ -70,7 +68,7 @@ namespace Adrien.Core.Tests.Fluent
     {
         private int[] _results;
 
-        public int[] ChunkSizes => new[] { _results.Length };
+        public int[] ChunkSizes => new[] {_results.Length};
 
         public MyDigitReader(int count)
         {
@@ -93,6 +91,10 @@ namespace Adrien.Core.Tests.Fluent
     public class MyTileCompiler : ITileCompiler
     {
         public IKernel Compile(Tile tile) => throw new NotImplementedException();
+    }
+
+    public class MyTensorAllocator : ITensorAllocator
+    {
         public ITensor Create(Shape shape, string name) => throw new NotImplementedException();
     }
 
@@ -117,12 +119,12 @@ namespace Adrien.Core.Tests.Fluent
             solver.Solve(graph);
 
             // Optimizing the flow
-            var optimizer = new AdamOptimizer(new MyTileCompiler());
-            var reader = new MyImageReader(/* dummy */ null);
+            var optimizer = new AdamOptimizer(new MyTileCompiler(), new MyTensorAllocator());
+            var reader = new MyImageReader( /* dummy */ null);
             var flow = optimizer.Optimize(graph, reader);
 
             // Evaluating with the flow
-            var writer = new MyDigitReader(/* dummy */ 0);
+            var writer = new MyDigitReader( /* dummy */ 0);
             flow.Evaluate(reader, writer);
         }
     }

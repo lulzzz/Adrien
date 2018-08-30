@@ -11,10 +11,5 @@
         /// a shape, all indices have ranges.
         /// </summary>
         IKernel Compile(Tile tile);
-
-        /// <summary>
-        /// Instantiate a tensor from a given shape.
-        /// </summary>
-        ITensor Create(Shape shape, string name);
     }
 }
