@@ -6,7 +6,11 @@ namespace Adrien.Core
     /// Multidimensional index intended for Einstein notations.
     /// </summary>
     /// <remarks>
-    /// The index is multi-dimensional in order to facilitate
+    /// The index is referred as unidimensional if 'Ranges' has
+    /// a count of 1. The index is referred as multidimensional
+    /// if count is greater than 1.
+    /// 
+    /// The index can be multidimensional in order to facilitate
     /// generic notations where the rank of the symbol is not
     /// known prior to the geometric inference.
     /// </remarks>

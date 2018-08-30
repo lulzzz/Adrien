@@ -21,6 +21,16 @@
     /// An expression that logically represents the calculation
     /// associated to index that parametrizes the access to a symbol. 
     /// </summary>
+    /// <remarks>
+    /// An 'IndexExpression' allows at most a single multidimensional
+    /// index. If several of such indices are found, the expression is
+    /// invalid.
+    ///
+    /// When an 'IndexExpression' contains a multidimensional index,
+    /// then the expression is interpreted as a sequence of index
+    /// expressions, each one associated with each subindex of the
+    /// original multidimensional index.
+    /// </remarks>
     public class IndexExpression
     {
         public IndexExpressionArityKind ArityKind { get; }
