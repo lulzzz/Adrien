@@ -2,7 +2,7 @@
 {
     public enum ArityKind
     {
-        Term,
+        Element,
         Unary,
         Binary,
         Ternary
@@ -22,7 +22,7 @@
 
         Add,
         Subtract,
-        Multiple,
+        Multiply,
         Divide,
 
         /// <summary>
@@ -54,7 +54,7 @@
 
         public BinaryExpressionKind BinaryKind { get; }
 
-        public Element Term { get; }
+        public Element Element { get; }
 
         public ElementExpression Expr1 { get; }
 
@@ -62,13 +62,13 @@
 
         public ElementExpression Expr3 { get; }
 
-        public ElementExpression(Element term)
+        public ElementExpression(Element element)
         {
-            ArityKind = ArityKind.Term;
+            ArityKind = ArityKind.Element;
             UnaryKind = UnaryExpressionKind.None;
             BinaryKind = BinaryExpressionKind.None;
 
-            Term = term;
+            Element = element;
         }
 
         public ElementExpression(UnaryExpressionKind kind, ElementExpression expr)

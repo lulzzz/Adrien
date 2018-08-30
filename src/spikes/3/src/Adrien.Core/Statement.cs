@@ -3,6 +3,7 @@
     public enum StatementKind
     {
         ElementWise,
+        ZeroAndSum,
         Sum,
         Max
     }
@@ -12,18 +13,14 @@
     /// </summary>
     public class Statement
     {
-        public bool InitializeAtZero { get; }
-
         public StatementKind Kind { get; }
 
-        public ElementExpression Left { get; }
+        public Element Left { get; }
 
         public ElementExpression Right { get; }
 
-        public Statement(bool initializeAtZero, StatementKind kind, 
-            ElementExpression left, ElementExpression right)
+        public Statement(StatementKind kind, Element left, ElementExpression right)
         {
-            InitializeAtZero = initializeAtZero;
             Kind = kind;
             Left = left;
             Right = right;

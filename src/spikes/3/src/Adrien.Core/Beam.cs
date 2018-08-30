@@ -39,7 +39,9 @@ namespace Adrien.Core
 
         public Func<int,int> InferRank { get; }
 
-        public int InferredDimension { get; }
+        public int TargetDimensionIndex { get; }
+
+        public int DependencyDimensionIndex { get; }
 
         public Func<int, int> InferDimension { get; }
 
@@ -82,12 +84,14 @@ namespace Adrien.Core
             InferRank = inferRank;
         }
 
-        public Beam(T target, T dependency, int dimIndex, Func<int, int> inferDimension)
+        public Beam(T target, T dependency, 
+            int targetDimensionIndex, int dependencyDimensionIndex, Func<int, int> inferDimension)
         {
             Kind = BeamKind.InferDimension;
             Target = target;
             Dependency = dependency;
-            InferredDimension = dimIndex;
+            TargetDimensionIndex = targetDimensionIndex;
+            DependencyDimensionIndex = dependencyDimensionIndex;
             InferDimension = inferDimension;
         }
     }

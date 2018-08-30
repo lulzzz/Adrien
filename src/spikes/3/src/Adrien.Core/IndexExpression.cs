@@ -3,7 +3,7 @@
     public enum IndexExpressionArityKind
     {
         Constant,
-        Term,
+        Index,
         Binary
     }
 
@@ -39,7 +39,7 @@
 
         public int Constant { get; }
 
-        public Index Term { get; }
+        public Index Index { get; }
 
         public IndexExpression Expr1 { get; }
 
@@ -52,11 +52,11 @@
             Constant = constant;
         }
 
-        public IndexExpression(Index term)
+        public IndexExpression(Index index)
         {
-            ArityKind = IndexExpressionArityKind.Term;
+            ArityKind = IndexExpressionArityKind.Index;
             BinaryKind = BinaryExpressionKind.None;
-            Term = term;
+            Index = index;
         }
 
         public IndexExpression(BinaryExpressionKind kind,
