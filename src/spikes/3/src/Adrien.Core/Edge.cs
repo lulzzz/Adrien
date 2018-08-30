@@ -44,11 +44,11 @@ namespace Adrien.Core
         }
 
         /// <summary>Reshape edge.</summary>
-        public Edge(IReadOnlyList<Variable> inputs, IReadOnlyList<Variable> outputs)
+        public Edge(Variable input, Variable output)
         {
             Kind = EdgeKind.Reshape;
-            Inputs = inputs;
-            Outputs = outputs;
+            Inputs = new[] {input};
+            Outputs = new[] {output};
         }
     }
 }
