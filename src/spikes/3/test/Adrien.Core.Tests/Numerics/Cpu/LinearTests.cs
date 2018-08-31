@@ -4,9 +4,9 @@ using Xunit;
 
 namespace Adrien.Core.Tests.Numerics.Cpu
 {
-    public class CpuTileCompilerTests
+    public class LinearTests
     {
-        public static (Tile, Tensor<float> a, Tensor<float> x, Tensor<float> b, Tensor<float> res) GetLinearTile()
+        public static (Tile, Tensor<float> a, Tensor<float> x, Tensor<float> b, Tensor<float> res) LinearTile()
         {
             // linear 2D layer: res[i] = sum(a[i,j] * x[j] + b[i])
 
@@ -92,7 +92,7 @@ namespace Adrien.Core.Tests.Numerics.Cpu
         public void SumExpression()
         {
             var compiler = new CpuTileCompiler();
-            var (linear, a, x, b, res) = GetLinearTile();
+            var (linear, a, x, b, res) = LinearTile();
 
             var kernel = compiler.Compile(linear);
 
@@ -106,7 +106,7 @@ namespace Adrien.Core.Tests.Numerics.Cpu
         public void ZeroAndSum()
         {
             var compiler = new CpuTileCompiler();
-            var (linear, a, x, b, res) = GetLinearTile();
+            var (linear, a, x, b, res) = LinearTile();
 
             var kernel = compiler.Compile(linear);
 

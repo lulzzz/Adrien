@@ -56,17 +56,19 @@ namespace Adrien.Core.Numerics.Cpu
             {
                 switch (statement.Kind)
                 {
+                    case StatementKind.ElementWise:
+                        exprList.Add(Compile(statement, spans, "SetSpanItem"));
+                        break;
                     case StatementKind.ZeroAndSum:
                         exprList.Add(CompileZero(statement.Left, spans[statement.Left.Symbol.Name]));
-                        exprList.Add(CompileSum(statement, spans));
+                        exprList.Add(Compile(statement, spans, "SetAddSpanItem"));
                         break;
                     case StatementKind.Sum:
-                        exprList.Add(CompileSum(statement, spans));
+                        exprList.Add(Compile(statement, spans, "SetAddSpanItem"));
                         break;
-                    case StatementKind.ElementWise:
-                        throw new NotImplementedException();
                     case StatementKind.Max:
-                        throw new NotImplementedException();
+                        exprList.Add(Compile(statement, spans, "SetMaxSpanItem"));
+                        break;
                     default:
                         throw new NotSupportedException();
                 }
@@ -97,14 +99,17 @@ namespace Adrien.Core.Numerics.Cpu
             return CompileLoops(inner, nakedIndices, indices);
         }
 
-        static E CompileSum(Statement statement, Dictionary<string, ParameterExpression> spans)
+        static E Compile(
+            Statement statement, 
+            Dictionary<string, ParameterExpression> spans,
+            string method)
         {
             var nakedIndices = statement.Indices();
             var indices = GetIndices(nakedIndices);
 
             var setterIndex = CompileAsIndex(statement.Left, indices);
 
-            var setMethod = typeof(CpuTileCompiler).FindMethod("SetAddSpanItem", statement.Left.ElementType());
+            var setMethod = typeof(CpuTileCompiler).FindMethod(method, statement.Left.ElementType());
 
             E inner = Call(
                 null,
@@ -303,6 +308,18 @@ namespace Adrien.Core.Numerics.Cpu
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void SetSpanItemInt32(Span<int> span, int index, int value)
+        {
+            span[index] = value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void SetSpanItemSingle(Span<float> span, int index, float value)
+        {
+            span[index] = value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static void SetAddSpanItemInt32(Span<int> span, int index, int value)
         {
             span[index] += value;
@@ -312,6 +329,18 @@ namespace Adrien.Core.Numerics.Cpu
         private static void SetAddSpanItemSingle(Span<float> span, int index, float value)
         {
             span[index] += value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void SetMaxSpanItemInt32(Span<int> span, int index, int value)
+        {
+            span[index] = span[index] > value ? span[index] : value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void SetMaxSpanItemSingle(Span<float> span, int index, float value)
+        {
+            span[index] = span[index] > value ? span[index] : value;
         }
     }
 }
