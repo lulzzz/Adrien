@@ -11,26 +11,13 @@ namespace Adrien.Core.Extensions
 
             void AddElementExpression(ElementExpression expression)
             {
-                if (expression.Element != null) AddElement(expression.Element);
+                if (expression.Element != null) indices.AddRange(expression.Element.Indices());
                 if (expression.Expr1 != null) AddElementExpression(expression.Expr1);
                 if (expression.Expr2 != null) AddElementExpression(expression.Expr2);
                 if (expression.Expr3 != null) AddElementExpression(expression.Expr3);
             }
 
-            void AddElement(Element element)
-            {
-                foreach (var expr in element.Expressions)
-                    AddIndexExpression(expr);
-            }
-
-            void AddIndexExpression(IndexExpression expression)
-            {
-                if (expression.Index != null) indices.Add(expression.Index);
-                if (expression.Expr1 != null) AddIndexExpression(expression.Expr1);
-                if (expression.Expr2 != null) AddIndexExpression(expression.Expr2);
-            }
-
-            AddElement(statement.Left);
+            indices.AddRange(statement.Left.Indices());
             AddElementExpression(statement.Right);
 
             return indices.OrderBy(idx => idx.Name).ToList();

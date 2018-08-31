@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 using Adrien.Core.Extensions;
 using static System.Linq.Expressions.Expression;
 using E = System.Linq.Expressions.Expression;
@@ -51,7 +52,22 @@ namespace Adrien.Core.Numerics.Cpu
 
             foreach (var statement in tile.Statements)
             {
-                exprList.Add(CompileSum(statement, spans));
+                switch (statement.Kind)
+                {
+                    case StatementKind.ZeroAndSum:
+                        exprList.Add(CompileZero(statement.Left, spans[statement.Left.Symbol.Name]));
+                        exprList.Add(CompileSum(statement, spans));
+                        break;
+                    case StatementKind.Sum:
+                        exprList.Add(CompileSum(statement, spans));
+                        break;
+                    case StatementKind.ElementWise:
+                        throw new NotImplementedException();
+                    case StatementKind.Max:
+                        throw new NotImplementedException();
+                    default:
+                        throw new NotSupportedException();
+                }
             }
 
             var block = Block(spans.Values, exprList);
@@ -60,35 +76,34 @@ namespace Adrien.Core.Numerics.Cpu
                 Lambda<Action<IReadOnlyList<ITensor>>>(block, tensors).Compile());
         }
 
+        static E CompileZero(Element element, ParameterExpression span)
+        {
+            var nakedIndices = element.Indices();
+            var indices = GetIndices(nakedIndices);
+
+            var setterIndex = CompileAsIndex(element, indices);
+
+            var setMethod = typeof(CpuTileCompiler).FindMethod("SetDefaultSpanItem", element.ElementType());
+
+            E inner = Call(
+                null,
+                setMethod,
+                span,
+                setterIndex
+            );
+
+            return CompileLoops(inner, nakedIndices, indices);
+        }
+
         static E CompileSum(Statement statement, Dictionary<string, ParameterExpression> spans)
         {
             var nakedIndices = statement.Indices();
-
-            var indices = new Dictionary<string, ParameterExpression>();
-            for (var i = 0; i < nakedIndices.Count; i++)
-            {
-                var idx = nakedIndices[i];
-
-                var index = Parameter(typeof(int), idx.Name);
-
-                indices.Add(idx.Name, index);
-            }
+            var indices = GetIndices(nakedIndices);
 
             var setterIndex = CompileAsIndex(statement.Left, indices);
 
-            // TODO: [vermorel] hard-coding the sum, other logic not coded
-            //if(statement.Kind != StatementKind.Sum)
-            //    throw new NotSupportedException();
+            var setMethod = typeof(CpuTileCompiler).FindMethod("SetAddSpanItem", statement.Left.ElementType());
 
-            var setMethod = typeof(CpuTileCompiler)
-                .GetMethod("SetAddSpanItem", BindingFlags.Static | BindingFlags.NonPublic, /* binder */ null,
-                new []
-                {
-                    typeof(Span<>).MakeGenericType(statement.Left.ElementType()),
-                    typeof(int),
-                    statement.Left.ElementType()
-                }, /*modifier*/ null);
-                
             E inner = Call(
                 null,
                 setMethod,
@@ -97,6 +112,13 @@ namespace Adrien.Core.Numerics.Cpu
                 Compile(statement.Right, spans, indices)
             );
 
+            return CompileLoops(inner, nakedIndices, indices);
+        }
+
+        static E CompileLoops(E inner,
+            IReadOnlyList<Index> nakedIndices,
+            Dictionary<string, ParameterExpression> indices)
+        {
             foreach (var index in nakedIndices.Reverse())
             {
                 var indexParam = indices[index.Name];
@@ -129,7 +151,8 @@ namespace Adrien.Core.Numerics.Cpu
                         case UnaryExpressionKind.Log:
                             throw new NotImplementedException();
                         default:
-                            throw new NotSupportedException();;
+                            throw new NotSupportedException();
+                            ;
                     }
 
                 case ArityKind.Binary:
@@ -179,8 +202,7 @@ namespace Adrien.Core.Numerics.Cpu
 
             return Call(
                 null,
-                typeof(CpuTileCompiler).GetMethod("GetSpanItem", BindingFlags.Static | BindingFlags.NonPublic)
-                    .MakeGenericMethod(element.ElementType()),
+                typeof(CpuTileCompiler).FindMethod("GetSpanItem", element.ElementType()),
                 spans[element.Symbol.Name],
                 index
             );
@@ -251,6 +273,20 @@ namespace Adrien.Core.Numerics.Cpu
             }
         }
 
+
+        static Dictionary<string, ParameterExpression> GetIndices(IReadOnlyList<Index> nakedIndices)
+        {
+            var indices = new Dictionary<string, ParameterExpression>();
+            for (var i = 0; i < nakedIndices.Count; i++)
+            {
+                var idx = nakedIndices[i];
+                var index = Parameter(typeof(int), idx.Name);
+                indices.Add(idx.Name, index);
+            }
+
+            return indices;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static T GetSpanItem<T>(Span<T> span, int index)
         {
@@ -259,13 +295,19 @@ namespace Adrien.Core.Numerics.Cpu
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SetAddSpanItem(Span<int> span, int index, int value)
+        private static void SetDefaultSpanItem<T>(Span<T> span, int index)
+        {
+            span[index] = default;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void SetAddSpanItemInt32(Span<int> span, int index, int value)
         {
             span[index] += value;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SetAddSpanItem(Span<float> span, int index, float value)
+        private static void SetAddSpanItemSingle(Span<float> span, int index, float value)
         {
             span[index] += value;
         }

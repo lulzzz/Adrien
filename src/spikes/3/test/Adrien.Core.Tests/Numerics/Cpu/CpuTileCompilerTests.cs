@@ -89,7 +89,7 @@ namespace Adrien.Core.Tests.Numerics.Cpu
         }
 
         [Fact]
-        public void Compile()
+        public void SumExpression()
         {
             var compiler = new CpuTileCompiler();
             var (linear, a, x, b, res) = GetLinearTile();
@@ -100,10 +100,26 @@ namespace Adrien.Core.Tests.Numerics.Cpu
 
             kernel.Compute(tensors);
             CheckRes(res);
+        }
 
-            // TODO: 'ZeroAndSum' not properly implemented
-            //kernel.Compute(tensors);
-            //CheckRes(res);
+        [Fact]
+        public void ZeroAndSum()
+        {
+            var compiler = new CpuTileCompiler();
+            var (linear, a, x, b, res) = GetLinearTile();
+
+            var kernel = compiler.Compile(linear);
+
+            var tensors = new ITensor[] { a, x, b, res };
+
+            var sr = res.Buffer.Span;
+            for (var i = 0; i < sr.Length; i++)
+                sr[i] = i; // non-zero initialization
+
+            kernel.Compute(tensors);
+
+            // correct only if 'res' is re-initialized before the sum
+            CheckRes(res);
         }
     }
 }
