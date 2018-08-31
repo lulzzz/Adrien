@@ -12,7 +12,7 @@ namespace Adrien.Core.Numerics.Cpu
             _kernel = kernel;
         }
 
-        public void Compute(IReadOnlyList<ITensor> tensors)
+        public void Eval(IReadOnlyList<ITensor> tensors)
         {
             _kernel(tensors);
         }

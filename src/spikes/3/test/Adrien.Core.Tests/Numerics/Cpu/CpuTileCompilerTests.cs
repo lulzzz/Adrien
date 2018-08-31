@@ -98,7 +98,7 @@ namespace Adrien.Core.Tests.Numerics.Cpu
 
             var tensors = new ITensor[] {a, x, b, res};
 
-            kernel.Compute(tensors);
+            kernel.Eval(tensors);
             CheckRes(res);
         }
 
@@ -116,7 +116,7 @@ namespace Adrien.Core.Tests.Numerics.Cpu
             for (var i = 0; i < sr.Length; i++)
                 sr[i] = i; // non-zero initialization
 
-            kernel.Compute(tensors);
+            kernel.Eval(tensors);
 
             // correct only if 'res' is re-initialized before the sum
             CheckRes(res);

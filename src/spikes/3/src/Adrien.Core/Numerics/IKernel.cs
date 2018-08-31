@@ -9,6 +9,6 @@ namespace Adrien.Core.Numerics
     /// </summary>
     public interface IKernel
     {
-        void Compute(IReadOnlyList<ITensor> tensors);
+        void Eval(IReadOnlyList<ITensor> tensors);
     }
 }
