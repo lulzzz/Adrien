@@ -12,16 +12,14 @@ namespace Adrien.Core
     /// </remarks>
     public class Element
     {
-        private readonly IndexExpression[] _expressions;
-
         public Symbol Symbol { get; }
 
-        public IReadOnlyList<IndexExpression> Expressions => _expressions;
+        public IReadOnlyList<IndexExpression> Expressions { get; }
 
-        public Element(Symbol symbol, params IndexExpression[] expressions)
+        public Element(Symbol symbol, IReadOnlyList<IndexExpression> expressions)
         {
             Symbol = symbol;
-            _expressions = expressions;
+            Expressions = expressions;
         }
     }
 }

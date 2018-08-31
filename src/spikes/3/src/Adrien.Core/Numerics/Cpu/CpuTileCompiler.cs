@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
 using Adrien.Core.Extensions;
+using Adrien.Core.Geometric;
 using static System.Linq.Expressions.Expression;
 using E = System.Linq.Expressions.Expression;
 
@@ -15,6 +14,9 @@ namespace Adrien.Core.Numerics.Cpu
     {
         public IKernel Compile(Tile tile)
         {
+            // Removing all complex indices through a tile transformation
+            tile = tile.SimplifyIndices();
+
             var T = typeof(IReadOnlyList<ITensor>);
 
             var tensors = Parameter(T, "tensors");
@@ -123,7 +125,7 @@ namespace Adrien.Core.Numerics.Cpu
             {
                 var indexParam = indices[index.Name];
 
-                // TODO: [vermorel] not handling multi-range indices yet
+                // Range simplified by construction
                 inner = indexParam.For(
                     index.Ranges[0].Offset,
                     index.Ranges[0].Offset + index.Ranges[0].Count,

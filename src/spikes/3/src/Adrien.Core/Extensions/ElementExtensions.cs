@@ -6,6 +6,24 @@ namespace Adrien.Core.Extensions
 {
     public static class ElementExtensions
     {
+        public static bool StructuralEquals(this Element element, Element other)
+        {
+            if (element == null && other == null)
+                return true;
+
+            if (!element.Symbol.StructuralEquals(other.Symbol))
+                return false;
+
+            if (element.Expressions.Count != other.Expressions.Count)
+                return false;
+
+            foreach (var (a, b) in element.Expressions.Zip(other.Expressions, (a, b) => (a, b)))
+                if (!a.StructuralEquals(b))
+                    return false;
+
+            return true;
+        }
+
         public static Type ElementType(this Element element)
         {
             return element.Symbol.Shape.Kind.GetMatchingType();
@@ -18,14 +36,7 @@ namespace Adrien.Core.Extensions
             void AddElement(Element elt)
             {
                 foreach (var expr in elt.Expressions)
-                    AddIndexExpression(expr);
-            }
-
-            void AddIndexExpression(IndexExpression expression)
-            {
-                if (expression.Index != null) indices.Add(expression.Index);
-                if (expression.Expr1 != null) AddIndexExpression(expression.Expr1);
-                if (expression.Expr2 != null) AddIndexExpression(expression.Expr2);
+                    indices.AddRange(expr.Indices());
             }
 
             AddElement(element);

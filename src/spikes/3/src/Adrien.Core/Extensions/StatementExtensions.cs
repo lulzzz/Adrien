@@ -1,10 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Adrien.Core.Extensions
 {
     public static class StatementExtensions
     {
+        public static bool StructuralEquals(this Statement statement, Statement other)
+        {
+            if (statement.Kind != other.Kind)
+                return false;
+
+            if (!statement.Left.StructuralEquals(other.Left))
+                return false;
+
+            if (!statement.Right.StructuralEquals(other.Right))
+                return false;
+
+            return true;
+        }
+
         public static IReadOnlyList<Index> Indices(this Statement statement)
         {
             var indices = new HashSet<Index>();

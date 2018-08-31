@@ -37,13 +37,13 @@ namespace Adrien.Core.Tests.Numerics.Cpu
 
             var statement = new Statement(StatementKind.ZeroAndSum,
                 // left
-                new Element(res, new IndexExpression(i)),
+                new Element(res, new []{new IndexExpression(i)}),
                 // right
                 new ElementExpression(BinaryExpressionKind.Add,
                     new ElementExpression(BinaryExpressionKind.Multiply,
-                        new ElementExpression(new Element(a, new IndexExpression(i), new IndexExpression(j))),
-                        new ElementExpression(new Element(x, new IndexExpression(j)))),
-                    new ElementExpression(new Element(b, new IndexExpression(i)))));
+                        new ElementExpression(new Element(a, new []{new IndexExpression(i), new IndexExpression(j)})),
+                        new ElementExpression(new Element(x, new []{new IndexExpression(j)}))),
+                    new ElementExpression(new Element(b, new []{new IndexExpression(i)}))));
 
             tile.Add(statement);
 

@@ -1,10 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Adrien.Core.Extensions
 {
     public static class ShapeExtensions
     {
+        public static bool StructuralEquals(this Shape shape, Shape other)
+        {
+            if (shape.Kind != other.Kind)
+                return false;
+
+            if (shape.Dimensions.Count != other.Dimensions.Count)
+                return false;
+
+            foreach (var (a, b) in shape.Dimensions.Zip(other.Dimensions, (a, b) => (a, b)))
+                if (a != b)
+                    return false;
+
+            return true;
+        }
+
         public static int ElementCount(this Shape shape)
         {
             var count = 1;
