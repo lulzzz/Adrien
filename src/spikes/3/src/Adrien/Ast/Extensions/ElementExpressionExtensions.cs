@@ -39,7 +39,7 @@ namespace Adrien.Ast.Extensions
             var symbols = new HashSet<Symbol>();
 
             if (expr.Element != null)
-                symbols.Add(expr.Element.Symbol);
+                symbols.AddRange(expr.Element.Symbols());
 
             if(expr.Expr1 != null)
                 symbols.AddRange(expr.Expr1.Symbols());

@@ -54,19 +54,24 @@ namespace Adrien.Numerics.Reference
             {
                 switch (statement.Kind)
                 {
-                    case StatementKind.ElementWise:
+                    case StatementKind.Assign:
                         exprList.Add(Compile(statement, spans, SpanMethods.SetSpanItem));
                         break;
-                    case StatementKind.ZeroAndSum:
-                        exprList.Add(CompileZero(statement.Left, spans[statement.Left.Symbol.Name]));
-                        exprList.Add(Compile(statement, spans, SpanMethods.SetAddSpanItem));
-                        break;
+                    
                     case StatementKind.Sum:
                         exprList.Add(Compile(statement, spans, SpanMethods.SetAddSpanItem));
                         break;
+
                     case StatementKind.Max:
                         exprList.Add(Compile(statement, spans, SpanMethods.SetMaxSpanItem));
                         break;
+
+                    case StatementKind.AddSum:
+                        exprList.Add(CompileZero(
+                            statement.Left, spans[statement.Left.Symbol.Name], spans));
+                        exprList.Add(Compile(statement, spans, SpanMethods.SetAddSpanItem));
+                        break;
+
                     default:
                         throw new NotSupportedException();
                 }
@@ -78,19 +83,22 @@ namespace Adrien.Numerics.Reference
                 E.Lambda<Action<IReadOnlyList<ITensor>>>(block, tensors).Compile());
         }
 
-        static E CompileZero(Element element, ParameterExpression span)
+        static E CompileZero(
+            Element element,
+            ParameterExpression zeroed,
+            Dictionary<string, ParameterExpression> spans)
         {
             var nakedIndices = element.Indices();
             var indices = GetIndices(nakedIndices);
 
-            var setterIndex = CompileAsIndex(element, indices);
+            var setterIndex = CompileAsIndex(element, spans, indices);
 
             var setMethod = typeof(SpanMethods).FindMethod(SpanMethods.SetDefaultSpanItem, element.ElementType());
 
             E inner = E.Call(
                 null,
                 setMethod,
-                span,
+                zeroed,
                 setterIndex
             );
 
@@ -105,7 +113,7 @@ namespace Adrien.Numerics.Reference
             var nakedIndices = statement.Indices();
             var indices = GetIndices(nakedIndices);
 
-            var setterIndex = CompileAsIndex(statement.Left, indices);
+            var setterIndex = CompileAsIndex(statement.Left, spans, indices);
 
             var setMethod = typeof(SpanMethods).FindMethod(method, statement.Left.ElementType());
 
@@ -157,7 +165,6 @@ namespace Adrien.Numerics.Reference
                             throw new NotImplementedException();
                         default:
                             throw new NotSupportedException();
-                            ;
                     }
 
                 case ArityKind.Binary:
@@ -183,9 +190,6 @@ namespace Adrien.Numerics.Reference
                                 Compile(expression.Expr1, spans, indices),
                                 Compile(expression.Expr2, spans, indices));
 
-                        case BinaryExpressionKind.Embed:
-                            throw new NotImplementedException();
-
                         default:
                             throw new NotSupportedException();
                     }
@@ -203,7 +207,7 @@ namespace Adrien.Numerics.Reference
             Dictionary<string, ParameterExpression> spans,
             Dictionary<string, ParameterExpression> indices)
         {
-            var index = CompileAsIndex(element, indices);
+            var index = CompileAsIndex(element, spans, indices);
 
             return E.Call(
                 null,
@@ -214,18 +218,20 @@ namespace Adrien.Numerics.Reference
         }
 
         static E CompileAsIndex(
-            Element element, Dictionary<string, ParameterExpression> indices)
+            Element element,
+            Dictionary<string, ParameterExpression> spans,
+            Dictionary<string, ParameterExpression> indices)
         {
             var strides = element.Symbol.Shape.Strides();
 
-            var expr = Compile(element.Expressions.Last(), indices);
+            var expr = Compile(element.Expressions.Last(), spans, indices);
 
             for (var i = element.Expressions.Count - 2; i >= 0; i--)
             {
                 expr = E.Add(
                     E.Multiply(
                         E.Constant(strides[i]),
-                        Compile(element.Expressions[i], indices)),
+                        Compile(element.Expressions[i], spans, indices)),
                     expr);
             }
 
@@ -233,7 +239,9 @@ namespace Adrien.Numerics.Reference
         }
 
         static E Compile(
-            IndexExpression expression, Dictionary<string, ParameterExpression> indices)
+            IndexExpression expression,
+            Dictionary<string, ParameterExpression> spans,
+            Dictionary<string, ParameterExpression> indices)
         {
             switch (expression.ArityKind)
             {
@@ -243,31 +251,33 @@ namespace Adrien.Numerics.Reference
                 case IndexExpressionArityKind.Index:
                     return indices[expression.Index.Name];
 
+                case IndexExpressionArityKind.Element:
+                    if(expression.Element.Symbol.Shape.Kind != ElementKind.Int32)
+                        throw new InvalidOperationException("Integer tensor requires for table lookups.");
+                    return Compile(expression.Element, spans, indices);
+
                 case IndexExpressionArityKind.Binary:
                     switch (expression.BinaryKind)
                     {
                         case BinaryExpressionKind.Add:
                             return E.Add(
-                                Compile(expression.Expr1, indices),
-                                Compile(expression.Expr2, indices));
+                                Compile(expression.Expr1, spans, indices),
+                                Compile(expression.Expr2, spans, indices));
 
                         case BinaryExpressionKind.Subtract:
                             return E.Add(
-                                Compile(expression.Expr1, indices),
-                                E.Negate(Compile(expression.Expr2, indices)));
+                                Compile(expression.Expr1, spans, indices),
+                                E.Negate(Compile(expression.Expr2, spans, indices)));
 
                         case BinaryExpressionKind.Multiply:
                             return E.Multiply(
-                                Compile(expression.Expr1, indices),
-                                Compile(expression.Expr2, indices));
+                                Compile(expression.Expr1, spans, indices),
+                                Compile(expression.Expr2, spans, indices));
 
                         case BinaryExpressionKind.Divide:
                             return E.Divide(
-                                Compile(expression.Expr1, indices),
-                                Compile(expression.Expr2, indices));
-
-                        case BinaryExpressionKind.Embed:
-                            throw new NotSupportedException();
+                                Compile(expression.Expr1, spans, indices),
+                                Compile(expression.Expr2, spans, indices));
 
                         default:
                             throw new NotSupportedException();
@@ -277,7 +287,6 @@ namespace Adrien.Numerics.Reference
                     throw new NotSupportedException();
             }
         }
-
 
         static Dictionary<string, ParameterExpression> GetIndices(IReadOnlyList<Index> nakedIndices)
         {

@@ -26,24 +26,6 @@ namespace Adrien.Ast
         Subtract,
         Multiply,
         Divide,
-
-        /// <summary>
-        /// Special operation dedicated to lookup table embedding.
-        /// </summary>
-        /// <remarks>
-        /// This operator is an alternative to both a full support
-        /// for sparse tensor algebra, and for a full support of
-        /// tensors in index expressions.
-        ///
-        /// The signature of this operator is:
-        /// (I:int[m], E:float[n,k]) -> (S:float[m,k])
-        ///
-        /// It expects two tensors as inputs, the first one 'I' containing
-        /// indices, the second one 'E' containing the embeddings. The
-        /// operator returns the selection 'S' of embeddings matching the
-        /// indices as defined by 'I'.
-        /// </remarks>
-        Embed
     }
 
     /// <summary>Abstract calculation that combines elements.

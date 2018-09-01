@@ -1,6 +1,8 @@
 ﻿# Adrien
 
-Adrien is an differentiable programming framework intended for .NET.
+Adrien is a differentiable programming framework intended for .NET.
+
+TODO: misc elements not implemented in the reference compiler.
 
 ## Abstraction levels
 

@@ -29,7 +29,7 @@ namespace Adrien.Tests.Numerics.Reference
             var j = new Index("j");
             j.Ranges = new[] {new Range(0, 32)};
 
-            var statement = new Statement(StatementKind.ZeroAndSum,
+            var statement = new Statement(StatementKind.AddSum,
                 // left
                 new Element(res, new[] {new IndexExpression(i)}),
                 // right

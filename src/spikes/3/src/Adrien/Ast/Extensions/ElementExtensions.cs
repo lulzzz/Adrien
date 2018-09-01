@@ -29,6 +29,15 @@ namespace Adrien.Ast.Extensions
             return element.Symbol.Shape.Kind.GetMatchingType();
         }
 
+        public static IReadOnlyList<Symbol> Symbols(this Element element)
+        {
+            var symbols = new HashSet<Symbol>();
+            symbols.Add(element.Symbol);
+            symbols.AddRange(element.Expressions.SelectMany(e => e.Symbols()));
+
+            return symbols.OrderBy(s => s.Position).ToList();
+        }
+
         public static IReadOnlyList<Index> Indices(this Element element)
         {
             var indices = new HashSet<Index>();

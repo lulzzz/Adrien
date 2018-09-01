@@ -34,7 +34,7 @@ namespace Adrien.Tests.Numerics.Reference
             for (int n = 0; n < 16; n++)
                 s[n] = n + 2;
 
-            var tres = (Tensor<int>) allocator.Create(input.Shape, "res");
+            var tres = (Tensor<int>) allocator.Create(res.Shape, "res");
 
             return (tile, tinput, tres);
         }

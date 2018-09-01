@@ -29,7 +29,7 @@ namespace Adrien.Tests.Geometric
             var j = new Index("j");
             j.Ranges = new[] {new Range(0, 32), new Range(0, 64)};
 
-            var statement = new Statement(StatementKind.ZeroAndSum,
+            var statement = new Statement(StatementKind.AddSum,
                 // left
                 new Element(res, new[] {new IndexExpression(i)}),
                 // right
@@ -70,7 +70,7 @@ namespace Adrien.Tests.Geometric
             var j_1 = new Index("j_1");
             j_1.Ranges = new[] {new Range(0, 64)};
 
-            var statement = new Statement(StatementKind.ZeroAndSum,
+            var statement = new Statement(StatementKind.AddSum,
                 // left
                 new Element(res, new[] {new IndexExpression(i_0), new IndexExpression(i_1), new IndexExpression(i_2)}),
                 // right

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Adrien.Ast.Extensions
@@ -19,6 +20,9 @@ namespace Adrien.Ast.Extensions
             if (!expression.Index.StructuralEquals(other.Index))
                 return false;
 
+            if (!expression.Element.StructuralEquals(other.Element))
+                return false;
+
             if (expression.Constant != other.Constant)
                 return false;
 
@@ -29,6 +33,30 @@ namespace Adrien.Ast.Extensions
                 return false;
 
             return true;
+        }
+
+        public static IReadOnlyList<Symbol> Symbols(this IndexExpression expression)
+        {
+            var symbols = new HashSet<Symbol>();
+
+            switch (expression.ArityKind)
+            {
+                case IndexExpressionArityKind.Constant:
+                    break;
+                case IndexExpressionArityKind.Index:
+                    break;
+                case IndexExpressionArityKind.Element:
+                    symbols.AddRange(expression.Element.Symbols());
+                    break;
+                case IndexExpressionArityKind.Binary:
+                    symbols.AddRange(expression.Expr1.Symbols());
+                    symbols.AddRange(expression.Expr2.Symbols());
+                    break;
+                default:
+                    throw new NotSupportedException();
+            }
+
+            return symbols.OrderBy(s => s.Position).ToList();
         }
 
         public static IReadOnlyList<Index> Indices(this IndexExpression expression)

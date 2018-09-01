@@ -4,10 +4,10 @@ namespace Adrien.Ast
 {
     public enum StatementKind
     {
-        ElementWise,
-        ZeroAndSum,
+        Assign,
         Sum,
-        Max
+        Max,
+        AddSum,
     }
 
     /// <summary>

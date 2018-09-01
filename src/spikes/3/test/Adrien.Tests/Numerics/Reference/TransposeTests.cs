@@ -21,7 +21,7 @@ namespace Adrien.Tests.Numerics.Reference
             j.Ranges = new[] {new Range(0, 16)};
 
             var statement = new Statement(
-                StatementKind.ElementWise,
+                StatementKind.Assign,
                 // left
                 new Element(res,
                     new[] {new IndexExpression(j), new IndexExpression(i)}),

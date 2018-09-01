@@ -6,6 +6,12 @@ namespace Adrien.Ast
     {
         Constant,
         Index,
+
+        /// <summary>
+        /// Intended for table lookup embeddings.
+        /// </summary>
+        Element,
+
         Binary
     }
 
@@ -43,6 +49,8 @@ namespace Adrien.Ast
 
         public Index Index { get; }
 
+        public Element Element { get; }
+
         public IndexExpression Expr1 { get; }
 
         public IndexExpression Expr2 { get; }
@@ -59,6 +67,13 @@ namespace Adrien.Ast
             ArityKind = IndexExpressionArityKind.Index;
             BinaryKind = BinaryExpressionKind.None;
             Index = index ?? throw new ArgumentNullException(nameof(index));
+        }
+
+        public IndexExpression(Element element)
+        {
+            ArityKind = IndexExpressionArityKind.Element;
+            BinaryKind = BinaryExpressionKind.None;
+            Element = element ?? throw new ArgumentNullException(nameof(element));
         }
 
         public IndexExpression(BinaryExpressionKind kind,
