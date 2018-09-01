@@ -16,24 +16,14 @@ namespace Adrien.Geometric
                 return tile;
             }
 
-            var simplified = new Tile(tile.Name);
-
-            foreach (var input in tile.Inputs)
-            {
-                simplified.AddInput(input);
-            }
-
-            foreach (var output in tile.Outputs)
-            {
-                simplified.AddOutput(output);
-            }
+            var statements = new List<Statement>();
 
             foreach (var statement in tile.Statements)
             {
-                simplified.Add(Simplify(statement));
+                statements.Add(Simplify(statement));
             }
 
-            return simplified;
+            return new Tile(tile.Name, statements);
         }
 
         private static Statement Simplify(Statement statement)

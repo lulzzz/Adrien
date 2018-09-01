@@ -1,4 +1,6 @@
-﻿namespace Adrien.Ast
+﻿using System;
+
+namespace Adrien.Ast
 {
     /// <summary>
     /// A range is the geometric characterization of an index
@@ -12,6 +14,9 @@
 
         public Range(int offset, int count)
         {
+            if (count < 0)
+                throw new ArgumentOutOfRangeException(nameof(count));
+
             Offset = offset;
             Count = count;
         }

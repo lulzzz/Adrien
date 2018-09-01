@@ -1,4 +1,6 @@
-﻿namespace Adrien.Ast
+﻿using System;
+
+namespace Adrien.Ast
 {
     public enum StatementKind
     {
@@ -22,8 +24,8 @@
         public Statement(StatementKind kind, Element left, ElementExpression right)
         {
             Kind = kind;
-            Left = left;
-            Right = right;
+            Left = left ?? throw new ArgumentNullException(nameof(left));
+            Right = right ?? throw new ArgumentNullException(nameof(right));
         }
     }
 }

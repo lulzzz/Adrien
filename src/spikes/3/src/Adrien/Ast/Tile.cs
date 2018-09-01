@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Adrien.Ast
 {
@@ -8,49 +9,17 @@ namespace Adrien.Ast
     /// </summary>
     public class Tile
     {
-        private readonly List<Symbol> _inputs;
-
-        private readonly List<Symbol> _outputs;
-
-        private readonly List<Statement> _statements;
-
-        private readonly List<Beam<Symbol>> _beams;
-
         public string Name { get; }
 
-        public IReadOnlyList<Symbol> Inputs => _inputs;
+        public IReadOnlyList<Statement> Statements { get; }
 
-        public IReadOnlyList<Symbol> Outputs => _outputs;
-
-        public IReadOnlyList<Statement> Statements => _statements;
-
-        public Tile(string name)
+        public Tile(string name, IReadOnlyList<Statement> statements)
         {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Name cannot be null or empty.", nameof(name));
+
             Name = name;
-            _inputs = new List<Symbol>();
-            _outputs = new List<Symbol>();
-            _statements = new List<Statement>();
-            _beams = new List<Beam<Symbol>>();
-        }
-
-        public void AddInput(Symbol input)
-        {
-            _inputs.Add(input);
-        }
-
-        public void AddOutput(Symbol output)
-        {
-            _outputs.Add(output);
-        }
-
-        public void Add(Statement statement)
-        {
-            _statements.Add(statement);
-        }
-
-        public void Add(Beam<Symbol> beam)
-        {
-            _beams.Add(beam);
+            Statements = statements ?? throw new ArgumentNullException(nameof(statements));
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Adrien.Ast
+﻿using System;
+
+namespace Adrien.Ast
 {
     public enum IndexExpressionArityKind
     {
@@ -56,7 +58,7 @@
         {
             ArityKind = IndexExpressionArityKind.Index;
             BinaryKind = BinaryExpressionKind.None;
-            Index = index;
+            Index = index ?? throw new ArgumentNullException(nameof(index));
         }
 
         public IndexExpression(BinaryExpressionKind kind,
@@ -64,8 +66,8 @@
         {
             ArityKind = IndexExpressionArityKind.Binary;
             BinaryKind = kind;
-            Expr1 = expr1;
-            Expr2 = expr2;
+            Expr1 = expr1 ?? throw new ArgumentNullException(nameof(expr1));
+            Expr2 = expr2 ?? throw new ArgumentNullException(nameof(expr2));
         }
     }
 }

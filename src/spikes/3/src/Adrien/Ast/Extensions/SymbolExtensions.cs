@@ -6,7 +6,13 @@ namespace Adrien.Ast.Extensions
     {
         public static bool StructuralEquals(this Symbol symbol, Symbol other)
         {
+            if (symbol == null && other == null)
+                return true;
+
             if (symbol.Name != other.Name)
+                return false;
+
+            if (symbol.Position != other.Position)
                 return false;
 
             if (!symbol.Shape.StructuralEquals(other.Shape))

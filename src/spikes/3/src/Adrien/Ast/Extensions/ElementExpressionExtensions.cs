@@ -1,4 +1,7 @@
-﻿namespace Adrien.Ast.Extensions
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Adrien.Ast.Extensions
 {
     public static class ElementExpressionExtensions
     {
@@ -29,6 +32,25 @@
                 return false;
 
             return true;
+        }
+
+        public static IReadOnlyList<Symbol> Symbols(this ElementExpression expr)
+        {
+            var symbols = new HashSet<Symbol>();
+
+            if (expr.Element != null)
+                symbols.Add(expr.Element.Symbol);
+
+            if(expr.Expr1 != null)
+                symbols.AddRange(expr.Expr1.Symbols());
+
+            if (expr.Expr2 != null)
+                symbols.AddRange(expr.Expr2.Symbols());
+
+            if (expr.Expr3 != null)
+                symbols.AddRange(expr.Expr3.Symbols());
+
+            return symbols.OrderBy(s => s.Position).ToList();
         }
     }
 }

@@ -11,24 +11,17 @@ namespace Adrien.Tests.Numerics.Reference
         {
             // linear 2D layer: res[i] = sum(a[i,j] * x[j] + b[i])
 
-            var tile = new Tile("linear");
+            var a = new Symbol("A", 0);
+            a.Shape = new Shape(ElementKind.Float32, new[] {16, 32});
 
-            var a = new Symbol("A");
-            a.Shape = new Shape(ElementKind.Float32, new[] { 16, 32 });
+            var x = new Symbol("x", 1);
+            x.Shape = new Shape(ElementKind.Float32, new[] {32});
 
-            var x = new Symbol("x");
-            x.Shape = new Shape(ElementKind.Float32, new[] { 32 });
+            var b = new Symbol("b", 2);
+            b.Shape = new Shape(ElementKind.Float32, new[] {16});
 
-            var b = new Symbol("b");
-            b.Shape = new Shape(ElementKind.Float32, new[] { 16 });
-
-            var res = new Symbol("res");
-            res.Shape = new Shape(ElementKind.Float32, new[] { 16 });
-
-            tile.AddInput(a);
-            tile.AddInput(x);
-            tile.AddInput(b);
-            tile.AddOutput(res);
+            var res = new Symbol("res", 3);
+            res.Shape = new Shape(ElementKind.Float32, new[] {16});
 
             var i = new Index("i");
             i.Ranges = new[] {new Range(0, 16)};
@@ -38,34 +31,34 @@ namespace Adrien.Tests.Numerics.Reference
 
             var statement = new Statement(StatementKind.ZeroAndSum,
                 // left
-                new Element(res, new []{new IndexExpression(i)}),
+                new Element(res, new[] {new IndexExpression(i)}),
                 // right
                 new ElementExpression(BinaryExpressionKind.Add,
                     new ElementExpression(BinaryExpressionKind.Multiply,
-                        new ElementExpression(new Element(a, new []{new IndexExpression(i), new IndexExpression(j)})),
-                        new ElementExpression(new Element(x, new []{new IndexExpression(j)}))),
-                    new ElementExpression(new Element(b, new []{new IndexExpression(i)}))));
+                        new ElementExpression(new Element(a, new[] {new IndexExpression(i), new IndexExpression(j)})),
+                        new ElementExpression(new Element(x, new[] {new IndexExpression(j)}))),
+                    new ElementExpression(new Element(b, new[] {new IndexExpression(i)}))));
 
-            tile.Add(statement);
+            var tile = new Tile("linear", new[] {statement});
 
             var allocator = new TensorAllocator();
-            var ta = (Tensor<float>)allocator.Create(a.Shape, "a");
+            var ta = (Tensor<float>) allocator.Create(a.Shape, "a");
             var sa = ta.Buffer.Span;
-            for(int m = 0; m < 16; m++)
+            for (int m = 0; m < 16; m++)
             for (int n = 0; n < 32; n++)
                 sa[m * 32 + n] = (n + m) % 2;
 
-            var tx = (Tensor<float>)allocator.Create(x.Shape, "x");
+            var tx = (Tensor<float>) allocator.Create(x.Shape, "x");
             var sx = tx.Buffer.Span;
             for (int n = 0; n < 32; n++)
                 sx[n] = n % 3;
 
-            var tb = (Tensor<float>)allocator.Create(b.Shape, "b");
+            var tb = (Tensor<float>) allocator.Create(b.Shape, "b");
             var sb = tb.Buffer.Span;
             for (int m = 0; m < 16; m++)
                 sb[m] = m % 5;
 
-            var tres = (Tensor<float>)allocator.Create(res.Shape, "res");
+            var tres = (Tensor<float>) allocator.Create(res.Shape, "res");
 
             return (tile, ta, tx, tb, tres);
         }
@@ -111,7 +104,7 @@ namespace Adrien.Tests.Numerics.Reference
 
             var kernel = compiler.Compile(linear);
 
-            var tensors = new ITensor[] { a, x, b, res };
+            var tensors = new ITensor[] {a, x, b, res};
 
             var sr = res.Buffer.Span;
             for (var i = 0; i < sr.Length; i++)

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Adrien.Ast
 {
@@ -16,15 +17,30 @@ namespace Adrien.Ast
     /// </remarks>
     public class Index
     {
+        private IReadOnlyList<Range> _ranges;
+
         public string Name { get; }
 
         /// <summary>
         /// Late assignment at geometric inference.
         /// </summary>
-        public IReadOnlyList<Range> Ranges { get; set; }
+        public IReadOnlyList<Range> Ranges
+        {
+            get => _ranges;
+            set
+            {
+                if (_ranges != null)
+                    throw new InvalidOperationException("Index.Ranges is monotonous and cannot be reassigned.");
+
+                _ranges = value;
+            }
+        }
 
         public Index(string name)
         {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Name cannot be null or empty.", nameof(name));
+
             Name = name;
         }
     }

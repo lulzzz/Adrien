@@ -32,16 +32,15 @@ A tensor is fully defined in shape, type and numerical values. Operations on
 those arrays are intended to be delegated to specialized hardware such as
 a GPU or a TPU.
 
-
-## Basic API vs Fluent APIs
+## Fluent API vs Abstract Syntax Tree (AST)
 
 The DSL-like APIs for differential programming are referred as _fluent_.
 Those APIs are intended for inline compact notations. Those API somewhat
 stretches the capabilities of the C# syntax, are isolated as an overlay
 of the more basic APIs.
 
-The basic API - as the name suggests - is intended for simplicity. It
-decouples the intricacies of the frontend syntax from the compilation
+The abstract syntax tree (AST) is intended for backend simplicity. It 
+decouples  the intricacies of the frontend syntax from the compilation
 task which converts a tile into a kernel.
 
 ## Numeric backend

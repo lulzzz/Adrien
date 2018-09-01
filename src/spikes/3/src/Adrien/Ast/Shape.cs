@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Adrien.Ast
 {
@@ -25,7 +26,7 @@ namespace Adrien.Ast
         public Shape(ElementKind kind, IReadOnlyList<int> dimensions)
         {
             Kind = kind;
-            Dimensions = dimensions;
+            Dimensions = dimensions ?? throw new ArgumentNullException(nameof(dimensions));
         }
     }
 

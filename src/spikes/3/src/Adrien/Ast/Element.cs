@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Adrien.Ast
 {
@@ -18,8 +19,8 @@ namespace Adrien.Ast
 
         public Element(Symbol symbol, IReadOnlyList<IndexExpression> expressions)
         {
-            Symbol = symbol;
-            Expressions = expressions;
+            Symbol = symbol ?? throw new ArgumentNullException(nameof(symbol));
+            Expressions = expressions ?? throw new ArgumentNullException(nameof(expressions));
         }
     }
 }

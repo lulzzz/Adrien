@@ -20,11 +20,9 @@ namespace Adrien.Numerics.Reference
 
             var T = typeof(IReadOnlyList<ITensor>);
 
-            var tensors = Expression.Parameter(T, "tensors");
+            var tensors = E.Parameter(T, "tensors");
 
-            var symbols = new List<Symbol>();
-            symbols.AddRange(tile.Inputs);
-            symbols.AddRange(tile.Outputs);
+            var symbols = tile.Symbols();
 
             var spans = new Dictionary<string, ParameterExpression>();
 

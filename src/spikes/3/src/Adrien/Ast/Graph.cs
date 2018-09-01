@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Adrien.Ast
 {
@@ -7,18 +8,11 @@ namespace Adrien.Ast
     /// </summary>
     public class Graph
     {
-        private readonly List<Edge> _edges;
+        public IReadOnlyList<Edge> Edges { get; }
 
-        public IReadOnlyList<Edge> Edges => _edges;
-
-        public Graph()
+        public Graph(IReadOnlyList<Edge> edges)
         {
-            _edges = new List<Edge>();
-        }
-
-        public void Add(Edge edge)
-        {
-            _edges.Add(edge);
+            Edges = edges ?? throw new ArgumentNullException(nameof(edges));
         }
     }
 }

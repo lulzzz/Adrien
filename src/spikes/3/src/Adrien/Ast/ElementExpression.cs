@@ -1,4 +1,6 @@
-﻿namespace Adrien.Ast
+﻿using System;
+
+namespace Adrien.Ast
 {
     public enum ArityKind
     {
@@ -68,7 +70,7 @@
             UnaryKind = UnaryExpressionKind.None;
             BinaryKind = BinaryExpressionKind.None;
 
-            Element = element;
+            Element = element ?? throw new ArgumentNullException(nameof(element));
         }
 
         public ElementExpression(UnaryExpressionKind kind, ElementExpression expr)
@@ -77,7 +79,7 @@
             UnaryKind = kind;
             BinaryKind = BinaryExpressionKind.None;
 
-            Expr1 = expr;
+            Expr1 = expr ?? throw new ArgumentNullException(nameof(expr));
         }
 
         public ElementExpression(BinaryExpressionKind kind,
@@ -87,8 +89,8 @@
             UnaryKind = UnaryExpressionKind.None;
             BinaryKind = kind;
 
-            Expr1 = expr1;
-            Expr2 = expr2;
+            Expr1 = expr1 ?? throw new ArgumentNullException(nameof(expr1));
+            Expr2 = expr2 ?? throw new ArgumentNullException(nameof(expr2));
         }
 
         public ElementExpression(ElementExpression test,
@@ -98,9 +100,9 @@
             UnaryKind = UnaryExpressionKind.None;
             BinaryKind = BinaryExpressionKind.None;
 
-            Expr1 = test;
-            Expr2 = ifTrue;
-            Expr3 = ifFalse;
+            Expr1 = test ?? throw new ArgumentNullException(nameof(test));
+            Expr2 = ifTrue ?? throw new ArgumentNullException(nameof(ifTrue));
+            Expr3 = ifFalse ?? throw new ArgumentNullException(nameof(ifFalse));
         }
     }
 }

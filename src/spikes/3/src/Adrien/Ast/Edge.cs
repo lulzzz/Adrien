@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Adrien.Ast
 {
@@ -53,16 +55,16 @@ namespace Adrien.Ast
         {
             Kind = EdgeKind.Tile;
             Tile = tile;
-            Inputs = inputs;
-            Outputs = outputs;
+            Inputs = inputs ?? throw new ArgumentNullException(nameof(inputs));
+            Outputs = outputs ?? throw new ArgumentNullException(nameof(outputs));
         }
 
         /// <summary>Reshape edge.</summary>
         public Edge(Variable input, IReadOnlyList<Variable> outputs)
         {
             Kind = EdgeKind.Reshape;
-            Inputs = new[] {input};
-            Outputs = outputs;
+            Inputs = new[] {input ?? throw new ArgumentNullException(nameof(input))};
+            Outputs = outputs ?? throw new ArgumentNullException(nameof(outputs));
         }
     }
 }
