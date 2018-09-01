@@ -26,7 +26,7 @@ namespace Adrien.Ast
             set
             {
                 if (_shape != null)
-                    throw new InvalidOperationException("Symbol.Shape is monotonous and cannot be reassigned.");
+                    throw new InvalidOperationException("Shape is monotonous and cannot be reassigned.");
 
                 _shape = value;
             }

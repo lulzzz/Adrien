@@ -6,34 +6,37 @@ using Adrien.Ast.Extensions;
 
 namespace Adrien.Geometric
 {
-    public static class IndexSimplifier
+    /// <summary>
+    /// Intended to simplify backend implementations of Adrien.
+    /// Transform all complex indices into simple ones.
+    /// </summary>
+    /// <remarks>
+    /// Just like a mathematical projection, the application of the
+    /// projector is idempotent, i.e. re-projecting a tile yields the
+    /// same tile.
+    /// </remarks>
+    public static class TileProjector
     {
         /// <summary>Transform all complex indices into simple ones.</summary>
-        public static Tile SimplifyIndices(this Tile tile)
+        public static Tile Project(this Tile tile)
         {
             if (!tile.Statements.Any(s => s.Indices().Any(i => i.IsComplex())))
             {
                 return tile;
             }
 
-            var statements = new List<Statement>();
-
-            foreach (var statement in tile.Statements)
-            {
-                statements.Add(Simplify(statement));
-            }
-
+            var statements = tile.Statements.Select(Project).ToList();
             return new Tile(tile.Name, statements);
         }
 
-        private static Statement Simplify(Statement statement)
+        private static Statement Project(Statement statement)
         {
             return new Statement(statement.Kind, 
-                Simplify(statement.Left),
-                Simplify(statement.Right));            
+                Project(statement.Left),
+                Project(statement.Right));            
         }
 
-        private static Element Simplify(Element element)
+        private static Element Project(Element element)
         {
             var allIndices = element.Indices();
             if (!allIndices.Any(i => i.IsComplex()))
@@ -54,8 +57,8 @@ namespace Adrien.Geometric
                     for (var i = 0; i < complex.Ranges.Count; i++)
                     {
                         var simple = new Index(complex.Name + "_" + i);
-                        simple.Ranges = new[] { complex.Ranges[i] };
-                        list.Add(Simplify(expr, complex, simple));
+                        simple.Range = complex.Ranges[i];
+                        list.Add(Project(expr, complex, simple));
                     }
                 }
             }
@@ -63,24 +66,24 @@ namespace Adrien.Geometric
             return new Element(element.Symbol, list);
         }
 
-        private static ElementExpression Simplify(ElementExpression expr)
+        private static ElementExpression Project(ElementExpression expr)
         {
             switch (expr.ArityKind)
             {
                 case ArityKind.Element:
-                    return new ElementExpression(Simplify(expr.Element));
+                    return new ElementExpression(Project(expr.Element));
                 case ArityKind.Unary:
-                    return new ElementExpression(expr.UnaryKind, Simplify(expr.Expr1));
+                    return new ElementExpression(expr.UnaryKind, Project(expr.Expr1));
                 case ArityKind.Binary:
-                    return new ElementExpression(expr.BinaryKind, Simplify(expr.Expr1), Simplify(expr.Expr2));
+                    return new ElementExpression(expr.BinaryKind, Project(expr.Expr1), Project(expr.Expr2));
                 case ArityKind.Ternary:
-                    return new ElementExpression(Simplify(expr.Expr1), Simplify(expr.Expr2), Simplify(expr.Expr3));
+                    return new ElementExpression(Project(expr.Expr1), Project(expr.Expr2), Project(expr.Expr3));
                 default:
                     throw new NotSupportedException();
             }
         }
 
-        private static IndexExpression Simplify(IndexExpression expr, Index complex, Index simple)
+        private static IndexExpression Project(IndexExpression expr, Index complex, Index simple)
         {
             switch (expr.ArityKind)
             {
@@ -92,8 +95,8 @@ namespace Adrien.Geometric
                     return expr;
                 case IndexExpressionArityKind.Binary:
                     return new IndexExpression(expr.BinaryKind, 
-                        Simplify(expr.Expr1, complex, simple),
-                        Simplify(expr.Expr2, complex, simple));
+                        Project(expr.Expr1, complex, simple),
+                        Project(expr.Expr2, complex, simple));
                 default:
                     throw new NotSupportedException();
             }

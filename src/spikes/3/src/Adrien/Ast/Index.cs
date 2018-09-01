@@ -24,13 +24,39 @@ namespace Adrien.Ast
         /// <summary>
         /// Late assignment at geometric inference.
         /// </summary>
+        /// <remarks>
+        /// Backend implementations are intended to only use 'Range' rather
+        /// than 'Ranges'. Indeed, by applying a prior transformation on the
+        /// tile, all the complex indices can be turned into simple ones.
+        /// </remarks>
+        public Range Range
+        {
+            get
+            {
+                if (Ranges.Count > 1)
+                    throw new InvalidOperationException("Range not accessible in a complex Index.");
+
+                return Ranges[0];
+            }
+            set
+            {
+                if (_ranges != null)
+                    throw new InvalidOperationException("Range is monotonous and cannot be reassigned.");
+
+                Ranges = new[] {value};
+            }
+        }
+
+        /// <summary>
+        /// Late assignment at geometric inference.
+        /// </summary>
         public IReadOnlyList<Range> Ranges
         {
             get => _ranges;
             set
             {
                 if (_ranges != null)
-                    throw new InvalidOperationException("Index.Ranges is monotonous and cannot be reassigned.");
+                    throw new InvalidOperationException("Ranges is monotonous and cannot be reassigned.");
 
                 _ranges = value;
             }

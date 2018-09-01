@@ -93,7 +93,7 @@ namespace Adrien.Tests.Geometric
         public void Simplify()
         {
             var complex = ComplexLinear();
-            var simple = complex.SimplifyIndices();
+            var simple = complex.Project();
             var expectedSimple = SimpleLinear();
 
             Assert.True(expectedSimple.StructuralEquals(simple));

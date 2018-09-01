@@ -16,7 +16,7 @@ namespace Adrien.Numerics.Reference
         public IKernel Compile(Tile tile)
         {
             // Removing all complex indices through a tile transformation
-            tile = tile.SimplifyIndices();
+            tile = tile.Project();
 
             var T = typeof(IReadOnlyList<ITensor>);
 
@@ -32,17 +32,17 @@ namespace Adrien.Numerics.Reference
             {
                 var s = symbols[i];
 
-                var span = Expression.Parameter(typeof(Span<>).MakeGenericType(s.ElementType()), s.Name);
+                var span = E.Parameter(typeof(Span<>).MakeGenericType(s.ElementType()), s.Name);
 
                 spans.Add(s.Name, span);
 
                 var tensorType = s.Shape.Kind.GetTensorType();
 
-                var assign = Expression.Assign(span,
-                    Expression.Call(
-                        Expression.Call(
-                            Expression.Convert(
-                                Expression.Call(tensors, T.GetMethod("get_Item"), Expression.Constant(i)),
+                var assign = E.Assign(span,
+                    E.Call(
+                        E.Call(
+                            E.Convert(
+                                E.Call(tensors, T.GetMethod("get_Item"), E.Constant(i)),
                                 tensorType),
                             tensorType.GetMethod("get_Buffer")),
                         typeof(Memory<>).MakeGenericType(s.ElementType()).GetMethod("get_Span"))
@@ -73,10 +73,10 @@ namespace Adrien.Numerics.Reference
                 }
             }
 
-            var block = Expression.Block(spans.Values, exprList);
+            var block = E.Block(spans.Values, exprList);
 
             return new Kernel(
-                Expression.Lambda<Action<IReadOnlyList<ITensor>>>(block, tensors).Compile());
+                E.Lambda<Action<IReadOnlyList<ITensor>>>(block, tensors).Compile());
         }
 
         static E CompileZero(Element element, ParameterExpression span)
@@ -88,7 +88,7 @@ namespace Adrien.Numerics.Reference
 
             var setMethod = typeof(TileCompiler).FindMethod("SetDefaultSpanItem", element.ElementType());
 
-            E inner = Expression.Call(
+            E inner = E.Call(
                 null,
                 setMethod,
                 span,
@@ -110,7 +110,7 @@ namespace Adrien.Numerics.Reference
 
             var setMethod = typeof(TileCompiler).FindMethod(method, statement.Left.ElementType());
 
-            E inner = Expression.Call(
+            E inner = E.Call(
                 null,
                 setMethod,
                 spans[statement.Left.Symbol.Name],
@@ -129,14 +129,14 @@ namespace Adrien.Numerics.Reference
             {
                 var indexParam = indices[index.Name];
 
-                // Range simplified by construction
+                // The tile has been projected to simple indices.
                 inner = indexParam.For(
-                    index.Ranges[0].Offset,
-                    index.Ranges[0].Offset + index.Ranges[0].Count,
+                    index.Range.Offset,
+                    index.Range.Offset + index.Range.Count,
                     inner);
             }
 
-            return Expression.Block(indices.Values, inner);
+            return E.Block(indices.Values, inner);
         }
 
         static E Compile(
@@ -165,22 +165,22 @@ namespace Adrien.Numerics.Reference
                     switch (expression.BinaryKind)
                     {
                         case BinaryExpressionKind.Add:
-                            return Expression.Add(
+                            return E.Add(
                                 Compile(expression.Expr1, spans, indices),
                                 Compile(expression.Expr2, spans, indices));
 
                         case BinaryExpressionKind.Subtract:
-                            return Expression.Add(
+                            return E.Add(
                                 Compile(expression.Expr1, spans, indices),
-                                Expression.Negate(Compile(expression.Expr2, spans, indices)));
+                                E.Negate(Compile(expression.Expr2, spans, indices)));
 
                         case BinaryExpressionKind.Multiply:
-                            return Expression.Multiply(
+                            return E.Multiply(
                                 Compile(expression.Expr1, spans, indices),
                                 Compile(expression.Expr2, spans, indices));
 
                         case BinaryExpressionKind.Divide:
-                            return Expression.Divide(
+                            return E.Divide(
                                 Compile(expression.Expr1, spans, indices),
                                 Compile(expression.Expr2, spans, indices));
 
@@ -206,7 +206,7 @@ namespace Adrien.Numerics.Reference
         {
             var index = CompileAsIndex(element, indices);
 
-            return Expression.Call(
+            return E.Call(
                 null,
                 typeof(TileCompiler).FindMethod("GetSpanItem", element.ElementType()),
                 spans[element.Symbol.Name],
@@ -223,9 +223,9 @@ namespace Adrien.Numerics.Reference
 
             for (var i = element.Expressions.Count - 2; i >= 0; i--)
             {
-                expr = Expression.Add(
-                    Expression.Multiply(
-                        Expression.Constant(strides[i]),
+                expr = E.Add(
+                    E.Multiply(
+                        E.Constant(strides[i]),
                         Compile(element.Expressions[i], indices)),
                     expr);
             }
@@ -239,7 +239,7 @@ namespace Adrien.Numerics.Reference
             switch (expression.ArityKind)
             {
                 case IndexExpressionArityKind.Constant:
-                    return Expression.Constant(expression.Constant);
+                    return E.Constant(expression.Constant);
 
                 case IndexExpressionArityKind.Index:
                     return indices[expression.Index.Name];
@@ -248,22 +248,22 @@ namespace Adrien.Numerics.Reference
                     switch (expression.BinaryKind)
                     {
                         case BinaryExpressionKind.Add:
-                            return Expression.Add(
+                            return E.Add(
                                 Compile(expression.Expr1, indices),
                                 Compile(expression.Expr2, indices));
 
                         case BinaryExpressionKind.Subtract:
-                            return Expression.Add(
+                            return E.Add(
                                 Compile(expression.Expr1, indices),
-                                Expression.Negate(Compile(expression.Expr2, indices)));
+                                E.Negate(Compile(expression.Expr2, indices)));
 
                         case BinaryExpressionKind.Multiply:
-                            return Expression.Multiply(
+                            return E.Multiply(
                                 Compile(expression.Expr1, indices),
                                 Compile(expression.Expr2, indices));
 
                         case BinaryExpressionKind.Divide:
-                            return Expression.Divide(
+                            return E.Divide(
                                 Compile(expression.Expr1, indices),
                                 Compile(expression.Expr2, indices));
 
@@ -286,7 +286,7 @@ namespace Adrien.Numerics.Reference
             for (var i = 0; i < nakedIndices.Count; i++)
             {
                 var idx = nakedIndices[i];
-                var index = Expression.Parameter(typeof(int), idx.Name);
+                var index = E.Parameter(typeof(int), idx.Name);
                 indices.Add(idx.Name, index);
             }
 
