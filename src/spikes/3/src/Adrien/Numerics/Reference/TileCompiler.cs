@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.CompilerServices;
 using Adrien.Ast;
 using Adrien.Ast.Extensions;
 using Adrien.Geometric;
@@ -56,17 +55,17 @@ namespace Adrien.Numerics.Reference
                 switch (statement.Kind)
                 {
                     case StatementKind.ElementWise:
-                        exprList.Add(Compile(statement, spans, "SetSpanItem"));
+                        exprList.Add(Compile(statement, spans, SpanMethods.SetSpanItem));
                         break;
                     case StatementKind.ZeroAndSum:
                         exprList.Add(CompileZero(statement.Left, spans[statement.Left.Symbol.Name]));
-                        exprList.Add(Compile(statement, spans, "SetAddSpanItem"));
+                        exprList.Add(Compile(statement, spans, SpanMethods.SetAddSpanItem));
                         break;
                     case StatementKind.Sum:
-                        exprList.Add(Compile(statement, spans, "SetAddSpanItem"));
+                        exprList.Add(Compile(statement, spans, SpanMethods.SetAddSpanItem));
                         break;
                     case StatementKind.Max:
-                        exprList.Add(Compile(statement, spans, "SetMaxSpanItem"));
+                        exprList.Add(Compile(statement, spans, SpanMethods.SetMaxSpanItem));
                         break;
                     default:
                         throw new NotSupportedException();
@@ -86,7 +85,7 @@ namespace Adrien.Numerics.Reference
 
             var setterIndex = CompileAsIndex(element, indices);
 
-            var setMethod = typeof(TileCompiler).FindMethod("SetDefaultSpanItem", element.ElementType());
+            var setMethod = typeof(SpanMethods).FindMethod(SpanMethods.SetDefaultSpanItem, element.ElementType());
 
             E inner = E.Call(
                 null,
@@ -99,7 +98,7 @@ namespace Adrien.Numerics.Reference
         }
 
         static E Compile(
-            Statement statement, 
+            Statement statement,
             Dictionary<string, ParameterExpression> spans,
             string method)
         {
@@ -108,7 +107,7 @@ namespace Adrien.Numerics.Reference
 
             var setterIndex = CompileAsIndex(statement.Left, indices);
 
-            var setMethod = typeof(TileCompiler).FindMethod(method, statement.Left.ElementType());
+            var setMethod = typeof(SpanMethods).FindMethod(method, statement.Left.ElementType());
 
             E inner = E.Call(
                 null,
@@ -208,7 +207,7 @@ namespace Adrien.Numerics.Reference
 
             return E.Call(
                 null,
-                typeof(TileCompiler).FindMethod("GetSpanItem", element.ElementType()),
+                typeof(SpanMethods).FindMethod(SpanMethods.GetSpanItem, element.ElementType()),
                 spans[element.Symbol.Name],
                 index
             );
@@ -291,55 +290,6 @@ namespace Adrien.Numerics.Reference
             }
 
             return indices;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static T GetSpanItem<T>(Span<T> span, int index)
-        {
-            // TODO: work-around on https://stackoverflow.com/questions/52105111/arithmetic-on-floats-with-linq-expression-trees
-            return span[index];
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SetDefaultSpanItem<T>(Span<T> span, int index)
-        {
-            span[index] = default;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SetSpanItemInt32(Span<int> span, int index, int value)
-        {
-            span[index] = value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SetSpanItemSingle(Span<float> span, int index, float value)
-        {
-            span[index] = value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SetAddSpanItemInt32(Span<int> span, int index, int value)
-        {
-            span[index] += value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SetAddSpanItemSingle(Span<float> span, int index, float value)
-        {
-            span[index] += value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SetMaxSpanItemInt32(Span<int> span, int index, int value)
-        {
-            span[index] = span[index] > value ? span[index] : value;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void SetMaxSpanItemSingle(Span<float> span, int index, float value)
-        {
-            span[index] = span[index] > value ? span[index] : value;
         }
     }
 }
