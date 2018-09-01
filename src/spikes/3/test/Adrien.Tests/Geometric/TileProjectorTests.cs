@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Adrien.Tests.Geometric
 {
-    public class IndexSimplifierTests
+    public class TileProjectorTests
     {
         public Tile ComplexLinear()
         {
@@ -90,7 +90,7 @@ namespace Adrien.Tests.Geometric
         }
 
         [Fact]
-        public void Simplify()
+        public void Project()
         {
             var complex = ComplexLinear();
             var simple = complex.Project();
